@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TimelessJeweler</title>
+    <title>Timeless Jeweler</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,21 @@
   </head>
 
   <body>
-    <%= yield %>
+    <main role="main" class="container">
+
+      <%= render 'layouts/navigation' %>
+
+      <div class="jumbotron text-center">
+        <div class="container">
+          <h1 class="display-3">Timeless Jeweler</h1>
+        </div>
+      </div>
+
+      <div class="container">
+
+        <%= yield %>
+
+      </div>
+    </main>
   </body>
 </html>
