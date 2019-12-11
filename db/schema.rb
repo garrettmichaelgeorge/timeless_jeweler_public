@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_11_005113) do
+ActiveRecord::Schema.define(version: 2019_12_11_152807) do
 
   create_table "customers", force: :cascade do |t|
     t.string "first_name", limit: 25
-    t.string "last_name", limit: 25
+    t.integer "household_id", null: false
     t.string "gender", limit: 1
     t.decimal "ring_size", precision: 2, scale: 2
     t.text "ring_size_notes", limit: 140
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_12_11_005113) do
     t.date "birthday"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["household_id"], name: "index_customers_on_household_id"
   end
 
   create_table "households", force: :cascade do |t|
@@ -39,4 +40,5 @@ ActiveRecord::Schema.define(version: 2019_12_11_005113) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "customers", "households"
 end
