@@ -1,0 +1,57 @@
+<%= form_with(model: customer, local: true) do |form| %>
+  <% if customer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
+
+      <ul>
+        <% customer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :household_id %>
+    <%= form.text_field :household_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gender %>
+    <%= form.text_field :gender %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ring_size %>
+    <%= form.text_field :ring_size %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ring_size_notes %>
+    <%= form.text_area :ring_size_notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :necklace_length %>
+    <%= form.number_field :necklace_length %>
+  </div>
+
+  <div class="field">
+    <%= form.label :necklace_length_notes %>
+    <%= form.text_area :necklace_length_notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :birthday %>
+    <%= form.date_select :birthday %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
