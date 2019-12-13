@@ -11,11 +11,14 @@
 
       <%= render 'layouts/navigation' %>
 
-
+      <!-- Pseudo-code: If rendered page is NOT dashboard, put a div.container around the yield tag, else nothing -->
+      <div class="container">
 
         <%= yield %>
 
+      </div>
 
+        <!-- end if -->
 
     </main>
 
