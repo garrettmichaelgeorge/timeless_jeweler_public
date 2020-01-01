@@ -16,10 +16,12 @@
     <%= form.text_field :first_name %>
   </div>
 
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :household_name %>
-  </div>
+  <%= form.fields_for :households do |household_form| %>
+    <div class="field">
+      <%= household_form.label :last_name %>
+      <%= household_form.text_field :household_name %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= form.label :gender %>
