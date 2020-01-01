@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_11_152807) do
+ActiveRecord::Schema.define(version: 2019_12_13_212120) do
 
   create_table "customers", force: :cascade do |t|
     t.string "first_name", limit: 25
@@ -40,5 +40,34 @@ ActiveRecord::Schema.define(version: 2019_12_11_152807) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "product_categories", force: :cascade do |t|
+    t.string "product_category_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "metal"
+    t.string "purity"
+    t.decimal "size"
+    t.decimal "length"
+    t.decimal "weight"
+    t.text "miscellaneous_measurements"
+    t.string "color"
+    t.string "clarity"
+    t.integer "report_number"
+    t.text "narrative_description"
+    t.decimal "cost"
+    t.text "notes"
+    t.decimal "retail_price"
+    t.string "source"
+    t.date "date_sold"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "product_category_id"
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
+  end
+
   add_foreign_key "customers", "households"
+  add_foreign_key "products", "product_categories"
 end

@@ -1,0 +1,37 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer: one
+  metal: MyString
+  purity: MyString
+  size: 9.99
+  length: 9.99
+  weight: 9.99
+  miscellaneous_measurements: MyText
+  color: MyString
+  clarity: MyString
+  report_number: 1
+  narrative_description: MyText
+  cost: 9.99
+  notes: MyText
+  retail_price: 9.99
+  source: MyString
+  date_sold: 2019-12-13
+
+two:
+  customer: two
+  metal: MyString
+  purity: MyString
+  size: 9.99
+  length: 9.99
+  weight: 9.99
+  miscellaneous_measurements: MyText
+  color: MyString
+  clarity: MyString
+  report_number: 1
+  narrative_description: MyText
+  cost: 9.99
+  notes: MyText
+  retail_price: 9.99
+  source: MyString
+  date_sold: 2019-12-13
