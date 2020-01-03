@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :customer_id %>
-    <%= form.text_field :customer_id %>
+    <%= form.label "Description" %>
+    <%= form.text_area :narrative_description %>
   </div>
 
   <div class="field">
@@ -62,18 +62,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :narrative_description %>
-    <%= form.text_area :narrative_description %>
-  </div>
-
-  <div class="field">
     <%= form.label :cost %>
     <%= form.text_field :cost %>
-  </div>
-
-  <div class="field">
-    <%= form.label :notes %>
-    <%= form.text_area :notes %>
   </div>
 
   <div class="field">
@@ -87,9 +77,21 @@
   </div>
 
   <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <div class="field">
     <%= form.label :date_sold %>
     <%= form.date_select :date_sold %>
   </div>
+
+  <!--
+  <div class="field">
+    <%= form.label :customer_id %>
+    <%= form.text_field :customer_id %>
+  </div>
+  -->
 
   <div class="actions">
     <%= form.submit %>
