@@ -3,13 +3,12 @@ body {
   padding: 56px 0 0 0;
 }
 
-/* header */
-
+/* Header */
 .navbar-brand {
   background-color: none;
 }
 
-/* footer */
+/* Footer */
 .footer {
   background-color: #f5f5f5;
 }
@@ -17,3 +16,8 @@ body {
 .footer > .container {
 }
 
+/* Tables */
+table > * {
+  font-size: 0.8rem;
+  line-height: 1.1;
+}
