@@ -1,6 +1,8 @@
+@import "variables";
+
 body {
   // margin: 0 auto 0;
-  padding: 56px 0 0 0;
+  padding: 4rem 0 0 0;
 }
 
 /* Header */
@@ -13,11 +15,21 @@ body {
   background-color: #f5f5f5;
 }
 
-.footer > .container {
-}
-
 /* Tables */
 table > * {
   font-size: 0.8rem;
   line-height: 1.1;
+}
+
+/* Miscellaneous */
+
+/* Debug section (development environment only) */
+.debug_dump {
+  padding: 1em;
+  border: 1px gray;
+  border-radius: 4px;
+  background-color: lightgray;
+  width: 100%;
+  margin-top: 3rem;
+  @include box_sizing;
 }

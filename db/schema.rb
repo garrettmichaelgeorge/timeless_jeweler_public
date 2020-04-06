@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_212120) do
+ActiveRecord::Schema.define(version: 2020_04_05_221427) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.text "address_line_1"
+    t.text "address_line_2"
+    t.text "city"
+    t.integer "postal_code"
+    t.integer "state_province_id_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["state_province_id_id"], name: "index_addresses_on_state_province_id_id"
+  end
+
+  create_table "country_region_tables", force: :cascade do |t|
+    t.string "name"
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string "first_name", limit: 25
@@ -23,7 +38,9 @@ ActiveRecord::Schema.define(version: 2019_12_13_212120) do
     t.date "birthday"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "products_id"
     t.index ["household_id"], name: "index_customers_on_household_id"
+    t.index ["products_id"], name: "index_customers_on_products_id"
   end
 
   create_table "households", force: :cascade do |t|
@@ -65,9 +82,23 @@ ActiveRecord::Schema.define(version: 2019_12_13_212120) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "product_category_id"
+    t.integer "customers_id"
+    t.index ["customers_id"], name: "index_products_on_customers_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
+  create_table "state_province_tables", force: :cascade do |t|
+    t.string "name"
+    t.string "state_province_code"
+    t.boolean "is_only_state_province?"
+    t.integer "country_region_id_id", null: false
+    t.index ["country_region_id_id"], name: "index_state_province_tables_on_country_region_id_id"
+  end
+
+  add_foreign_key "addresses", "state_province_ids"
   add_foreign_key "customers", "households"
+  add_foreign_key "customers", "products", column: "products_id"
+  add_foreign_key "products", "customers", column: "customers_id"
   add_foreign_key "products", "product_categories"
+  add_foreign_key "state_province_tables", "country_region_ids"
 end

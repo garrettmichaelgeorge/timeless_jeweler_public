@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html class="h-100">
-  <head>
-    <title>Timeless Jeweler</title>
-    <%= render 'layouts/rails_default_head' %>
-    <% render 'layouts/shim' %>
-  </head>
 
-  <body class="d-flex flex-column h-100">
-    <main role="main" class="flex-shrink-0">
+<head>
+  <title>Timeless Jeweler</title>
+  <%= render 'layouts/rails_default_head' %>
+  <% render 'layouts/shim' %>
+</head>
 
-      <%= render 'layouts/navigation' %>
+<body class="d-flex flex-column h-100">
+  <main role="main" class="flex-shrink-0">
+    <%= render 'layouts/navigation' %>
+    <!-- Pseudo-code: If rendered page is NOT dashboard, put a div.container around the yield tag, else nothing -->
+    <div class="container-fluid">
+      <%= yield %>
+    </div>
+    <!-- end if -->
+  </main>
+  <%= render 'layouts/footer' %>
+  <div class="container-fluid">
+    <%= debug(params) if Rails.env.development? %>
+  </div>
+</body>
 
-      <!-- Pseudo-code: If rendered page is NOT dashboard, put a div.container around the yield tag, else nothing -->
-
-      <div class="container-fluid">
-
-        <%= yield %>
-
-      </div>
-
-      <!-- end if -->
-
-    </main>
-
-    <%= render 'layouts/footer' %>
-
-  </body>
 </html>
