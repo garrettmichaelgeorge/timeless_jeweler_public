@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_05_221427) do
+ActiveRecord::Schema.define(version: 0) do
 
   create_table "addresses", force: :cascade do |t|
     t.text "address_line_1"
@@ -95,10 +95,4 @@ ActiveRecord::Schema.define(version: 2020_04_05_221427) do
     t.index ["country_region_id_id"], name: "index_state_province_tables_on_country_region_id_id"
   end
 
-  add_foreign_key "addresses", "state_province_ids"
-  add_foreign_key "customers", "households"
-  add_foreign_key "customers", "products", column: "products_id"
-  add_foreign_key "products", "customers", column: "customers_id"
-  add_foreign_key "products", "product_categories"
-  add_foreign_key "state_province_tables", "country_region_ids"
 end
