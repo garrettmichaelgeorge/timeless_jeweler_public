@@ -10,22 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
-
-  create_table "addresses", force: :cascade do |t|
-    t.text "address_line_1"
-    t.text "address_line_2"
-    t.text "city"
-    t.integer "postal_code"
-    t.integer "state_province_id_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["state_province_id_id"], name: "index_addresses_on_state_province_id_id"
-  end
-
-  create_table "country_region_tables", force: :cascade do |t|
-    t.string "name"
-  end
+ActiveRecord::Schema.define(version: 2020_04_05_215330) do
 
   create_table "customers", force: :cascade do |t|
     t.string "first_name", limit: 25
@@ -38,9 +23,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.date "birthday"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "products_id"
     t.index ["household_id"], name: "index_customers_on_household_id"
-    t.index ["products_id"], name: "index_customers_on_products_id"
   end
 
   create_table "households", force: :cascade do |t|
@@ -87,12 +70,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
-  create_table "state_province_tables", force: :cascade do |t|
-    t.string "name"
-    t.string "state_province_code"
-    t.boolean "is_only_state_province?"
-    t.integer "country_region_id_id", null: false
-    t.index ["country_region_id_id"], name: "index_state_province_tables_on_country_region_id_id"
-  end
-
+  add_foreign_key "customers", "households"
+  add_foreign_key "products", "customers", column: "customers_id"
+  add_foreign_key "products", "product_categories"
 end

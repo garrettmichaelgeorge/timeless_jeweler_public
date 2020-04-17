@@ -2,7 +2,6 @@
   <% if customer.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(customer.errors.count, "error") %> prohibited this customer from being saved:</h2>
-
       <ul>
         <% customer.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,49 +9,50 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
-  </div>
-
-  <%= form.fields_for :households do |household_form| %>
-    <div class="field">
-      <%= household_form.label :last_name %>
-      <%= household_form.text_field :household_name %>
+  <div class="form-row">
+    <div class="col">
+      <div class="form-group">
+        <%= form.label :first_name %>
+        <%= form.text_field :first_name, class: "form-control" %>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :gender %>
-    <%= form.text_field :gender %>
+    <%= form.fields_for :households do |household_form| %>
+      <div class="col">
+        <div class="form-group">
+          <%= household_form.label :household_name %>
+          <%= household_form.text_field :household_name, class: "form-control" %>
+        </div>
+      </div>
+    <% end %>
   </div>
-
-  <div class="field">
+  <div class="form-group">
+    <div class="form-check">
+      <%= radio_button_tag :gender, "M", class: "form-check-input" %>
+      <%= label_tag :gender_male, "Male", class: "form-check-label" %>
+      <%= radio_button_tag :gender, "F", class: "form-check-input" %>
+      <%= label_tag :gender_female, "Female", class: "form-check-label" %>
+    </div>
+  </div>
+  <div class="form-group">
     <%= form.label :ring_size %>
-    <%= form.text_field :ring_size %>
+    <%= form.text_field :ring_size, class: "form-control" %>
   </div>
-
-  <div class="field">
+  <div class="form-group">
     <%= form.label :ring_size_notes %>
-    <%= form.text_area :ring_size_notes %>
+    <%= form.text_area :ring_size_notes, class: "form-control" %>
   </div>
-
-  <div class="field">
+  <div class="form-group">
     <%= form.label :necklace_length %>
-    <%= form.number_field :necklace_length %>
+    <%= form.number_field :necklace_length, class: "form-control" %>
   </div>
-
-  <div class="field">
+  <div class="form-group">
     <%= form.label :necklace_length_notes %>
-    <%= form.text_area :necklace_length_notes %>
+    <%= form.text_area :necklace_length_notes, class: "form-control" %>
   </div>
-
-  <div class="field">
+  <div class="form-group">
     <%= form.label :birthday %>
-    <%= form.date_select :birthday %>
+    <%= form.date_select :birthday, start_year: 1920, end_year: 2020, class: "form-control" %>
   </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -1,0 +1,69 @@
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" id="sidebar">
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <%= link_to dashboard_path, class: "nav-link" do %>
+        <span data-feather="home"></span>
+        Dashboard <span class="sr-only">(current)</span>
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to products_path, class: "nav-link" do %>
+        <span data-feather="shopping-cart"></span>
+        Inventory
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to customers_path, class: "nav-link" do%>
+        <span data-feather="users"></span>
+        Customers
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "#", class: "nav-link" do%>
+        <span data-feather=""></span>
+        Services
+        <% end %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "#", class: "nav-link" do%>
+        <span data-feather="bar-chart-2"></span>
+        Reports
+        <% end %>
+      </li>
+    </ul>
+
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+      <span>Saved reports</span>
+      <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+        <span data-feather="plus-circle">+</span>
+      </a>
+    </h6>
+    <ul class="nav flex-column mb-2">
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="file-text"></span>
+          Current Inventory
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="file-text"></span>
+          Inventory Bought (Monthly)
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="file-text"></span>
+          Inventory Sold (Monthly)
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="file-text"></span>
+          Sales Receipts
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

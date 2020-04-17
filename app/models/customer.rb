@@ -5,7 +5,7 @@ class Customer < ApplicationRecord
   validates :necklace_length, numericality: { allow_nil: true }
 
   belongs_to :household
-  validates_associated :household
+  # validates_associated :household
   accepts_nested_attributes_for :household
 
   has_many :products

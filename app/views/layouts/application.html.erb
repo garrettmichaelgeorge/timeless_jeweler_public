@@ -4,18 +4,23 @@
 <head>
   <title>Timeless Jeweler</title>
   <%= render 'layouts/rails_default_head' %>
-  <% render 'layouts/shim' %>
+  <%= render 'layouts/shim' %>
 </head>
 
 <body class="d-flex flex-column h-100">
-  <main role="main" class="flex-shrink-0">
-    <%= render 'layouts/navigation' %>
-    <!-- Pseudo-code: If rendered page is NOT dashboard, put a div.container around the yield tag, else nothing -->
-    <div class="container-fluid">
-      <%= yield %>
+  <%= render 'layouts/navigation' %>
+  <div class="container-fluid">
+    <div class="row">
+      <% if not current_page?(root_path) or current_page?(login_path) %>
+        <%= render 'layouts/sidebar'%>
+      <% end %>
+        <main role="main" class="col">
+
+          <%= yield %>
+          
+        </main>
     </div>
-    <!-- end if -->
-  </main>
+  </div>
   <%= render 'layouts/footer' %>
   <div class="container-fluid">
     <%= debug(params) if Rails.env.development? %>
