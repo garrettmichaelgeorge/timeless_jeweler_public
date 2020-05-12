@@ -10,67 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_05_215330) do
+ActiveRecord::Schema.define(version: 2020_05_12_182444) do
 
-  create_table "customers", force: :cascade do |t|
-    t.string "first_name", limit: 25
-    t.integer "household_id", null: false
-    t.string "gender", limit: 1
-    t.decimal "ring_size", precision: 2, scale: 2
-    t.text "ring_size_notes", limit: 140
-    t.integer "necklace_length", limit: 2
-    t.text "necklace_length_notes", limit: 140
-    t.date "birthday"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["household_id"], name: "index_customers_on_household_id"
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
-  create_table "households", force: :cascade do |t|
-    t.string "household_name", limit: 25
-    t.string "street_name_and_no", limit: 50
-    t.string "city", limit: 25
-    t.string "state", limit: 2
-    t.string "zip", limit: 5
-    t.string "country", limit: 2
-    t.string "marital_status", limit: 9
-    t.date "anniversary"
-    t.string "referral_source", limit: 25
+  create_table "addresses", force: :cascade do |t|
+    t.string "address_line_1", limit: 80
+    t.string "address_line_2", limit: 80
+    t.string "city", limit: 30
+    t.string "state_province", limit: 2
+    t.string "country_region", limit: 2
+    t.integer "zip_postal_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "product_categories", force: :cascade do |t|
-    t.string "product_category_name"
+  create_table "parties", force: :cascade do |t|
+    t.string "party_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "actable_id"
+    t.string "actable_type"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "title", limit: 20
+    t.string "first_name", limit: 40
+    t.string "last_name", limit: 40
+    t.string "suffix", limit: 20
+    t.decimal "ring_size", precision: 4, scale: 2
+    t.text "ring_size_notes"
+    t.decimal "necklace_length", precision: 4, scale: 2
+    t.text "necklace_length_notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "products", force: :cascade do |t|
-    t.string "metal"
-    t.string "purity"
-    t.decimal "size"
-    t.decimal "length"
-    t.decimal "weight"
-    t.text "miscellaneous_measurements"
-    t.string "color"
-    t.string "clarity"
-    t.integer "report_number"
-    t.text "narrative_description"
-    t.decimal "cost"
-    t.text "notes"
-    t.decimal "retail_price"
-    t.string "source"
-    t.date "date_sold"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "product_category_id"
-    t.integer "customers_id"
-    t.index ["customers_id"], name: "index_products_on_customers_id"
-    t.index ["product_category_id"], name: "index_products_on_product_category_id"
-  end
-
-  add_foreign_key "customers", "households"
-  add_foreign_key "products", "customers", column: "customers_id"
-  add_foreign_key "products", "product_categories"
 end
