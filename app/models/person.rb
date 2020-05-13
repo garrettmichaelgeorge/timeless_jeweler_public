@@ -6,4 +6,5 @@ class Person < ApplicationRecord
   end
   
   validates :first_name, presence: true, length: { maximum: 40 }
+  validates :last_name, length: { maximum: 40 }
 end

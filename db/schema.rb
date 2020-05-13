@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_12_201517) do
+ActiveRecord::Schema.define(version: 2020_05_13_033144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,6 @@ ActiveRecord::Schema.define(version: 2020_05_12_201517) do
   create_table "households", force: :cascade do |t|
     t.string "household_name", limit: 40
     t.date "anniversary"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "parties", force: :cascade do |t|
@@ -50,8 +48,6 @@ ActiveRecord::Schema.define(version: 2020_05_12_201517) do
     t.text "ring_size_notes"
     t.decimal "necklace_length", precision: 4, scale: 2
     t.text "necklace_length_notes"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

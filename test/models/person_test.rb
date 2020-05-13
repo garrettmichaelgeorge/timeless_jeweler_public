@@ -28,4 +28,23 @@ class PersonTest < ActiveSupport::TestCase
     @person.first_name = "a" * 41
     assert_not @person.valid?
   end
+
+  test "last name should not be too long" do
+    @person.last_name = "a" * 41
+    assert_not @person.valid?
+  end
+
+  test "new person should have a corresponding party id" do
+    assert_equal Party, @person.acting_as.class
+  end
+
+  test "should have a corresponding party id on save" do
+    @person.save
+    assert @person.acting_as.id
+  end
+
+  test "should be equal to the subtype of its supertype (i.e. parties)" do
+    @person.save
+    assert_equal @person, @person.acting_as.specific
+  end
 end
