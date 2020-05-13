@@ -25,6 +25,8 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+# Create placeholder data
+gem 'faker', '2.1.2'
 
 # Use ActiveRecord::ActsAs to simulate Multiple Table Inheritance (MTI). Read more: https://github.com/manuelmeurer/active_record-acts_as
 # This enables type-subtype relationships between models (e.g. Party-Person/Household)
