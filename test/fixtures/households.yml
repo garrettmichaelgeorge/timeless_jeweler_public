@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  household_name: MyString
+  anniversary: 2020-05-12
+
+two:
+  household_name: MyString
+  anniversary: 2020-05-12
