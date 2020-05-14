@@ -1,5 +1,6 @@
 class Household < ApplicationRecord
   acts_as :party
+  has_many :people
   
   # after_initialize do
   #   self.build_party if party.nil?

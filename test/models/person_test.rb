@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class PersonTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
   def setup
     @person = Person.new(title: "Mrs.",
                          first_name: "Clara",
@@ -46,5 +43,15 @@ class PersonTest < ActiveSupport::TestCase
   test "should be equal to the subtype of its supertype (i.e. parties)" do
     @person.save
     assert_equal @person, @person.acting_as.specific
+  end
+
+  test "should create new household from last name" do
+    @person.create_household_from_last_name!
+    assert @person.household
+  end
+
+  test "should not create new household from last name if one already exists" do
+    @person.create_household_from_last_name!
+    assert_not @person.create_household_from_last_name!, "Person already has a household!"
   end
 end
