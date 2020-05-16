@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Customers</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover table-nowrap">
+  <caption>List of customers</caption>
+    <thead>
+      <tr>
+        <th class="text-muted" scope="col">#</th>
+        <th class="text-muted" scope="col">Title</th>
+        <th class="text-muted" scope="col">First Name</th>
+        <th class="text-muted" scope="col">Last Name</th>
+        <th class="text-muted" scope="col">Suffix</th>
+        <th class="text-muted" scope="col">Ring Size</th>
+        <th class="text-muted" scope="col">Necklace Length</th>
+        <th class="text-muted" scope="col">Birthday</th>
+        <th class="text-muted" scope="col" colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @parties.each do |party| %>
+        <tr>
+          <th scope="row"><%= party.specific.id %></td>
+          <td><%= party.specific.title %></td>
+          <td><%= party.specific.first_name %></td>
+          <td><%= party.specific.last_name %></td>
+          <td><%= party.specific.suffix %></td>
+          <td><%= party.specific.ring_size %></td>
+          <td><%= party.specific.necklace_length %></td>
+          <td><%= party.specific.birthday %></td>
+          <td><%= link_to 'Show', party %></td>
+          <td><%= link_to 'Edit', edit_party_path(party) %></td>
+          <td><%= link_to 'Destroy', party, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<%= link_to 'New Party', new_party_path %>

@@ -62,19 +62,10 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ansi (1.5.0)
-    autoprefixer-rails (9.7.6)
-      execjs
     bcrypt (3.1.13)
     bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
-    bootstrap (4.4.1)
-      autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 1.14.3, < 2)
-      sassc-rails (>= 2.0.0)
-    bootstrap-sass (3.4.1)
-      autoprefixer-rails (>= 5.2.1)
-      sassc (>= 2.0.0)
     builder (3.2.4)
     byebug (11.1.3)
     capybara (3.32.1)
@@ -149,7 +140,6 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     pg (1.2.3)
-    popper_js (1.16.0)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -208,6 +198,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    semantic_range (2.3.0)
     shellany (0.0.1)
     simple_form (5.0.2)
       actionpack (>= 5.0)
@@ -231,6 +222,8 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
+    uglifier (3.2.0)
+      execjs (>= 0.3.0, < 3)
     web-console (4.0.2)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -240,10 +233,11 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (>= 3.0, < 4.0)
-    webpacker (4.2.2)
-      activesupport (>= 4.2)
+    webpacker (5.1.1)
+      activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
-      railties (>= 4.2)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -258,8 +252,6 @@ DEPENDENCIES
   active_record-acts_as
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
-  bootstrap (~> 4.4.1)
-  bootstrap-sass (= 3.4.1)
   byebug
   capybara (>= 2.15)
   faker (= 2.1.2)
@@ -271,18 +263,20 @@ DEPENDENCIES
   minitest (= 5.11.3)
   minitest-reporters (= 1.3.8)
   pg
-  puma (~> 4.3.3)
-  rails (~> 6.0.1)
-  sass-rails (>= 6)
+  puma
+  rails (~> 6.0.3)
+  sass-rails (~> 6.0)
   selenium-webdriver
   simple_form
   spring (= 2.1.0)
   spring-watcher-listen (~> 2.0.1)
+  sprockets (= 4.0.0)
   turbolinks (~> 5)
   tzinfo-data
+  uglifier (~> 3.0)
   web-console (>= 3.3.0)
   webdrivers
-  webpacker (~> 4.0)
+  webpacker (~> 5.0)
 
 RUBY VERSION
    ruby 2.7.1p83
