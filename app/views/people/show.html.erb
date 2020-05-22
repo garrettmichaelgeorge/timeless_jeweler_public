@@ -1,0 +1,189 @@
+<% @person_show_values = {
+      biographical: {
+        id: 'ID',
+        title: 'Title',
+        first_name: 'First Name',
+        last_name: 'Last Name',
+        suffix: 'Suffix',
+        ring_size: 'Ring Size',
+        ring_size_notes: 'Notes',
+        necklace_length: 'Necklace Length',
+        necklace_length_notes: 'Notes',
+        birthday: 'Birthday'
+      },
+      phone_number: {
+        phone_number: 'Phone Number'
+      },
+      address: {
+        address_line_1: 'Address Line 1',
+        address_line_2: 'Address Line 2',
+        city: 'City',
+        state: 'State',
+        zip_postal_code: 'Zip'
+      },
+      email_address: {
+        email_address: 'Email Address'
+      }
+    } %>
+
+<%= render partial: 'layouts/components/page_header', locals: { 
+  title: "#{@person.full_name}", 
+  pre_title: "Customer", 
+  action_button_text: "Edit Customer", 
+  action_button_link: edit_person_path(@person), 
+  # action_button_options: nil
+  } %>
+
+
+<div class="row">
+
+  <!-- Biographical Values -->
+  <div class="col-12 col-xl-5">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- List group -->
+        <div class="list-group list-group-flush my-n3">
+          <% @person_show_values[:biographical].each do |value| %>
+          <div class="list-group-item">
+
+            <div class="row align-items-baseline">
+              <div class="col-4">
+
+                <!-- Title -->
+                <h5 class="mb-0 text-muted">
+                  <%= value[1] %>
+                </h5>
+
+              </div>
+              <div class="col-8">
+
+                <!-- Time -->
+                <div class="small">
+                  <%= @person.send(value[0]) %>
+                </div>
+
+              </div>
+            </div> <!-- / .row -->
+
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Address Values -->
+  <div class="col-12 col-xl-7">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- List group -->
+        <div class="list-group list-group-flush my-n3">
+          <% @person_show_values[:address].each do |value| %>
+          <div class="list-group-item">
+
+            <div class="row align-items-center">
+              <div class="col">
+
+                <!-- Title -->
+                <h5 class="mb-0 text-muted">
+                  <%= value[1] %>
+                </h5>
+
+              </div>
+              <div class="col-auto">
+
+                <!-- Value -->
+                <% if @person.address %>
+                <div class="small">
+                  <%= @person.address.send(value[0]) %>
+                </div>
+                <% end %>
+
+              </div>
+            </div> <!-- / .row -->
+
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone Values -->
+    <div class="card">
+      <div class="card-body">
+
+        <!-- List group -->
+        <div class="list-group list-group-flush my-n3">
+          <% @person_show_values[:phone_number].each do |value| %>
+          <div class="list-group-item">
+
+            <div class="row align-items-center">
+              <div class="col">
+
+                <!-- Title -->
+                <h5 class="mb-0 text-muted">
+                  <%= value[1] %>
+                </h5>
+
+              </div>
+              <div class="col-auto">
+
+                <!-- Value -->
+                <% if @person.phone_number %>
+                <p class="small">
+                  <%= @person.phone_number.send(value[0]) %>
+                </p>
+                <% end %>
+
+              </div>
+            </div> <!-- / .row -->
+
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Values -->
+    <div class="card">
+      <div class="card-body">
+
+        <!-- List group -->
+        <div class="list-group list-group-flush my-n3">
+          <% @person_show_values[:email_address].each do |value| %>
+          <div class="list-group-item">
+
+            <div class="row align-items-center">
+              <div class="col">
+
+                <!-- Title -->
+                <h5 class="mb-0 text-muted">
+                  <%= value[1] %>
+                </h5>
+
+              </div>
+              <div class="col-auto">
+
+                <!-- Value -->
+                <% if @person.email_address %>
+                <div class="small">
+                  <%= @person.email_address.send(value[0]) %>
+                </div>
+                <% end %>
+
+              </div>
+            </div> <!-- / .row -->
+
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%= link_to 'Delete Customer', @person, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', people_path %>

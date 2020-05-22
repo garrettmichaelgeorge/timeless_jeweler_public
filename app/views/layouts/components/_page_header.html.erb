@@ -1,0 +1,62 @@
+<% title                  = title %>
+<% pre_title              = pre_title %>
+<% action_button_text     = action_button_text %>
+<% action_button_link     = action_button_link %>
+
+<% unless defined? tabs %>
+  <% tabs                 = {} %>
+<% end %>
+<% tabs                   = tabs # hash %>
+
+<% unless defined? action_button_options %>
+  <% action_button_options = {} %>
+<% end %>
+<% action_button_options.store(:class, 'btn btn-primary lift') %>
+
+<div class="header mt-md-5">
+  <div class="header-body">
+    <div class="row align-items-center">
+      <div class="col">
+
+        <!-- Pretitle -->
+        <h6 class="header-pretitle">
+          <%= pre_title %>
+        </h6>
+
+        <!-- Title -->
+        <h1 class="header-title">
+          <%= title %>
+        </h1>
+
+      </div>
+      <div class="col-auto">
+
+        <!-- Button -->
+        <% if action_button_text %>
+          <%= link_to action_button_text, action_button_link, action_button_options %>
+        <% end %>
+
+      </div>
+    </div> <!-- / .row -->
+    <div class="row align-items-center">
+      <div class="col">
+
+        <!-- Tabs -->
+        <% unless tabs.empty? %>
+        <ul class="nav nav-tabs nav-overflow header-tabs">
+        <%= tabs.each do |tab| %>
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <%= tab[:name] %> 
+              <span class="badge badge-pill badge-soft-secondary">823</span>
+            </a>
+          </li>
+          <% end %>
+
+        </ul>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

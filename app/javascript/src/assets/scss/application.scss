@@ -1,0 +1,29 @@
+/**
+ * Dashkit
+ *
+ * Custom variables followed by Dashkit variables followed by Bootstrap variables
+ * to ensure cascade of styles.
+ */
+
+ @import '../fonts/feather/feather';
+ @import '~flatpickr/dist/flatpickr.min';
+ @import '~quill/dist/quill.core';
+ @import '~highlightjs/styles/vs2015';
+
+// Bootstrap functions
+@import '~bootstrap/scss/functions';
+
+// Custom variables
+@import 'user-variables';
+
+// Dashkit variables
+@import 'dashkit/variables';
+
+// Bootstrap core
+@import '~bootstrap/scss/bootstrap';
+
+// Dashkit core
+@import 'dashkit/dashkit';
+
+// Custom core
+@import 'user';

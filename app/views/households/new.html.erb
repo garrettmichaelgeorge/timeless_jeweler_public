@@ -1,5 +1,14 @@
-<h1>New Household</h1>
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-10 col-xl-8">
 
-<%= render 'form', household: @household %>
+    <%= render partial: 'layouts/components/page_header', locals: { 
+      title: "Create a new household",
+      pre_title: "New", 
+      action_button_text: "", 
+      action_button_link: "",
+      action_button_option: nil 
+      } %>
 
-<%= link_to 'Back', households_path %>
+    <%= render 'form', household: @household %>
+  </div>
+</div>

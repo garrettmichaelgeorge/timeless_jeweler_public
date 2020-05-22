@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+rolex:
+  name: Rolex Watch
+  description: 1960s era men's watch
+  brand: Rolex
+  size: 
+  size_unit: MM
+  weight: 
+  misc_measurements:
+  cost: 
+  price: 

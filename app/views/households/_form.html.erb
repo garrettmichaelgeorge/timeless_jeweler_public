@@ -1,17 +1,16 @@
-<%= form_with(model: household, local: true) do |form| %>
-  <% if household.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(household.errors.count, "error") %> prohibited this household from being saved:</h2>
+<%= simple_form_for @household do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-      <ul>
-        <% household.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= f.input :household_name %>
 
-  <div class="actions">
-    <%= form.submit %>
+  <%= f.input :anniversary %>
+
+  <div class="form-actions">
   </div>
+
+  <%= f.button :submit, class: "btn-primary" %>
+  <%= f.button :button, "Cancel", type: "reset", class: "btn-outline-secondary" %>
+
+
 <% end %>

@@ -1,24 +1,77 @@
 <% provide(:title, "Log in") %>
-<div class="container-fluid">
-    <div class="d-flex flex-column text-center align-items-center">
-      <%= render 'layouts/jumbotron' %>
+<% provide(:body_class, "d-flex align-items-center bg-auth border-top border-top-2 border-primary" )%>
+<% @subtitle = "Authentication required." %>
+
+<!-- CONTENT
+    ================================================== -->
+<div class="row justify-content-center">
+  <div class="col-12 col-md-5 col-xl-4 my-5">
+
+    <!-- Heading -->
+    <h1 class="display-4 text-center mb-3">
+      <%= yield :title %>
+    </h1>
+
+    <!-- Subheading -->
+    <p class="text-muted text-center mb-5">
+      <%= @subtitle %>
+    </p>
+
+    <!-- Login Form -->
+    <%= form_for(:session, url: login_path) do |f| %>
+
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control', placeholder: 'name@address.com' %>
     </div>
 
-      <h1>Log in</h1>
+    <!-- Password -->
+    <div class="form-group">
 
       <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <%= form_for(:session, url: login_path) do |f| %>
+        <div class="col">
 
-            <%= f.label :email %>
-            <%= f.email_field :email, class: 'form-control' %>
+          <!-- Label -->
+          <%= f.label :password %>
 
-            <%= f.label :password %>
-            <%= f.password_field :password, class: 'form-control' %>
-
-            <%= f.submit "Log in", class: "btn btn-primary" %>
-
-          <% end %>
         </div>
+        <div class="col-auto">
+
+          <!-- Help text -->
+          <a href="password-reset.html" class="form-text small text-muted">
+            Forgot password?
+          </a>
+
+        </div>
+      </div> <!-- / .row -->
+
+      <!-- Input group -->
+      <div class="input-group input-group-merge">
+
+        <!-- Input -->
+        <%= f.password_field :password, class: 'form-control form-control-appended', placeholder: 'Enter your password' %>
+
+        <!-- Icon -->
+        <div class="input-group-append">
+          <span class="input-group-text">
+            <i class="fe fe-eye"></i>
+          </span>
+        </div>
+
       </div>
+    </div>
+
+    <!-- Submit -->
+    <% f.submit "Log in", class: "btn btn-lg btn-block btn-primary mb-3" %>
+    <%= link_to "Log in", dashboard_path, class: "btn btn-lg btn-block btn-primary mb-3" %>
+
+    <!-- Link -->
+    <div class="text-center">
+      <small class="text-muted text-center">
+        <!-- Don't have an account yet? <a href="sign-up.html">Sign up</a>. -->
+      </small>
+    </div>
+    <% end %>
   </div>
+</div> <!-- / .row -->
+</div> <!-- / .container -->

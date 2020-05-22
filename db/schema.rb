@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_191125) do
+ActiveRecord::Schema.define(version: 2020_05_21_223647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,21 @@ ActiveRecord::Schema.define(version: 2020_05_13_191125) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "party_contact_method_id"
     t.index ["party_contact_method_id"], name: "index_phone_numbers_on_party_contact_method_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name", limit: 40
+    t.text "description"
+    t.string "brand", limit: 40
+    t.decimal "size", precision: 7, scale: 2
+    t.string "size_unit"
+    t.decimal "weight", precision: 7, scale: 2
+    t.string "weight_unit"
+    t.text "misc_measurements"
+    t.decimal "cost", precision: 10, scale: 2
+    t.decimal "price", precision: 10, scale: 2
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "addresses", "party_contact_methods"

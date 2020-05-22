@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+
+<head>
+  <title><%= yield :title %></title>
+  <!-- Rails Default Header -->
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.21/af-2.3.5/b-1.6.2/b-colvis-1.6.2/b-html5-1.6.2/b-print-1.6.2/cr-1.5.2/fh-3.1.7/kt-2.5.2/r-2.2.4/sp-1.1.0/sl-1.3.1/datatables.min.css" />
+
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <!-- /Rails Default Header -->
+
+  <%= render 'layouts/components/shim' %>
+
+</head>
+
+<body class="<%= yield :body_class %>">
+
+  <!-- MAIN CONTENT
+    ================================================== -->
+  <main role="main" class="container">
+
+    <% flash.each do |message_type, message| %>
+    <div role="alert" class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
+
+    <%= yield %>
+
+    <%= render 'layouts/components/footer' %>
+
+    <!-- Rails debug (development only) -->
+    <div class="row">
+      <div class="col">
+        <div class="container-fluid">
+          <div class="card">
+            <div class="card-body text-white">
+              <%= debug(params) if Rails.env.development? %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+
+</html>

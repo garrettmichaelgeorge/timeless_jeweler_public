@@ -36,12 +36,12 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test "should have a corresponding party id on save" do
-    @person.save
+    @person.save!
     assert @person.acting_as.id
   end
 
   test "should be equal to the subtype of its supertype (i.e. parties)" do
-    @person.save
+    @person.save!
     assert_equal @person, @person.acting_as.specific
   end
 
@@ -54,4 +54,5 @@ class PersonTest < ActiveSupport::TestCase
     @person.create_household_from_last_name!
     assert_not @person.create_household_from_last_name!, "Person already has a household!"
   end
+
 end

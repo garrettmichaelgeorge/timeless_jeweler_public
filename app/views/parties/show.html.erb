@@ -1,4 +1,63 @@
-<p id="notice"><%= notice %></p>
+<% @party_attributes = { id: 'ID',
+                         title: 'Title', 
+                         first_name: 'First Name', 
+                         last_name: 'Last Name', 
+                         suffix: 'Suffix', 
+                         ring_size: 'Ring Size', 
+                         necklace_length: 'Necklace Length', 
+                         birthday: 'Birthday' } %>
+
+
+
+
+<%= render partial: 'layouts/components/page_header', locals: { 
+  title: "#{@party.specific.full_name}", 
+  pre_title: "Customer", 
+  action_button_text: "Delete Customer", 
+  action_button_link: @party, 
+  action_button_options: { method: :delete, data: { confirm: 'Are you sure?' } } 
+  } %>
+
+<div class="row">
+
+  <div class="col-12 col-xl-4">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- List group -->
+        <div class="list-group list-group-flush my-n3">
+          <% @party_attributes.each do |a| %>
+          <div class="list-group-item">
+
+            <div class="row align-items-center">
+              <div class="col">
+
+                <!-- Title -->
+                <h5 class="mb-0">
+                  <%= a[1] %>
+                </h5>
+
+              </div>
+              <div class="col-auto">
+
+                <!-- Time -->
+                <time class="small text-muted" datetime="1988-10-24">
+                  <%= @party.specific.send(a[0]) %>
+                </time>
+
+              </div>
+            </div> <!-- / .row -->
+
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-xl-8">
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_party_path(@party) %> |
 <%= link_to 'Back', parties_path %>

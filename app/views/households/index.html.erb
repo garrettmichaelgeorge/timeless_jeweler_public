@@ -1,44 +1,26 @@
-<p id="notice"><%= notice %></p>
+<% @table_title = 'Households' %>
+<% @table_columns = { id: 'ID',
+                      household_name: 'Household Name',
+                      anniversary: 'Anniversary'
+                    } %>
 
-<h1>Households</h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Household Name</th>
-      <th></th>
-      <th>Street Name and No.</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Zip</th>
-      <th>Country</th>
-      <th>Marital Status</th>
-      <th>Anniversary</th>
-      <th>Referral Source</th>
-    </tr>
-  </thead>
+<!-- 
+<p id="notice" class="alert alert-default-primary <%= "d-none" unless notice %>">
+<%= notice %>
+</p>
+-->
 
-  <tbody>
-    <% @households.each do |household| %>
-      <tr>
-        <td><%= household.household_name %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= link_to 'Show', household %></td>
-        <td><%= link_to 'Edit', edit_household_path(household) %></td>
-        <td><%= link_to 'Destroy', household, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render partial: 'layouts/components/page_header', locals: { 
+  title: @table_title, 
+  pre_title: "Overview", 
+  action_button_text: "New Household", 
+  action_button_link: new_household_path,
+  action_button_option: nil 
+  } %>
 
-<br>
-
-<%= link_to 'New Household', new_household_path %>
+<%= render partial: 'layouts/components/table', locals: { 
+  table_title: @table_title,
+  table_columns: @table_columns,
+  table_objects: @households
+  } %>

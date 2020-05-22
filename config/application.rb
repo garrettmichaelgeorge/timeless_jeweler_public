@@ -1,12 +1,13 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'view_component/engine'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# Note: the following 2 lines (origin unknown) broke the app and raised a NoMethod error
+# FIXME: the following 2 lines (origin unknown) broke the app and raised a NoMethod error
     # def assets
     # end
 

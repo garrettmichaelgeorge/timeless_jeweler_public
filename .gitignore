@@ -34,12 +34,14 @@
 /public/packs
 /public/packs-test
 /node_modules
+
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
 .yarn/*
-!.yarn/cache
 !.yarn/releases
 !.yarn/plugins
+.pnp.*
+
 # Ignore VS Code workspace files
 *.code-workspace

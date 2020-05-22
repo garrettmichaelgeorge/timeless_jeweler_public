@@ -1,0 +1,30 @@
+<%= simple_form_for @person do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <%= f.input :title %>
+
+  <%= f.input :first_name %>
+
+  <%= f.input :last_name %>
+
+  <%= f.input :suffix %>
+
+  <%= f.input :ring_size %>
+
+  <%= f.input :ring_size_notes %>
+
+  <%= f.input :necklace_length %>
+
+  <%= f.input :necklace_length_notes %>
+
+  <%= f.input :birthday %>
+
+  <div class="form-actions">
+  </div>
+
+  <%= f.button :submit, class: "btn-primary" %>
+  <%= f.button :button, "Cancel", type: "reset", class: "btn-outline-secondary" %>
+
+
+<% end %>

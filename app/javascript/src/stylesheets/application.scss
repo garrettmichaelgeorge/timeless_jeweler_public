@@ -14,7 +14,24 @@
 
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 // To see built-in bootstrap SASS variables, see https://github.com/twbs/bootstrap-rubygem/blob/master/assets/stylesheets/bootstrap/_variables.scss
-// @import "bootstrap/bootstrap_custom.scss";
-// @import "theme/AdminLTE-raw.scss";
-@import '~admin-lte/build/scss/AdminLTE';
-@import "custom";
+// @import '~admin-lte/build/scss/AdminLTE';
+
+// @import '~bootstrap/scss/functions';
+
+// Custom variables
+// @import 'user-variables';
+
+// Dashkit variables
+// @import 'variables-dashkit';
+
+// Bootstrap core
+// @import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/dist/css/bootstrap';
+// @import 'fonts';
+
+// Dashkit core
+// @import 'vendor/dashkit/dist/assets/css/theme.min';
+@import '../dashkit/src/assets/scss/theme';
+
+// Custom core
+// @import 'custom';

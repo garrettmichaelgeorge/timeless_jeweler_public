@@ -4,7 +4,20 @@ class PartiesController < ApplicationController
   # GET /parties
   # GET /parties.json
   def index
-    @parties = Party.where(actable_type: 'Person')
+    @parties = Party.where("actable_type = ?", params[:actable_type])
+    @actable_type = params[:actable_type]
+  end
+
+  # GET /customers
+  # GET /customers.json
+  def index_customers
+    @parties = Party.where("actable_type = ?", 'Party')
+  end
+
+  # GET /households
+  # GET /households.json
+  def index_households
+    @parties = Party.where("actable_type = ?", 'Household')
   end
 
   # GET /parties/1
@@ -42,7 +55,8 @@ class PartiesController < ApplicationController
   def update
     respond_to do |format|
       if @party.update(party_params)
-        format.html { redirect_to @party, notice: 'Party was successfully updated.' }
+        redirect_to @party
+        flash.now[:success] = 'Party was successfully updated.'
         format.json { render :show, status: :ok, location: @party }
       else
         format.html { render :edit }
@@ -56,10 +70,13 @@ class PartiesController < ApplicationController
   def destroy
     @party.destroy
     respond_to do |format|
-      format.html { redirect_to parties_url, notice: 'Party was successfully destroyed.' }
+      format.html { redirect_to parties_url, success: 'Party was successfully destroyed.' }
+      # redirect_to parties_url
+      # flash.now[:success] = 'Party was successfully deleted.'
       format.json { head :no_content }
     end
   end
+
 
   private
 
@@ -71,5 +88,9 @@ class PartiesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def party_params
     params.require(:party).permit(:actable_type)
+  end
+
+  def party_actable_type(actable_type)
+    @party = Party.where(actable_type: actable_type.capitalize)
   end
 end

@@ -1,0 +1,26 @@
+<% @table_title = 'Products' %>
+<% @table_columns = { id: 'ID',
+                     name: 'Name',
+                     description: 'Description',
+                     brand: 'Brand',
+                     size: 'Size',
+                     size_unit: 'Unit',
+                     weight: 'Weight',
+                     weight_unit: 'Unit',
+                     misc_measurements: 'Misc. Measurements',
+                     cost: 'Cost',
+                     price: 'Price' } %>
+
+<%= render partial: 'layouts/components/page_header', locals: { 
+  title: @table_title, 
+  pre_title: "Overview", 
+  action_button_text: "New Product", 
+  action_button_link: new_product_path,
+  action_button_option: nil 
+  } %>
+
+<%= render partial: 'layouts/components/table', locals: { 
+  table_title: @table_title,
+  table_columns: @table_columns,
+  table_objects: @products
+  } %>

@@ -1,59 +1,53 @@
 <!DOCTYPE html>
 <html class="h-100" lang="en">
+
 <head>
-  <title>Timeless Jeweler</title>
+  <title><%= yield :title %></title>
   <!-- Rails Default Header -->
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   <!-- /Rails Default Header -->
 
+  <%= render 'layouts/components/shim' %>
 
-  <%= render 'layouts/shim' %>
 </head>
 
-<body class="hold-transition sidebar-mini">
-  <div class="wrapper">
-    <%= render 'layouts/navigation' %>
-    <%= render 'layouts/sidebar'%>
-    <main role="main" class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0 text-dark">Page Title</h1>
-            </div><!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Current Page</li>
-              </ol>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
-      <div class="content">
-        <div class="container-fluid">
+<body class="<%= yield :body_class %>">
+  <%= render 'layouts/components/sidebar' %>
+  <!-- MAIN CONTENT
+    ================================================== -->
+  <main role="main" class="main-content pb-6">
+    <div class="container-fluid">
 
-          <%= yield %>
+      <% flash.each do |message_type, message| %>
+        <i class="fe fe-circle">
+        <p id="flash" role="alert" class="alert alert-<%= message_type %>"><%= message %></p>
+      <% end %>
 
+      <%= yield %>
+
+
+    </div>
+  </main>
+  <div class="row">
+      <%= render 'layouts/components/footer' %>
+  </div>
+<!-- Rails debug (development only) -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-4">
+    </div>
+    <div class="col-8">
+      <div class="card">
+        <div class="card-body text-white">
+          <%= debug(params) if Rails.env.development? %>
         </div>
       </div>
-    </main>
-    <%= render 'layouts/footer' %>
-  </div>
-  <!-- /.wrapper -->
-
-    <!-- Rails debug (development only) -->
-    <div class="container-fluid">
-      <%= debug(params) if Rails.env.development? %>
     </div>
-
-
+  </div>
+</div>
+ <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </body>
-
 </html>
