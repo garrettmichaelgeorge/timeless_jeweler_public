@@ -1,0 +1,60 @@
+/ Component Instance Variables:
+/ @nav_items  (nested hash)
+/ @reports    (array)
+
+
+/ NAVIGATION
+/ ==================================================
+%nav.navbar.navbar-vertical.fixed-left.navbar-expand-md.navbar-light#sidebar
+  .container-fluid
+    / Toggler
+    %button.navbar-toggler(type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation")
+      %span.navbar-toggler-icon
+    / Brand
+    = link_to "Timeless Jeweler", root_path, class: "navbar-brand text-align-left"
+    / User (xs)
+    .navbar-user.d-md-none
+      / Dropdown
+      .dropdown
+        / Toggle
+        %a.dropdown-toggle#sidebarIcon(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+          .avatar.avatar-sm.avatar-online
+        / Menu
+        .dropdown-menu.dropdown-menu-right(aria-labelledby="sidebarIcon")
+          %a(href="../profile-posts.html" class="dropdown-item")
+            Profile
+          %a(href="../account-general.html" class="dropdown-item")
+            Settings
+          %hr.dropdown-divider
+          %a(href="../sign-in.html" class="dropdown-item")
+            Logout
+
+    / Collapse
+    .collapse.navbar-collapse#sidebarCollapse
+      / Form
+      %form.mt-4.mb-3.d-md-none
+        .input-group.input-group-rounded.input-group-merge
+          %input(type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search")
+          .input-group-prepend
+            .input-group-text
+              %span.fe.fe-search
+
+      / Nav Items
+      - # generate nav items by iterating over @nav_item hash
+      %ul.navbar-nav
+        - @nav_items.each do |key, values_hash|
+        %li.nav-item
+          = link_to values_hash[:link_path], class: "nav-link" do
+            %i{class: values_hash[:icon]}
+            = values_hash[:name]
+
+        / Reports
+        %li.nav-item
+          %a.nav-link(href="#sidebarReports" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards")
+            %i.fe.fe-bar-chart-2
+            Reports
+          .collapse#sidebarReports
+            %ul.nav.nav-sm.flex-column
+              - @reports.each do |report|
+                %li.nav-item
+                  = link_to report, "#", class: "nav-link"

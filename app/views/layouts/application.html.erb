@@ -3,31 +3,27 @@
 
 <head>
   <title><%= yield :title %></title>
-  <!-- Rails Default Header -->
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <!-- /Rails Default Header -->
-
   <%= render 'layouts/components/shim' %>
-
 </head>
 
 <body class="<%= yield :body_class %>">
+  <% # render SidebarComponent.new %>
   <%= render 'layouts/components/sidebar' %>
   <!-- MAIN CONTENT
     ================================================== -->
   <main role="main" class="main-content pb-6">
     <div class="container-fluid">
 
+      <!-- Flash -->
       <% flash.each do |message_type, message| %>
         <i class="fe fe-circle">
         <p id="flash" role="alert" class="alert alert-<%= message_type %>"><%= message %></p>
       <% end %>
 
       <%= yield %>
-
 
     </div>
   </main>
@@ -48,6 +44,7 @@
     </div>
   </div>
 </div>
+
  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </body>
 </html>

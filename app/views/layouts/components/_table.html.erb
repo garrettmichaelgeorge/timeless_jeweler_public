@@ -48,7 +48,7 @@
             <%= render partial: 'layouts/components/checkbox_table', locals: { id: 'all', collection: @table_title } %>
           </th>
           <% table_columns.each_with_index do |table_column, index| %>
-            <th class="" scope="col">
+            <th scope="col">
               <a href="#" class="text-muted list-sort" data-sort="<%= list_values[index] %>">
                 <%= table_column[1] %>
               </a>

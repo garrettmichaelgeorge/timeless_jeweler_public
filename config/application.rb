@@ -8,8 +8,8 @@ require 'view_component/engine'
 Bundler.require(*Rails.groups)
 
 # FIXME: the following 2 lines (origin unknown) broke the app and raised a NoMethod error
-    # def assets
-    # end
+  # def assets
+  # end
 
 module TimelessJeweler
   class Application < Rails::Application

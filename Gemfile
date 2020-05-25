@@ -12,6 +12,7 @@ gem 'bcrypt',                    '~> 3.1.7'
 gem 'bootsnap',                  '>= 1.4.2', require: false
 # Create placeholder data
 gem 'faker',                     '2.1.2'
+gem 'haml'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder',                  '~> 2.7'
 gem 'jquery-rails'

@@ -1,0 +1,28 @@
+- # Component Instance Variables:
+- # @title
+- # @pre_title
+- # @action_button_text
+- # @action_button_link
+- # @action_button_options
+
+.header.mt-md-5
+  .header-body
+    .row.align-items-center
+      .col
+        / Pretitle
+        %h6.header-pretitle= @pre_title
+        / Title
+        %h1.header-title= @title
+      .col-auto
+        / Button
+        = link_to @action_button_text, @action_button_link, @action_button_options unless @action_button_text.empty?
+
+    .row.align-items-center
+      .col
+        / FIXME: tabs should be shown conditionally using passed-in options
+        / Tabs
+        / - unless @tabs.empty?
+        / %ul.nav.nav-tabs.nav-overflow.header-tabs
+        /   = @tabs.each do |tab|
+        /     %li.nav-item
+        /       = link_to tab[:name], "#", class: "nav-link active"

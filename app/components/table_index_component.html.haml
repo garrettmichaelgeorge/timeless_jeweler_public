@@ -1,0 +1,63 @@
+/ LOCAL VARIABLES:
+/ @title
+/ @columns
+/ @resources
+
+/ returns array with values for List.js columns
+- list_values = @columns.keys.map { |column| column.to_s.camelize(:lower) } 
+
+/ list_values expected output
+/ data-list='{"valueNames": ["orders-order", "orders-product", "orders-date", "orders-total", "orders-status", "orders-method"]}'
+/ list_values actual output
+/ data-list="{'valueNames': [&quot;id&quot;, &quot;title&quot;, &quot;firstName&quot;, &quot;lastName&quot;, &quot;suffix&quot;, &quot;ringSize&quot;, &quot;necklaceLength&quot;, &quot;birthday&quot;]}"
+
+.card
+  .card-header
+
+    / Search
+    %form
+      .input-group.input-group-flush
+        .input-group-prepend
+          %span.input-group-text
+            %i.fe.fe-search
+        %input.form-control.list-search(type="search" placeholder="Search")
+
+    / Dropdown
+    .dropdown
+      %button#bulkActionDropdown.btn.btn-sm.btn-white.dropdown-toggle(type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") 
+        Bulk action
+        .dropdown-menu.dropdown-menu-right(aria-labelledby="bulkActionDropdown")
+          = link_to "Hide", "#", class: "dropdown-item"
+          = link_to "Delete", "#", class: "dropdown-item"
+
+
+  / Table
+  .table-responsive{ data: { list: "{'valueNames': #{list_values}}" } }
+    %table.table.table-sm.table-nowrap.card-table.table-hover(id=@title)
+      %caption= @title
+      %thead
+        %tr
+          / Table Heading
+          %th
+            = render partial: 'layouts/components/checkbox_table', locals: { id: 'all', collection: @title }
+          - @columns.each_with_index do |table_column, index|
+            %th(scope="col")= link_to table_column[1], "#", class: "text-muted list_sort", data_sort: list_values[index]
+          %th(scope="col" colspan="3")
+
+      %tbody.list
+        / Table Body
+        - @resources.each do |resource|
+          / Table Row
+          %tr
+            %td
+              = render partial: 'layouts/components/checkbox_table', locals: { id: resource.id, collection: resource }
+            - @columns.each_with_index do |table_column, index|
+              - if table_column == 'id'
+                %th{scope: "row", class: list_values[index]}
+                = resource.send(table_column[0])
+              - else
+                %td{class: list_values[index]}
+                  = resource.send(table_column[0])
+            %td= link_to 'Show', resource
+            / %td= link_to 'Edit', edit_path(resource)
+            %td= link_to 'Delete', resource, method: :delete, data: { confirm: 'Are you sure?' }
