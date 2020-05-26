@@ -20,9 +20,10 @@
     .row.align-items-center
       .col
         / FIXME: tabs should be shown conditionally using passed-in options
+
         / Tabs
-        / - unless @tabs.empty?
-        / %ul.nav.nav-tabs.nav-overflow.header-tabs
-        /   = @tabs.each do |tab|
-        /     %li.nav-item
-        /       = link_to tab[:name], "#", class: "nav-link active"
+        - unless @tabs.blank?
+          %ul.nav.nav-tabs.nav-overflow.header-tabs
+            = @tabs.each do |tab|
+              %li.nav-item
+                = link_to tab[:name], "#", class: "nav-link"

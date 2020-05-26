@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_21_223647) do
+ActiveRecord::Schema.define(version: 2020_05_26_024418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,16 +24,22 @@ ActiveRecord::Schema.define(version: 2020_05_21_223647) do
     t.integer "zip_postal_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "party_contact_method_id"
-    t.index ["party_contact_method_id"], name: "index_addresses_on_party_contact_method_id"
+  end
+
+  create_table "addresses_parties", id: false, force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.bigint "address_id", null: false
   end
 
   create_table "email_addresses", force: :cascade do |t|
     t.string "email_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "party_contact_method_id"
-    t.index ["party_contact_method_id"], name: "index_email_addresses_on_party_contact_method_id"
+  end
+
+  create_table "email_addresses_parties", id: false, force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.bigint "email_address_id", null: false
   end
 
   create_table "households", force: :cascade do |t|
@@ -49,11 +55,9 @@ ActiveRecord::Schema.define(version: 2020_05_21_223647) do
     t.string "actable_type"
   end
 
-  create_table "party_contact_methods", force: :cascade do |t|
+  create_table "parties_phone_numbers", id: false, force: :cascade do |t|
     t.bigint "party_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["party_id"], name: "index_party_contact_methods_on_party_id"
+    t.bigint "phone_number_id", null: false
   end
 
   create_table "people", force: :cascade do |t|
@@ -74,8 +78,6 @@ ActiveRecord::Schema.define(version: 2020_05_21_223647) do
     t.string "phone_number_complete", limit: 32
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "party_contact_method_id"
-    t.index ["party_contact_method_id"], name: "index_phone_numbers_on_party_contact_method_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -93,9 +95,5 @@ ActiveRecord::Schema.define(version: 2020_05_21_223647) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "addresses", "party_contact_methods"
-  add_foreign_key "email_addresses", "party_contact_methods"
-  add_foreign_key "party_contact_methods", "parties"
   add_foreign_key "people", "households"
-  add_foreign_key "phone_numbers", "party_contact_methods"
 end

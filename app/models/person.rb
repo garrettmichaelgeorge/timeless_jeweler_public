@@ -5,7 +5,6 @@ class Person < ApplicationRecord
   belongs_to :household, optional: true
 
   accepts_nested_attributes_for :party, allow_destroy: true
-  accepts_nested_attributes_for :party_contact_method, allow_destroy: true
   accepts_nested_attributes_for :household, allow_destroy: true
   accepts_nested_attributes_for :address, allow_destroy: true
   accepts_nested_attributes_for :email_address, allow_destroy: true

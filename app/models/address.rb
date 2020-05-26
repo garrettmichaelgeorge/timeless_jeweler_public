@@ -1,5 +1,4 @@
 class Address < ApplicationRecord
-  belongs_to :party_contact_method
 
   before_validation :upcase_state_province
 

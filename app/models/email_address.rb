@@ -1,5 +1,4 @@
 class EmailAddress < ApplicationRecord
-  belongs_to :party_contact_method
 
   before_save :downcase_email
 
