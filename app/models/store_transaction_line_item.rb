@@ -3,6 +3,7 @@
 # Table name: store_transaction_line_items
 #
 #  id                   :bigint           not null, primary key
+#  price                :decimal(10, 2)
 #  quantity             :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
@@ -23,6 +24,7 @@ class StoreTransactionLineItem < ApplicationRecord
   # belongs_to :store_transaction, inverse_of: "line_item"
   belongs_to :store_transaction
   belongs_to :product
+  accepts_nested_attributes_for :product
 
   private
 

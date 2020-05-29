@@ -24,6 +24,7 @@ class StoreTransaction < ApplicationRecord
   belongs_to :category, class_name: "StoreTransactionCategory", foreign_key: "store_transaction_category_id"
   # has_many :line_items, class_name: "StoreTransactionLineItem", inverse_of: :store_transaction, dependent: :destroy
   has_many :store_transaction_line_items, dependent: :destroy
+  accepts_nested_attributes_for :store_transaction_line_items, allow_destroy: true
 
   validates :party_id, null: false
   validates :store_transaction_category_id, null: false

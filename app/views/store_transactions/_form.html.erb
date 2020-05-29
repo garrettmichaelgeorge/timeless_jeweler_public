@@ -18,7 +18,15 @@
 
   <%= f.association :category %>
 
-  <%= f.association :store_transaction_line_items %>
+  <% 10.times do %>
+    <div class="row">
+      <%= f.simple_fields_for @store_transaction_line_item do |f| %>
+        <%= f.association :product, wrapper_html: { class: "col-8" } %>
+        <%= f.input :quantity, wrapper_html: { class: "col-2" }  %>
+        <%= f.input :price, wrapper_html: { class: "col-2" }  %>
+      <% end %>
+    </div>
+  <% end %>
 
   <%= f.button :submit, "Log transaction", class: "btn-primary" %>
   <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>

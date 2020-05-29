@@ -3,6 +3,7 @@
 # Table name: store_transaction_line_items
 #
 #  id                   :bigint           not null, primary key
+#  price                :decimal(10, 2)
 #  quantity             :integer
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null

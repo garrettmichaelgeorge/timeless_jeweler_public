@@ -21,6 +21,7 @@ class StoreTransactionsController < ApplicationController
 
   def new
     @store_transaction = StoreTransaction.new
+    @store_transaction_line_item = @store_transaction.store_transaction_line_items.build
   end
 
   def edit
@@ -59,7 +60,7 @@ class StoreTransactionsController < ApplicationController
   end
 
   def store_transaction_params
-    params.require(:store_transaction).permit(:party_id, :transaction_datetime)
+    params.require(:store_transaction).permit(:party_id, :transaction_datetime, store_transaction_line_items_attributes: [:id, :product_id, :quantity])
   end
   
 end

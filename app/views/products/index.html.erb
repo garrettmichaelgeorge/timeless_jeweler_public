@@ -1,15 +1,15 @@
 <% @table_title = 'Products' %>
 <% @table_columns = { id: 'ID',
                      name: 'Product',
-                     description: 'Description',
                      brand: 'Brand',
+                     cost: 'Cost',
+                     price: 'Price',
                      size: 'Size',
                      size_unit: 'Unit',
                      weight: 'Weight',
                      weight_unit: 'Unit',
                      misc_measurements: 'Misc. Measurements',
-                     cost: 'Cost',
-                     price: 'Price' } %>
+                     description: 'Description' } %>
 
 <%= render partial: 'layouts/components/page_header', locals: { 
   title: @table_title, 

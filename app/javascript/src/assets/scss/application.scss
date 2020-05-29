@@ -5,31 +5,27 @@
  * to ensure cascade of styles.
  */
 
- @use '../fonts/feather/feather';
- @use '~flatpickr/dist/flatpickr.min';
- @use '~quill/dist/quill.core';
- @use '~highlightjs/styles/vs2015';
- @use '~tippy.js/animations/scale';
- @use '~tippy.js/animations/shift-away';
- @use '~tippy.js/animations/*';
+ @import '../fonts/feather/feather';
+ @import '~flatpickr/dist/flatpickr.min';
+ @import '~quill/dist/quill.core';
+ @import '~highlightjs/styles/vs2015';
+ @import '~tippy.js/animations/scale';
+ @import '~tippy.js/animations/shift-away';
 
 // Bootstrap functions
-@use '~bootstrap/scss/functions';
+@import '~bootstrap/scss/functions';
 
 // Custom variables
-@use 'user-variables';
+@import 'user-variables';
 
 // Dashkit variables
-@use 'dashkit/variables';
+@import 'dashkit/variables';
 
 // Bootstrap core
-@use '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
 // Dashkit core
-@use 'dashkit/dashkit';
-
-// Simple Form
-@use "simple_form-bootstrap/simple_form-bootstrap";
+@import 'dashkit/dashkit';
 
 // Custom core
-@use 'user';
+@import 'user';

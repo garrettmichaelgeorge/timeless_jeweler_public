@@ -16,6 +16,7 @@ require("channels")
 import "jquery/dist/jquery.slim.min"
 import("src/plugins")
 
+// Custom
 import "src/js/tippyScripts"
 
 /**
@@ -24,7 +25,7 @@ import "src/js/tippyScripts"
  * Note that we don't need to preface this path with "app/javascript" due to the `source_path` config set in config/webpacker.yml. Magical!
  * The file extension can be left off due to the `extensions` config in config/webpacker.yml.
  */
-import "src/assets/scss/application" // i.e. app/javascript/stylesheets/application.scss
+import "src/assets/scss/application"
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
