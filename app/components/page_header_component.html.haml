@@ -1,11 +1,12 @@
-- # Component Instance Variables:
-- # @title
-- # @pre_title
-- # @action_button_text
-- # @action_button_link
-- # @action_button_options
+- # Component Attribute Setters:
+- # title
+- # pre_title
+- # action_button_text
+- # action_button_link
+- # action_button_options
+- # wrapper_class
 
-.header.mt-md-5
+.header{class: wrapper_class}
   .header-body
     .row.align-items-center
       .col
@@ -20,7 +21,6 @@
     .row.align-items-center
       .col
         / FIXME: tabs should be shown conditionally using passed-in options
-
         / Tabs
         - unless @tabs.blank?
           %ul.nav.nav-tabs.nav-overflow.header-tabs

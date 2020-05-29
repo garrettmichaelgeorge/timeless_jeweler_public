@@ -1,7 +1,7 @@
-/ Component Instance Variables:
-/ @nav_items  (nested hash)
-/ @reports    (array)
-
+- # To access data structures for @nav_items and @reports,
+- # use their instance getter methods like so:
+- #   self.nav_items
+- #   self.reports
 
 / NAVIGATION
 / ==================================================
@@ -11,7 +11,9 @@
     %button.navbar-toggler(type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation")
       %span.navbar-toggler-icon
     / Brand
-    = link_to "Timeless Jeweler", root_path, class: "navbar-brand text-align-left"
+    = link_to root_path, class: "navbar-brand text-align-left" do |link|
+      = image_tag "logo.jpg", class: "navbar-brand-img mx-auto"
+      - # %img{src: asset_pack_path("media/images/logo.jpg")}
     / User (xs)
     .navbar-user.d-md-none
       / Dropdown
@@ -21,12 +23,12 @@
           .avatar.avatar-sm.avatar-online
         / Menu
         .dropdown-menu.dropdown-menu-right(aria-labelledby="sidebarIcon")
-          %a(href="../profile-posts.html" class="dropdown-item")
+          %a(href="#" class="dropdown-item")
             Profile
-          %a(href="../account-general.html" class="dropdown-item")
+          %a(href="#" class="dropdown-item")
             Settings
           %hr.dropdown-divider
-          %a(href="../sign-in.html" class="dropdown-item")
+          %a(href="#" class="dropdown-item")
             Logout
 
     / Collapse
@@ -42,19 +44,30 @@
       / Nav Items
       - # generate nav items by iterating over @nav_item hash
       %ul.navbar-nav
-        - @nav_items.each do |key, values_hash|
-        %li.nav-item
-          = link_to values_hash[:link_path], class: "nav-link" do
-            %i{class: values_hash[:icon]}
-            = values_hash[:name]
+        - self.nav_items.each do |key, values_hash|
+          %li.nav-item
+            = link_to values_hash[:link_path], class: "nav-link" do
+              %i{class: values_hash[:icon]}
+              = values_hash[:name]
 
-        / Reports
+      %hr.navbar-divider.my-3
+      / Reports
+      %h6.navbar-heading Reports
+      %ul.navbar-nav.mb-md-4
         %li.nav-item
           %a.nav-link(href="#sidebarReports" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards")
             %i.fe.fe-bar-chart-2
             Reports
           .collapse#sidebarReports
             %ul.nav.nav-sm.flex-column
-              - @reports.each do |report|
-                %li.nav-item
-                  = link_to report, "#", class: "nav-link"
+              - self.reports.each do |report|
+                %li.nav-item= link_to report, "#", class: "nav-link"
+      / Spacer
+      .mt-auto
+      / "New" button
+      .d-flex.justify-content-center
+        .mb-4
+          %button#tippy-sidebar-new.btn.btn-outline-primary.btn-large.rounded-circle{data_tippy_content: ""}
+            %i.fe.fe-plus
+            %span.d-md-none.ml-2 Customize
+      = render TippyTemplateSidebarComponent.new

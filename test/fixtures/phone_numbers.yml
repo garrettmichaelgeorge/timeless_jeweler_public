@@ -1,9 +1,15 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: phone_numbers
+#
+#  id                    :bigint           not null, primary key
+#  phone_number_complete :string(32)
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#
 
 one:
   phone_number_complete: MyString
-  party_contact_method:
 
 two:
   phone_number_complete: MyString
-  party_contact_method:

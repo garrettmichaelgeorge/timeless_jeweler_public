@@ -5,9 +5,15 @@ Rails.application.routes.draw do
   resources :people
   resources :households
   resources :products
-  # get       'parties/:actable_type' => 'parties#index'
   resources :parties
+
+  resources :store_transactions do
+    resources :store_transaction_line_items
+  end
+
   get       'customers'     => 'people#index'
+  
+  # get       'parties/:actable_type' => 'parties#index'
   # get       'households'    => redirect('/parties?actable_type=household')
   
   get       'dashboard'     => 'static_pages#dashboard'

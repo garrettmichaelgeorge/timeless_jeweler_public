@@ -4,13 +4,12 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
   def index
-    @people = Person.all
+    @people = Person.includes(:party).all
   end
 
   # GET /people/1
   # GET /people/1.json
   def show
-    @person = Person.find(params[:id])
   end
 
   # GET /people/new
@@ -20,7 +19,6 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-    @person = Person.find(params[:id])
   end
 
   # POST /people

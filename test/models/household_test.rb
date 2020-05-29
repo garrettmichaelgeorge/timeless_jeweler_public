@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: households
+#
+#  id             :bigint           not null, primary key
+#  anniversary    :date
+#  household_name :string(40)
+#
 require 'test_helper'
 
 class HouseholdTest < ActiveSupport::TestCase

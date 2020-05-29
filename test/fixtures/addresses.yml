@@ -1,7 +1,19 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: addresses
+#
+#  id              :bigint           not null, primary key
+#  address_line_1  :string(80)
+#  address_line_2  :string(80)
+#  city            :string(30)
+#  country_region  :string(2)
+#  state_province  :string(2)
+#  zip_postal_code :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
 
 one:
-  party_contact_method: clara
   address_line_1: 50 Market St.
   address_line_2:
   city: San Francisco
@@ -9,7 +21,6 @@ one:
   zip_postal_code: 94111
 
 two:
-  party_contact_method: robert
   address_line_1:
   address_line_2:
   city:

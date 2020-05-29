@@ -5,20 +5,47 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
 puts '== Database: seeding'
 
+# ========================================================================
+# === Wipe database
+# ========================================================================
 # Wipe database before adding data
 # Add any tables here that will be re-seeded
-Person.destroy_all
-puts '-- Person.destroy_all'
-Household.destroy_all
-puts '-- Household.destroy_all'
-Party.destroy_all
-puts '-- Party.destroy_all'
-Product.destroy_all
-puts '-- Product.destroy_all'
+
+puts '-- StoreTransactionLineItem.destroy_all'
+StoreTransactionLineItem.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!(StoreTransactionLineItem.table_name)
+
+puts '-- StoreTransaction.destroy_all'
+StoreTransaction.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!(StoreTransaction.table_name)
 puts ''
 
+puts '-- Person.destroy_all'
+Person.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)
+
+puts '-- Household.destroy_all'
+Household.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!(Household.table_name)
+
+puts '-- Party.destroy_all'
+Party.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!(Party.table_name)
+
+puts '-- Product.destroy_all'
+Product.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!(Product.table_name)
+
+
+
+# ========================================================================
+# === Seed Database
+# ========================================================================
+
+# Hardcode specific customer records
 puts '-- robert and clara: creating'
 puts ''
 
@@ -42,33 +69,33 @@ Person.create!(
   ring_size_notes: '',
   necklace_length: nil,
   necklace_length_notes: ''
-  )
+)
                
-Household.create!(
-  id: 1,
+schumann = Household.create!(
   household_name: 'Schumann',
   anniversary: '1840-09-12'
-  )
+)
                
 clara = Person.find_by(first_name: 'Clara')
-clara.household_id = 1
+clara.household_id = schumann.id
 clara.save
 
 robert = Person.find_by(first_name: 'Robert')
-robert.household_id = 1
+robert.household_id = schumann.id
 robert.save
 
+# Create people
 puts '-- People: creating'
 puts ''
                
-99.times do |n|
+150.times do |n|
   title                  = Faker::Name.prefix
   first_name             = Faker::Name.first_name
   last_name              = Faker::Name.last_name
   suffix                 = Faker::Name.suffix
-  ring_size              = rand(30.0..40.0)
+  ring_size              = rand(3.0..10.0)
   ring_size_notes        = Faker::Movies::StarWars.quote
-  necklace_length        = rand(30.0..40.0)
+  necklace_length        = rand(3.0..10.0)
   necklace_length_notes  = Faker::Movies::StarWars.quote
   birthday               = Faker::Date.birthday(min_age: 25, max_age: 82)
   Person.create!(
@@ -81,9 +108,10 @@ puts ''
     necklace_length: necklace_length,
     necklace_length_notes: necklace_length_notes,
     birthday: birthday
-    )
+  )
 end
 
+# Create households
 puts '-- Households: creating'
 puts ''
 
@@ -94,9 +122,9 @@ end
 puts '-- Products: creating'
 puts ''
 
-74.times do |n|
+750.times do |n|
   name                  = Faker::Commerce.product_name
-  description           = Faker::Lorem.sentence
+  description           = Faker::Movies::StarWars.quote
   brand                 = Faker::Lorem.word
   size                  = rand(2.0..11.0)
   size_unit             = "in"
@@ -116,6 +144,36 @@ puts ''
     misc_measurements: misc_measurements,
     cost: cost,
     price: price
+  )
+end
+
+puts '-- StoreTransactions: creating'
+puts ''
+
+100.times do |n|
+  transaction_datetime            = Faker::Date.backward(days: 300)
+  store_transaction_category_id   = 1
+  party_id                        = rand(Party.first.id..Party.last.id)
+  
+  StoreTransaction.create!(
+    transaction_datetime: transaction_datetime,
+    store_transaction_category_id: store_transaction_category_id,
+    party_id: party_id
+  )
+end
+
+puts '-- StoreTransactionLineItems: creating'
+puts ''
+
+250.times do |n|
+  quantity              = rand(1..10)
+  store_transaction_id  = rand(StoreTransaction.first.id..StoreTransaction.last.id)
+  product_id            = rand(Product.first.id..Product.last.id)
+  
+  StoreTransactionLineItem.create!(
+    quantity: quantity,
+    store_transaction_id: store_transaction_id,
+    product_id: product_id
   )
 end
 

@@ -1,30 +1,49 @@
-<%= simple_form_for @person do |f| %>
+<%= simple_form_for @person, 
+  wrapper_mappings: {
+    boolean:       :custom_boolean,
+    check_boxes:   :custom_collection,
+    date:          :custom_multi_select,
+    datetime:      :custom_multi_select,
+    file:          :custom_file,
+    radio_buttons: :custom_collection,
+    range:         :custom_range,
+    time:          :custom_multi_select,
+    select:        :custom_multi_select
+  } do |f| %>
+
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <%= f.input :title %>
 
-  <%= f.input :first_name %>
-
-  <%= f.input :last_name %>
+  <div class="form-row">
+    <%= f.input :first_name, wrapper_html: { class: "col" } %>
+    <%= f.input :last_name, wrapper_html: { class: "col" } %>
+  </div>
 
   <%= f.input :suffix %>
 
-  <%= f.input :ring_size %>
+  <%= f.association :household, input_html: { class: "custom-select" }, prompt: "Select a previous household" %>
 
-  <%= f.input :ring_size_notes %>
-
-  <%= f.input :necklace_length %>
-
-  <%= f.input :necklace_length_notes %>
-
-  <%= f.input :birthday %>
-
-  <div class="form-actions">
+  <div class="form-row">
+    <%= f.input :ring_size, wrapper_html: { class: "col-3"} %>
+    <%= f.input :ring_size_notes, wrapper_html: { class: "col-9"} %>
   </div>
 
-  <%= f.button :submit, class: "btn-primary" %>
-  <%= f.button :button, "Cancel", type: "reset", class: "btn-outline-secondary" %>
+  <div class="form-row">
+    <%= f.input :necklace_length, wrapper_html: { class: "col-3"} %>
+    <%= f.input :necklace_length_notes, wrapper_html: { class: "col-9"} %>
+  </div>
+
+  <%= f.input :birthday, as: :date, 
+                         start_year: Date.today.year - 90,
+                         end_year: Date.today.year - 12,
+                         input_html: { class: "custom-select" }%>
+
+  <div class="form-actions">
+    <%= f.button :submit, class: "btn-primary" %>
+    <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
+  </div>
 
 
 <% end %>

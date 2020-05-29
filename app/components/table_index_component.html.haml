@@ -30,34 +30,48 @@
           = link_to "Hide", "#", class: "dropdown-item"
           = link_to "Delete", "#", class: "dropdown-item"
 
-
   / Table
   .table-responsive{ data: { list: "{'valueNames': #{list_values}}" } }
     %table.table.table-sm.table-nowrap.card-table.table-hover(id=@title)
-      %caption= @title
+      %caption.d-none= @title
       %thead
         %tr
           / Table Heading
           %th
             = render partial: 'layouts/components/checkbox_table', locals: { id: 'all', collection: @title }
-          - @columns.each_with_index do |table_column, index|
-            %th(scope="col")= link_to table_column[1], "#", class: "text-muted list_sort", data_sort: list_values[index]
-          %th(scope="col" colspan="3")
+          - @columns.each_with_index do |column, index|
+            %th(scope="col")= link_to column[1], "#", class: "text-muted list_sort", data_sort: list_values[index]
+          %th{scope: "col", colspan: restful_actions.count}
 
+      / Table Body
       %tbody.list
-        / Table Body
         - @resources.each do |resource|
           / Table Row
           %tr
             %td
               = render partial: 'layouts/components/checkbox_table', locals: { id: resource.id, collection: resource }
-            - @columns.each_with_index do |table_column, index|
-              - if table_column == 'id'
+            - @columns.each_with_index do |column, index|
+              - if column[0].to_s.downcase == 'id'
                 %th{scope: "row", class: list_values[index]}
-                = resource.send(table_column[0])
+                  - if column_for_show?
+                    = link_to resource.send(column[0]), resource
+                  - else
+                    = resource.send(column[0])
+              - elsif column[0].is_a?(Array)
+                -# To access nested associations via a chain of method calls, send the column key as an array of symbolized methods in their call order 
+                -# e.g. {columns => {[:specific, :first_name] => "First Name"}
+                -# => @party.specific.first_name
+                %td{class: list_values[index]}
+                  - if column[2]
+                    = link_to column[0].inject(resource, :send), column[2]
+                  - else
+                    = column[0].inject(resource, :send)
               - else
                 %td{class: list_values[index]}
-                  = resource.send(table_column[0])
-            %td= link_to 'Show', resource
-            / %td= link_to 'Edit', edit_path(resource)
-            %td= link_to 'Delete', resource, method: :delete, data: { confirm: 'Are you sure?' }
+                  - if column[2]
+                    = link_to resource.send(column[0]), column[2]
+                  - else
+                    = resource.send(column[0])
+            -# %td= link_to 'Show', resource if column_for_show?
+            %td= link_to 'Edit', edit_path(resource) if column_for_edit?
+            %td= link_to 'Delete', resource, method: :delete, data: { confirm: 'Are you sure?' }, class: "danger" if column_for_destroy?

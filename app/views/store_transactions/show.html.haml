@@ -1,0 +1,20 @@
+- title = "Transaction"
+- provide(:title, title)
+- provide(:body_class, '' )
+
+= render(PageHeaderComponent.new(title: title,
+  pre_title: 'Overview',
+  action_button_text: 'New Customer',
+  action_button_link: new_person_path,
+  action_button_options: nil,
+  tabs: nil))
+
+= render(TableIndexComponent.new(title: title,
+  columns: { id: "ID",
+    [:product, :id]                       => "Product ID",
+    [:product, :name, :capitalize]        => "Product",
+    quantity:                                "Quantity",
+    [:store_transaction, :party_id]       => "Party ID",
+    [:store_transaction, :party, :specific, :name]       => "Customer",
+    [:product, :price]                    => "Price" },
+  resources: @line_items))

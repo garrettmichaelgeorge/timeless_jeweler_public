@@ -16,6 +16,7 @@ gem 'haml'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder',                  '~> 2.7'
 gem 'jquery-rails'
+gem 'money-rails',               '~> 1.12'
 gem 'pg'
 gem 'puma'
 gem 'rails',                     '~> 6.0.3'
@@ -51,6 +52,7 @@ group :development do
   # Better error page. Read more: https://github.com/BetterErrors/better_errors/
   gem 'better_errors',          '~> 2.7', '>= 2.7.1'
   gem 'binding_of_caller'
+  gem 'annotate'
 end
 
 group :test do

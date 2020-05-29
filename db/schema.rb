@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_024418) do
+ActiveRecord::Schema.define(version: 2020_05_26_225630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,5 +95,35 @@ ActiveRecord::Schema.define(version: 2020_05_26_024418) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "store_transaction_categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "store_transaction_line_items", force: :cascade do |t|
+    t.bigint "store_transaction_id", null: false
+    t.bigint "product_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_store_transaction_line_items_on_product_id"
+    t.index ["store_transaction_id"], name: "index_store_transaction_line_items_on_store_transaction_id"
+  end
+
+  create_table "store_transactions", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.datetime "transaction_datetime"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "store_transaction_category_id", null: false
+    t.index ["party_id"], name: "index_store_transactions_on_party_id"
+    t.index ["store_transaction_category_id"], name: "index_store_transactions_on_store_transaction_category_id"
+  end
+
   add_foreign_key "people", "households"
+  add_foreign_key "store_transaction_line_items", "products"
+  add_foreign_key "store_transaction_line_items", "store_transactions"
+  add_foreign_key "store_transactions", "parties"
+  add_foreign_key "store_transactions", "store_transaction_categories"
 end

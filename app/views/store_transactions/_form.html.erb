@@ -1,0 +1,25 @@
+<%= simple_form_for @store_transaction, 
+  wrapper_mappings: {
+    boolean:       :custom_boolean,
+    check_boxes:   :custom_collection,
+    date:          :custom_multi_select,
+    datetime:      :custom_multi_select,
+    file:          :custom_file,
+    radio_buttons: :custom_collection,
+    range:         :custom_range,
+    time:          :custom_multi_select,
+    select:        :custom_multi_select
+  } do |f| %>
+
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <%= f.association :party, collection: Party.all.where(actable_type: "Person"), label_method: "specific" %>
+
+  <%= f.association :category %>
+
+  <%= f.association :store_transaction_line_items %>
+
+  <%= f.button :submit, "Log transaction", class: "btn-primary" %>
+  <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
+<% end %>

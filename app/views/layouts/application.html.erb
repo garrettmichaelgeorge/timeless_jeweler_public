@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html class="h-100" lang="en">
-
 <head>
   <title><%= yield :title %></title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= render 'layouts/components/shim' %>
 </head>
-
 <body class="<%= yield :body_class %>">
-  <% # render SidebarComponent.new %>
-  <%= render 'layouts/components/sidebar' %>
+  <%= render SidebarComponent.new %>
+  <% # render 'layouts/components/sidebar' %>
+
   <!-- MAIN CONTENT
     ================================================== -->
   <main role="main" class="main-content pb-6">
