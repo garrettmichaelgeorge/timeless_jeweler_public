@@ -14,9 +14,9 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <%= f.association :party, collection: Party.all.where(actable_type: "Person"), label_method: "specific" %>
+  <%= f.association :party, collection: Party.all.order("actable_type DESC"), label_method: :name %>
 
-  <%= f.association :category %>
+  <%= f.association :category, label_method: :name_capitalized %>
 
   <% 10.times do %>
     <div class="row">

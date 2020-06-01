@@ -9,4 +9,8 @@
 #
 class StoreTransactionCategory < ApplicationRecord
   has_many :store_transactions, inverse_of: "category"
+
+  def name_capitalized
+    "#{name.capitalize}"
+  end
 end

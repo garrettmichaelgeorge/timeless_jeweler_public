@@ -6,9 +6,11 @@
 #  brand             :string(40)
 #  cost              :decimal(10, 2)
 #  description       :text
+#  long_name         :string
 #  misc_measurements :text
 #  name              :string(40)
 #  price             :decimal(10, 2)
+#  short_name        :string
 #  size              :decimal(7, 2)
 #  size_unit         :string
 #  weight            :decimal(7, 2)

@@ -19,6 +19,6 @@ class Household < ApplicationRecord
   # Provide household name when party.specific.name is called.
   # This allows us to use the same method on party.specific without knowing the actable_type.
   def name
-    self.household_name
+    "#{self.household_name} (Household)"
   end
 end

@@ -22,4 +22,8 @@ class Party < ApplicationRecord
 
   before_validation do |party|
   end
+
+  def name
+    self.specific.name
+  end
 end
