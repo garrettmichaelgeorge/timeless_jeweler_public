@@ -6,5 +6,5 @@ import tippy from "tippy.js"
 import flatpickr from "flatpickr";
 import "bootstrap/dist/js/bootstrap"
 // Theme
-import "src/dashkit/dist/assets/js/theme.min"
-import "src/dashkit/dist/assets/js/dashkit.min"
+import "dashkit/dist/assets/js/theme.min"
+import "dashkit/dist/assets/js/dashkit.min"
