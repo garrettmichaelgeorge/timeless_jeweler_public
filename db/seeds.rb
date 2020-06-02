@@ -147,6 +147,13 @@ puts ''
   )
 end
 
+puts '-- StoreTransactionCategories: creating'
+puts ''
+
+StoreTransactionCategory.create!(
+  name: 'sales'
+)
+
 puts '-- StoreTransactions: creating'
 puts ''
 

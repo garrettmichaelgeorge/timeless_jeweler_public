@@ -14,6 +14,9 @@ require("channels")
 
 // Libraries (Theme Dependencies)
 import "jquery/dist/jquery.slim.min"
+import tippy from "tippy.js"
+import flatpickr from "dashkit/dist/assets/libs/flatpickr/dist/flatpickr.min"
+import "dashkit/dist/assets/libs/select2/dist/js/select2.full.min.js"
 import "src/plugins"
 
 // Custom
