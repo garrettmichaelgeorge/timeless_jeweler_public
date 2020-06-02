@@ -1,0 +1,18 @@
+- if user_signed_in? 
+  #sidebarUser.navbar-user.d-none.d-md-flex
+    / Icon
+    %a.navbar-user-link(href="#sidebarModalActivity" data-toggle="modal")
+      %span.icon
+        %i.fe.fe-bell
+
+    / Dropup
+    .dropup
+      / Toggle
+      %a#sidebarIconCopy.dropdown-toggle(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+        %span.icon
+          %i.fe.fe-globe
+      / Menu
+      .dropdown-menu(aria-labelledby="sidebarIconCopy")
+        = link_to 'Edit profile', edit_user_registration_path, class: "dropdown-item" |
+        %hr.dropdown-divider
+        = link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item"

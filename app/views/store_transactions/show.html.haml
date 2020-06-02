@@ -1,12 +1,13 @@
-- title = "Transaction"
+- title = "#{@store_transaction.category.name_capitalized}: #{@store_transaction.party.name} on #{@store_transaction.created_at}"
 - provide(:title, title)
-- provide(:body_class, '' )
+- provide(:body_class, '')
 
 = render(PageHeaderComponent.new(title: title,
-  pre_title: 'Overview',
-  action_button_text: 'New Customer',
-  action_button_link: new_person_path,
+  pre_title: "Transactions",
+  action_button_text: 'Print receipt',
+  action_button_link: "#",
   action_button_options: nil,
+  wrapper_class: "header mt-md-5",
   tabs: nil))
 
 = render(TableIndexComponent.new(title: title,
@@ -14,7 +15,7 @@
     [:product, :id]                       => "Product ID",
     [:product, :name, :capitalize]        => "Product",
     quantity:                                "Quantity",
-    [:store_transaction, :party_id]       => "Party ID",
-    [:store_transaction, :party, :specific, :name]       => "Customer",
+    [:store_transaction, :party, :name]   => "Customer",
     [:product, :price]                    => "Price" },
-  resources: @line_items))
+  resources: @line_items,
+  restful_actions: [:delete]))

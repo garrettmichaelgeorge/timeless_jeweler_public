@@ -14,7 +14,7 @@ require("channels")
 
 // Libraries (Theme Dependencies)
 import "jquery/dist/jquery.slim.min"
-import("src/plugins")
+import "src/plugins"
 
 // Custom
 import "src/js/tippyScripts"

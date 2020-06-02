@@ -28,7 +28,12 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
 
-  # Configure uglifier to be compatible with Webpacker. Read more: https://github.com/rails/webpacker/blob/master/docs/troubleshooting.md#rake-assetsprecompile-fails-execjsruntimeerror
+  # For compatibility with Devise on Heroku
+  # Read more: https://github.com/heartcombo/devise#heroku
+  config.assets.initialize_on_precompile = false
+
+  # Configure uglifier to be compatible with Webpacker. 
+  # Read more: https://github.com/rails/webpacker/blob/master/docs/troubleshooting.md#rake-assetsprecompile-fails-execjsruntimeerror
   config.assets.js_compressor = Uglifier.new(harmony: true)
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.

@@ -11,7 +11,7 @@ class PageHeaderComponent < ApplicationComponent
     # Set default values for variables if not passed to component
     @tabs = defined?(tabs) ? tabs : {}
     @action_button_options = action_button_options.blank? ? {} : action_button_options
-    # @wrapper_class = wrapper_class.blank? ? "" : wrapper_class
+    @wrapper_class = wrapper_class.blank? ? "" : wrapper_class
 
     # Add Bootstrap style class to action_button
     @action_button_options.store(:class, 'btn btn-primary lift')
