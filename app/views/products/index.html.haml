@@ -3,14 +3,14 @@
 - provide(:title, title)
 - provide(:body_class, '' )
 
-= render(PageHeaderComponent.new(title: 'Customers',
+= render(PageHeaderComponent.new(title: title,
   pre_title: pre_title,
-  action_button_text: 'New Customer',
-  action_button_link: new_person_path,
+  action_button_text: 'New Product',
+  action_button_link: new_product_path,
   action_button_options: nil,
   tabs: nil))
 
-= render(TableIndexComponent.new(title: 'Customers',
+= render(TableIndexComponent.new(title: title,
   columns: { id: 'ID',
     name: 'Product',
     brand: 'Brand',
