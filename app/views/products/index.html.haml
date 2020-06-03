@@ -1,0 +1,25 @@
+- title = 'Products'
+- pre_title = 'Overview'
+- provide(:title, title)
+- provide(:body_class, '' )
+
+= render(PageHeaderComponent.new(title: 'Customers',
+  pre_title: pre_title,
+  action_button_text: 'New Customer',
+  action_button_link: new_person_path,
+  action_button_options: nil,
+  tabs: nil))
+
+= render(TableIndexComponent.new(title: 'Customers',
+  columns: { id: 'ID',
+    name: 'Product',
+    brand: 'Brand',
+    cost: 'Cost',
+    price: 'Price',
+    size: 'Size',
+    size_unit: 'Unit',
+    weight: 'Weight',
+    weight_unit: 'Unit',
+    misc_measurements: 'Misc. Measurements',
+    description: 'Description' },
+  resources: @products))

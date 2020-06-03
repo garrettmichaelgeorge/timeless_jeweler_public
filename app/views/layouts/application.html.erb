@@ -18,7 +18,6 @@
     ================================================== -->
   <main role="main" class="main-content pb-6">
     <div class="container-fluid">
-      <div><%= @browser.firefox? %></div>
       <!-- Flash -->
       <% flash.each do |message_type, message| %>
         <div id="<%= "flash_#{message_type}" %>" class="<%= flash_class(message_type) %>" role="alert">

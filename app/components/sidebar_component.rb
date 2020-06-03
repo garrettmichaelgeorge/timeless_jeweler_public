@@ -48,7 +48,7 @@ class SidebarComponent < ApplicationComponent
 
   def sidebar_class
     puts "@browser is #{@browser}"
-    if @browser.device.ipad?
+    if @browser.device.mobile? || @browser.device.tablet?
       puts "\tI'm mobile!"
       @sidebar_class = "navbar navbar-vertical navbar-vertical-sm fixed-left navbar-expand-md navbar-dark navbar-vibrant"
     else
