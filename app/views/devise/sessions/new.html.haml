@@ -1,28 +1,27 @@
-- provide(:title, 'Log in')
+- provide(:title, 'Sign in')
 - provide(:body_class, 'bg-auth border-top border-top-2 border-primary')
-- provide(:body_outer_wrapper_class, "container")
-- provide(:body_inner_wrapper_class, "row justify-content-center")
-- @subtitle = 'Authentication required.' 
+- subtitle = 'Authentication required.' 
 / 
 
-.col-12.col-md-5.col-xl-4.my-5
-  / Heading
-  %h1.display-4.text-center.mb-3= yield :title 
-  / Subheading
-  %p.text-muted.text-center.mb-5= @subtitle 
+.d-flex.justify-content-center.align-items-center.vh-100
+  .col-12.col-md-5.col-xl-4.my-5
+    / Heading
+    %h1.display-4.text-center.mb-3= yield :title 
+    / Subheading
+    %p.text-muted.text-center.mb-5= subtitle 
 
-  = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-    .form-group.form-inputs
-      = f.input :email,
-        required: false,
-        autofocus: true,
-        input_html: { autocomplete: "email" }
-      = f.input :password,
-        required: false,
-        input_html: { autocomplete: "current-password" }
-      = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .form-group.form-inputs
+        = f.input :email,
+          required: false,
+          autofocus: true,
+          input_html: { autocomplete: "email" }
+        = f.input :password,
+          required: false,
+          input_html: { autocomplete: "current-password" }
+        = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
 
-    .form-actions
-      = f.submit 'Log in', class: 'btn btn-lg btn-block btn-primary mb-3'
+      .form-actions
+        = f.submit 'Sign in', class: 'btn btn-lg btn-block btn-primary mb-3'
 
-  = render "devise/shared/links"
+    = render "devise/shared/links"

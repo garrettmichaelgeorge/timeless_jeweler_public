@@ -61,7 +61,7 @@
       %ul.navbar-nav.mb-md-4
         %li.nav-item
           %a.nav-link(href="#sidebarReports" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards")
-            %i.fe.fe-bar-chart-2
+            %i.fe.fe-pie-chart
             .d-none.d-lg-block Reports
           .collapse#sidebarReports
             %ul.nav.nav-sm.flex-column
@@ -69,11 +69,13 @@
                 %li.nav-item
                   = link_to report, "#", class: "nav-link"
       / Spacer
-      .mt-auto
+      .mt-lg-auto
       / "New" button
       .d-flex.justify-content-center
         .mb-4
           %button#tippy-sidebar-new.btn.btn-outline-primary.btn-large.rounded-circle{data_tippy_content: ""}
             %i.fe.fe-plus
+      / "New" dropup menu
       = render TippyTemplateSidebarComponent.new
+      / User widget
       = render partial: "layouts/components/user_widget"

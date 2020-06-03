@@ -1,0 +1,24 @@
+- provide(:title, 'Reset password')
+- provide(:body_class, 'bg-auth border-top border-top-2 border-primary')
+- subtitle = 'Enter your email to get a password reset link.' 
+
+.d-flex.justify-content-center.align-items-center.vh-100
+  .col-12.col-md-5.col-xl-4.my-5
+    / Heading
+    %h1.display-4.text-center.mb-3= yield :title 
+    / Subheading
+    %p.text-muted.text-center.mb-5= subtitle 
+
+    = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+      = f.error_notification
+
+      .form-group.form-inputs
+        = f.input :email,
+          required: true,
+          autofocus: true,
+          input_html: { autocomplete: "email" }
+
+      .form-actions
+        = f.submit 'Reset password', class: 'btn btn-lg btn-block btn-primary mb-3'
+
+    = render "devise/shared/links"
