@@ -5,15 +5,20 @@
 
 / NAVIGATION
 / ==================================================
-%nav.navbar.navbar-vertical.fixed-left.navbar-expand-md.navbar-light#sidebar
+%nav#sidebar{class: sidebar_class}
   .container-fluid
+
     / Toggler
     %button.navbar-toggler(type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation")
       %span.navbar-toggler-icon
+
     / Brand
     = link_to root_path, class: "navbar-brand text-align-left" do |link|
-      = image_tag "logo.jpg", class: "navbar-brand-img mx-auto"
+      = image_tag "logo.jpg", class: "navbar-brand-img mx-auto d-md-none"
+      %small.d-lg-none.text-wrap Timeless Jeweler
       - # %img{src: asset_pack_path("media/images/logo.jpg")}
+      
+    %hr.navbar-divider.d-md-block.mt-0.mb-3
     / User (xs)
     .navbar-user.d-md-none
       / Dropdown
@@ -48,7 +53,7 @@
           %li.nav-item
             = link_to values_hash[:link_path], class: "nav-link" do
               %i{class: values_hash[:icon]}
-              = values_hash[:name]
+              .d-md-none= values_hash[:name]
 
       %hr.navbar-divider.my-3
       / Reports
@@ -57,11 +62,12 @@
         %li.nav-item
           %a.nav-link(href="#sidebarReports" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards")
             %i.fe.fe-bar-chart-2
-            Reports
+            .d-md-none Reports
           .collapse#sidebarReports
             %ul.nav.nav-sm.flex-column
               - self.reports.each do |report|
-                %li.nav-item= link_to report, "#", class: "nav-link"
+                %li.nav-item
+                  = link_to report, "#", class: "nav-link"
       / Spacer
       .mt-auto
       / "New" button
@@ -69,6 +75,5 @@
         .mb-4
           %button#tippy-sidebar-new.btn.btn-outline-primary.btn-large.rounded-circle{data_tippy_content: ""}
             %i.fe.fe-plus
-            %span.d-md-none.ml-2 New
       = render TippyTemplateSidebarComponent.new
       = render partial: "layouts/components/user_widget"

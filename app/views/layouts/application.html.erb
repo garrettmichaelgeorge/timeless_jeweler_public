@@ -1,3 +1,5 @@
+<% require "browser" %>
+
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 <head>
@@ -10,21 +12,21 @@
   <%= render 'layouts/components/shim' %>
 </head>
 <body class="<%= yield :body_class %>">
-  <%= render SidebarComponent.new if user_signed_in? %>
-  <% # render 'layouts/components/sidebar' %>
+  <%= render SidebarComponent.new(@browser) if user_signed_in? %>
 
   <!-- MAIN CONTENT
     ================================================== -->
   <main role="main" class="main-content pb-6">
     <div class="container-fluid">
+      <div><%= @browser.firefox? %></div>
       <!-- Flash -->
       <% flash.each do |message_type, message| %>
         <div id="<%= "flash_#{message_type}" %>" class="<%= flash_class(message_type) %>" role="alert">
           <i class="<%= flash_icon(message_type) %>"></i>
           <%= message %>
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       <% end %>
 
