@@ -1,0 +1,16 @@
+- title = 'Households'
+- pre_title = 'Overview'
+
+= render(PageHeaderComponent.new(title: title,
+  pre_title: pre_title,
+  buttons: [{ text: 'New Household',
+    link: new_household_path,
+    options: nil }],
+  tabs: nil))
+
+= render(TableIndexComponent.new(title: title,
+  columns: [{ attribute: :id },
+    { attribute: :household_name },
+    { attribute: :anniversary }],
+  resources: @households,
+  restful_actions: [:show, :edit, :destroy] ))

@@ -5,12 +5,13 @@
  * to ensure cascade of styles.
  */
 
- @import '../fonts/feather/feather';
- @import '~flatpickr/dist/flatpickr.min';
- @import '~quill/dist/quill.core';
- @import '~highlightjs/styles/vs2015';
- @import '~tippy.js/animations/scale';
- @import '~tippy.js/animations/shift-away';
+@import '../fonts/feather/feather';
+@import '~flatpickr/dist/flatpickr.min';
+@import '~quill/dist/quill.core';
+@import '~highlightjs/styles/vs2015';
+@import '~tippy.js/animations/scale';
+@import '~tippy.js/animations/shift-away';
+// @import 'reports_kit/application';
 
 // Bootstrap functions
 @import '~bootstrap/scss/functions';

@@ -1,0 +1,16 @@
+- @columns.each_with_index do |column, index|
+  - if column[0].is_a?(Array)
+    -# To access nested associations via a chain of method calls, send the column key as an array of symbolized methods in their call order 
+    -# e.g. {columns => {[:specific, :first_name] => "First Name"}
+    -# => @party.specific.first_name
+    %td{class: list_js_values[index]}
+      - if column[2]
+        = link_to column[0].inject(resource, :send), column[2]
+      - else
+        = column[0].inject(resource, :send)
+  - else
+    %td{class: list_js_values[index]}
+      - if column[2]
+        = link_to resource.send(column[0]), column[2]
+      - else
+        = format_money(resource.send(column[0]))

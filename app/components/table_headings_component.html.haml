@@ -1,0 +1,4 @@
+- @labels.each_with_index do |label, index|
+  -# %th(scope="col")= link_to column, "#", class: "text-muted list_sort", data_sort: list_js_values[index]
+  %th(scope="col")= link_to label, "#", class: "text-muted list_sort", data_sort: ""
+%th{scope: "col", colspan: colspan_count}

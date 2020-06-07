@@ -56,7 +56,7 @@ Person.create!(
   suffix: nil,
   ring_size: 6.0,
   ring_size_notes: 'Will need to resize next visit',
-  necklace_length: 40.0,
+  necklace_length: 8.0,
   necklace_length_notes: 'Prefers very lightweight necklaces. Too short better than too long.'
   )
 
@@ -125,7 +125,7 @@ puts ''
 750.times do |n|
   name                  = Faker::Commerce.product_name
   description           = Faker::Movies::StarWars.quote
-  brand                 = Faker::Lorem.word
+  brand                 = Faker::Lorem.word.capitalize
   size                  = rand(2.0..11.0)
   size_unit             = "in"
   weight                = rand(2.0..11.0)
@@ -174,11 +174,15 @@ puts ''
 
 250.times do |n|
   quantity              = rand(1..10)
+  price_cents           = Money.new(rand(1000..10_000_000), 'USD')
+  tax_cents             = 0
   store_transaction_id  = rand(StoreTransaction.first.id..StoreTransaction.last.id)
   product_id            = rand(Product.first.id..Product.last.id)
   
   StoreTransactionLineItem.create!(
     quantity: quantity,
+    price_cents: price_cents,
+    tax_cents: tax_cents,
     store_transaction_id: store_transaction_id,
     product_id: product_id
   )

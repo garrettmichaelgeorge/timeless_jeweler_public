@@ -1,21 +1,21 @@
 - title = "Transactions"
 - pre_title = "Overview"
 - provide(:title, title)
-- provide(:body_class, "" )
+- provide(:body_class, "")
 
 = render(PageHeaderComponent.new(title: title,
   pre_title: pre_title,
-  action_button_text: "New Transaction",
-  action_button_link: new_store_transaction_path,
-  action_button_options: nil,
+  buttons: [{ text: 'New Transaction',
+    link: new_store_transaction_path,
+    options: nil }],
   tabs: nil))
 
 -# TODO: add the ability to make any given column values link elsewhere in the app
 = render(TableIndexComponent.new(title: title,
-  columns: { id:                       "ID",
-    transaction_datetime:              "Date",
-    [:category, :name, :capitalize] => "Category",
-    party_id:                          "Party ID",
-    [:party, :specific, :name]      => "Customer Name" },
+  columns: [{ attribute: :id },
+    { attribute: :transaction_datetime },
+    { attribute: :category_name },
+    { attribute: :total_cents },
+    { attribute: :party_name }],
   resources: @store_transactions,
   restful_actions: [:show, :destroy]))

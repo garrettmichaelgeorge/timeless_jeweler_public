@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
   devise_scope :user do
-    get '/users/sign_out'   => 'devise/sessions#destroy'
-    root to: 'static_pages#dashboard'
+    get       'login'         => 'devise/sessions#new'
+    post      'login'         => 'devise/sessions#create'
+    get       '/users/sign_out' => 'devise/sessions#destroy'
+    root to:  'static_pages#dashboard'
   end
 
   # root to:      'devise/sessions#new'
@@ -15,15 +17,12 @@ Rails.application.routes.draw do
     resources :store_transaction_line_items
   end
 
+  get       'transactions'  => 'store_transactions#index'
   get       'customers'     => 'people#index'
+  get       'dashboard'     => 'static_pages#dashboard'
   
   # get       'parties/:actable_type' => 'parties#index'
   # get       'households'    => redirect('/parties?actable_type=household')
-  
-  get       'dashboard'     => 'static_pages#dashboard'
 
   # Login and Logout
-  get       'login'         => 'sessions#new'
-  post      'login'         => 'sessions#create'
-  delete    'logout'        => 'sessions#destroy'
 end

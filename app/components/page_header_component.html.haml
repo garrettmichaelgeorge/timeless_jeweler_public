@@ -8,22 +8,31 @@
 
 .header{class: wrapper_class}
   .header-body
-    .row.align-items-center
+    .row.align-items-end
       .col
         / Pretitle
-        %h6.header-pretitle= @pre_title
+        %h6.header-pretitle= pre_title
         / Title
-        %h1.header-title= @title
+        %h1.header-title= title
       .col-auto
-        / Button
-        = link_to @action_button_text, @action_button_link, @action_button_options unless @action_button_text.empty?
+        - if buttons.present?
+          / Button
+          - buttons.each do |button|
+            / = link_to button[:text], button[:link], button[:options]
+            = link_to button[:text], button[:link], class: "btn btn-primary lift"
 
-    .row.align-items-center
-      .col
-        / FIXME: tabs should be shown conditionally using passed-in options
-        / Tabs
-        - unless @tabs.blank?
+        - elsif tabs.present?
+          / Tabs - primary
           %ul.nav.nav-tabs.nav-overflow.header-tabs
-            = @tabs.each do |tab|
+            - tabs.each do |tab|
               %li.nav-item
-                = link_to tab[:name], "#", class: "nav-link"
+                = link_to tab[:name], tab[:link], class: "nav-link"
+
+      / Tabs - secondary 
+      - if buttons.present? && tabs.present?
+        .row
+          .col-12
+            %ul.nav.nav-tabs.nav-overflow.header-tabs
+              - tabs.each do |tab|
+                %li.nav-item
+                  = link_to tab[:name], tab[:link], class: "nav-link"

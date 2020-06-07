@@ -20,6 +20,8 @@
 #  fk_rails_...  (store_transaction_category_id => store_transaction_categories.id)
 #
 class StoreTransaction < ApplicationRecord
+  # scope :total_amount, ->(id) { joins(:store_transaction_line_items).where(id: id).sum("store_transaction_line_items.price_cents") }
+
   belongs_to :party
   belongs_to :category, class_name: "StoreTransactionCategory", foreign_key: "store_transaction_category_id"
   # has_many :line_items, class_name: "StoreTransactionLineItem", inverse_of: :store_transaction, dependent: :destroy
@@ -28,5 +30,22 @@ class StoreTransaction < ApplicationRecord
 
   validates :party_id, null: false
   validates :store_transaction_category_id, null: false
+
+  monetize :total_cents
+
+  private
+
+  def total_cents
+    total_amount = self.store_transaction_line_items.sum("price_cents")
+  end
+
+  def category_name
+    self.category.name
+  end
+
+  def party_name
+    self.party.name
+  end
+
 
 end

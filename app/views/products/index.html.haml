@@ -1,25 +1,24 @@
 - title = 'Products'
 - pre_title = 'Overview'
 - provide(:title, title)
-- provide(:body_class, '' )
+- provide(:body_class, '')
 
 = render(PageHeaderComponent.new(title: title,
   pre_title: pre_title,
-  action_button_text: 'New Product',
-  action_button_link: new_product_path,
-  action_button_options: nil,
+  buttons: [{ text: 'New Product',
+    link: new_product_path,
+    options: nil }],
   tabs: nil))
 
 = render(TableIndexComponent.new(title: title,
-  columns: { id: 'ID',
-    name: 'Product',
-    brand: 'Brand',
-    cost: 'Cost',
-    price: 'Price',
-    size: 'Size',
-    size_unit: 'Unit',
-    weight: 'Weight',
-    weight_unit: 'Unit',
-    misc_measurements: 'Misc. Measurements',
-    description: 'Description' },
+  columns: [{ attribute: :name, label: "Name" },
+    { attribute: :brand },
+    { attribute: :cost },
+    { attribute: :price },
+    { attribute: :size },
+    { attribute: :size_unit },
+    { attribute: :weight },
+    { attribute: :weight_unit },
+    { attribute: :misc_measurements },
+    { attribute: :description }],
   resources: @products))

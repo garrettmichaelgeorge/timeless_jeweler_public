@@ -26,4 +26,6 @@ class Party < ApplicationRecord
   def name
     self.specific.name
   end
+
+  alias party_name name
 end

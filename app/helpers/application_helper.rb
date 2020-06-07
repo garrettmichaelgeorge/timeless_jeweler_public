@@ -16,4 +16,8 @@ module ApplicationHelper
     when :alert then "fe fe-alert-octagon"
     end
   end
+
+  def category_name_capitalized
+    self.category.name.capitalize
+  end
 end

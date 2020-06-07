@@ -53,4 +53,8 @@ class Person < ApplicationRecord
   # This allows us to use the same method on party.specific without knowing the actable_type 
   alias name full_name
 
+  def household_name
+    self.household.household_name if self.household_id?
+  end
+
 end

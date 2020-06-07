@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_01_214830) do
+ActiveRecord::Schema.define(version: 2020_06_04_184807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,7 +109,10 @@ ActiveRecord::Schema.define(version: 2020_06_01_214830) do
     t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.decimal "price", precision: 10, scale: 2
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "USD", null: false
+    t.integer "tax_cents", default: 0, null: false
+    t.string "tax_currency", default: "USD", null: false
     t.index ["product_id"], name: "index_store_transaction_line_items_on_product_id"
     t.index ["store_transaction_id"], name: "index_store_transaction_line_items_on_store_transaction_id"
   end
