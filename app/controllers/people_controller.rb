@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_person, only: [:edit, :update, :destroy]
 
   # GET /people
   # GET /people.json
@@ -10,6 +10,12 @@ class PeopleController < ApplicationController
   # GET /people/1
   # GET /people/1.json
   def show
+    @person = Person.contact_info.find(params[:id])
+    @household = @person.household
+    @addresses = @person.addresses
+    @email_addresses = @person.email_addresses
+    @phone_numbers = @person.phone_numbers
+    @store_transactions = @person.store_transactions
   end
 
   # GET /people/new
@@ -67,13 +73,26 @@ class PeopleController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def person_params
-    params.require(:person).permit(
-      :title, :first_name, :last_name, :suffix, :ring_size, :ring_size_notes, :necklace_length,:necklace_length_notes, :birthday,
-      party_attributes: [:id],
-      address_attributes: [:id, :address_line_1, :address_line_2, :city, :state_province, :zip_postal_code],
-      email_address_attributes: [:id, :email_address],
-      phone_number_attributes: [:id, :phone_number],
-    )
+    params.require(:person).permit(permitted_params)
   end
 
+  def permitted_params
+    [
+      :title,
+      :first_name,
+      :last_name,
+      :suffix,
+      :ring_size,
+      :ring_size_notes,
+      :necklace_length,
+      :necklace_length_notes,
+      :birthday,
+      :household_id,
+      party: %i[id],
+      household: %i[id household_name],
+      addresses: %i[id address_line_1 address_line_2 city state_province zip_postal_code],
+      email_addresses: %i[id email_address],
+      phone_numbers: %i[id phone_number]
+    ]
+  end
 end

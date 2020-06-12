@@ -10,6 +10,9 @@
 class StoreTransactionCategory < ApplicationRecord
   has_many :store_transactions, inverse_of: "category"
 
+  validates :name, uniqueness: true
+
+  # FIXME: move view logic to helper
   def name_capitalized
     "#{name.capitalize}"
   end

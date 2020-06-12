@@ -1,0 +1,167 @@
+- title = @person.full_name
+- pre_title = 'Customers'
+- values = { biographical: { id: 'ID',
+    title: 'Title',
+    first_name: 'First Name',
+    last_name: 'Last Name',
+    suffix: 'Suffix',
+    ring_size: 'Ring Size',
+    ring_size_notes: 'Notes',
+    necklace_length: 'Necklace Length',
+    necklace_length_notes: 'Notes',
+    birthday: 'Birthday' },
+  household: { household_id: 'ID',
+    household_name: 'Name',
+    household_member_ids: 'Member IDs',
+    household_member_names: 'Member Names' },
+  purchase_history: { store_transaction_datetime: "Date",
+    store_transaction_total_cents: "Total",
+    products: 'Products',
+    product_names: 'Names' },
+  addresses: { address_line_1: 'Address Line 1',
+    address_line_2: 'Address Line 2',
+    city: 'City',
+    state_province_name: 'State',
+    zip_postal_code: 'Zip' },
+  email_addresses: { email_address: 'Email Address' },
+  phone_numbers: { phone_number: 'Phone Number' } }
+
+= render(PageHeaderComponent.new(title: title,
+  pre_title: pre_title,
+  buttons: [{ text: 'Edit Customer',
+    link: edit_person_path(@person),
+    options: nil }],
+  tabs: nil))
+
+.row
+  .col-12.col-xl-5
+    = render CardComponent.new do |component|
+      - component.with(:header) do
+        Biographical
+      - component.with(:body) do
+        .list-group.list-group-flush.my-n3
+          - values[:biographical].each do |value|
+            .list-group-item
+              .row.align-items-baseline
+                .col-4
+                  / Label
+                  %h5.mb-0.text-muted= value[1]
+                .col.text-left
+                  / Value
+                  .small= @person.send(value[0])
+
+  .col-12.col-xl-7
+    / Addresses
+    = render CardComponent.new(inactive_if_empty: true) do |component|
+      - component.with(:header) do
+        Addresses
+      - component.with(:body) do
+        - @addresses.each do |address|
+          .list-group.list-group-flush.my-n3
+            - values[:addresses].each do |value|
+              .list-group-item
+                .row.align-items-baseline
+                  .col
+                    / Label
+                    %h5.mb-0.text-muted= value[1]
+                  .col-8
+                    / Value
+                    .small= address.send(value[0])
+
+    / Phone Numbers
+    = render CardComponent.new do |component|
+      - component.with(:header) do
+        Phone Numbers
+      - component.with(:body) do
+        - @phone_numbers.each do |phone_number|
+          .list-group.list-group-flush.my-n3
+            - values[:phone_numbers].each do |value|
+              .list-group-item
+                .row.align-items-baseline
+                  .col
+                    / Label
+                    %h5.mb-0.text-muted= value[1]
+                  .col-8
+                    / Value
+                    .small= phone_number.send(value[0])
+
+    / Email Addresses
+    = render CardComponent.new do |component|
+      - component.with(:header) do
+        Email Addresses
+      - component.with(:body) do
+        - @email_addresses.each do |email_address|
+          .list-group.list-group-flush.my-n3
+            - values[:email_addresses].each do |value|
+              .list-group-item
+                .row.align-items-baseline
+                  .col
+                    / Label
+                    %h5.mb-0.text-muted= value[1]
+                  .col-8
+                    / Value
+                    .small= email_address.send(value[0])
+
+    / Households
+    = render CardComponent.new do |component|
+      - component.with(:header) do
+        Household
+      - component.with(:body) do
+        .list-group.list-group-flush.my-n3
+          .list-group-item
+            .row.align-items-baseline
+              .col
+                / Label
+                %h5.mb-0.text-muted Members
+              .col-9
+                / Value
+                .small
+                  - if @household
+                    - @person.household_members.each_with_index do |member, i|
+                      = link_to(member.full_name, url_for(member))
+                      = "| " unless i == @person.household_members.size - 1
+          .list-group-item
+            .row.align-items-baseline
+              .col
+                / Label
+                %h5.mb-0.text-muted Anniversary
+              .col-9
+                / Value
+                .small
+                  - if @household
+                    = @household.anniversary
+
+.row
+  .col
+    / Purchase History
+    = render CardComponent.new do |component|
+      - component.with(:header) do
+        Purchase History
+      - component.with(:body) do
+        -# - @person.store_transactions.each do
+        .table-responsive{ data: { list: "" } }
+          %table.table.table-sm.table-nowrap.card-table.table-hover{ id: title }
+            -# %caption.d-none= title
+            %thead
+              %tr
+                -# - values[:purchase_history].values.each do |value|
+                / Label
+                %th.mb-0.text-muted Trans ID
+                %th.mb-0.text-muted Date
+                %th.mb-0.text-muted Total
+                %th.mb-0.text-muted Product
+            %tbody
+              - @store_transactions.each do |st|
+                %tr
+                  -# - values[:purchase_history].keys.each do |value|
+                  / Value
+                  %td.small= st.id
+                  %td.small= st.transaction_datetime
+                  %td.small= humanized_money_with_symbol(st.total_cents)
+                  %td.small
+                    - st.products.each_with_index do |product, i|
+                      = link_to product.id, product
+                      = "| "
+.row.justify-content-end                
+  .col.col-2
+    = link_to "Delete customer", person_path(@person), method: :delete, class: "btn btn-danger lift"

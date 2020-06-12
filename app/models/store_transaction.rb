@@ -26,6 +26,7 @@ class StoreTransaction < ApplicationRecord
   belongs_to :category, class_name: "StoreTransactionCategory", foreign_key: "store_transaction_category_id"
   # has_many :line_items, class_name: "StoreTransactionLineItem", inverse_of: :store_transaction, dependent: :destroy
   has_many :store_transaction_line_items, dependent: :destroy
+  has_many :products, through: :store_transaction_line_items
   accepts_nested_attributes_for :store_transaction_line_items, allow_destroy: true
 
   validates :party_id, null: false
@@ -33,19 +34,14 @@ class StoreTransaction < ApplicationRecord
 
   monetize :total_cents
 
-  private
-
   def total_cents
-    total_amount = self.store_transaction_line_items.sum("price_cents")
+    total = store_transaction_line_items.sum("price_cents")
+    # humanized_money_with_symbol(total)
   end
 
-  def category_name
-    self.category.name
-  end
+  delegate :name, to: :category, prefix: true
+  delegate :name, to: :party, prefix: true
 
-  def party_name
-    self.party.name
-  end
-
+  private
 
 end

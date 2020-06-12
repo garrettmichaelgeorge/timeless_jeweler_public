@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_04_184807) do
+ActiveRecord::Schema.define(version: 2020_06_11_180046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,32 +19,38 @@ ActiveRecord::Schema.define(version: 2020_06_04_184807) do
     t.string "address_line_1", limit: 80
     t.string "address_line_2", limit: 80
     t.string "city", limit: 30
-    t.string "state_province", limit: 2
     t.string "country_region", limit: 2
-    t.integer "zip_postal_code"
+    t.string "zip_postal_code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "addresses_parties", id: false, force: :cascade do |t|
-    t.bigint "party_id", null: false
-    t.bigint "address_id", null: false
+    t.string "addressable_type", null: false
+    t.bigint "addressable_id", null: false
+    t.bigint "state_province_id", null: false
+    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+    t.index ["state_province_id"], name: "index_addresses_on_state_province_id"
   end
 
   create_table "email_addresses", force: :cascade do |t|
     t.string "email_address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "email_addresses_parties", id: false, force: :cascade do |t|
-    t.bigint "party_id", null: false
-    t.bigint "email_address_id", null: false
+    t.string "emailable_type", null: false
+    t.bigint "emailable_id", null: false
+    t.index ["emailable_type", "emailable_id"], name: "index_email_addresses_on_emailable_type_and_emailable_id"
   end
 
   create_table "households", force: :cascade do |t|
     t.string "household_name", limit: 40
     t.date "anniversary"
+    t.string "addresses_type"
+    t.bigint "addresses_id"
+    t.string "email_address_type"
+    t.bigint "email_address_id"
+    t.string "phone_numbers_type"
+    t.bigint "phone_numbers_id"
+    t.index ["addresses_type", "addresses_id"], name: "index_households_on_addresses_type_and_addresses_id"
+    t.index ["email_address_type", "email_address_id"], name: "index_households_on_email_address_type_and_email_address_id"
+    t.index ["phone_numbers_type", "phone_numbers_id"], name: "index_households_on_phone_numbers_type_and_phone_numbers_id"
   end
 
   create_table "parties", force: :cascade do |t|
@@ -53,11 +59,6 @@ ActiveRecord::Schema.define(version: 2020_06_04_184807) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "actable_id"
     t.string "actable_type"
-  end
-
-  create_table "parties_phone_numbers", id: false, force: :cascade do |t|
-    t.bigint "party_id", null: false
-    t.bigint "phone_number_id", null: false
   end
 
   create_table "people", force: :cascade do |t|
@@ -75,9 +76,12 @@ ActiveRecord::Schema.define(version: 2020_06_04_184807) do
   end
 
   create_table "phone_numbers", force: :cascade do |t|
-    t.string "phone_number_complete", limit: 32
+    t.string "phone_number", limit: 32
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "phoneable_type", null: false
+    t.bigint "phoneable_id", null: false
+    t.index ["phoneable_type", "phoneable_id"], name: "index_phone_numbers_on_phoneable_type_and_phoneable_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -95,6 +99,13 @@ ActiveRecord::Schema.define(version: 2020_06_04_184807) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "short_name"
     t.string "long_name"
+  end
+
+  create_table "state_provinces", force: :cascade do |t|
+    t.string "code", limit: 2
+    t.string "name", limit: 40
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "store_transaction_categories", force: :cascade do |t|
@@ -144,6 +155,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_184807) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "addresses", "state_provinces"
   add_foreign_key "people", "households"
   add_foreign_key "store_transaction_line_items", "products"
   add_foreign_key "store_transaction_line_items", "store_transactions"

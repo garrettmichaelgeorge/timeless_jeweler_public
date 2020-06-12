@@ -9,8 +9,8 @@
   tabs: nil))
 
 = render(TableIndexComponent.new(title: title,
-  columns: [{ attribute: :id },
-    { attribute: :household_name },
-    { attribute: :anniversary }],
+  columns: [{ value: :id },
+    { value: :household_name },
+    { value: :anniversary }],
   resources: @households,
   restful_actions: [:show, :edit, :destroy] ))

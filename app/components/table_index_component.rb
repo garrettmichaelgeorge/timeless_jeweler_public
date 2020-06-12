@@ -1,5 +1,5 @@
 class TableIndexComponent < ApplicationComponent
-  include StoreTransactionsHelper
+  delegate :category_name_capitalized, to: :helpers
 
   # TODO: add the ability to make any given column values link elsewhere in the app
   attr_reader :title, :columns, :resources, :restful_actions, :labels
@@ -13,6 +13,16 @@ class TableIndexComponent < ApplicationComponent
     set_up_columns
 
     @labels = extract_labels(@columns)
+  end
+
+  def delegate_column_values_to_helpers
+    columns.each do |column|
+      # if helpers.send(column[:value])
+        # binding.pry
+        # puts "\t#{column[:value]} delegated to helpers!"
+        # helpers.send(column[:value])
+      # end
+    end
   end
 
   def before_render
@@ -29,11 +39,11 @@ class TableIndexComponent < ApplicationComponent
     # To access nested associations via a chain of method calls, send the column key as an array of symbolized methods in their call order 
     # e.g. { :columns => { [:specific, :first_name] => "First Name" }
     # => @party.specific.first_name
-    # column_value = column[:attribute].inject(resource, :send)
-    if column[:attribute] == :id
+    # column_value = column[:value].inject(resource, :send)
+    if column[:value] == :id
       column_value = column_for_show? ? link_to(resource.id, resource) : resource.id
     else
-      column_value = resource.send(column[:attribute])
+      column_value = resource.send(column[:value])
     end
     format_money(column_value)
   end
@@ -50,7 +60,7 @@ class TableIndexComponent < ApplicationComponent
 
   # returns array with values for List.js columns
   def list_js_values
-    @columns.each { |column| column[:attribute].to_s.camelize(:lower) }
+    @columns.each { |column| column[:value].to_s.camelize(:lower) }
   end
 
   # list_values expected output
@@ -72,29 +82,27 @@ class TableIndexComponent < ApplicationComponent
     self.restful_actions.include?(:destroy)
   end
 
-
   private
 
   def format_money(value)
-    if value.class == Money
-      puts "\n\t#{value} is a Money value!"
-      humanized_money_with_symbol(value)
-    else
-      puts "\n\t#{value} is not a Money value..."
-      value
-    end
+    return value unless value.class == Money
+
+    humanized_money_with_symbol(value)
   end
 
   # Setup methods
   def set_up_columns
+    delegate_column_values_to_helpers
     default_labels
   end
 
   def default_labels
-    # Give each column hash a default label if it doesn't include one
+    # Give each column hash a default label if one wasn't provided in the parameters
     columns.each do |column|
-      stringified_attribute = column[:attribute].to_s.capitalize.gsub(/_/, ' ')
-      column.store(:label, stringified_attribute) unless column.key?(:label)
+      unless column.key?(:label)
+        stringified_value = column[:value].to_s.capitalize.gsub(/_/, ' ')
+        column.store(:label, stringified_value)
+      end
     end
   end
 

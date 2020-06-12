@@ -13,15 +13,29 @@ require("@rails/activestorage").start()
 require("channels")
 
 // Libraries (Theme Dependencies)
-import "jquery/dist/jquery.slim.min"
+// import "jquery/dist/jquery.slim.min"
+import "jquery"
+import "popper.js/dist/popper"
 import tippy from "tippy.js"
-import flatpickr from "dashkit/dist/assets/libs/flatpickr/dist/flatpickr.min"
-import "dashkit/dist/assets/libs/select2/dist/js/select2.full.min.js"
+import flatpickr from "flatpickr"
+// import "dashkit/dist/assets/libs/select2/dist/js/select2.min.js"
+// import select2 from "select2"
+import "select2/dist/js/select2.full"
+
 // import "reports_kit/assets/javascripts/reports_kit/application.js"
-import "src/plugins"
+import "bootstrap/dist/js/bootstrap"
+
+// To decrease page load time, load js files asynchronously by placing them in the following file:
+// import "src/plugins"
+
+// Theme
+// import "dashkit/src/assets/js/theme"
+import "dashkit/src/assets/js/dashkit"
+
 
 // Custom
-import "src/js/tippyScripts"
+import "src/js/tippy_scripts"
+import "src/js/select2_scripts"
 
 /**
  * 

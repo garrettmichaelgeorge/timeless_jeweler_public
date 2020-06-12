@@ -4,12 +4,10 @@
  * Custom variables followed by Dashkit variables followed by Bootstrap variables
  * to ensure cascade of styles.
  */
-
+// Plugins
 @import '../fonts/feather/feather';
-@import '~flatpickr/dist/flatpickr.min';
-@import '~quill/dist/quill.core';
-@import '~highlightjs/styles/vs2015';
-@import '~tippy.js/animations/scale';
+@import '~tippy.js/dist/tippy';
+// @import '~tippy.js/animations/scale';
 @import '~tippy.js/animations/shift-away';
 // @import 'reports_kit/application';
 
@@ -28,5 +26,9 @@
 // Dashkit core
 @import 'dashkit/dashkit';
 
+// Simple Form - Bootstrap
+@import 'simple_form-bootstrap/simple_form-bootstrap';
+
 // Custom core
+@import '~@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4';
 @import 'user';

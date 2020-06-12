@@ -1,0 +1,73 @@
+  <div class="col-12 col-xl-7">
+    <!-- Phone Values -->
+    <div class="card">
+      <div class="card-body">
+        <% @person.phone_numbers do |phone_number| %>
+          <!-- List group -->
+          <div class="list-group list-group-flush my-n3">
+            <% @person_show_values[:phone_numbers].each do |value| %>
+              <div class="list-group-item">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <!-- Title -->
+                    <h5 class="mb-0 text-muted">
+                      <%= value[1] %>
+                    </h5>
+                  </div>
+                  <div class="col-auto">
+                    <!-- Value -->
+                    <% if @person.phone_numbers %>
+                    <p class="small">
+                      <%= @person.phone_numbers.send(value[0]) %>
+                    </p>
+                    <% end %>
+                  </div>
+                </div> <!-- / .row -->
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Email Values -->
+    <div class="card">
+      <div class="card-body">
+
+        <!-- List group -->
+        <div class="list-group list-group-flush my-n3">
+          <% @person_show_values[:email_addresses].each do |value| %>
+          <div class="list-group-item">
+
+            <div class="row align-items-center">
+              <div class="col">
+
+                <!-- Title -->
+                <h5 class="mb-0 text-muted">
+                  <%= value[1] %>
+                </h5>
+
+              </div>
+              <div class="col-auto">
+
+                <!-- Value -->
+                <% if @person.email_addresses %>
+                <div class="small">
+                  <%= @person.email_addresses.send(value[0]) %>
+                </div>
+                <% end %>
+
+              </div>
+            </div> <!-- / .row -->
+
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<%= link_to 'Delete Customer', @person, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', people_path %>

@@ -12,11 +12,11 @@
   tabs: nil))
 
 = render(TableIndexComponent.new(title: title,
-  columns: [{ attribute: :id },
-    { attribute: :product_id },
-    { attribute: :product_name },
-    { attribute: :quantity },
-    { attribute: :store_transaction_party_name, label: "Customer" },
-    { attribute: :price }],
+  columns: [{ value: :id },
+    { value: :product_id },
+    { value: :product_name },
+    { value: :quantity },
+    { value: :party_name, label: "Customer" },
+    { value: :price }],
   resources: @line_items,
   restful_actions: [:delete]))

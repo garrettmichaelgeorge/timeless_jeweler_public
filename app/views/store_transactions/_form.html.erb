@@ -14,16 +14,19 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <%= f.association :party, collection: Party.all.order("actable_type DESC"), label_method: :name %>
+  <%= f.association :party, collection: Party.all.order("actable_type DESC"),
+                            label: "Customer",
+                            label_method: :name,
+                            input_html: { class: "" } %>
 
   <%= f.association :category, label_method: :name_capitalized %>
 
   <% 10.times do %>
     <div class="row">
       <%= f.simple_fields_for @store_transaction_line_item do |f| %>
-        <%= f.association :product, wrapper_html: { class: "col-8" } %>
-        <%= f.input :quantity, wrapper_html: { class: "col-2" }  %>
-        <%= f.input :price, wrapper_html: { class: "col-2" }  %>
+        <%= f.association :product, wrapper_html: { class: "col-md-8" } %>
+        <%= f.input :quantity, wrapper_html: { class: "col-md-2" }  %>
+        <%= f.input :price, wrapper_html: { class: "col-md-2" }  %>
       <% end %>
     </div>
   <% end %>

@@ -27,8 +27,6 @@ class StoreTransactionLineItem < ApplicationRecord
   scope :current_transaction, ->(store_transaction_id) { where("store_transaction_id = ?", store_transaction_id) }
   # scope :total_amount, -> { sum("price") }
 
-  def self.total
-  end
 
   # belongs_to :store_transaction, inverse_of: "line_item"
   belongs_to :store_transaction
@@ -38,16 +36,11 @@ class StoreTransactionLineItem < ApplicationRecord
   monetize :price_cents
   monetize :tax_cents
 
-  def product_id
-    self.product.id
-  end
+  delegate :name, to: :product, prefix: true
+  delegate :party_name, to: :store_transaction
+  delegate :category_name, to: :store_transaction
 
-  def product_name
-    self.product.name
+  def self.total_cents
+    current_transaction.store_transaction.total_cents
   end
-
-  def store_transaction_party_name
-    self.store_transaction.party.name
-  end
-
 end

@@ -4,11 +4,11 @@ class StoreTransactionsController < ApplicationController
   def index
     case params[:type]
     when 'sale'
-      @store_transactions = StoreTransaction.includes(:category).where(category: params[:type])
+      @store_transactions = StoreTransaction.includes(:category, :party, :store_transaction_line_items).where(category: params[:type])
     when 'order'
       @store_transactions = StoreTransaction.includes(:category).where(category: params[:type])
     else
-      @store_transactions = StoreTransaction.includes(:category).all
+      @store_transactions = StoreTransaction.includes(:category, :party).all
     end
   end
 

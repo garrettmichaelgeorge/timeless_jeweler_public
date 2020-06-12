@@ -12,10 +12,10 @@
 
 -# TODO: add the ability to make any given column values link elsewhere in the app
 = render(TableIndexComponent.new(title: title,
-  columns: [{ attribute: :id },
-    { attribute: :transaction_datetime },
-    { attribute: :category_name },
-    { attribute: :total_cents },
-    { attribute: :party_name }],
+  columns: [{ value: :id },
+    { value: :transaction_datetime },
+    { value: :category_name },
+    { value: :total },
+    { value: :party_name }],
   resources: @store_transactions,
   restful_actions: [:show, :destroy]))

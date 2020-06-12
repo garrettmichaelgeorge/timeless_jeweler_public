@@ -14,36 +14,57 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <%= f.input :title %>
-
   <div class="form-row">
+    <%= f.input :title, wrapper_html: { class: "col-md-2" } %>
     <%= f.input :first_name, wrapper_html: { class: "col" } %>
     <%= f.input :last_name, wrapper_html: { class: "col" } %>
+    <%= f.input :suffix, wrapper_html: { class: "col-md-2" } %>
   </div>
 
-  <%= f.input :suffix %>
-
-  <%= f.association :household, input_html: { class: "custom-select" }, prompt: "Select a previous household" %>
+  <!-- Households -->
+  <%= f.association :household, input_html: { class: "custom-select with-select2", id: "new-person-household-association" },
+                                prompt: "Select a previous household" %>
 
   <div class="form-row">
-    <%= f.input :ring_size, wrapper_html: { class: "col-3"} %>
-    <%= f.input :ring_size_notes, wrapper_html: { class: "col-9"} %>
+    <%= f.input :ring_size, wrapper_html: { class: "col-md-3"} %>
+    <%= f.input :ring_size_notes, wrapper_html: { class: "col-md-9"} %>
   </div>
 
   <div class="form-row">
-    <%= f.input :necklace_length, wrapper_html: { class: "col-3"} %>
-    <%= f.input :necklace_length_notes, wrapper_html: { class: "col-9"} %>
+    <%= f.input :necklace_length, wrapper_html: { class: "col-md-3 form-control-auto"} %>
+    <%= f.input :necklace_length_notes, wrapper_html: { class: "col-md-9"} %>
   </div>
 
   <%= f.input :birthday, as: :date, 
-                         start_year: Date.today.year - 90,
+                         start_year: Date.today.year - 100,
                          end_year: Date.today.year - 12,
                          input_html: { class: "custom-select" }%>
 
+  <h2 class="mt-6">Contact Info</h2>
+
+  <%= f.simple_fields_for :address do |f| %>
+    <%= f.input :address_line_1 %>
+    <%= f.input :address_line_2 %>
+    <div class="form-row">
+      <%= f.input :city, wrapper_html: { class: "col-md-6"} %>
+      <%= f.input :state, wrapper_html: { class: "col-md-4"} %>
+      <%= f.input :zip_postal_code, label: "Zip", wrapper_html: { class: "col-md-2"} %>
+    </div>
+  <% end %>
+
+  <%= f.simple_fields_for :email_addresses do |f| %>
+    <div class="form-row">
+      <%= f.input :email_address, wrapper_html: { class: "col" } %>
+    </div>
+  <% end %>
+
+  <%= f.simple_fields_for :phone_number do |f| %>
+      <%= f.input :phone_number %>
+  <% end %>
+
   <div class="form-actions">
-    <%= f.button :submit, class: "btn-primary" %>
+    <%= f.button :submit, "Submit", class: "btn-primary" %>
     <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
   </div>
-
 
 <% end %>

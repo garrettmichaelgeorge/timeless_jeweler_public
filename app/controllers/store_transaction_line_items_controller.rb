@@ -1,5 +1,6 @@
 class StoreTransactionLineItemsController < ApplicationController
   before_action :set_store_transaction_line_item, only: [:show, :edit, :update, :destroy]
+  before_action :get_store_transaction
 
   def index
     @store_transaction_line_items = StoreTransactionLineItem.all
@@ -40,7 +41,7 @@ class StoreTransactionLineItemsController < ApplicationController
     redirect_to store_transaction_line_items_path
     flash.now[:success] = 'Line Item was successfully deleted.'
   end
-  
+
   private
 
   def set_store_transaction_line_item
@@ -48,7 +49,24 @@ class StoreTransactionLineItemsController < ApplicationController
   end
 
   def store_transaction_line_item_params
-    params.require(:store_transaction_line_item).permit(:store_transaction_id, :product_id)
+    params.require(:store_transaction_line_item).permit(permitted_params)
   end
-  
+
+  def get_store_transaction
+    @store_transaction = StoreTransaction.find(params[:store_transaction_id])
+  end
+
+  def permitted_params
+    [
+      :quantity,
+      :price,
+      :store_transaction_id,
+      :product_id,
+      store_transaction: [
+        :transaction_datetime,
+        :party_id,
+        :category_id
+      ]
+    ]
+  end
 end
