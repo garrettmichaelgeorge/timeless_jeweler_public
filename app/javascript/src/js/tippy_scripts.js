@@ -1,19 +1,34 @@
-import tippy from "tippy.js";
+import tippy, {createSingleton} from 'tippy.js';
+import 'tippy.js/themes/light';
+import 'tippy.js/themes/light-border';
 
-const sidebarTemplate = document.getElementById('tippy-template-sidebar')
+const sidebarTemplate = document.getElementById('tippy-template-sidebar');
+const tippyInstances = tippy('.tippy-instance');
+const singleton = createSingleton(tippyInstances, {
+  delay: [0, 500],
+  duration: [400, 250],
+  animation: 'shift-away',
+  inertia: true,
+  moveTransition: 'transform 0.2s ease-out',
+});
 
-tippy.setDefaultProps(
-  {delay: [50, 50]},
-  {zIndex: 9999},
-)
-
-tippy('[data-tippy-content]');
-
-tippy('#tippy-sidebar-new', {
+const sidebarButton = tippy('#tippy-sidebar-new', {
+  theme: 'light',
   content: sidebarTemplate.innerHTML,
   animation: 'shift-away',
   allowHTML: true,
   interactive: true,
+  interactiveBorder: 20,
   inertia: true,
-  arrow: true,
+  delay: [0, 400]
+});
+
+tippy.setDefaultProps(
+  {delay: [25, 25]},
+  {duration: [400, 250]},
+  {zIndex: 1060},
+  {animation: 'shift-away'},
+);
+
+tippy([singleton, sidebarButton], {
 });

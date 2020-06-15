@@ -1,4 +1,8 @@
 %div{class: card_class}
+  / Card Image: Top
+  - if image_top
+    = link_to image_top[:link_path] do
+      %img{src: image_top[:source_path], alt: image_top[:alt], class: "card-img-top"}
 
   / Card Header
   .card-header

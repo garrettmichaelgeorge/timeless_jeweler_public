@@ -34,7 +34,7 @@
   tabs: nil))
 
 .row
-  .col-12.col-xl-5
+  .col-12.col-md-5
     = render CardComponent.new do |component|
       - component.with(:header) do
         Biographical
@@ -50,7 +50,7 @@
                   / Value
                   .small= @person.send(value[0])
 
-  .col-12.col-xl-7
+  .col-12.col-md-7
     / Addresses
     = render CardComponent.new(inactive_if_empty: true) do |component|
       - component.with(:header) do
@@ -160,8 +160,8 @@
                   %td.small= humanized_money_with_symbol(st.total_cents)
                   %td.small
                     - st.products.each_with_index do |product, i|
-                      = link_to product.id, product
-                      = "| "
+                      = link_to product.id, product, data: { 'tippy-content' => product.name }, class: "tippy-instance"
+                      = "| " unless i == st.products.size - 1
 .row.justify-content-end                
   .col.col-2
     = link_to "Delete customer", person_path(@person), method: :delete, class: "btn btn-danger lift"

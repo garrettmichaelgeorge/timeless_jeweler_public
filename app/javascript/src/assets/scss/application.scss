@@ -4,11 +4,18 @@
  * Custom variables followed by Dashkit variables followed by Bootstrap variables
  * to ensure cascade of styles.
  */
+
 // Plugins
 @import '../fonts/feather/feather';
+
+// -- Tippy.js
 @import '~tippy.js/dist/tippy';
 // @import '~tippy.js/animations/scale';
 @import '~tippy.js/animations/shift-away';
+@import '~tippy.js/animations/shift-away-subtle';
+@import '~tippy.js/themes/light';
+@import '~tippy.js/themes/light-border';
+
 // @import 'reports_kit/application';
 
 // Bootstrap functions

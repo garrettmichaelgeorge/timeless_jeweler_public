@@ -1,9 +1,10 @@
 class CardComponent < ApplicationComponent
   with_content_areas :header, :body
   attr_reader :inactive, :inactive_if_empty
-  attr_accessor :card_class
+  attr_accessor :card_class, :image_top
 
-  def initialize(inactive: false, inactive_if_empty: false)
+  def initialize(image_top: nil, inactive: false, inactive_if_empty: false)
+    @image_top = image_top
     @inactive = inactive
     @inactive_if_empty = inactive_if_empty
     @card_class = %w[card]

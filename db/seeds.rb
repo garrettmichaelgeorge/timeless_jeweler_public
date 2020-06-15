@@ -16,38 +16,27 @@ puts '== Database: seeding'
 # Wipe database before adding data
 # Add any tables here that will be re-seeded
 
-puts '-- StoreTransactionLineItem.destroy_all'
-StoreTransactionLineItem.destroy_all
-ActiveRecord::Base.connection.reset_pk_sequence!(StoreTransactionLineItem.table_name)
+tables = [
+  StoreTransactionLineItem,
+  StoreTransaction,
+  StoreTransactionCategory,
+  Person,
+  Household,
+  Party,
+  ProductCategory,
+  Product,
+  Address,
+  EmailAddress,
+  PhoneNumber,
+  StateProvince
+]
 
-puts '-- StoreTransaction.destroy_all'
-StoreTransaction.destroy_all
-ActiveRecord::Base.connection.reset_pk_sequence!(StoreTransaction.table_name)
+tables.each do |t|
+  puts "-- #{t}.destroy_all"
+  t.destroy_all
+  ActiveRecord::Base.connection.reset_pk_sequence!(t.table_name)
+end
 puts ''
-
-puts '-- Person.destroy_all'
-Person.destroy_all
-ActiveRecord::Base.connection.reset_pk_sequence!(Person.table_name)
-
-puts '-- Household.destroy_all'
-Household.destroy_all
-ActiveRecord::Base.connection.reset_pk_sequence!(Household.table_name)
-
-puts '-- Party.destroy_all'
-Party.destroy_all
-ActiveRecord::Base.connection.reset_pk_sequence!(Party.table_name)
-
-puts '-- Product.destroy_all'
-Product.destroy_all
-ActiveRecord::Base.connection.reset_pk_sequence!(Product.table_name)
-
-puts '-- Address.destroy_all'
-Address.destroy_all
-ActiveRecord::Base.connection.reset_pk_sequence!(Address.table_name)
-
-puts '-- StateProvince.destroy_all'
-StateProvince.destroy_all
-ActiveRecord::Base.connection.reset_pk_sequence!(StateProvince.table_name)
 
 # ========================================================================
 # === Seed Database
@@ -71,7 +60,7 @@ end
 puts '-- robert and clara: creating'
 puts ''
 
-Person.create!(
+clara = Person.create!(
   title: 'Mrs.',
   first_name: 'Clara',
   last_name: 'Schumann',
@@ -82,7 +71,7 @@ Person.create!(
   necklace_length_notes: 'Prefers very lightweight necklaces. Too short better than too long.'
 )
 
-Person.create!(
+robert = Person.create!(
   title: 'Mr.',
   first_name: 'Robert',
   last_name: 'Schumann',
@@ -93,18 +82,12 @@ Person.create!(
   necklace_length_notes: ''
 )
 
-schumann = Household.create!(
+schumann = clara.create_household!(
   household_name: 'Schumann',
   anniversary: '1840-09-12'
 )
 
-clara = Person.find_by(first_name: 'Clara')
-clara.household_id = schumann.id
-clara.save
-
-robert = Person.find_by(first_name: 'Robert')
-robert.household_id = schumann.id
-robert.save
+schumann.people << robert
 
 # Create people
 puts '-- People with Addresses, Email Addresses, Phone Numbers: creating'
@@ -159,10 +142,18 @@ end
 puts '-- Households: creating'
 puts ''
 
-Person.first(20).each do |person|
-  person.create_household!
-  Household.create!(
-    household_name: 
+Person.last(20).each do |person|
+  person.create_household_from_last_name!
+end
+
+puts '-- ProductCategories: creating'
+puts ''
+
+product_categories = %w[watch necklace ring earring]
+
+product_categories.each do |category|
+  ProductCategory.create!(
+    name: category
   )
 end
 
@@ -171,7 +162,7 @@ puts ''
 
 750.times do |_n|
   name                  = Faker::Commerce.product_name
-  description           = Faker::Movies::StarWars.quote
+  description           = Faker::Lorem.sentence
   brand                 = Faker::Lorem.word.capitalize
   size                  = rand(2.0..11.0)
   size_unit             = 'in'
@@ -179,7 +170,7 @@ puts ''
   weight_unit           = 'oz'
   misc_measurements     = nil
   cost                  = Faker::Commerce.price(range: 0.99..50_000.00)
-  price                 = Faker::Commerce.price(range: 0.99..50_000.00)
+  price                 = cost * rand(12.0..17.0) / 10.0 # simulate profit margins
   Product.create!(
     name: name,
     description: description,
@@ -201,40 +192,31 @@ StoreTransactionCategory.create!(
   name: 'sales'
 )
 
-puts '-- StoreTransactions: creating'
+puts '-- StoreTransactions with LineItems and Products: creating'
 puts ''
 
-100.times do |_n|
-  transaction_datetime            = Faker::Date.backward(days: 300)
+300.times do |_n|
+  # Transaction attributes
+  transaction_datetime            = Faker::Date.backward(days: 365)
   store_transaction_category_id   = 1
   party_id                        = rand(Party.first.id..Party.last.id)
 
-  StoreTransaction.create!(
+  store_transaction = StoreTransaction.create!(
     transaction_datetime: transaction_datetime,
     store_transaction_category_id: store_transaction_category_id,
     party_id: party_id
   )
+  
+  rand(1..5).times do
+    store_transaction.store_transaction_line_items.create!(
+      quantity:              rand(1..10),
+      price_cents:           Money.new(rand(1000..10_000_000), 'USD'),
+      tax_cents:             0,
+      store_transaction_id:  rand(StoreTransaction.first.id..StoreTransaction.last.id),
+      product_id:            rand(Product.first.id..Product.last.id)
+    )
+  end
 end
-
-puts '-- StoreTransactionLineItems: creating'
-puts ''
-
-250.times do |_n|
-  quantity              = rand(1..10)
-  price_cents           = Money.new(rand(1000..10_000_000), 'USD')
-  tax_cents             = 0
-  store_transaction_id  = rand(StoreTransaction.first.id..StoreTransaction.last.id)
-  product_id            = rand(Product.first.id..Product.last.id)
-
-  StoreTransactionLineItem.create!(
-    quantity: quantity,
-    price_cents: price_cents,
-    tax_cents: tax_cents,
-    store_transaction_id: store_transaction_id,
-    product_id: product_id
-  )
-end
-
 
 puts '== Database: seeded'
 puts ''

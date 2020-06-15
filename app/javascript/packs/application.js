@@ -8,7 +8,8 @@ import "regenerator-runtime/runtime"
 
 // require("@rails/ujs").start()
 import Rails from "@rails/ujs"
-require("turbolinks").start()
+// require("turbolinks").start()
+import Turbolink from "turbolinks"
 require("@rails/activestorage").start()
 require("channels")
 
@@ -16,11 +17,10 @@ require("channels")
 // import "jquery/dist/jquery.slim.min"
 import "jquery"
 import "popper.js/dist/popper"
-import tippy from "tippy.js"
-import flatpickr from "flatpickr"
+// import flatpickr from "flatpickr"
 // import "dashkit/dist/assets/libs/select2/dist/js/select2.min.js"
 // import select2 from "select2"
-import "select2/dist/js/select2.full"
+// import "select2/dist/js/select2.full"
 
 // import "reports_kit/assets/javascripts/reports_kit/application.js"
 import "bootstrap/dist/js/bootstrap"
@@ -55,3 +55,4 @@ const imagePath = (name) => images(name, true)
 // createPopper(reference, popper, options);
 
 Rails.start()
+Turbolink.start()

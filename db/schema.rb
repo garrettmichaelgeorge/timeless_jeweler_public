@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_11_180046) do
+ActiveRecord::Schema.define(version: 2020_06_13_021313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,12 @@ ActiveRecord::Schema.define(version: 2020_06_11_180046) do
     t.index ["phoneable_type", "phoneable_id"], name: "index_phone_numbers_on_phoneable_type_and_phoneable_id"
   end
 
+  create_table "product_categories", force: :cascade do |t|
+    t.string "name", limit: 40
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name", limit: 40
     t.text "description"
@@ -99,6 +105,8 @@ ActiveRecord::Schema.define(version: 2020_06_11_180046) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "short_name"
     t.string "long_name"
+    t.bigint "product_categories_id"
+    t.index ["product_categories_id"], name: "index_products_on_product_categories_id"
   end
 
   create_table "state_provinces", force: :cascade do |t|
@@ -157,6 +165,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_180046) do
 
   add_foreign_key "addresses", "state_provinces"
   add_foreign_key "people", "households"
+  add_foreign_key "products", "product_categories", column: "product_categories_id"
   add_foreign_key "store_transaction_line_items", "products"
   add_foreign_key "store_transaction_line_items", "store_transactions"
   add_foreign_key "store_transactions", "parties"
