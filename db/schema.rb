@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_13_021313) do
+ActiveRecord::Schema.define(version: 2020_06_15_185854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,13 +99,15 @@ ActiveRecord::Schema.define(version: 2020_06_13_021313) do
     t.decimal "weight", precision: 7, scale: 2
     t.string "weight_unit"
     t.text "misc_measurements"
-    t.decimal "cost", precision: 10, scale: 2
-    t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "short_name"
     t.string "long_name"
     t.bigint "product_categories_id"
+    t.integer "cost_cents", default: 0, null: false
+    t.string "cost_currency", default: "USD", null: false
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "USD", null: false
     t.index ["product_categories_id"], name: "index_products_on_product_categories_id"
   end
 
@@ -128,10 +130,11 @@ ActiveRecord::Schema.define(version: 2020_06_13_021313) do
     t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "USD", null: false
     t.integer "tax_cents", default: 0, null: false
     t.string "tax_currency", default: "USD", null: false
+    t.integer "discount_cents", default: 0, null: false
+    t.string "discount_currency", default: "USD", null: false
     t.index ["product_id"], name: "index_store_transaction_line_items_on_product_id"
     t.index ["store_transaction_id"], name: "index_store_transaction_line_items_on_store_transaction_id"
   end

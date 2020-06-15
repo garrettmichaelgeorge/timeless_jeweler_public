@@ -25,8 +25,8 @@
     <div class="row">
       <%= f.simple_fields_for @store_transaction_line_item do |f| %>
         <%= f.association :product, wrapper_html: { class: "col-md-8" } %>
-        <%= f.input :quantity, wrapper_html: { class: "col-md-2" }  %>
-        <%= f.input :price, wrapper_html: { class: "col-md-2" }  %>
+        <%= f.input :quantity, wrapper_html: { class: "col" }  %>
+        <%= f.input :price, wrapper_html: { class: "col" }  %>
       <% end %>
     </div>
   <% end %>

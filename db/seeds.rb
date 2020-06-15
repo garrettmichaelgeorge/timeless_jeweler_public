@@ -169,8 +169,8 @@ puts ''
   weight                = rand(2.0..11.0)
   weight_unit           = 'oz'
   misc_measurements     = nil
-  cost                  = Faker::Commerce.price(range: 0.99..50_000.00)
-  price                 = cost * rand(12.0..17.0) / 10.0 # simulate profit margins
+  cost_cents            = Money.new(rand(10_000..1_000_0000), 'USD')
+  price_cents           = cost * rand(12.0..17.0) / 10.0 # simulate profit margins
   Product.create!(
     name: name,
     description: description,
@@ -180,8 +180,8 @@ puts ''
     weight: weight,
     weight_unit: weight_unit,
     misc_measurements: misc_measurements,
-    cost: cost,
-    price: price
+    cost_cents: cost_cents,
+    price_cents: price_cents
   )
 end
 

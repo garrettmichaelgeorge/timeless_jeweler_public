@@ -3,7 +3,8 @@
 # Table name: store_transaction_line_items
 #
 #  id                   :bigint           not null, primary key
-#  price_cents          :integer          default(0), not null
+#  discount_cents       :integer          default(0), not null
+#  discount_currency    :string           default("USD"), not null
 #  price_currency       :string           default("USD"), not null
 #  quantity             :integer
 #  tax_cents            :integer          default(0), not null

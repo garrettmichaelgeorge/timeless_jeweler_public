@@ -4,12 +4,14 @@
 #
 #  id                    :bigint           not null, primary key
 #  brand                 :string(40)
-#  cost                  :decimal(10, 2)
+#  cost_cents            :integer          default(0), not null
+#  cost_currency         :string           default("USD"), not null
 #  description           :text
 #  long_name             :string
 #  misc_measurements     :text
 #  name                  :string(40)
-#  price                 :decimal(10, 2)
+#  price_cents           :integer          default(0), not null
+#  price_currency        :string           default("USD"), not null
 #  short_name            :string
 #  size                  :decimal(7, 2)
 #  size_unit             :string
