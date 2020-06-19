@@ -23,12 +23,12 @@ tables = [
   Person,
   Household,
   Party,
-  ProductCategory,
   Product,
+  ProductCategory,
   Address,
+  StateProvince,
   EmailAddress,
-  PhoneNumber,
-  StateProvince
+  PhoneNumber
 ]
 
 tables.each do |t|
@@ -89,6 +89,9 @@ schumann = clara.create_household!(
 
 schumann.people << robert
 
+puts "clara's household is #{clara.household}"
+puts ""
+
 # Create people
 puts '-- People with Addresses, Email Addresses, Phone Numbers: creating'
 puts ''
@@ -99,9 +102,9 @@ puts ''
   last_name             = Faker::Name.last_name
   suffix                = Faker::Name.suffix
   ring_size             = rand(3.0..10.0)
-  ring_size_notes       = Faker::Movies::StarWars.quote
+  ring_size_notes       = Faker::Lorem.sentence
   necklace_length       = rand(3.0..10.0)
-  necklace_length_notes = Faker::Movies::StarWars.quote
+  necklace_length_notes = Faker::Lorem.sentence
   birthday              = Faker::Date.birthday(min_age: 25, max_age: 82)
   # Address
   address_line_1        = Faker::Address.street_address
@@ -149,9 +152,9 @@ end
 puts '-- ProductCategories: creating'
 puts ''
 
-product_categories = %w[watch necklace ring earring]
+PRODUCT_CATEGORIES = %w[watch necklace ring earring]
 
-product_categories.each do |category|
+PRODUCT_CATEGORIES.each do |category|
   ProductCategory.create!(
     name: category
   )
@@ -161,7 +164,8 @@ puts '-- Products: creating'
 puts ''
 
 750.times do |_n|
-  name                  = Faker::Commerce.product_name
+  short_name            = Faker::Commerce.product_name
+  long_name             = "#{short_name} #{Faker::Lorem.sentence}"
   description           = Faker::Lorem.sentence
   brand                 = Faker::Lorem.word.capitalize
   size                  = rand(2.0..11.0)
@@ -169,10 +173,13 @@ puts ''
   weight                = rand(2.0..11.0)
   weight_unit           = 'oz'
   misc_measurements     = nil
-  cost_cents            = Money.new(rand(10_000..1_000_0000), 'USD')
-  price_cents           = cost * rand(12.0..17.0) / 10.0 # simulate profit margins
+  cost                  = Money.new(rand(10..100_000), 'USD')
+  price                 = cost * rand(11.0..17.0) / 10.0 # simulate profit margins
+  product_category_id   = rand(1..PRODUCT_CATEGORIES.count)
+
   Product.create!(
-    name: name,
+    short_name: short_name,
+    long_name: long_name,
     description: description,
     brand: brand,
     size: size,
@@ -180,8 +187,9 @@ puts ''
     weight: weight,
     weight_unit: weight_unit,
     misc_measurements: misc_measurements,
-    cost_cents: cost_cents,
-    price_cents: price_cents
+    cost: cost,
+    price: price,
+    product_category_id: product_category_id
   )
 end
 
@@ -206,12 +214,12 @@ puts ''
     store_transaction_category_id: store_transaction_category_id,
     party_id: party_id
   )
-  
+ 
   rand(1..5).times do
-    store_transaction.store_transaction_line_items.create!(
+    store_transaction.line_items.create!(
       quantity:              rand(1..10),
-      price_cents:           Money.new(rand(1000..10_000_000), 'USD'),
       tax_cents:             0,
+      discount_cents:        0,
       store_transaction_id:  rand(StoreTransaction.first.id..StoreTransaction.last.id),
       product_id:            rand(Product.first.id..Product.last.id)
     )

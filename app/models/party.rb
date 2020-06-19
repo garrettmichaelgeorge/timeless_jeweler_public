@@ -14,11 +14,11 @@
 class Party < ApplicationRecord
   actable
 
-  scope :purchase_history, -> { joins(store_transactions: { store_transaction_line_items: :product }) }
+  scope :purchase_history, -> { joins(store_transactions: { line_items: :product }) }
 
-  has_many :store_transactions, -> { includes :store_transaction_line_items }
-  has_many :store_transaction_line_items, through: :store_transactions
-  has_many :products,                     through: :store_transaction_line_items
+  has_many :store_transactions, -> { includes :line_items }
+  has_many :products,                     through: :line_items
+  has_many :line_items, through: :store_transactions
 
   before_validation do |party|
   end
@@ -41,7 +41,7 @@ class Party < ApplicationRecord
   end
 
   def product_ids
-    store_transactions.store_transaction_line_items.product_ids
+    store_transactions.line_items.product_ids
   end
 
   

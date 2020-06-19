@@ -25,23 +25,27 @@
 #  fk_rails_...  (store_transaction_id => store_transactions.id)
 #
 class StoreTransactionLineItem < ApplicationRecord
-  scope :current_transaction, ->(store_transaction_id) { where("store_transaction_id = ?", store_transaction_id) }
+  scope :specific_transaction, ->(store_transaction_id) { joins(:product).where("store_transaction_id = ?", store_transaction_id) }
+  scope :current_transaction, ->(store_transaction_id) { joins(:product).where("store_transaction_id = ?", store_transaction_id) }
+  # scope :total_amount, -> { sum("price") }
   # scope :total_amount, -> { sum("price") }
 
 
-  # belongs_to :store_transaction, inverse_of: "line_item"
-  belongs_to :store_transaction
+  belongs_to :store_transaction, inverse_of: :line_items,
+                                 foreign_key: "store_transaction_id"
+  # belongs_to :store_transaction
   belongs_to :product
   accepts_nested_attributes_for :product
 
-  monetize :price_cents
+  monetize :discount_cents
   monetize :tax_cents
 
-  delegate :name, to: :product, prefix: true
-  delegate :party_name, to: :store_transaction
-  delegate :category_name, to: :store_transaction
+  delegate :name, :price_cents, to: :product, prefix: true
+  delegate :party_name, :category_name, to: :store_transaction
+  delegate :total, to: :store_transaction, prefix: true
 
-  def self.total_cents
-    current_transaction.store_transaction.total_cents
+  def self.total_cents(store_transaction_id)
+    specific_transaction(store_transaction_id).sum("price_cents")
   end
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_15_185854) do
+ActiveRecord::Schema.define(version: 2020_06_17_184705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(version: 2020_06_15_185854) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "name", limit: 40
     t.text "description"
     t.string "brand", limit: 40
     t.decimal "size", precision: 7, scale: 2
@@ -101,14 +100,20 @@ ActiveRecord::Schema.define(version: 2020_06_15_185854) do
     t.text "misc_measurements"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "short_name"
-    t.string "long_name"
-    t.bigint "product_categories_id"
+    t.string "short_name", limit: 40
+    t.string "long_name", limit: 255
     t.integer "cost_cents", default: 0, null: false
     t.string "cost_currency", default: "USD", null: false
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "USD", null: false
-    t.index ["product_categories_id"], name: "index_products_on_product_categories_id"
+    t.bigint "product_category_id", null: false
+    t.date "acquired_on"
+    t.string "report_number"
+    t.string "metal"
+    t.string "color"
+    t.string "clarity"
+    t.string "purity"
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
   end
 
   create_table "state_provinces", force: :cascade do |t|
@@ -168,7 +173,7 @@ ActiveRecord::Schema.define(version: 2020_06_15_185854) do
 
   add_foreign_key "addresses", "state_provinces"
   add_foreign_key "people", "households"
-  add_foreign_key "products", "product_categories", column: "product_categories_id"
+  add_foreign_key "products", "product_categories"
   add_foreign_key "store_transaction_line_items", "products"
   add_foreign_key "store_transaction_line_items", "store_transactions"
   add_foreign_key "store_transactions", "parties"

@@ -6,10 +6,10 @@
         link: @person,
         options: nil }]) %>
 
-    <%= render 'form', person: @person %>
+    <%= render 'form', product: @product %>
 
     <div class="mt-4">
-      <%= link_to "View #{@person.name}'s record", @person %> |
+      <%= link_to "View #{@product.name}'s record", @person %> |
       <%= link_to 'Back', people_path %>
     </div>
   </div>

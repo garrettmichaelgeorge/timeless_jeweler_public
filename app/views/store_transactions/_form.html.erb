@@ -23,13 +23,23 @@
 
   <% 10.times do %>
     <div class="row">
-      <%= f.simple_fields_for @store_transaction_line_item do |f| %>
-        <%= f.association :product, wrapper_html: { class: "col-md-8" } %>
+
+      <%= f.simple_fields_for @line_item do |f| %>
+        <%= f.association :product, wrapper_html: { class: "col col-md-8" } %>
         <%= f.input :quantity, wrapper_html: { class: "col" }  %>
-        <%= f.input :price, wrapper_html: { class: "col" }  %>
+
+        <%= f.input :tax_cents, label: "Tax", wrapper_html: { class: "col" } %>
       <% end %>
     </div>
   <% end %>
+  <div class="row">
+    <div class="col">
+      <div class="btn btn-primary mb-4">
+        <span class="fe fe-plus"></span>
+          Add another line item
+      </div>
+    </div>
+  </div>
 
   <%= f.button :submit, "Log transaction", class: "btn-primary" %>
   <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>

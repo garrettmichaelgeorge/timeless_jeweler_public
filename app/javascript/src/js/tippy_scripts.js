@@ -1,8 +1,8 @@
 import tippy, {createSingleton} from 'tippy.js';
-import 'tippy.js/themes/light';
-import 'tippy.js/themes/light-border';
+// import 'tippy.js/themes/light';
+// import 'tippy.js/themes/light-border';
 
-const sidebarTemplate = document.getElementById('tippy-template-sidebar');
+const sidebarTemplate = document.getElementById('tippyTemplateSidebar');
 const tippyInstances = tippy('.tippy-instance');
 const singleton = createSingleton(tippyInstances, {
   delay: [0, 500],

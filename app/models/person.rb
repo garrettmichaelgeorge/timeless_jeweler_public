@@ -42,7 +42,6 @@ class Person < ApplicationRecord
   accepts_nested_attributes_for :phone_numbers, allow_destroy: true
 
   after_initialize do |person|
-    @last_name = person.last_name
     build_party if party.nil?
   end
 
@@ -73,7 +72,9 @@ class Person < ApplicationRecord
   def create_household_from_last_name!
     # Create an associated household using the person's last name as
     # the household name unless the person already has a household
-    create_household!(household_name: @last_name) unless household
+    return household if household
+
+    create_household!(household_name: self.last_name)
   end
 
   def full_name

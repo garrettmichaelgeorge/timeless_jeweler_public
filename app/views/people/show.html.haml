@@ -9,22 +9,7 @@
     ring_size_notes: 'Notes',
     necklace_length: 'Necklace Length',
     necklace_length_notes: 'Notes',
-    birthday: 'Birthday' },
-  household: { household_id: 'ID',
-    household_name: 'Name',
-    household_member_ids: 'Member IDs',
-    household_member_names: 'Member Names' },
-  purchase_history: { store_transaction_datetime: "Date",
-    store_transaction_total_cents: "Total",
-    products: 'Products',
-    product_names: 'Names' },
-  addresses: { address_line_1: 'Address Line 1',
-    address_line_2: 'Address Line 2',
-    city: 'City',
-    state_province_name: 'State',
-    zip_postal_code: 'Zip' },
-  email_addresses: { email_address: 'Email Address' },
-  phone_numbers: { phone_number: 'Phone Number' } }
+    birthday: 'Birthday' } }
 
 = render(PageHeaderComponent.new(title: title,
   pre_title: pre_title,
@@ -155,9 +140,10 @@
                 %tr
                   -# - values[:purchase_history].keys.each do |value|
                   / Value
-                  %td.small= st.id
+                  %td.small
+                    = link_to st.id, st
                   %td.small= st.transaction_datetime
-                  %td.small= humanized_money_with_symbol(st.total_cents)
+                  %td.small= humanized_money_with_symbol(st.total)
                   %td.small
                     - st.products.each_with_index do |product, i|
                       = link_to product.id, product, data: { 'tippy-content' => product.name }, class: "tippy-instance"

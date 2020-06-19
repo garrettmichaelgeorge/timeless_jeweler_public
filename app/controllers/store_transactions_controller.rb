@@ -15,13 +15,14 @@ class StoreTransactionsController < ApplicationController
   def show
     # @store_transaction = StoreTransaction.includes(:line_items).find(params[:id])
     @store_transaction = StoreTransaction.find(params[:id])
-    @line_items = @store_transaction.store_transaction_line_items
+    @line_items = @store_transaction.line_items
     # @line_item = StoreTransactionLineItem.where(store_transaction_id: params[:id])
   end
 
   def new
     @store_transaction = StoreTransaction.new
-    @store_transaction_line_item = @store_transaction.store_transaction_line_items.build
+    @line_item = @store_transaction.line_items.build
+    @product = @line_item.build_product
   end
 
   def edit

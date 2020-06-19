@@ -15,24 +15,24 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-row">
-    <%= f.input :title, wrapper_html: { class: "col-md-2" } %>
+    <%= f.input :title, wrapper_html: { class: "col col-md-2" } %>
     <%= f.input :first_name, wrapper_html: { class: "col" } %>
     <%= f.input :last_name, wrapper_html: { class: "col" } %>
-    <%= f.input :suffix, wrapper_html: { class: "col-md-2" } %>
+    <%= f.input :suffix, wrapper_html: { class: "col col-md-2" } %>
   </div>
 
   <!-- Households -->
   <%= f.association :household, input_html: { class: "custom-select with-select2", id: "new-person-household-association" },
-                                prompt: "Select a previous household" %>
+                                prompt: "Select a household" %>
 
   <div class="form-row">
-    <%= f.input :ring_size, wrapper_html: { class: "col-md-3"} %>
-    <%= f.input :ring_size_notes, wrapper_html: { class: "col-md-9"} %>
+    <%= f.input :ring_size, wrapper_html: { class: "col col-md-3"} %>
+    <%= f.input :ring_size_notes, wrapper_html: { class: "col col-md-9"} %>
   </div>
 
   <div class="form-row">
-    <%= f.input :necklace_length, wrapper_html: { class: "col-md-3 form-control-auto"} %>
-    <%= f.input :necklace_length_notes, wrapper_html: { class: "col-md-9"} %>
+    <%= f.input :necklace_length, wrapper_html: { class: "col col-md-3 form-control-auto"} %>
+    <%= f.input :necklace_length_notes, wrapper_html: { class: "col col-md-9"} %>
   </div>
 
   <%= f.input :birthday, as: :date, 
@@ -46,20 +46,31 @@
     <%= f.input :address_line_1 %>
     <%= f.input :address_line_2 %>
     <div class="form-row">
-      <%= f.input :city, wrapper_html: { class: "col-md-6"} %>
-      <%= f.input :state, wrapper_html: { class: "col-md-4"} %>
+      <%= f.input :city, wrapper_html: { class: "col col-md-6"} %>
+      <%= f.input :state, wrapper_html: { class: "col col-md-4"} %>
       <%= f.input :zip_postal_code, label: "Zip", wrapper_html: { class: "col-md-2"} %>
     </div>
   <% end %>
 
-  <%= f.simple_fields_for :email_addresses do |f| %>
-    <div class="form-row">
-      <%= f.input :email_address, wrapper_html: { class: "col" } %>
-    </div>
+  <%= f.simple_fields_for :email_addresses do |builder| %>
+    <%= render "people/email_address_fields", f: builder %>
   <% end %>
 
+  <div class="form-row">
+    <div class="col mb-4">
+      <%= link_to_add_fields "Add email address", f, :email_addresses %>
+    </div>
+  </div>
+
   <%= f.simple_fields_for :phone_number do |f| %>
-      <%= f.input :phone_number %>
+    <%= f.label :phone_number %>
+    <div id="phoneNumberInputGroup" class="input-group mb-4 show">
+      <%= f.input_field :phone_number, class: "form-control", id: ""  %>
+      <div class="input-group-append">
+        <%= f.hidden_field :_destroy %>
+        <%= link_to "remove", "#phoneNumberInputGroup", class: "btn btn-danger remove-field", data: { toggle: "collapse" }, role: "button" %>
+      </div>
+    </div>
   <% end %>
 
   <div class="form-actions">

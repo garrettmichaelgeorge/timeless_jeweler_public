@@ -29,6 +29,12 @@
           .list-group-item
             .row.align-items-baseline
               .col
+                %dt Category
+              .col
+                %dd= @product.category_name.capitalize
+          .list-group-item
+            .row.align-items-baseline
+              .col
                 %dt Notes
               .col
                 %dd= @product.description

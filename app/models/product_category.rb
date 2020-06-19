@@ -8,4 +8,5 @@
 #  updated_at :datetime         not null
 #
 class ProductCategory < ApplicationRecord
+  has_many :products, inverse_of: :category
 end

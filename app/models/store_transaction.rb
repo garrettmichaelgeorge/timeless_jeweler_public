@@ -23,25 +23,35 @@ class StoreTransaction < ApplicationRecord
   # scope :total_amount, ->(id) { joins(:store_transaction_line_items).where(id: id).sum("store_transaction_line_items.price_cents") }
 
   belongs_to :party
-  belongs_to :category, class_name: "StoreTransactionCategory", foreign_key: "store_transaction_category_id"
-  # has_many :line_items, class_name: "StoreTransactionLineItem", inverse_of: :store_transaction, dependent: :destroy
-  has_many :store_transaction_line_items, dependent: :destroy
-  has_many :products, through: :store_transaction_line_items
-  accepts_nested_attributes_for :store_transaction_line_items, allow_destroy: true
+  belongs_to :category, class_name: "StoreTransactionCategory",
+                        foreign_key: "store_transaction_category_id"
+  has_many :line_items, class_name: "StoreTransactionLineItem",
+                        inverse_of: :store_transaction,
+                        dependent: :destroy
+  has_many :products,   through: :line_items
+
+  accepts_nested_attributes_for :line_items, allow_destroy: true
+  accepts_nested_attributes_for :products
 
   validates :party_id, null: false
   validates :store_transaction_category_id, null: false
 
   monetize :total_cents
 
-  def total_cents
-    total = store_transaction_line_items.sum("price_cents")
+  # def total_cents
+    # store_transaction_line_items.map { |li| li.product.select("price_cents").sum }
+    
     # humanized_money_with_symbol(total)
-  end
+  # end
 
   delegate :name, to: :category, prefix: true
   delegate :name, to: :party, prefix: true
+  delegate :price, to: :line_items
 
-  private
+  def total_cents
+    products.sum("price_cents")
+  end
+
+  alias store_transaction_line_items line_items
 
 end
