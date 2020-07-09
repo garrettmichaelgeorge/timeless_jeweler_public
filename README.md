@@ -1,5 +1,7 @@
 # Timeless Jeweler Web App
 
+See the demo at https://iowhlbk.herokuapp.com/
+
 This is a retail management web app that tracks business information for
 customers, products, and services. It is not a Point-of-Sale (POS) app and
 is intended for record-keeping only.
