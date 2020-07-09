@@ -44,5 +44,7 @@ yarn-debug.log*
 !.yarn/plugins
 .pnp.*
 
-# Ignore VS Code workspace files
 *.code-workspace
+.ctagsignore
+tags
+tmux.sh

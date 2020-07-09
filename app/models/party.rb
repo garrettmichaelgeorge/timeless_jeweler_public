@@ -44,8 +44,6 @@ class Party < ApplicationRecord
     store_transactions.line_items.product_ids
   end
 
-  
-
   alias party_name name
 
   # def self.purchase_history(party_id)
