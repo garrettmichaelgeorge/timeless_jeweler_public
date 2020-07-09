@@ -22,8 +22,6 @@ is intended for record-keeping only.
   Sans](https://www.myfonts.com/fonts/hanken-designco/cerebri-sans?tab=techSpecs)
   and [Feather](https://feathericons.com) icons
 
-* Dashboard
-
 ## Requirements
 
 * Ruby version 2.7.0+
