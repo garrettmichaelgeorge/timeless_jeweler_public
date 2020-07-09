@@ -4,11 +4,6 @@ This is a retail management web app that tracks business information for
 customers, products, and services. It is not a Point-of-Sale (POS) app and
 is intended for record-keeping only.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
 ## Requirements
 * Ruby version 2.7.0+
 
@@ -16,9 +11,19 @@ Things you may want to cover:
 
 1. Clone the repository
 
-```
-git clone https://github.com/garrettmichaelgeorge/timeless-jeweler
-```
+    ```
+    # bash
+
+    git clone https://github.com/garrettmichaelgeorge/timeless-jeweler
+    ```
+
+2. Install all gems listed in Gemfile
+    
+    ```
+    # bash
+
+    bundle install
+    ```
 
 2. Create the database and load the schema from schema.rb
 
