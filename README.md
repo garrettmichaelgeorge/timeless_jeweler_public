@@ -4,8 +4,36 @@ This is a retail management web app that tracks business information for
 customers, products, and services. It is not a Point-of-Sale (POS) app and
 is intended for record-keeping only.
 
+## Features
+
+* Intelligently track retail data related to customers and inventory
+  (services coming soon!)
+
+* Easily perform CRUD (create, read, update, destroy) actions using visual
+  interface
+
+* Secure authentication using
+[Devise](https://github.com/heartcombo/devise) gem
+
+* Component-based view layer using [View
+  Component](https://github.com/joelhawksley/view-component) gem
+
+* Beautiful custom Bootstrap UI using [Dashkit]() theme with [Cerebri
+  Sans](https://www.myfonts.com/fonts/hanken-designco/cerebri-sans?tab=techSpecs)
+  and [Feather](https://feathericons.com) icons
+
+* Dashboard
+
 ## Requirements
+
 * Ruby version 2.7.0+
+    
+    ```
+    # bash
+    # to check:
+
+    ruby -v
+    ```
 
 ## Installation
 
@@ -25,7 +53,7 @@ is intended for record-keeping only.
     bundle install
     ```
 
-2. Create the database and load the schema from schema.rb
+3. Create the database and load the schema from schema.rb
 
     ```
     # bash
@@ -35,7 +63,7 @@ is intended for record-keeping only.
     bin/rails db:seed # optional
     ```
 
-3. Set up Yarn
+4. Set up Yarn
 
     ```
     # bash
@@ -43,7 +71,7 @@ is intended for record-keeping only.
     yarn install
     ```
 
-4. Run the test suite
+5. Run the test suite
 
     ```
     # bash
@@ -51,7 +79,7 @@ is intended for record-keeping only.
     bin/rails test
     ```
 
-5. Start the Webpack dev server to compile assets
+6. Start the Webpack dev server to compile assets
 
     ```
     # bash
@@ -59,7 +87,7 @@ is intended for record-keeping only.
     bin/webpack-dev-server
     ```
 
-6. Start the Rails server
+7. Start the Rails server
 
     ```
     # bash
