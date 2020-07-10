@@ -29,9 +29,6 @@ is intended for record-keeping only.
 * Ruby version 2.7.0+
     
     ```
-    # bash
-    # to check:
-
     ruby -v
     ```
 
@@ -40,24 +37,18 @@ is intended for record-keeping only.
 1. Clone the repository
 
     ```
-    # bash
-
     git clone https://github.com/garrettmichaelgeorge/timeless-jeweler
     ```
 
 2. Install all gems listed in Gemfile
     
     ```
-    # bash
-
     bundle install
     ```
 
 3. Create the database and load the schema from schema.rb
 
     ```
-    # bash
-
     bin/rails db:create
     bin/rails db:schema:load
     bin/rails db:seed # optional
@@ -66,15 +57,12 @@ is intended for record-keeping only.
 4. Set up Yarn
 
     ```
-    # bash
-
     yarn install
     ```
 
 5. Run the test suite
 
     ```
-    # bash
 
     bin/rails test
     ```
@@ -82,15 +70,11 @@ is intended for record-keeping only.
 6. Start the Webpack dev server to compile assets
 
     ```
-    # bash
-
     bin/webpack-dev-server
     ```
 
 7. Start the Rails server
 
     ```
-    # bash
-
     bundle exec rails server
     ```
