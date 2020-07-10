@@ -63,7 +63,6 @@ is intended for record-keeping only.
 5. Run the test suite
 
     ```
-
     bin/rails test
     ```
 
