@@ -107,13 +107,16 @@ puts ''
   necklace_length       = rand(3.0..10.0)
   necklace_length_notes = Faker::Lorem.sentence
   birthday              = Faker::Date.birthday(min_age: 25, max_age: 82)
+
   # Address
   address_line_1        = Faker::Address.street_address
   city                  = Faker::Address.city
   state_province_id     = rand(1..50)
   zip_postal_code       = Faker::Address.zip
-  # Phone Number
+
+  # Email Address
   email_address         = Faker::Internet.unique.email
+
   # Phone Number
   phone_number          = rand(1111111111..9999999999).to_s
 
