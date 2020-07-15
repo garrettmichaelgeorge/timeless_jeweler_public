@@ -36,6 +36,7 @@ tables.each do |t|
   t.destroy_all
   ActiveRecord::Base.connection.reset_pk_sequence!(t.table_name)
 end
+
 puts ''
 
 # ========================================================================
