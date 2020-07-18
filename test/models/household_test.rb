@@ -21,9 +21,6 @@
 require 'test_helper'
 
 class HouseholdTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
   def setup
     @household = Household.new(household_name: "Schumann",
                                anniversary: "1840-01-01")

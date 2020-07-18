@@ -1,8 +1,13 @@
 require 'test_helper'
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   def setup
     @product = products(:rolex)
+    @user = users(:bob)
+
+    sign_in @user
   end
 
   test "should get index" do

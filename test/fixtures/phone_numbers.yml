@@ -14,8 +14,3 @@
 #  index_phone_numbers_on_phoneable_type_and_phoneable_id  (phoneable_type,phoneable_id)
 #
 
-one:
-  phone_number_complete: MyString
-
-two:
-  phone_number_complete: MyString

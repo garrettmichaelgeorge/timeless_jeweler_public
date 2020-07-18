@@ -76,7 +76,7 @@ class PersonTest < ActiveSupport::TestCase
 
   test "should not create new household from last name if one already exists" do
     @person.create_household_from_last_name!
-    assert_not @person.create_household_from_last_name!, "Person already has a household!"
+    assert_equal @person.household, @person.create_household_from_last_name!, "Should return the person's household if one exists"
   end
 
 end

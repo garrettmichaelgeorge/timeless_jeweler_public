@@ -24,7 +24,7 @@
 #  weight_unit         :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  product_category_id :bigint           not null
+#  product_category_id :bigint
 #
 # Indexes
 #
@@ -36,12 +36,14 @@
 #
 
 rolex:
-  name: Rolex Watch
+  short_name: Rolex Watch
   description: 1960s era men's watch
   brand: Rolex
   size: 
   size_unit: MM
   weight: 
+  weight_unit:
   misc_measurements:
-  cost: 
-  price: 
+  cost_cents: 10000
+  price_cents: 12000
+

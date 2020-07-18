@@ -1,8 +1,13 @@
 require 'test_helper'
 
 class PeopleFlowTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   def setup
     @person = people(:robert)
+    @user = users(:bob)
+
+    sign_in @user
   end
 
   test 'successful show' do

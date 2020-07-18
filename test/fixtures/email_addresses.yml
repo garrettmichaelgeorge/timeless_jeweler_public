@@ -13,9 +13,3 @@
 #
 #  index_email_addresses_on_emailable_type_and_emailable_id  (emailable_type,emailable_id)
 #
-
-one:
-  email_address: MyString
-
-two:
-  email_address: MyString

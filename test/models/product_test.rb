@@ -24,7 +24,7 @@
 #  weight_unit         :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  product_category_id :bigint           not null
+#  product_category_id :bigint
 #
 # Indexes
 #
@@ -42,12 +42,11 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test 'should create new product' do
-    @product = Product.new
+    @product = Product.new(name: "Long women's necklace")
     assert @product.save!
   end
 
   test 'should be valid' do
-    assert @product.valid?
+    assert @product.valid?, "Expected valid product to be valid"
   end
-
 end

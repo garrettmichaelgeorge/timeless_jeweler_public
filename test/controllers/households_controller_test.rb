@@ -1,8 +1,13 @@
 require 'test_helper'
 
 class HouseholdsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   def setup
     @household = households(:schumann)
+    @user = users(:bob)
+
+    sign_in @user
   end
 
 

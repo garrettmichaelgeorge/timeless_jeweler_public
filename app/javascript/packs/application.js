@@ -10,7 +10,6 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
@@ -22,8 +21,8 @@ import "regenerator-runtime/runtime"
 
 // Libraries (Theme Dependencies)
 import "popper.js";
-// import tippy, {createSingleton} from 'tippy.js';
-import "tippy.js/dist/tippy.umd"
+import tippy, {createSingleton} from 'tippy.js';
+// import "tippy.js/dist/tippy.umd"
 import "bootstrap"
 
 // Theme

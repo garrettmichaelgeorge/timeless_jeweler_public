@@ -37,14 +37,16 @@ class TableIndexComponent < ApplicationComponent
 
   def render_column(resource, column)
     # To access nested associations via a chain of method calls, send the column key as an array of symbolized methods in their call order 
-    # e.g. { :columns => { [:specific, :first_name] => "First Name" }
+    # e.g. {columns: {[:specific, :first_name] => "First Name"}
     # => @party.specific.first_name
-    # column_value = column[:value].inject(resource, :send)
+    # column_value = column[:value].reduce(resource, :send)
+
     if column[:value] == :id
       column_value = column_for_show? ? link_to(resource.id, resource) : resource.id
     else
       column_value = resource.send(column[:value])
     end
+
     format_money(column_value)
   end
 

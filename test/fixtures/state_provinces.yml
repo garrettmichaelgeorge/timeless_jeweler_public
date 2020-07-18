@@ -9,10 +9,10 @@
 #  updated_at :datetime         not null
 #
 
-one:
-  code: 
-  name: MyString
+ca:
+  code: CA
+  name: California
 
-two:
-  code: 
-  name: MyString
+or:
+  code: OR
+  name: Oregon

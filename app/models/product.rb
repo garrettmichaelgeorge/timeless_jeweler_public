@@ -24,7 +24,7 @@
 #  weight_unit         :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  product_category_id :bigint           not null
+#  product_category_id :bigint
 #
 # Indexes
 #
@@ -40,13 +40,17 @@ class Product < ApplicationRecord
   has_many :store_transaction_line_items
   belongs_to :category, class_name: "ProductCategory",
                         inverse_of: :products,
-                        foreign_key: "product_category_id"
+                        foreign_key: "product_category_id",
+                        optional: true
 
   def to_label
     "#{self.name} (#{self.price})"
   end
 
-  delegate :name, to: :category, prefix: true
+  delegate :name, to: :category,
+                  prefix: true,
+                  allow_nil: true
+                  
 
   alias_attribute :name, :short_name
 end
