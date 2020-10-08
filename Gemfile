@@ -1,18 +1,16 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby                             '2.7.1'
+ruby                             '2.7.2'
 
 # Use ActiveRecord::ActsAs to simulate Multiple Table Inheritance (MTI). Read more: https://github.com/manuelmeurer/active_record-acts_as
 # This enables type-subtype relationships between models (e.g. Party-Person/Household)
 gem 'active_record-acts_as'
 # Use Active Model has_secure_password
 gem 'bcrypt',                    '~> 3.1.7'
-# Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap',                  '>= 1.4.2', require: false
 gem 'browser'
 gem 'devise'
-# Create placeholder data
 gem 'faker',                     '2.1.2'
 gem 'haml'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -33,10 +31,8 @@ gem 'uglifier',                  '~> 3.0'
 gem 'view_component'
 gem 'webpacker',                 '~> 5.0'
 
-
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-
 
 group :development, :test do
   gem 'pry'
