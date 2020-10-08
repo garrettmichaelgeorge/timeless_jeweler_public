@@ -1,0 +1,25 @@
+  create_table "products", force: :cascade do |t|
+    t.text "description"
+    t.string "brand", limit: 40
+    t.decimal "size", precision: 7, scale: 2
+    t.string "size_unit"
+    t.decimal "weight", precision: 7, scale: 2
+    t.string "weight_unit"
+    t.text "misc_measurements"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "short_name", limit: 40
+    t.string "long_name", limit: 255
+    t.integer "cost_cents", default: 0, null: false
+    t.string "cost_currency", default: "USD", null: false
+    t.integer "price_cents", default: 0, null: false
+    t.string "price_currency", default: "USD", null: false
+    t.bigint "product_category_id"
+    t.date "acquired_on"
+    t.string "report_number"
+    t.string "metal"
+    t.string "color"
+    t.string "clarity"
+    t.string "purity"
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
+  end

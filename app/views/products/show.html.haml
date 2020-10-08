@@ -4,8 +4,8 @@
 = render(PageHeaderComponent.new(title: title,
   pre_title: pre_title,
   buttons: [{ text: 'Edit Product',
-    link: edit_product_path(@product),
-    options: nil }],
+              link: edit_product_path(@product),
+              options: nil }],
   tabs: nil))
 
 .row
@@ -31,7 +31,7 @@
               .col
                 %dt Category
               .col
-                %dd= @product.category_name.capitalize
+                %dd= ProductsHelper.display_category_for(@product)
           .list-group-item
             .row.align-items-baseline
               .col
@@ -51,6 +51,4 @@
             %h2.mb-0= humanized_money_with_symbol(@product.price)
             .col
   .col
-    Descriptions Here
-
-
+    %p= @product.description ? @product.description : 'Description Here'

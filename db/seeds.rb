@@ -15,6 +15,7 @@ puts '== Database: seeding'
 # ========================================================================
 # Wipe database before adding data
 # Add any tables here that will be re-seeded
+# Make sure tables with foreign keys are BEFORE the tables they reference
 
 tables = [
   StoreTransactionLineItem,
@@ -91,7 +92,7 @@ schumann = clara.create_household!(
 schumann.people << robert
 
 puts "clara's household is #{clara.household}"
-puts ""
+puts ''
 
 # Create people
 puts '-- People with Addresses, Email Addresses, Phone Numbers: creating'
@@ -115,10 +116,10 @@ puts ''
   zip_postal_code       = Faker::Address.zip
 
   # Email Address
-  email_address         = Faker::Internet.unique.email
+  email_address = Faker::Internet.unique.email
 
   # Phone Number
-  phone_number          = rand(1111111111..9999999999).to_s
+  phone_number = rand(1_111_111_111..9_999_999_999).to_s
 
   person = Person.create!(
     title: title,
@@ -156,7 +157,18 @@ end
 puts '-- ProductCategories: creating'
 puts ''
 
-PRODUCT_CATEGORIES = %w[watch necklace ring earring]
+PRODUCT_CATEGORIES = [
+  'ring',
+  'brooch/pin',
+  'necklace',
+  'earrings',
+  'bracelet',
+  'pendant/locket',
+  'charm',
+  'cufflink',
+  'jewelry set/parune',
+  'watch'
+].freeze
 
 PRODUCT_CATEGORIES.each do |category|
   ProductCategory.create!(
@@ -218,14 +230,14 @@ puts ''
     store_transaction_category_id: store_transaction_category_id,
     party_id: party_id
   )
- 
+
   rand(1..5).times do
     store_transaction.line_items.create!(
-      quantity:              rand(1..10),
-      tax_cents:             0,
-      discount_cents:        0,
-      store_transaction_id:  rand(StoreTransaction.first.id..StoreTransaction.last.id),
-      product_id:            rand(Product.first.id..Product.last.id)
+      quantity: rand(1..10),
+      tax_cents: 0,
+      discount_cents: 0,
+      store_transaction_id: rand(StoreTransaction.first.id..StoreTransaction.last.id),
+      product_id: rand(Product.first.id..Product.last.id)
     )
   end
 end

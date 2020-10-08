@@ -20,9 +20,5 @@ Rails.application.routes.draw do
   get       'transactions'  => 'store_transactions#index'
   get       'customers'     => 'people#index'
   get       'dashboard'     => 'static_pages#dashboard'
-  
-  # get       'parties/:actable_type' => 'parties#index'
-  # get       'households'    => redirect('/parties?actable_type=household')
-
-  # Login and Logout
+  get       'charts'        => 'static_pages#dashboard'
 end
