@@ -1,6 +1,6 @@
 import select2 from 'select2'
 
-export default function select2Script () {
+export default function initSelect2 () {
   $('.with-select2').select2({
     // theme: 'bootstrap4',
     tags: true,

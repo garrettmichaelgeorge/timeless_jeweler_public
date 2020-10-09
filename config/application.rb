@@ -8,10 +8,6 @@ ActiveSupport::Deprecation.silenced = true
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-# FIXME: the following 2 lines (origin unknown) broke the app and raised a NoMethod error
-  # def assets
-  # end
-
 module TimelessJeweler
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.

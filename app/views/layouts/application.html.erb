@@ -7,9 +7,7 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <%= render 'layouts/components/shim' %>
-
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
@@ -22,13 +20,13 @@
     <div class="container-fluid">
       <!-- Flash -->
       <% flash.each do |message_type, message| %>
-        <div id="<%= "flash_#{message_type}" %>" class="<%= flash_class(message_type) %>" role="alert">
+        <aside id="<%= "flash_#{message_type}" %>" class="<%= flash_class(message_type) %>" role="alert">
           <i class="<%= flash_icon(message_type) %>"></i>
           <%= message %>
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
+        </aside>
       <% end %>
 
       <%= yield %>
