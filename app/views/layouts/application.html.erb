@@ -2,53 +2,34 @@
 
 <!DOCTYPE html>
 <html class="" lang="en">
-<head>
-  <title><%= yield :title %></title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <%= render 'layouts/components/shim' %>
-  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-</head>
-<body class="<%= yield :body_class %>">
-  <%= render SidebarComponent.new(@browser) if user_signed_in? %>
+  <head>
+    <title><%= yield :title %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= render 'layouts/components/shim' %>
 
-  <!-- MAIN CONTENT
-    ================================================== -->
-  <main role="main" class="main-content pb-6">
-    <div class="container-fluid">
-      <!-- Flash -->
-      <% flash.each do |message_type, message| %>
-        <aside id="<%= "flash_#{message_type}" %>" class="<%= flash_class(message_type) %>" role="alert">
-          <i class="<%= flash_icon(message_type) %>"></i>
-          <%= message %>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </aside>
-      <% end %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!-- <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> -->
+    <%= javascript_packs_with_chunks_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body class="<%= yield :body_class %>">
+    <%= render SidebarComponent.new(browser: @browser) if user_signed_in? %>
 
-      <%= yield %>
+    <!-- MAIN CONTENT ================================================== -->
+    <main role="main" class="main-content pb-6">
+      <div class="container-fluid">
 
-    </div>
-  </main>
-<!-- Rails debug (development only) -->
-<% if Rails.env.development? %>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-4">
+        <% flash.each do |message_type, message| %>
+        <%= render FlashComponent.new(message_type: message_type, message: message) %>
+        <% end %>
+
+        <%= yield %>
+
       </div>
-      <div class="col-8">
-        <div class="card">
-          <div class="card-body text-white">
-            <%= debug(params) %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-<% end %>
+    </main>
 
-</body>
+    <!-- Rails debug (development only) -->
+    <%= render DebugComponent.new(params: params) if Rails.env.development? %>
+  </body>
 </html>

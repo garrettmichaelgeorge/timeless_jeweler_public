@@ -1,0 +1,13 @@
+<thead>
+  <tr>
+    <th>
+      <%= render TableCheckboxComponent.new(id: 'all', resource: resources) %>
+    </th>
+
+    <% labels_from(columns).map do |label| %>
+    <%= render TableHeaderCellComponent.new(label: label) %>
+    <% end %>
+
+    <th scope='col' colspan="<%= colspan %>"></th>
+  </tr>
+</thead>

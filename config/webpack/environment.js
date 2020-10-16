@@ -6,17 +6,17 @@ environment.config.set('output.filename', '[name].js')
 
 environment.plugins.append('Provide',
   new ProvidePlugin({
-    $: 'jquery/src/jquery',
-    jQuery: 'jquery/src/jquery',
-    jquery: 'jquery/src/jquery',
+    $: 'jquery',
+    jQuery: 'jquery',
+    jquery: 'jquery',
     'window.Tether': 'tether',
     Popper: ['popper.js', 'default'],
     ActionCable: 'actioncable'
   })
 )
 
-// environment.config.set('resolve.alias', {
-//   jquery: 'jquery/src/jquery'
-// })
+environment.config.set('resolve.alias', {
+  jquery: 'jquery/src/jquery'
+})
 
 module.exports = environment

@@ -1,0 +1,50 @@
+<%#
+  COMPONENT ATTRIBUTES
+  title
+  columns
+  resources
+  restful_actions
+%>
+
+<%= render(CardComponent.new) do |component| %>
+  <% component.with(:header) do %>
+    <%= render TableControlsComponent.new %>
+  <% end %>
+
+  <% component.with(:body) do %>
+    <div class="table-responsive" data-list="">
+      <table id="<%= title %>" class="table table-sm table-nowrap card-table table-hover">
+        <thead>
+          <tr>
+            <th>
+              <%= render TableCheckboxComponent.new(id: 'all', resource: resources) %>
+            </th>
+            <%= render TableHeadingsComponent.new(columns: columns, restful_actions: restful_actions, labels: labels) %>
+          </tr>
+        </thead>
+        <tbody class="list">
+          <% resources.each do |resource| %>
+          <tr>
+            <td>
+              <%= render TableCheckboxComponent.new(id: resource.id, resource: resource) %>
+            </td>
+            <% columns.each_with_index do |column, index| %>
+            <td class="<%= list_js_values[index]%>">
+              <%= render_column(resource, column) %>
+            </td>
+
+            <%# FIXME: %>
+            <%# %td= link_to 'Show', resource if column_for_show? %>
+
+            <td>
+              <%= link_to 'Edit', url_for(only_path: true, action: 'edit', id: resource.id) if column_for_edit? %>
+            </td>
+            <td>
+              <%= link_to 'Delete', resource, method: :delete, data: { confirm: 'Are you sure?' }, class: "danger" if column_for_destroy? %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

@@ -1,10 +1,14 @@
-<%= render partial: 'layouts/components/page_header', locals: { 
-  title: "Dashboard", 
-  pre_title: "Welcome back", 
-  action_button_text: "New Transaction", 
-  action_button_link: new_store_transaction_path,
-  action_button_option: nil 
-  } %>
+<% title = 'Dashboard' %>
+<% pre_title = 'Welcome back' %>
+<% provide(:title, title) %>
+<% provide(:body_class, '') %>
+
+<%= render(PageHeaderComponent.new(title: title,
+  pre_title: pre_title,
+  buttons: [{ text: 'New Transaction',
+    link: new_store_transaction_path,
+    options: nil }],
+    tabs: nil)) %>
 
 <!-- CARDS -->
 <div class="row">

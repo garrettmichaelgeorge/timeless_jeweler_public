@@ -1,0 +1,2 @@
+class CardDataContainerComponent < ApplicationComponent
+end

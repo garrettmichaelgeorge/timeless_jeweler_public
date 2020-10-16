@@ -47,13 +47,12 @@
               %span.fe.fe-search
 
       / Nav Items
-      - # generate nav items by iterating over @nav_item hash
       %ul.navbar-nav
-        - self.nav_items.each do |key, values_hash|
+        - nav_items.each do |key, value_hash|
           %li.nav-item
-            = link_to values_hash[:link_path], class: "nav-link" do
-              %i{class: values_hash[:icon]}
-              .d-none.d-lg-block= values_hash[:name]
+            = link_to value_hash[:link_path], class: "nav-link" do
+              %i{class: value_hash[:icon]}
+              .d-none.d-lg-block= value_hash[:name]
 
       %hr.navbar-divider.my-3
       / Reports
@@ -75,7 +74,5 @@
         .mb-4
           %button#tippy-sidebar-new.btn.btn-outline-primary.btn-large.rounded-circle{data_tippy_content: ""}
             %i.fe.fe-plus
-      / "New" dropup menu
       = render TippyTemplateSidebarComponent.new
-      / User widget
-      = render partial: "layouts/components/user_widget"
+      = render UserWidgetComponent.new

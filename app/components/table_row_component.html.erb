@@ -1,0 +1,18 @@
+<tr>
+  <td>
+    <%= render TableCheckboxComponent.new(id: resource.id, resource: resource) %>
+  </td>
+
+  <% columns.each_with_index do |column, index| %>
+  <td class="">
+    <%= render_cell(resource, column) %>
+  </td>
+  <% end %>
+
+  <td>
+    <%= link_to 'Edit', url_for(only_path: true, action: 'edit', id: resource.id) if column_for_edit? %>
+  </td>
+  <td>
+    <%= link_to 'Delete', resource, method: :delete, data: { confirm: 'Are you sure?' }, class: "danger" if column_for_destroy? %>
+  </td>
+</tr>

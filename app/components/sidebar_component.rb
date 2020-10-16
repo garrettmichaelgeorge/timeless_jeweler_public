@@ -1,15 +1,10 @@
 class SidebarComponent < ApplicationComponent
-  # attr_accessor :nav_items, :reports
-
-  def initialize(browser)
+  def initialize(browser:)
     @browser = browser
-    @nav_items = {}
-    @reports = {}
-    @sidebar_class = ""
   end
 
   def nav_items
-    @nav_items = {
+    {
       dashboard: {
         name: 'Dashboard',
         icon: 'fe fe-home',
@@ -47,13 +42,14 @@ class SidebarComponent < ApplicationComponent
   end
 
   def sidebar_class
-    puts "@browser is #{@browser}"
-    if @browser.device.tablet?
-      puts "\tI'm mobile!"
-      @sidebar_class = "navbar navbar-vertical navbar-vertical-sm fixed-left navbar-expand-md navbar-dark navbar-vibrant"
+    if browser.device.tablet?
+      'navbar navbar-vertical navbar-vertical-sm fixed-left navbar-expand-md navbar-dark navbar-vibrant'
     else
-      puts "\tI'm not mobile!"
-      @sidebar_class = "navbar navbar-vertical fixed-left navbar-expand-md navbar-light"
+      'navbar navbar-vertical fixed-left navbar-expand-md navbar-light'
     end
   end
+
+  private
+
+  attr_reader :browser
 end

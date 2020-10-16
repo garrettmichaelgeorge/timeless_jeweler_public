@@ -1,0 +1,2 @@
+class TableControlsComponent < ApplicationComponent
+end

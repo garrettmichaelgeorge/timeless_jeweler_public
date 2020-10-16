@@ -3,47 +3,35 @@
 # Table name: products
 #
 #  id                  :bigint           not null, primary key
-#  acquired_on         :date
-#  brand               :string(40)
-#  clarity             :string
-#  color               :string
 #  cost_cents          :integer          default(0), not null
 #  cost_currency       :string           default("USD"), not null
 #  description         :text
-#  long_name           :string(255)
-#  metal               :string
-#  misc_measurements   :text
+#  name                :string(40)       not null
+#  notes               :text
 #  price_cents         :integer          default(0), not null
 #  price_currency      :string           default("USD"), not null
-#  purity              :string
-#  report_number       :string
-#  short_name          :string(40)
-#  size                :decimal(7, 2)
-#  size_unit           :string
-#  weight              :decimal(7, 2)
-#  weight_unit         :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
-#  product_category_id :bigint
+#  product_category_id :bigint           not null
+#  product_style_id    :bigint           not null
 #
 # Indexes
 #
 #  index_products_on_product_category_id  (product_category_id)
+#  index_products_on_product_style_id     (product_style_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (product_category_id => product_categories.id)
+#  fk_rails_...  (product_style_id => product_styles.id)
 #
 
 rolex:
-  short_name: Rolex Watch
+  name: Rolex Watch
   description: 1960s era men's watch
-  brand: Rolex
-  size: 
-  size_unit: MM
-  weight: 
-  weight_unit:
-  misc_measurements:
+  category: watch
+  style: mid_century_modern
+  notes:
   cost_cents: 10000
   price_cents: 12000
 

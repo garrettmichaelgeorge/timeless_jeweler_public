@@ -14,23 +14,17 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <%= f.input :short_name%>
+  <%= f.input :name%>
 
-  <%= f.input :long_name%>
+  <%= f.input :description %>
 
-  <%= f.input :brand %>
+  <%= f.input :category %>
+
+  <%= f.input :style %>
 
   <%= f.input :cost %>
 
   <%= f.input :price %>
-
-  <%= f.input :size %>
-
-  <%= f.input :size_unit %>
-
-  <%= f.input :weight %>
-
-  <%= f.input :weight_unit %>
 
   <%= f.button :submit, class: "btn-primary" %>
   <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_17_212210) do
+ActiveRecord::Schema.define(version: 2020_10_15_002102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,24 @@ ActiveRecord::Schema.define(version: 2020_07_17_212210) do
     t.bigint "state_province_id", null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
     t.index ["state_province_id"], name: "index_addresses_on_state_province_id"
+  end
+
+  create_table "diamond_clarities", force: :cascade do |t|
+    t.string "grade", limit: 4, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "diamond_colors", force: :cascade do |t|
+    t.string "grade", limit: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "diamond_cuts", force: :cascade do |t|
+    t.string "grade", limit: 9, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "email_addresses", force: :cascade do |t|
@@ -90,30 +108,27 @@ ActiveRecord::Schema.define(version: 2020_07_17_212210) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "products", force: :cascade do |t|
-    t.text "description"
-    t.string "brand", limit: 40
-    t.decimal "size", precision: 7, scale: 2
-    t.string "size_unit"
-    t.decimal "weight", precision: 7, scale: 2
-    t.string "weight_unit"
-    t.text "misc_measurements"
+  create_table "product_styles", force: :cascade do |t|
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "short_name", limit: 40
-    t.string "long_name", limit: 255
+    t.index ["name"], name: "index_product_styles_on_name", unique: true
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name", limit: 40, null: false
     t.integer "cost_cents", default: 0, null: false
     t.string "cost_currency", default: "USD", null: false
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "USD", null: false
-    t.bigint "product_category_id"
-    t.date "acquired_on"
-    t.string "report_number"
-    t.string "metal"
-    t.string "color"
-    t.string "clarity"
-    t.string "purity"
+    t.bigint "product_category_id", null: false
+    t.text "notes"
+    t.bigint "product_style_id", null: false
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
+    t.index ["product_style_id"], name: "index_products_on_product_style_id"
   end
 
   create_table "state_provinces", force: :cascade do |t|
@@ -174,6 +189,7 @@ ActiveRecord::Schema.define(version: 2020_07_17_212210) do
   add_foreign_key "addresses", "state_provinces"
   add_foreign_key "people", "households"
   add_foreign_key "products", "product_categories"
+  add_foreign_key "products", "product_styles"
   add_foreign_key "store_transaction_line_items", "products"
   add_foreign_key "store_transaction_line_items", "store_transactions"
   add_foreign_key "store_transactions", "parties"

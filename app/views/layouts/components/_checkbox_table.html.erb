@@ -1,13 +1,21 @@
 <!-- Checkbox (Table Header) -->
-
-  <% id == 'all' ? input_class_helper = "-all" : input_class_helper = "" %>
-  <% id = id.to_s.capitalize %>
-  <% checkbox_name = "#{collection}Select" %>
-  <% checkbox_name_with_id = "#{collection}Select#{id}" %>
-  <% input_class = "list-check-box#{input_class_helper} custom-control-input" %>
+<% id == 'all' ? input_class_helper = "-all" : input_class_helper = "" %>
+<% id = id.to_s.capitalize %>
+<% checkbox_name = "#{collection}Select" %>
+<% checkbox_name_with_id = "#{collection}Select#{id}" %>
+<% input_class = "list-check-box#{input_class_helper} custom-control-input" %>
 
 <div class="custom-control custom-checkbox table-checkbox">
-  <input type="checkbox" class="<%= input_class %>" name="<%= checkbox_name %>"
-    id="<%= checkbox_name_with_id %>">
-  <label class="custom-control-label" for="<%= checkbox_name_with_id %>">&nbsp;</label>
+  <input
+    type="checkbox"
+    class="<%= input_class %>"
+    name="<%= checkbox_name %>"
+    id="<%= checkbox_name_with_id %>"
+    >
+    <label
+      class="custom-control-label"
+      for="<%= checkbox_name_with_id %>"
+      >
+      &nbsp;
+    </label>
 </div>

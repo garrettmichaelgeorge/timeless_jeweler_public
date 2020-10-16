@@ -5,11 +5,13 @@
       %img{src: image_top[:source_path], alt: image_top[:alt], class: "card-img-top"}
 
   / Card Header
-  .card-header
-    %h4.card-header-title
-      = header
+  = render(CardHeaderComponent.new()) do |component|
+    = header
 
   / Card Body
-  .card-body
-    .card-text
-      = body
+  - if has_body_margin
+    .card-body
+      .card-text
+        = body
+  - else
+    = body
