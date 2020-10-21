@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_15_002102) do
+ActiveRecord::Schema.define(version: 2020_10_16_210814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,12 @@ ActiveRecord::Schema.define(version: 2020_10_15_002102) do
     t.bigint "product_style_id", null: false
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
     t.index ["product_style_id"], name: "index_products_on_product_style_id"
+  end
+
+  create_table "sources", force: :cascade do |t|
+    t.string "code", limit: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "state_provinces", force: :cascade do |t|

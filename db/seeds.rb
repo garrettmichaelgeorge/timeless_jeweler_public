@@ -240,6 +240,16 @@ PRODUCT_STYLES.each do |style|
   )
 end
 
+puts '-- Source: seeding'
+
+SOURCES = %w[E B T].freeze
+
+SOURCES.each do |code|
+  Source.create!(
+    code: code
+  )
+end
+
 puts '-- DiamondCut: seeding'
 
 DIAMOND_CUT_GRADES = [
