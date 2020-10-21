@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby                             '2.7.2'
+ruby '2.7.2'
 
 # Use ActiveRecord::ActsAs to simulate Multiple Table Inheritance (MTI). Read more: https://github.com/manuelmeurer/active_record-acts_as
 # This enables type-subtype relationships between models (e.g. Party-Person/Household)
@@ -11,26 +11,26 @@ gem 'bcrypt',                    '~> 3.1.7'
 gem 'bootsnap',                  '>= 1.4.2', require: false
 gem 'browser'
 gem 'devise'
-gem 'faker',                     '2.1.2'
+gem 'faker', '2.1.2'
 gem 'haml'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder',                  '~> 2.7'
+gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
-gem 'money-rails',               '~> 1.12'
+gem 'money-rails', '~> 1.12'
 gem 'pg'
 gem 'puma'
 gem 'rack-cors',                 '~> 0.4.1'
 gem 'rails',                     '~> 6.0.3'
 gem 'rails-controller-testing'
-gem 'rails-i18n',                '~> 6.0.0'
+gem 'rails-i18n', '~> 6.0.0'
 gem 'reports_kit'
-gem 'sass-rails',                '~> 6.0'
+gem 'sass-rails', '~> 6.0'
 gem 'simple_form'
 gem 'sprockets',                 '4.0.0'
 gem 'turbolinks',                '~> 5'
 gem 'uglifier',                  '~> 3.0'
 gem 'view_component', require: 'view_component/engine'
-gem 'webpacker',                 '~> 5.0'
+gem 'webpacker', '~> 5.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -43,10 +43,13 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'annotate'
   # Better error page. Read more: https://github.com/BetterErrors/better_errors/
-  gem 'better_errors',          '~> 2.7', '>= 2.7.1'
+  gem 'better_errors', '~> 2.7', '>= 2.7.1'
   gem 'binding_of_caller'
-  gem 'listen', '>= 3.0.5',     '< 3.2'
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
+  gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'shoulda-matchers',       '~> 4.0'
   gem 'spring',                 '2.1.0'
   gem 'spring-watcher-listen',  '~> 2.0.1'
   gem 'web-console',            '>= 3.3.0'
@@ -69,4 +72,4 @@ group :production do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
