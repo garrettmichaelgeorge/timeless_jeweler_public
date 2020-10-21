@@ -36,7 +36,9 @@ gem 'webpacker', '~> 5.0'
 # gem 'image_processing', '~> 1.2'
 
 group :development, :test do
+  gem 'cucumber-rails', require: false
   gem 'pry'
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 group :development do
@@ -45,11 +47,8 @@ group :development do
   # Better error page. Read more: https://github.com/BetterErrors/better_errors/
   gem 'better_errors', '~> 2.7', '>= 2.7.1'
   gem 'binding_of_caller'
-  gem 'cucumber-rails', require: false
-  gem 'database_cleaner'
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'shoulda-matchers',       '~> 4.0'
   gem 'spring',                 '2.1.0'
   gem 'spring-watcher-listen',  '~> 2.0.1'
   gem 'web-console',            '>= 3.3.0'
@@ -57,11 +56,12 @@ end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara',                 '>= 2.15'
-  # gem 'minitest-rails-capybara'
+  gem 'capybara', '>= 2.15'
+  gem 'database_cleaner'
   gem 'guard',                    '2.16.2'
   gem 'guard-minitest',           '2.4.6'
   gem 'minitest',                 '5.11.3'
+  # gem 'minitest-rails-capybara'
   gem 'minitest-reporters',       '1.3.8'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
