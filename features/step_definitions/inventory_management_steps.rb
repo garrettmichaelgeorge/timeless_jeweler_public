@@ -1,16 +1,24 @@
-Given(/^I am on the New Item page$/) do
+Given(/^I have started the intake process$/) do
+  visit new_product_path
+end
+
+Given(/^I have filled all required fields except for Category$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-When(/^I select a category$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+When(/^I select the Gemstone category$/) do
+  select('Gemstone', from: 'Category')
 end
 
-Then(/^I should see one of the allowed categories on the item's page$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+When(/^I submit the form$/) do
+  click_button 'Submit'
 end
 
-Given(/^I have a gemstone$/) do
+Then(/^I should see that the new item is labeled 'gemstone'$/) do
+  expect(page).to have_content('gemstone')
+end
+
+Given(/^I have a gemstone in inventory$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
@@ -22,30 +30,46 @@ When(/^I navigate to the gemstone's Edit page$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Then(/^I should not see a field to add or remove gemstones$/) do
+Then(/^I should not see a field to attach the gemstone above to a piece$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Given(/^I have a piece$/) do
+When(/^I go to edit the piece above$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-When(/^I navigate to the piece's Edit page$/) do
+Then(/^I should not see a way to add a gemstone$/) do
+  expect(page).to have_no_content('add gemstone')
+end
+
+Then(/^I should not see a way to remove gemstones$/) do
+  expect(page).to have_no_content('remove gemstone')
+end
+
+Given(/^I have selected the 'Piece' category$/) do
+  select('Piece', from: 'Category')
+end
+
+When(/^I add (\d+) gemstones to the piece above$/) do |_added|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Given(/^the gemstone is loose$/) do
+When(/^I press 'submit'$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-When(/^I include the gemstone in a sales transaction$/) do
+Then(/^I should see that the piece has (\d+) gemstones$/) do |_arg1|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Then(/^I should receive a success message$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+When(/^I try to view the inventory$/) do
+  visit products_path
 end
 
-Then(/^I should receive an error message$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+Then(/^I should see the inventory$/) do
+  page.has_table?('products')
+end
+
+Then(/^I should not be able to see the inventory$/) do
+  page.has_no_table?('products')
 end
