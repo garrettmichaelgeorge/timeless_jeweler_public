@@ -10,7 +10,7 @@ Feature: Inventory Management
   I want to record all new inventory using an intake form
 
   Background:
-    Given I have logged in
+    Given I have signed in
 
   Rule: An item can have one of three categories: Gemstone, Piece, or Miscellaneous
 

@@ -30,25 +30,25 @@ Given(/^I am a registered user$/) do
                                        password: 'pa$$word')
 end
 
-When(/^I fill in the login form$/) do
+When(/^I fill in the signin form$/) do
   fill_in 'user_email', with: 'example@example.com'
   fill_in 'user_password', with: 'pa$$word'
 end
 
-Given(/^I have logged in$/) do
+Given(/^I have signed in$/) do
   visit root_path
 
   fill_in 'user_email', with: 'example@example.com'
   fill_in 'user_password', with: 'pa$$word'
 
-  click_link_or_button 'Log in'
+  click_link_or_button 'Sign in'
 end
 
-When(/^I click on the logout button$/) do
+When(/^I click on the signout button$/) do
   click_link_or_button 'Log out'
 end
 
-Then(/^I should see that I am logged in$/) do
+Then(/^I should see that I am signed in$/) do
   expect(page).to have_content('Logged in')
 end
 
@@ -56,6 +56,6 @@ Given(/^I am not a registered user$/) do
   @unregistered_user = nil
 end
 
-Then(/^I should be (re)directed to (the) log()in( page)$/) do
-  expect(page).to have_content('Log in')
+Then(/^I should be (re)directed to( the) sign( )in( page)$/) do
+  expect(page).to have_content('Sign in')
 end

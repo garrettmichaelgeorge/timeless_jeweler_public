@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :user do
-    email_address { 'example@example.com' }
+    email { 'example@example.com' }
     password { 'pa$$word' }
 
     factory :invalid_user do
-      email_address { 'example@example' }
+      email { 'example@example' }
     end
   end
 
