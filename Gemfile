@@ -59,6 +59,7 @@ group :test do
   gem 'cucumber_factory', '2.3.1'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
+  gem 'email_spec'
   gem 'guard',                    '2.16.2'
   gem 'guard-minitest',           '2.4.6'
   gem 'minitest',                 '5.11.3'

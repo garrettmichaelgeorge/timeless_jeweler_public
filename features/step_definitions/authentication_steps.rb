@@ -5,7 +5,7 @@ end
 When(/^I fill in the signup form$/) do
   click_link_or_button 'Sign up'
 
-  fill_in 'user_email',                 with: 'tester@example.com'
+  fill_in 'user_email',                 with: 'example@example.com'
   fill_in 'user_password',              with: 'pa$$word'
   fill_in 'user_password_confirmation', with: 'pa$$word'
 
@@ -13,57 +13,49 @@ When(/^I fill in the signup form$/) do
 end
 
 When(/^I confirm the email$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  open_email('example@example.com')
+
+  visit_in_email('Confirm my account')
 end
 
 Then(/^I should see that my account is confirmed$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  message = 'Your email address has been successfully confirmed'
+
+  expect(page).to have_content(message)
 end
 
 Given(/^I am a registered user$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @registered_user = FactoryBot.create(:user,
+                                       email: 'example@example.com',
+                                       password: 'pa$$word')
 end
 
 When(/^I fill in the login form$/) do
-  fill_in 'user_email', with: 'tester@example.com'
+  fill_in 'user_email', with: 'example@example.com'
   fill_in 'user_password', with: 'pa$$word'
 end
 
 Given(/^I have logged in$/) do
   visit root_path
 
-  fill_in 'user_email', with: 'tester@example.com'
+  fill_in 'user_email', with: 'example@example.com'
   fill_in 'user_password', with: 'pa$$word'
+
+  click_link_or_button 'Log in'
 end
 
 When(/^I click on the logout button$/) do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then(/^I should be redirected to the login page$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  click_link_or_button 'Log out'
 end
 
 Then(/^I should see that I am logged in$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(page).to have_content('Logged in')
 end
 
 Given(/^I am not a registered user$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @unregistered_user = nil
 end
 
-Then(/^I should be directed to log in$/) do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then(/^I should see that I am logged in$/) do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Given(/^I am not a registered user$/) do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then(/^I should be directed to log in$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+Then(/^I should be (re)directed to (the) log()in( page)$/) do
+  expect(page).to have_content('Log in')
 end

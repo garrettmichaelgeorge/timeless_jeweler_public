@@ -654,7 +654,10 @@ CREATE TABLE public.users (
     current_sign_in_ip inet,
     last_sign_in_ip inet,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    confirmation_token character varying,
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone
 );
 
 
@@ -1278,6 +1281,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201015001857'),
 ('20201015002102'),
 ('20201016210814'),
-('20201016235621');
+('20201016235621'),
+('20201023222650');
 
 
