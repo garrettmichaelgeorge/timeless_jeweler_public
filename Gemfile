@@ -36,9 +36,7 @@ gem 'webpacker', '~> 5.0'
 # gem 'image_processing', '~> 1.2'
 
 group :development, :test do
-  gem 'cucumber-rails', require: false
   gem 'pry'
-  gem 'shoulda-matchers', '~> 4.0'
 end
 
 group :development do
@@ -57,6 +55,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'guard',                    '2.16.2'
   gem 'guard-minitest',           '2.4.6'
@@ -64,6 +63,7 @@ group :test do
   # gem 'minitest-rails-capybara'
   gem 'minitest-reporters',       '1.3.8'
   gem 'selenium-webdriver'
+  gem 'shoulda', '~> 4.0'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
