@@ -223,6 +223,69 @@ ALTER SEQUENCE public.email_addresses_id_seq OWNED BY public.email_addresses.id;
 
 
 --
+-- Name: gemstone_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.gemstone_categories (
+    id bigint NOT NULL,
+    name character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: gemstone_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.gemstone_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gemstone_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.gemstone_categories_id_seq OWNED BY public.gemstone_categories.id;
+
+
+--
+-- Name: gemstone_subcategories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.gemstone_subcategories (
+    id bigint NOT NULL,
+    name character varying(40),
+    gemstone_category_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: gemstone_subcategories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.gemstone_subcategories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gemstone_subcategories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.gemstone_subcategories_id_seq OWNED BY public.gemstone_subcategories.id;
+
+
+--
 -- Name: households; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -723,6 +786,20 @@ ALTER TABLE ONLY public.email_addresses ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
+-- Name: gemstone_categories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_categories ALTER COLUMN id SET DEFAULT nextval('public.gemstone_categories_id_seq'::regclass);
+
+
+--
+-- Name: gemstone_subcategories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_subcategories ALTER COLUMN id SET DEFAULT nextval('public.gemstone_subcategories_id_seq'::regclass);
+
+
+--
 -- Name: households id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -867,6 +944,22 @@ ALTER TABLE ONLY public.diamond_grades
 
 ALTER TABLE ONLY public.email_addresses
     ADD CONSTRAINT email_addresses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gemstone_categories gemstone_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_categories
+    ADD CONSTRAINT gemstone_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gemstone_subcategories gemstone_subcategories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_subcategories
+    ADD CONSTRAINT gemstone_subcategories_pkey PRIMARY KEY (id);
 
 
 --
@@ -1024,6 +1117,13 @@ CREATE INDEX index_email_addresses_on_emailable_type_and_emailable_id ON public.
 
 
 --
+-- Name: index_gemstone_subcategories_on_gemstone_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gemstone_subcategories_on_gemstone_category_id ON public.gemstone_subcategories USING btree (gemstone_category_id);
+
+
+--
 -- Name: index_households_on_addresses_type_and_addresses_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1170,6 +1270,14 @@ ALTER TABLE ONLY public.people
 
 
 --
+-- Name: gemstone_subcategories fk_rails_94115774e7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_subcategories
+    ADD CONSTRAINT fk_rails_94115774e7 FOREIGN KEY (gemstone_category_id) REFERENCES public.gemstone_categories(id);
+
+
+--
 -- Name: diamond_grades fk_rails_a430fb1905; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1282,6 +1390,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201015002102'),
 ('20201016210814'),
 ('20201016235621'),
-('20201023222650');
+('20201023222650'),
+('20201026201355'),
+('20201026211514');
 
 

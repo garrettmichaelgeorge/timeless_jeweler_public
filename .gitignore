@@ -49,3 +49,5 @@ yarn-debug.log*
 tags
 tmux.sh
 vendor/bundle
+erd.pdf
+models.txt
