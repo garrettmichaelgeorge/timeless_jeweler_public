@@ -6,7 +6,7 @@ Feature: Retail transaction
 
   Background:
     Given I am a registered user
-    And I have logged in
+    And I have signed in
     And I have started a new retail transaction
 
   Rule: A retail transaction consists of one or more items

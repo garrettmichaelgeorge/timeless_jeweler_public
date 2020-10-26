@@ -1,12 +1,12 @@
 Given(/^I have started a new retail transaction$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  visit new_store_transaction_path
 end
 
 Given(/^I have not added any items$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-When(/^I click the submit button$/) do
+When(/^I click (the) submit (button)$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 
