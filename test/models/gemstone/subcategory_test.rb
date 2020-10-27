@@ -19,7 +19,12 @@
 require 'test_helper'
 
 class Gemstone::SubcategoryTest < ActiveSupport::TestCase
-  should belong_to(:category)
-  should validate_presence_of(:name)
-  should validate_length_of(:name)
+  context 'associations' do
+    should belong_to(:category)
+  end
+
+  context 'validations' do
+    should validate_presence_of(:name)
+    should validate_length_of(:name)
+  end
 end

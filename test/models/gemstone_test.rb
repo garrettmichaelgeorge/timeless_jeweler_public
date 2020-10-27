@@ -16,9 +16,15 @@
 #
 #  fk_rails_...  (gemstone_subcategory_id => gemstone_subcategories.id)
 #
-class Gemstone < ApplicationRecord
-  belongs_to :subcategory, class_name: 'Gemstone::Subcategory',
-                           foreign_key: 'gemstone_subcategory_id'
-  has_one :mounting
-  validates_numericality_of :carat
+require 'test_helper'
+
+class GemstoneTest < ActiveSupport::TestCase
+  context 'associations' do
+    should belong_to(:subcategory)
+    should have_one(:mounting)
+  end
+
+  context 'validations' do
+    should validate_numericality_of(:carat)
+  end
 end

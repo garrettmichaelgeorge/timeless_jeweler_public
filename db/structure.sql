@@ -286,6 +286,38 @@ ALTER SEQUENCE public.gemstone_subcategories_id_seq OWNED BY public.gemstone_sub
 
 
 --
+-- Name: gemstones; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.gemstones (
+    id bigint NOT NULL,
+    gemstone_subcategory_id bigint NOT NULL,
+    carat numeric(5,2),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: gemstones_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.gemstones_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gemstones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.gemstones_id_seq OWNED BY public.gemstones.id;
+
+
+--
 -- Name: households; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -319,6 +351,46 @@ CREATE SEQUENCE public.households_id_seq
 --
 
 ALTER SEQUENCE public.households_id_seq OWNED BY public.households.id;
+
+
+--
+-- Name: jewelry_pieces; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.jewelry_pieces (
+    id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: jewelry_pieces_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.jewelry_pieces_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: jewelry_pieces_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.jewelry_pieces_id_seq OWNED BY public.jewelry_pieces.id;
+
+
+--
+-- Name: mountings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.mountings (
+    jewelry_piece_id bigint NOT NULL,
+    gemstone_id bigint NOT NULL
+);
 
 
 --
@@ -800,10 +872,24 @@ ALTER TABLE ONLY public.gemstone_subcategories ALTER COLUMN id SET DEFAULT nextv
 
 
 --
+-- Name: gemstones id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstones ALTER COLUMN id SET DEFAULT nextval('public.gemstones_id_seq'::regclass);
+
+
+--
 -- Name: households id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.households ALTER COLUMN id SET DEFAULT nextval('public.households_id_seq'::regclass);
+
+
+--
+-- Name: jewelry_pieces id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jewelry_pieces ALTER COLUMN id SET DEFAULT nextval('public.jewelry_pieces_id_seq'::regclass);
 
 
 --
@@ -963,11 +1049,27 @@ ALTER TABLE ONLY public.gemstone_subcategories
 
 
 --
+-- Name: gemstones gemstones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstones
+    ADD CONSTRAINT gemstones_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: households households_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.households
     ADD CONSTRAINT households_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: jewelry_pieces jewelry_pieces_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jewelry_pieces
+    ADD CONSTRAINT jewelry_pieces_pkey PRIMARY KEY (id);
 
 
 --
@@ -1124,6 +1226,13 @@ CREATE INDEX index_gemstone_subcategories_on_gemstone_category_id ON public.gems
 
 
 --
+-- Name: index_gemstones_on_gemstone_subcategory_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gemstones_on_gemstone_subcategory_id ON public.gemstones USING btree (gemstone_subcategory_id);
+
+
+--
 -- Name: index_households_on_addresses_type_and_addresses_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1142,6 +1251,20 @@ CREATE INDEX index_households_on_email_address_type_and_email_address_id ON publ
 --
 
 CREATE INDEX index_households_on_phone_numbers_type_and_phone_numbers_id ON public.households USING btree (phone_numbers_type, phone_numbers_id);
+
+
+--
+-- Name: index_mountings_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mountings_on_gemstone_id ON public.mountings USING btree (gemstone_id);
+
+
+--
+-- Name: index_mountings_on_jewelry_piece_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_mountings_on_jewelry_piece_id ON public.mountings USING btree (jewelry_piece_id);
 
 
 --
@@ -1302,6 +1425,14 @@ ALTER TABLE ONLY public.store_transaction_line_items
 
 
 --
+-- Name: gemstones fk_rails_c1d36c249a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstones
+    ADD CONSTRAINT fk_rails_c1d36c249a FOREIGN KEY (gemstone_subcategory_id) REFERENCES public.gemstone_subcategories(id);
+
+
+--
 -- Name: products fk_rails_efe167855e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1392,6 +1523,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201016235621'),
 ('20201023222650'),
 ('20201026201355'),
-('20201026211514');
+('20201026211514'),
+('20201027025910'),
+('20201027122009'),
+('20201027122712');
 
 

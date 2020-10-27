@@ -22,6 +22,8 @@ class Gemstone
                           inverse_of: :subcategories,
                           foreign_key: 'gemstone_category_id'
 
+    has_many :gemstones, inverse_of: :subcategories
+
     validates_presence_of :name
     validates_length_of :name, maximum: 40
   end
