@@ -19,7 +19,7 @@
 require 'test_helper'
 
 class Gemstone::SubcategoryTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should belong_to(:category)
+  should validate_presence_of(:name)
+  should validate_length_of(:name)
 end

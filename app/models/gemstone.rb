@@ -1,4 +1,4 @@
-module Gemstone
+class Gemstone
   def self.table_name_prefix
     'gemstone_'
   end

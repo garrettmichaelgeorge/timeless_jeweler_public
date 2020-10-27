@@ -16,6 +16,13 @@
 #
 #  fk_rails_...  (gemstone_category_id => gemstone_categories.id)
 #
-class Gemstone::Subcategory < ApplicationRecord
-  belongs_to :gemstone_category
+class Gemstone
+  class Subcategory < ApplicationRecord
+    belongs_to :category, class_name: 'Gemstone::Category',
+                          inverse_of: :subcategories,
+                          foreign_key: 'gemstone_category_id'
+
+    validates_presence_of :name
+    validates_length_of :name, maximum: 40
+  end
 end
