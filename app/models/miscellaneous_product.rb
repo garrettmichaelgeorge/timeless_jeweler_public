@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: jewelry_pieces
+# Table name: miscellaneous_products
 #
 #  id         :bigint           not null, primary key
 #  created_at :datetime         not null
@@ -9,12 +9,12 @@
 #
 # Indexes
 #
-#  index_jewelry_pieces_on_product_id  (product_id)
+#  index_miscellaneous_products_on_product_id  (product_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (product_id => products.id)
 #
-class JewelryPiece < ApplicationRecord
-  has_many :gemstones, through: :mountings
+class MiscellaneousProduct < ApplicationRecord
+  belongs_to :product
 end

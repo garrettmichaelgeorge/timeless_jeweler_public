@@ -9,6 +9,27 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: validate_exclusive_fn(bigint, integer); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.validate_exclusive_fn(product_id bigint, product_category_id integer) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $_$
+      DECLARE
+        result_var            INTEGER;
+      BEGIN
+        SELECT COALESCE(1, 0)
+            INTO result_var
+            FROM products
+           WHERE products.product_id            = $1
+             AND products.product_category_id   = $2;
+
+          RETURN result_var;
+      END
+      $_$;
+
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -360,7 +381,9 @@ ALTER SEQUENCE public.households_id_seq OWNED BY public.households.id;
 CREATE TABLE public.jewelry_pieces (
     id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    product_id bigint NOT NULL,
+    CONSTRAINT jewelry_pieces_are_exclusive_ck CHECK ((public.validate_exclusive_fn(product_id, 1) = true))
 );
 
 
@@ -381,6 +404,49 @@ CREATE SEQUENCE public.jewelry_pieces_id_seq
 --
 
 ALTER SEQUENCE public.jewelry_pieces_id_seq OWNED BY public.jewelry_pieces.id;
+
+
+--
+-- Name: loose_gemstones; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.loose_gemstones (
+    gemstone_id bigint NOT NULL,
+    product_id bigint NOT NULL,
+    CONSTRAINT loose_gemstones_are_exclusive_ck CHECK ((public.validate_exclusive_fn(product_id, 2) = true))
+);
+
+
+--
+-- Name: miscellaneous_products; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.miscellaneous_products (
+    id bigint NOT NULL,
+    product_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    CONSTRAINT miscellaneous_products_are_exclusive_ck CHECK ((public.validate_exclusive_fn(product_id, 3) = true))
+);
+
+
+--
+-- Name: miscellaneous_products_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.miscellaneous_products_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: miscellaneous_products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.miscellaneous_products_id_seq OWNED BY public.miscellaneous_products.id;
 
 
 --
@@ -893,6 +959,13 @@ ALTER TABLE ONLY public.jewelry_pieces ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: miscellaneous_products id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.miscellaneous_products ALTER COLUMN id SET DEFAULT nextval('public.miscellaneous_products_id_seq'::regclass);
+
+
+--
 -- Name: parties id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1070,6 +1143,14 @@ ALTER TABLE ONLY public.households
 
 ALTER TABLE ONLY public.jewelry_pieces
     ADD CONSTRAINT jewelry_pieces_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: miscellaneous_products miscellaneous_products_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.miscellaneous_products
+    ADD CONSTRAINT miscellaneous_products_pkey PRIMARY KEY (id);
 
 
 --
@@ -1254,6 +1335,34 @@ CREATE INDEX index_households_on_phone_numbers_type_and_phone_numbers_id ON publ
 
 
 --
+-- Name: index_jewelry_pieces_on_product_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_jewelry_pieces_on_product_id ON public.jewelry_pieces USING btree (product_id);
+
+
+--
+-- Name: index_loose_gemstones_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_loose_gemstones_on_gemstone_id ON public.loose_gemstones USING btree (gemstone_id);
+
+
+--
+-- Name: index_loose_gemstones_on_product_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_loose_gemstones_on_product_id ON public.loose_gemstones USING btree (product_id);
+
+
+--
+-- Name: index_miscellaneous_products_on_product_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_miscellaneous_products_on_product_id ON public.miscellaneous_products USING btree (product_id);
+
+
+--
 -- Name: index_mountings_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1393,11 +1502,27 @@ ALTER TABLE ONLY public.people
 
 
 --
+-- Name: miscellaneous_products fk_rails_8bf128d7a0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.miscellaneous_products
+    ADD CONSTRAINT fk_rails_8bf128d7a0 FOREIGN KEY (product_id) REFERENCES public.products(id);
+
+
+--
 -- Name: gemstone_subcategories fk_rails_94115774e7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gemstone_subcategories
     ADD CONSTRAINT fk_rails_94115774e7 FOREIGN KEY (gemstone_category_id) REFERENCES public.gemstone_categories(id);
+
+
+--
+-- Name: jewelry_pieces fk_rails_9c5563f7bd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jewelry_pieces
+    ADD CONSTRAINT fk_rails_9c5563f7bd FOREIGN KEY (product_id) REFERENCES public.products(id);
 
 
 --
@@ -1526,6 +1651,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201026211514'),
 ('20201027025910'),
 ('20201027122009'),
-('20201027122712');
+('20201027122712'),
+('20201027233045'),
+('20201027234852'),
+('20201028141119'),
+('20201028144401'),
+('20201028144501');
 
 
