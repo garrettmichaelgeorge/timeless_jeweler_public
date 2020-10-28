@@ -22,12 +22,12 @@
 #  fk_rails_...  (diamond_cut_id => diamond_cuts.id)
 #
 
-one:
-  diamond_cut: one
-  diamond_color: one
-  diamond_clarity: one
-
-two:
-  diamond_cut: two
-  diamond_color: two
-  diamond_clarity: two
+class Product
+  class Gemstone
+    class DiamondGrade < ApplicationRecord
+      belongs_to :diamond_cut
+      belongs_to :diamond_color
+      belongs_to :diamond_clarity
+    end
+  end
+end

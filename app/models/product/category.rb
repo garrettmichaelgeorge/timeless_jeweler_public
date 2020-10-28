@@ -1,11 +1,14 @@
 # == Schema Information
 #
-# Table name: sources
+# Table name: product_categories
 #
 #  id         :bigint           not null, primary key
-#  code       :string(1)        not null
+#  name       :string(40)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Source < ApplicationRecord
+class Product
+  class Category < ApplicationRecord
+    has_many :products, inverse_of: :category
+  end
 end

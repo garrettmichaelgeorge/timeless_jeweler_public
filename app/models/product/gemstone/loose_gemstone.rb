@@ -10,11 +10,12 @@
 #  index_loose_gemstones_on_gemstone_id  (gemstone_id)
 #  index_loose_gemstones_on_product_id   (product_id)
 #
-require 'test_helper'
 
-class Gemstone::LooseGemstoneTest < ActiveSupport::TestCase
-  context 'associations' do
-    should belong_to(:gemstone)
-    should belong_to(:product)
+class Product
+  class Gemstone
+    class LooseGemstone < ApplicationRecord
+      belongs_to :gemstone, inverse_of: :loose_gemstone
+      belongs_to :product
+    end
   end
 end

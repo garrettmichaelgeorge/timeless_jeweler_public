@@ -7,8 +7,13 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class DiamondClarity < ApplicationRecord
-  validates :grade, presence: true
-  validates :grade, uniqueness: true
-  validates :grade, length: { maximum: 4 }
+
+class Product
+  class Gemstone
+    class DiamondClarity < ApplicationRecord
+      validates :grade, presence: true
+      validates :grade, uniqueness: true
+      validates :grade, length: { maximum: 4 }
+    end
+  end
 end

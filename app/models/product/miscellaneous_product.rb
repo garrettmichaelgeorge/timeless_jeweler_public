@@ -15,6 +15,8 @@
 #
 #  fk_rails_...  (product_id => products.id)
 #
-class MiscellaneousProduct < ApplicationRecord
-  belongs_to :product
+class Product
+  class MiscellaneousProduct < ApplicationRecord
+    belongs_to :product
+  end
 end

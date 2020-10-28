@@ -1,15 +1,11 @@
 # == Schema Information
 #
-# Table name: diamond_colors
+# Table name: sources
 #
 #  id         :bigint           not null, primary key
-#  grade      :string(1)        not null
+#  code       :string(1)        not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
-one:
-  grade: D
-
-two:
-  grade: P
+class Product::Source < ApplicationRecord
+end

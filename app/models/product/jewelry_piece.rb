@@ -15,6 +15,9 @@
 #
 #  fk_rails_...  (product_id => products.id)
 #
-class JewelryPiece < ApplicationRecord
-  has_many :gemstones, through: :mountings
+
+class Product
+  class JewelryPiece < ApplicationRecord
+    has_many :gemstones, through: :mountings
+  end
 end

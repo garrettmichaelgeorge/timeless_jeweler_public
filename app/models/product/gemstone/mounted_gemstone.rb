@@ -10,7 +10,12 @@
 #  index_mountings_on_gemstone_id       (gemstone_id)
 #  index_mountings_on_jewelry_piece_id  (jewelry_piece_id)
 #
-class Mounting < ApplicationRecord
-  belongs_to :gemstone
-  belongs_to :jewelry_piece
+
+class Product
+  class Gemstone
+    class MountedGemstone < ApplicationRecord
+      belongs_to :gemstone
+      belongs_to :jewelry_piece
+    end
+  end
 end

@@ -11,6 +11,8 @@
 #
 #  index_product_styles_on_name  (name) UNIQUE
 #
-class ProductStyle < ApplicationRecord
-  has_many :products, inverse_of: :style
+class Product
+  class Style < ApplicationRecord
+    has_many :products, inverse_of: :style
+  end
 end
