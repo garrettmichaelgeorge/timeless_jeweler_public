@@ -13,12 +13,14 @@
 require 'test_helper'
 
 class Product
-  class Gemstone
-    class LooseGemstoneTest < ActiveSupport::TestCase
-      context 'associations' do
-        should belong_to(:gemstone)
-        should belong_to(:product)
-      end
+  class GemstoneProductTest < ActiveSupport::TestCase
+    context 'associations' do
+      should belong_to(:gemstone)
+      should belong_to(:product)
+        .conditions(product_category_id: 1)
+    end
+
+    context 'validations' do
     end
   end
 end

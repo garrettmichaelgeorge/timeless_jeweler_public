@@ -18,13 +18,16 @@
 #
 require 'test_helper'
 
-class GemstoneTest < ActiveSupport::TestCase
-  context 'associations' do
-    should belong_to(:subcategory)
-    should have_one(:mounting)
-  end
+class Product
+  class GemstoneTest < ActiveSupport::TestCase
+    context 'associations' do
+      should belong_to(:subcategory)
+      should have_one(:mounted_gemstone)
+      should have_one(:gemstone_product)
+    end
 
-  context 'validations' do
-    should validate_numericality_of(:carat)
+    context 'validations' do
+      should validate_numericality_of(:carat)
+    end
   end
 end

@@ -12,9 +12,13 @@
 #
 require 'test_helper'
 
-class MountingTest < ActiveSupport::TestCase
-  context 'associations' do
-    should belong_to(:gemstone)
-    should belong_to(:jewelry_piece)
+class Product
+  class Gemstone
+    class MountedGemstoneTest < ActiveSupport::TestCase
+      context 'associations' do
+        should belong_to(:gemstone)
+        should belong_to(:jewelry_product)
+      end
+    end
   end
 end

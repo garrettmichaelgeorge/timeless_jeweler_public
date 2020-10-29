@@ -55,6 +55,8 @@ class ProductsController < ApplicationController
 
   def permitted_params
     %i[
+      name
+      category
       creator
       cost
       price

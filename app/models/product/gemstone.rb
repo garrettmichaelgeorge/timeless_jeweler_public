@@ -18,9 +18,11 @@
 #
 class Product
   class Gemstone < ApplicationRecord
-    belongs_to :subcategory, class_name: 'Gemstone::Subcategory',
+    self.table_name = 'gemstones'
+    belongs_to :subcategory, class_name: 'Product::Gemstone::Subcategory',
                              foreign_key: 'gemstone_subcategory_id'
-    has_one :mounting
+    has_one :mounted_gemstone
+    has_one :gemstone_product, class_name: 'Product::GemstoneProduct'
     validates_numericality_of :carat
   end
 end

@@ -10,6 +10,7 @@
 class Product
   class Gemstone
     class Category < ApplicationRecord
+      self.table_name = 'gemstone_categories'
       has_many :subcategories, class_name: 'Product::Gemstone::Subcategory',
                                inverse_of: :category,
                                foreign_key: 'gemstone_subcategory_id'

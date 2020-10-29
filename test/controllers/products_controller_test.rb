@@ -3,12 +3,7 @@ require 'test_helper'
 class ProductsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-  def setup
-    @product = products(:rolex)
-    @user = users(:bob)
-
-    sign_in @user
-  end
+  def setup; end
 
   test 'should get index' do
     get products_path
@@ -35,5 +30,8 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     # post products_path
     # assert_redirected_to products_path(Product.last)
     # assert_equal 'Product was successfully created.', flash[:notice]
+  end
+
+  context 'flash' do
   end
 end

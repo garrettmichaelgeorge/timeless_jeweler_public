@@ -15,8 +15,12 @@
 #
 #  fk_rails_...  (product_id => products.id)
 #
+
 class Product
   class MiscellaneousProduct < ApplicationRecord
+    # Product subtype. Catch-all for handbags, etc. that aren't jewelry-related but are still sold in the store
+    self.table_name = 'miscellaneous_products'
+
     belongs_to :product
   end
 end

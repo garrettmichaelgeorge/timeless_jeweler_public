@@ -17,8 +17,10 @@
 #
 require 'test_helper'
 
-class MiscellaneousProductTest < ActiveSupport::TestCase
-  context 'associations' do
-    should belong_to(:product)
+class Product
+  class MiscellaneousProductTest < ActiveSupport::TestCase
+    context 'associations' do
+      should belong_to(:product)
+    end
   end
 end

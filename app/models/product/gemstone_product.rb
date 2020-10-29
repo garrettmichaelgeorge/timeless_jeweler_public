@@ -12,10 +12,10 @@
 #
 
 class Product
-  class Gemstone
-    class LooseGemstone < ApplicationRecord
-      belongs_to :gemstone, inverse_of: :loose_gemstone
-      belongs_to :product
-    end
+  class GemstoneProduct < ApplicationRecord
+    self.table_name = 'loose_gemstones'
+
+    belongs_to :gemstone, inverse_of: :gemstone_product
+    belongs_to :product, -> { where product_category: 1 }
   end
 end

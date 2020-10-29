@@ -17,7 +17,11 @@
 #
 
 class Product
-  class JewelryPiece < ApplicationRecord
-    has_many :gemstones, through: :mountings
+  class JewelryProduct < ApplicationRecord
+    self.table_name = 'jewelry_pieces'
+    has_many :mounted_gemstones, class_name: 'Product::Gemstone::MountedGemstone',
+                                 inverse_of: :jewelry_product
+
+    has_many :gemstones, through: :mounted_gemstones
   end
 end

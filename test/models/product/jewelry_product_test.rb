@@ -17,6 +17,9 @@
 #
 require 'test_helper'
 
-class JewelryPieceTest < ActiveSupport::TestCase
-  should have_many(:gemstones), through: :mountings
+class Product
+  class JewelryProductTest < ActiveSupport::TestCase
+    should have_many(:mounted_gemstones)
+    should have_many(:gemstones).through(:mounted_gemstones)
+  end
 end

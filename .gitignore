@@ -51,3 +51,4 @@ tmux.sh
 vendor/bundle
 erd.pdf
 models.txt
+*.tags
