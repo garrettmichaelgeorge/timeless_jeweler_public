@@ -14,11 +14,16 @@ Feature: Inventory Management
 
   Rule: An item can have one of three categories: Gemstone, Piece, or Miscellaneous
 
-    Example: Intake of an item
+    Example: Selecting category during intake
+      Given I have started the intake process
+      When I look at the Gemstone category field
+      Then I should see three options: Gemstone, Piece, or Miscellaneous
+
+    Example: Viewing category after successful intake
       Given I have started the intake process
       And I have filled all required fields except for Category
       When I select the Gemstone category
-      And I press 'submit'
+      And I complete the intake process
       Then I should see that the new item is labeled 'gemstone'
 
   Rule: A piece can have zero or more gemstones
@@ -36,22 +41,50 @@ Feature: Inventory Management
         | 1     | 1        |
         | 3     | 3        |
 
-  Rule: The association of gemstone with piece cannot be changed while editing: only during intake
+  Rule: A gemstone must be sold and re-acquired as a new product in order to change its status from 'mounted' to 'loose'
 
-    In order to change the association of a gemstone with a piece
+    In order to change the status of a gemstone
     and keep clear accounting,
     as a jeweler,
     I need to sell the gemstone and piece
     and re-acquire them with the new association
 
-    Example: Trying to separate a gemstone from a piece by editing its record
+    Example: Trying unsuccessfully to separate a gemstone from a piece by editing its record
       Given there is a gemstone
       And there is a piece with the gemstone above
       When I go to edit the gemstone above
       Then I should not see a way to mount the gemstone on a piece
 
-    Example: Trying to mount a gemstone by editing a piece record
+    Example: Trying unsuccessfully to mount a gemstone by editing a piece record
       Given there is a piece
       When I go to edit the piece above
       Then I should not see a way to add gemstones
       And I should not see a way to remove gemstones
+
+    Example: Changing a loose gemstone to a mounted one
+      Given there is a gemstone
+      And the gemstone above is loose
+      When I change the gemstone's status from loose to mounted
+      Then I should see that the gemstone is mounted to a jewelry piece
+      And I should see that the gemstone has been sold to 'Anonymous'
+      And I should see that the gemstone has been re-acquired from 'Anonymous'
+
+    Example: Changing a mounted gemstone to a loose one
+      Given there is a gemstone
+      And there is a piece with the gemstone above
+      When I change the gemstone's status from mounted to loose
+      Then I should see that the gemstone is loose
+      And I should see that the gemstone has been sold to 'Anonymous'
+      And I should see that the gemstone has been re-acquired from 'Anonymous'
+
+  Rule: A gemstone can be mounted on a piece or sold as a loose gemstone, but not both
+
+  Rule: A piece cannot be associated with a loose gemstone, only a mounted one
+
+  Rule: A gemstone can be a diamond or not
+
+  Rule: A gemstone that is a diamond has three additional qualities: color, cut, and clarity
+
+  Rule: A gemstone has zero or more lab reports given by gemstone laboratories
+
+  Rule: A gemstone has a category and a subcategory
