@@ -29,5 +29,9 @@ class Product
     context 'validations' do
       should validate_numericality_of(:carat)
     end
+
+    context 'attributes' do
+      should respond_to?(:carat)
+    end
   end
 end

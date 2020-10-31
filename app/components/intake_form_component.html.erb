@@ -1,0 +1,48 @@
+<%= simple_form_for resource, wrapper_mappings: {
+                                boolean:       :custom_boolean,
+                                check_boxes:   :custom_collection,
+                                date:          :custom_multi_select,
+                                datetime:      :custom_multi_select,
+                                file:          :custom_file,
+                                radio_buttons: :custom_collection,
+                                range:         :custom_range,
+                                time:          :custom_multi_select,
+                                select:        :custom_multi_select
+                                                } do |f| %>
+
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <%= f.input :name%>
+
+  <%= f.input :description %>
+
+  <%= f.association :category, input_html: { class: "",
+                                             id: "new-product-category-association" },
+                                             prompt: 'Select a category' %>
+
+  <%= f.association :style, input_html: { class: "",
+                                             id: "new-product-style-association" },
+                                         prompt: 'Select a category' %>
+
+  <%= f.input :cost_cents %>
+
+  <%= f.input :price_cents %>
+
+  <%= f.input :notes %>
+
+  <%= f.simple_fields_for :jewelry_product do |f| %>
+    <%= render IntakeForm::JewelryFieldsComponent.new(resource: resource, intake_form: f) %>
+  <% end %>
+
+  <%= f.simple_fields_for :jewelry_product do |f| %>
+    <%= render IntakeForm::MiscellaneousFieldsComponent.new(resource: resource, intake_form: f) %>
+  <% end %>
+
+  <%= f.simple_fields_for :jewelry_product do |f| %>
+    <%= render IntakeForm::GemstoneFieldsComponent.new(resource: resource, intake_form: f) %>
+  <% end %>
+
+  <%= f.button :submit, class: "btn-primary" %>
+  <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
+<% end %>

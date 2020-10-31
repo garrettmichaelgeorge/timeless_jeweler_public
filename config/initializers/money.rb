@@ -1,7 +1,4 @@
-# encoding : utf-8
-
 MoneyRails.configure do |config|
-
   # To set the default currency
   #
   config.default_currency = :usd
@@ -21,7 +18,7 @@ MoneyRails.configure do |config|
   # To handle the inclusion of validations for monetized fields
   # The default value is true
   #
-  # config.include_validations = true
+  config.include_validations = true
 
   # Default ActiveRecord migration configuration values for columns:
   #
@@ -71,16 +68,16 @@ MoneyRails.configure do |config|
   #
   # set to BigDecimal::ROUND_HALF_EVEN by default
   #
-  # config.rounding_mode = BigDecimal::ROUND_HALF_UP
+  config.rounding_mode = BigDecimal::ROUND_HALF_UP
 
   # Set default money format globally.
   # Default value is nil meaning "ignore this option".
   # Example:
   #
   config.default_format = {
-  #   no_cents_if_whole: nil,
-    symbol: "$",
-  #   sign_before_symbol: nil
+    #   no_cents_if_whole: nil,
+    symbol: '$'
+    #   sign_before_symbol: nil
   }
 
   # If you would like to use I18n localization (formatting depends on the

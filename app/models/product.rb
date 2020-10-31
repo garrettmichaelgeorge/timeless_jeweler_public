@@ -42,10 +42,29 @@ class Product < ApplicationRecord
                      foreign_key: 'product_style_id'
 
   # Subtype associations
-  has_one :jewelry_product,         class_name: 'Product::JewelryProduct'
-  has_one :miscellaneous_product,   class_name: 'Product::MiscellaneousProduct'
-  has_one :gemstone_product,        class_name: 'Product::GemstoneProduct'
-  has_one :gemstone,                through: :gemstone_product
+  has_one :jewelry_product,         class_name: 'Product::JewelryProduct',
+                                    autosave: true,
+                                    dependent: :destroy,
+                                    validate: true,
+                                    touch: true
+
+  has_one :miscellaneous_product,   class_name: 'Product::MiscellaneousProduct',
+                                    autosave: true,
+                                    dependent: :destroy,
+                                    validate: true,
+                                    touch: true
+
+  has_one :gemstone_product,        class_name: 'Product::GemstoneProduct',
+                                    autosave: true,
+                                    dependent: :destroy,
+                                    validate: true,
+                                    touch: true
+
+  has_one :gemstone,                through: :gemstone_product,
+                                    autosave: true,
+                                    dependent: :destroy,
+                                    validate: true,
+                                    touch: true
 
   # Validations
   PRODUCT_CATEGORIES.each do |category|
@@ -54,8 +73,10 @@ class Product < ApplicationRecord
 
   validates_associated(*PRODUCT_CATEGORIES)
 
+  # Validations
   def validate_exclusive(product_id, product_category_id); end
 
+  # Presenters/Decorators
   # TODO: move to decorator/presenter/helper class
   def to_label
     "#{name} (#{price})"
@@ -67,4 +88,7 @@ class Product < ApplicationRecord
 
   delegate :name, to: :style,
                   prefix: true
+
+  monetize :cost_cents, numericality: { greater_than_or_equal_to: 0 }
+  monetize :price_cents, numericality: { greater_than_or_equal_to: 0 }
 end

@@ -3,9 +3,11 @@ require_relative '../config/environment'
 require 'rails/test_help'
 require 'minitest/reporters'
 require 'minitest/autorun'
+require 'minitest/spec'
 Minitest::Reporters.use!
 
 # require 'minitest/rails/capybara'
+require 'simple_form'
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods

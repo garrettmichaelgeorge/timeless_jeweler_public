@@ -1,4 +1,4 @@
-- title = 'New Product'
+- title = 'Edit Product'
 - pre_title = 'Inventory'
 
 .row.justify-content-center
@@ -6,4 +6,4 @@
     = render PageHeaderComponent.new(title: title,
         pre_title: pre_title )
 
-    = render 'form', product: @product
+    = render IntakeFormComponent.new(resource: @product)

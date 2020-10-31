@@ -2,9 +2,10 @@
   .col-12.col-lg-10.col-xl-8
     = render partial: 'layouts/components/page_header',
       locals: { title: "Add a New Product to Inventory",
-      pre_title: "Create", 
-      action_button_text: nil, 
+      pre_title: "Create",
+      action_button_text: nil,
       action_button_link: "",
       action_button_option: nil }
 
     = render 'form', product: @product
+    = render IntakeFormComponent.new(resource: @product)

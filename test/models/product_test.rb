@@ -33,9 +33,11 @@ class ProductTest < ActiveSupport::TestCase
                           miscellaneous_product
                           gemstone_product].freeze
 
-  def setup; end
+  def setup
+    @product = FactoryBot.create(:product)
+  end
 
-  test 'should create new product' do
+  test 'creates new product' do
     @new_product = Product.new
     @new_product.name = "Long women's necklace"
     @new_product.category = Product::Category.first
@@ -46,11 +48,32 @@ class ProductTest < ActiveSupport::TestCase
   context 'associations' do
     should belong_to(:category)
     should belong_to(:style)
-    should have_one(:gemstone_product)
-    should have_one(:gemstone), through: :gemstone_product
-    should have_one(:miscellaneous_product)
-    should have_one(:jewelry_product)
     should have_many(:store_transaction_line_items)
+
+    context 'product subtypes' do
+      should have_one(:gemstone_product)
+        .dependent(:destroy)
+        .validate(true)
+        .touch(true)
+
+      should have_one(:gemstone)
+        .through(:gemstone_product)
+        .dependent(:destroy)
+        .validate(true)
+        .touch(true)
+
+      should have_one(:miscellaneous_product)
+        .dependent(:destroy)
+        .conditions('category == MISCELLANEOUS')
+        .dependent(:destroy)
+        .validate(true)
+        .touch(true)
+
+      should have_one(:jewelry_product)
+        .dependent(:destroy)
+        .validate(true)
+        .touch(true)
+    end
   end
 
   context 'validations' do
@@ -63,5 +86,15 @@ class ProductTest < ActiveSupport::TestCase
   context 'delegations' do
     should delegate_method(:name).to(:category).with_prefix
     should delegate_method(:name).to(:style).with_prefix
+  end
+
+  context 'monetize' do
+    should 'monetize price' do
+      assert_instance_of(Money, subject.price)
+    end
+
+    should 'monetize cost' do
+      assert_instance_of(Money, subject.cost)
+    end
   end
 end

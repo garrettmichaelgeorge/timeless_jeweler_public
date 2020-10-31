@@ -1,3 +1,5 @@
+<%# NOTE: This is deprecated. Use `render ProductIntakeFormComponent(resource: @product) instead` %>
+
 <%= simple_form_for @product, 
 wrapper_mappings: {
 boolean:       :custom_boolean,
@@ -11,25 +13,25 @@ time:          :custom_multi_select,
 select:        :custom_multi_select
 } do |f| %>
 
-<%= f.error_notification %>
-<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-<%= f.input :name%>
+  <%= f.input :name%>
 
-<%= f.input :description %>
+  <%= f.input :description %>
 
-<%= f.association :category, input_html: { class: "",
-                                           id: "new-product-category-association" },
-                             prompt: 'Select a category' %>
+  <%= f.association :category, input_html: { class: "",
+                                             id: "new-product-category-association" },
+                                             prompt: 'Select a category' %>
 
-<%= f.association :style, input_html: { class: "",
-                                           id: "new-product-style-association" },
-                             prompt: 'Select a category' %>
+  <%= f.association :style, input_html: { class: "",
+                                             id: "new-product-style-association" },
+                                         prompt: 'Select a category' %>
 
-<%= f.input :cost %>
+  <%= f.input :cost %>
 
-<%= f.input :price %>
+  <%= f.input :price %>
 
-<%= f.button :submit, class: "btn-primary" %>
-<%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
+  <%= f.button :submit, class: "btn-primary" %>
+  <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
 <% end %>
