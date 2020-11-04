@@ -6,8 +6,8 @@ require 'minitest/autorun'
 require 'minitest/spec'
 Minitest::Reporters.use!
 
-# require 'minitest/rails/capybara'
 require 'capybara/rails'
+require 'capybara/minitest/spec'
 require 'simple_form'
 require 'view_component/test_helpers'
 require 'view_component/test_case'
@@ -23,6 +23,16 @@ class ActiveSupport::TestCase
   # fixture false
 
   # Add more helper methods to be used by all tests here...
+end
+
+class ActionDispatch::IntegrationTest
+  include Capybara::DSL
+  include Capybara::Minitest::Assertions
+
+  teardown do
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  end
 end
 
 Shoulda::Matchers.configure do |config|

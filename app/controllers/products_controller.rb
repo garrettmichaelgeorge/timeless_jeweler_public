@@ -9,7 +9,6 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
-    @categories = Product::Category.all
     @styles = Product::Style.all
   end
 

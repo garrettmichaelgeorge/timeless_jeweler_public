@@ -17,15 +17,14 @@
 
   <%= f.input :description %>
 
-  <%= f.select :category, label_method: :category_name,
-                               input_html: { class: "",
-                                             id: "new-product-category-association" },
-                                             prompt: 'Select a category' %>
+  <%= f.input :category, as: :radio_buttons,
+                          collection: [['Jewelry', 'JEWELRY'], ['Gemstone',
+                          'GEMSTONE'], ['Miscellaneous', 'MISCELLANEOUS']] %>
 
-  <%= f.association :style, label_method: :style_name,
+  <%= f.association :style, label_method: :name,
                             input_html: { class: "",
                                              id: "new-product-style-association" },
-                                         prompt: 'Select a category' %>
+                            prompt: 'Select a style' %>
 
   <%= f.input :cost_cents %>
 
