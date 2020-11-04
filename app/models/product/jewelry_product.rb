@@ -19,6 +19,10 @@
 class Product
   class JewelryProduct < ApplicationRecord
     self.table_name = 'jewelry_pieces'
+
+    include Salable
+
+    # Associations
     has_many :mounted_gemstones, class_name: 'Product::Gemstone::MountedGemstone',
                                  inverse_of: :jewelry_product
 

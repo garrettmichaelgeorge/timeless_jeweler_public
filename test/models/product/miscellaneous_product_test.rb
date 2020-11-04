@@ -21,6 +21,7 @@ class Product
   class MiscellaneousProductTest < ActiveSupport::TestCase
     context 'associations' do
       should belong_to(:product)
+        .conditions(category: 'MISCELLANEOUS')
     end
   end
 end

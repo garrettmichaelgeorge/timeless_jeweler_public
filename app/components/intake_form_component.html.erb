@@ -17,11 +17,13 @@
 
   <%= f.input :description %>
 
-  <%= f.association :category, input_html: { class: "",
+  <%= f.select :category, label_method: :category_name,
+                               input_html: { class: "",
                                              id: "new-product-category-association" },
                                              prompt: 'Select a category' %>
 
-  <%= f.association :style, input_html: { class: "",
+  <%= f.association :style, label_method: :style_name,
+                            input_html: { class: "",
                                              id: "new-product-style-association" },
                                          prompt: 'Select a category' %>
 
@@ -32,15 +34,15 @@
   <%= f.input :notes %>
 
   <%= f.simple_fields_for :jewelry_product do |f| %>
-    <%= render IntakeForm::JewelryFieldsComponent.new(resource: resource, intake_form: f) %>
+    <%= render IntakeForm::JewelryFieldsComponent.new(resource: resource, f: f) %>
   <% end %>
 
-  <%= f.simple_fields_for :jewelry_product do |f| %>
-    <%= render IntakeForm::MiscellaneousFieldsComponent.new(resource: resource, intake_form: f) %>
+  <%= f.simple_fields_for :miscellaneous_product do |f| %>
+    <%= render IntakeForm::MiscellaneousFieldsComponent.new(resource: resource, f: f) %>
   <% end %>
 
-  <%= f.simple_fields_for :jewelry_product do |f| %>
-    <%= render IntakeForm::GemstoneFieldsComponent.new(resource: resource, intake_form: f) %>
+  <%= f.simple_fields_for :gemstone_product do |f| %>
+    <%= render IntakeForm::GemstoneFieldsComponent.new(resource: resource, f: f) %>
   <% end %>
 
   <%= f.button :submit, class: "btn-primary" %>

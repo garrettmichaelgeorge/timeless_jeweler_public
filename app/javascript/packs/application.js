@@ -12,7 +12,7 @@ import 'popper.js'
 import 'bootstrap'
 
 // Theme
-import 'dashkit/src/assets/js/dashkit'
+// import 'dashkit/src/assets/js/dashkit'
 
 // Custom
 import initApplication from 'src/js/main'

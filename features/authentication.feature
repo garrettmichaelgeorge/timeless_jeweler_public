@@ -16,11 +16,11 @@ Feature: Authentication
     When I fill in the signin form
     Then I should see that I am signed in
 
-  Scenario: Registered user logs out
+  Scenario: Registered user signs out
     Given I am a registered user
     And I have signed in
     And I visit the homepage
-    When I click on the logout button
+    When I click on the signout button
     Then I should be redirected to the signin page
 
   Rule: The application should only be available to registered users

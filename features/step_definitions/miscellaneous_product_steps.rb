@@ -1,8 +1,12 @@
-Given(/^I have a handbag$/) do
-end
+When(/^I input information for a handbag$/) do
+  @handbag = { name: "Trendy ladies' handbag",
+               description: 'Lorem ipsum sic dolor amet',
+               notes: 'My private notes about the handbag' }
 
-When(/^I specify that the product is a handbag$/) do
-  select('Handbag', from: 'Product Subcategory')
+  fill_in('Name', with: @handbag[:name])
+  fill_in('Description', with: @handbag[:description])
+  fill_in('Notes', with: @handbag[:notes])
+  step 'I specify that the product is a miscellaneous product'
 end
 
 Then(/^I should see that the product is a handbag$/) do

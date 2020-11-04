@@ -1,4 +1,4 @@
-require 'stdlib/english'
+# require 'stdlib/english'
 
 # from https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#linting-factories
 namespace :factory_bot do
@@ -12,7 +12,7 @@ namespace :factory_bot do
       end
     else
       system("bundle exec rake factory_bot:lint RAILS_ENV='test'")
-      raise if $CHILD_STATUS.exitstatus.nonzero?
+      raise if $_.exitstatus.nonzero?
     end
   end
 end

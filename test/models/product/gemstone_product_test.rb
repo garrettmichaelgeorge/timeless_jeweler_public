@@ -17,7 +17,7 @@ class Product
     context 'associations' do
       should belong_to(:gemstone)
       should belong_to(:product)
-        .conditions(product_category_id: 1)
+        .conditions(category: 'GEMSTONE')
     end
 
     context 'validations' do

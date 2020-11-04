@@ -30,8 +30,8 @@ tables = [
   DiamondCut,
   DiamondClarity,
   DiamondColor,
-  ProductStyle,
-  ProductCategory,
+  Product::Style,
+  Product::Category,
   Address,
   StateProvince,
   EmailAddress,
@@ -154,7 +154,7 @@ Person.last(20).each do |person|
   person.create_household_from_last_name!
 end
 
-puts '-- ProductCategory: seeding'
+puts '-- Product::Category: seeding'
 
 PRODUCT_CATEGORIES = [
   'ring',
@@ -170,12 +170,12 @@ PRODUCT_CATEGORIES = [
 ].freeze
 
 PRODUCT_CATEGORIES.each do |category|
-  ProductCategory.create!(
+  Product::Category.create!(
     name: category
   )
 end
 
-puts '-- ProductStyle: seeding'
+puts '-- Product::Style: seeding'
 
 PRODUCT_STYLES = [
   '21st Century',
@@ -235,7 +235,7 @@ PRODUCT_STYLES = [
 ].freeze
 
 PRODUCT_STYLES.each do |style|
-  ProductStyle.create!(
+  Product::Style.create!(
     name: style
   )
 end

@@ -19,7 +19,27 @@ require 'test_helper'
 
 class Product
   class JewelryProductTest < ActiveSupport::TestCase
-    should have_many(:mounted_gemstones)
-    should have_many(:gemstones).through(:mounted_gemstones)
+    context 'associations' do
+      should have_many(:mounted_gemstones)
+      should have_many(:gemstones).through(:mounted_gemstones)
+      should belong_to(:product)
+        .conditions(category: 'JEWELRY')
+    end
+
+    context 'delegations' do
+      delegated_methods = %i[name
+                             description
+                             notes
+                             cost
+                             price]
+      delegated_methods.each do |method|
+        should delegate_method(method).to(:product)
+      end
+    end
+
+    test "doesn't save when associated product's category is not JEWELRY" do
+      @jewelry_product = FactoryBot.build(:jewelry_product)
+      assert_not_nil @jewelry_product.product
+    end
   end
 end

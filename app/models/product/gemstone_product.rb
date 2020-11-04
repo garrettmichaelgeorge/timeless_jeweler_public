@@ -15,7 +15,8 @@ class Product
   class GemstoneProduct < ApplicationRecord
     self.table_name = 'loose_gemstones'
 
+    include Salable
+
     belongs_to :gemstone, inverse_of: :gemstone_product
-    belongs_to :product, -> { where product_category: 1 }
   end
 end

@@ -382,8 +382,7 @@ CREATE TABLE public.jewelry_pieces (
     id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    product_id bigint NOT NULL,
-    CONSTRAINT jewelry_pieces_are_exclusive_ck CHECK ((public.validate_exclusive_fn(product_id, 1) = true))
+    product_id bigint NOT NULL
 );
 
 
@@ -412,8 +411,7 @@ ALTER SEQUENCE public.jewelry_pieces_id_seq OWNED BY public.jewelry_pieces.id;
 
 CREATE TABLE public.loose_gemstones (
     gemstone_id bigint NOT NULL,
-    product_id bigint NOT NULL,
-    CONSTRAINT loose_gemstones_are_exclusive_ck CHECK ((public.validate_exclusive_fn(product_id, 2) = true))
+    product_id bigint NOT NULL
 );
 
 
@@ -425,8 +423,7 @@ CREATE TABLE public.miscellaneous_products (
     id bigint NOT NULL,
     product_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    CONSTRAINT miscellaneous_products_are_exclusive_ck CHECK ((public.validate_exclusive_fn(product_id, 3) = true))
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -564,37 +561,6 @@ ALTER SEQUENCE public.phone_numbers_id_seq OWNED BY public.phone_numbers.id;
 
 
 --
--- Name: product_categories; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.product_categories (
-    id bigint NOT NULL,
-    name character varying(40),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: product_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.product_categories_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: product_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.product_categories_id_seq OWNED BY public.product_categories.id;
-
-
---
 -- Name: product_styles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -639,9 +605,9 @@ CREATE TABLE public.products (
     cost_currency character varying DEFAULT 'USD'::character varying NOT NULL,
     price_cents integer DEFAULT 0 NOT NULL,
     price_currency character varying DEFAULT 'USD'::character varying NOT NULL,
-    product_category_id bigint NOT NULL,
     notes text,
-    product_style_id bigint NOT NULL
+    product_style_id bigint NOT NULL,
+    category character varying(20)
 );
 
 
@@ -987,13 +953,6 @@ ALTER TABLE ONLY public.phone_numbers ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- Name: product_categories id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.product_categories ALTER COLUMN id SET DEFAULT nextval('public.product_categories_id_seq'::regclass);
-
-
---
 -- Name: product_styles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1175,14 +1134,6 @@ ALTER TABLE ONLY public.people
 
 ALTER TABLE ONLY public.phone_numbers
     ADD CONSTRAINT phone_numbers_pkey PRIMARY KEY (id);
-
-
---
--- Name: product_categories product_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.product_categories
-    ADD CONSTRAINT product_categories_pkey PRIMARY KEY (id);
 
 
 --
@@ -1398,13 +1349,6 @@ CREATE UNIQUE INDEX index_product_styles_on_name ON public.product_styles USING 
 
 
 --
--- Name: index_products_on_product_category_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_products_on_product_category_id ON public.products USING btree (product_category_id);
-
-
---
 -- Name: index_products_on_product_style_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1558,14 +1502,6 @@ ALTER TABLE ONLY public.gemstones
 
 
 --
--- Name: products fk_rails_efe167855e; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.products
-    ADD CONSTRAINT fk_rails_efe167855e FOREIGN KEY (product_category_id) REFERENCES public.product_categories(id);
-
-
---
 -- Name: addresses fk_rails_fe85803a1e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1656,6 +1592,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201027234852'),
 ('20201028141119'),
 ('20201028144401'),
-('20201028144501');
+('20201028144501'),
+('20201031194123'),
+('20201103183352'),
+('20201103185250');
 
 

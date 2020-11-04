@@ -24,14 +24,15 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-require 'test_helper'
+FactoryBot.define do
+  factory :user do
+    email { 'example@example.com' }
+    password { 'pa$$word' }
+    password_confirmation { 'pa$$word' }
+    confirmed_at { Date.today }
 
-class UserTest < ActiveSupport::TestCase
-  context 'attributes' do
-
-  end
-
-  context 'validations' do
-
+    factory :invalid_user do
+      email { 'example@example' }
+    end
   end
 end

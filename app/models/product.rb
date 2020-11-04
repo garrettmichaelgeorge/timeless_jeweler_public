@@ -31,11 +31,16 @@ class Product < ApplicationRecord
                           miscellaneous_product
                           gemstone_product].freeze
 
+  # Scopes
+  scope :jewelry, -> { where category: 'JEWELRY' }
+  scope :gemstone, -> { where category: 'GEMSTONE' }
+  scope :miscellaneous, -> { where category: 'MISCELLANEOUS' }
+
+  # Callbacks
+  before_save :build_subtype
+
   # Associations
   has_many :store_transaction_line_items
-  belongs_to :category, class_name: 'Product::Category',
-                        inverse_of: :products,
-                        foreign_key: 'product_category_id'
 
   belongs_to :style, class_name: 'Product::Style',
                      inverse_of: :products,
@@ -66,15 +71,14 @@ class Product < ApplicationRecord
                                     validate: true,
                                     touch: true
 
+  accepts_nested_attributes_for :jewelry_product, :gemstone_product, :miscellaneous_product
+
   # Validations
-  PRODUCT_CATEGORIES.each do |category|
-    accepts_nested_attributes_for category, allow_destroy: true
+  validates_presence_of :name
+
+  def validate_exclusive(product_id, product_category_id)
+    # TODO
   end
-
-  validates_associated(*PRODUCT_CATEGORIES)
-
-  # Validations
-  def validate_exclusive(product_id, product_category_id); end
 
   # Presenters/Decorators
   # TODO: move to decorator/presenter/helper class
@@ -83,12 +87,24 @@ class Product < ApplicationRecord
   end
 
   # Delegations
-  delegate :name, to: :category,
-                  prefix: true
-
   delegate :name, to: :style,
                   prefix: true
 
   monetize :cost_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :price_cents, numericality: { greater_than_or_equal_to: 0 }
+
+  private
+
+  def build_subtype
+    case category
+    when 'JEWELRY'
+      build_jewelry_product if jewelry_product.nil?
+    when 'GEMSTONE'
+      build_gemstone_product if gemstone_product.nil?
+    when 'MISCELLANEOUS'
+      build_miscellaneous_product if miscellaneous_product.nil?
+    else
+      raise StandardError, 'Cannot create product subtype due to invalid category'
+    end
+  end
 end

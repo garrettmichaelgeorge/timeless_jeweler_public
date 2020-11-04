@@ -7,7 +7,10 @@ require 'minitest/spec'
 Minitest::Reporters.use!
 
 # require 'minitest/rails/capybara'
+require 'capybara/rails'
 require 'simple_form'
+require 'view_component/test_helpers'
+require 'view_component/test_case'
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods
@@ -17,6 +20,7 @@ class ActiveSupport::TestCase
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
+  # fixture false
 
   # Add more helper methods to be used by all tests here...
 end
