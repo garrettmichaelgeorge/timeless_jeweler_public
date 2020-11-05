@@ -561,6 +561,37 @@ ALTER SEQUENCE public.phone_numbers_id_seq OWNED BY public.phone_numbers.id;
 
 
 --
+-- Name: product_eras; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.product_eras (
+    id bigint NOT NULL,
+    name character varying(40),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: product_eras_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.product_eras_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: product_eras_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.product_eras_id_seq OWNED BY public.product_eras.id;
+
+
+--
 -- Name: product_styles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -953,6 +984,13 @@ ALTER TABLE ONLY public.phone_numbers ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: product_eras id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.product_eras ALTER COLUMN id SET DEFAULT nextval('public.product_eras_id_seq'::regclass);
+
+
+--
 -- Name: product_styles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1134,6 +1172,14 @@ ALTER TABLE ONLY public.people
 
 ALTER TABLE ONLY public.phone_numbers
     ADD CONSTRAINT phone_numbers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_eras product_eras_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.product_eras
+    ADD CONSTRAINT product_eras_pkey PRIMARY KEY (id);
 
 
 --
@@ -1339,6 +1385,13 @@ CREATE INDEX index_people_on_household_id ON public.people USING btree (househol
 --
 
 CREATE INDEX index_phone_numbers_on_phoneable_type_and_phoneable_id ON public.phone_numbers USING btree (phoneable_type, phoneable_id);
+
+
+--
+-- Name: index_product_eras_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_product_eras_on_name ON public.product_eras USING btree (name);
 
 
 --
@@ -1595,6 +1648,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201028144501'),
 ('20201031194123'),
 ('20201103183352'),
-('20201103185250');
+('20201103185250'),
+('20201105000549');
 
 

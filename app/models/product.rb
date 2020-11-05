@@ -2,27 +2,25 @@
 #
 # Table name: products
 #
-#  id                  :bigint           not null, primary key
-#  cost_cents          :integer          default(0), not null
-#  cost_currency       :string           default("USD"), not null
-#  description         :text
-#  name                :string(40)       not null
-#  notes               :text
-#  price_cents         :integer          default(0), not null
-#  price_currency      :string           default("USD"), not null
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  product_category_id :bigint           not null
-#  product_style_id    :bigint           not null
+#  id               :bigint           not null, primary key
+#  category         :string(20)
+#  cost_cents       :integer          default(0), not null
+#  cost_currency    :string           default("USD"), not null
+#  description      :text
+#  name             :string(40)       not null
+#  notes            :text
+#  price_cents      :integer          default(0), not null
+#  price_currency   :string           default("USD"), not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  product_style_id :bigint           not null
 #
 # Indexes
 #
-#  index_products_on_product_category_id  (product_category_id)
-#  index_products_on_product_style_id     (product_style_id)
+#  index_products_on_product_style_id  (product_style_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (product_category_id => product_categories.id)
 #  fk_rails_...  (product_style_id => product_styles.id)
 #
 
@@ -32,8 +30,8 @@ class Product < ApplicationRecord
                           gemstone_product].freeze
 
   # Scopes
-  scope :jewelry, -> { where category: 'JEWELRY' }
-  scope :gemstone, -> { where category: 'GEMSTONE' }
+  scope :jewelry,       -> { where category: 'JEWELRY' }
+  scope :gemstone,      -> { where category: 'GEMSTONE' }
   scope :miscellaneous, -> { where category: 'MISCELLANEOUS' }
 
   # Callbacks
@@ -47,31 +45,33 @@ class Product < ApplicationRecord
                      foreign_key: 'product_style_id'
 
   # Subtype associations
-  has_one :jewelry_product,         class_name: 'Product::JewelryProduct',
-                                    autosave: true,
-                                    dependent: :destroy,
-                                    validate: true,
-                                    touch: true
+  has_one :jewelry_product,       class_name: 'Product::JewelryProduct',
+                                  autosave: true,
+                                  dependent: :destroy,
+                                  validate: true,
+                                  touch: true
 
-  has_one :miscellaneous_product,   class_name: 'Product::MiscellaneousProduct',
-                                    autosave: true,
-                                    dependent: :destroy,
-                                    validate: true,
-                                    touch: true
+  has_one :miscellaneous_product, class_name: 'Product::MiscellaneousProduct',
+                                  autosave: true,
+                                  dependent: :destroy,
+                                  validate: true,
+                                  touch: true
 
-  has_one :gemstone_product,        class_name: 'Product::GemstoneProduct',
-                                    autosave: true,
-                                    dependent: :destroy,
-                                    validate: true,
-                                    touch: true
+  has_one :gemstone_product,      class_name: 'Product::GemstoneProduct',
+                                  autosave: true,
+                                  dependent: :destroy,
+                                  validate: true,
+                                  touch: true
 
-  has_one :gemstone,                through: :gemstone_product,
-                                    autosave: true,
-                                    dependent: :destroy,
-                                    validate: true,
-                                    touch: true
+  has_one :gemstone,              through: :gemstone_product,
+                                  autosave: true,
+                                  dependent: :destroy,
+                                  validate: true,
+                                  touch: true
 
-  accepts_nested_attributes_for :jewelry_product, :gemstone_product, :miscellaneous_product
+  accepts_nested_attributes_for :jewelry_product,
+                                :gemstone_product,
+                                :miscellaneous_product
 
   # Validations
   validates_presence_of :name
