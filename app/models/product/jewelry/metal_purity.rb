@@ -24,4 +24,7 @@ class Product::Jewelry::MetalPurity < ApplicationRecord
   validates :value, presence: true,
                     uniqueness: true,
                     length: { maximum: 4 }
+
+  # Aliases
+  alias_attribute :name, :value
 end
