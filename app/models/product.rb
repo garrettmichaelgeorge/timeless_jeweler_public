@@ -29,13 +29,13 @@ class Product < ApplicationRecord
                           miscellaneous_product
                           gemstone_product].freeze
 
+  # Callbacks
+  before_save :build_subtype
+
   # Scopes
   scope :jewelry,       -> { where category: 'JEWELRY' }
   scope :gemstone,      -> { where category: 'GEMSTONE' }
   scope :miscellaneous, -> { where category: 'MISCELLANEOUS' }
-
-  # Callbacks
-  before_save :build_subtype
 
   # Associations
   has_many :store_transaction_line_items
@@ -44,7 +44,11 @@ class Product < ApplicationRecord
                      inverse_of: :products,
                      foreign_key: 'product_style_id'
 
-  # Subtype associations
+  belongs_to :era,   class_name: 'Product::Era',
+                     inverse_of: :products,
+                     foreign_key: 'product_era_id'
+
+  ## subtype associations
   has_one :jewelry_product,       class_name: 'Product::JewelryProduct',
                                   autosave: true,
                                   dependent: :destroy,
@@ -80,16 +84,17 @@ class Product < ApplicationRecord
     # TODO
   end
 
+  # Delegations
+  delegate :name, to: :style,
+                  prefix: true
+
   # Presenters/Decorators
   # TODO: move to decorator/presenter/helper class
   def to_label
     "#{name} (#{price})"
   end
 
-  # Delegations
-  delegate :name, to: :style,
-                  prefix: true
-
+  # Monetizers
   monetize :cost_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :price_cents, numericality: { greater_than_or_equal_to: 0 }
 

@@ -16,7 +16,6 @@ class IntakeFormComponentTest < ViewComponent::TestCase
     should('have radio button for Miscellaneous')    { page.must_have_field('Miscellaneous', type: 'radio') }
     should('have style field')                       { page.must_have_field('Style',         type: 'select') }
     should('have source field')                      { page.must_have_field('Style',         type: 'select') }
-    should('have era field')                         { page.must_have_field('Era',           type: 'select') }
     should('not have iRrElLeVaNt field')             { page.wont_have_field('NONSENSE') }
 
     context 'jewelry fields' do

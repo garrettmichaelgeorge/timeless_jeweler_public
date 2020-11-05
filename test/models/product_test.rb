@@ -45,8 +45,9 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   context 'associations' do
-    should belong_to(:style)
     should have_many(:store_transaction_line_items)
+    should belong_to(:style)
+    should belong_to(:era)
 
     context 'product subtypes' do
       should have_one(:gemstone_product)

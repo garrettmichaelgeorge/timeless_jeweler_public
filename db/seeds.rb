@@ -27,11 +27,10 @@ tables = [
   Household,
   Party,
   Product,
-  DiamondCut,
-  DiamondClarity,
-  DiamondColor,
+  Product::Gemstone::DiamondCut,
+  Product::Gemstone::DiamondClarity,
+  Product::Gemstone::DiamondColor,
   Product::Style,
-  Product::Category,
   Address,
   StateProvince,
   EmailAddress,
@@ -235,9 +234,7 @@ PRODUCT_STYLES = [
 ].freeze
 
 PRODUCT_STYLES.each do |style|
-  Product::Style.create!(
-    name: style
-  )
+  Product::Style.create!(name: style)
 end
 
 puts '-- Source: seeding'
@@ -245,12 +242,10 @@ puts '-- Source: seeding'
 SOURCES = %w[E B T].freeze
 
 SOURCES.each do |code|
-  Source.create!(
-    code: code
-  )
+  Source.create!(code: code)
 end
 
-puts '-- DiamondCut: seeding'
+puts '-- Product::Gemstone::DiamondCut: seeding'
 
 DIAMOND_CUT_GRADES = [
   'Excellent',
@@ -261,12 +256,12 @@ DIAMOND_CUT_GRADES = [
 ].freeze
 
 DIAMOND_CUT_GRADES.each do |grade|
-  DiamondCut.create!(
+  Product::Gemstone::DiamondCut.create!(
     grade: grade
   )
 end
 
-puts '-- DiamondClarity: seeding'
+puts '-- Product::Gemstone::DiamondClarity: seeding'
 
 DIAMOND_CLARITY_GRADES = %w[
   I1
@@ -283,17 +278,17 @@ DIAMOND_CLARITY_GRADES = %w[
 ].freeze
 
 DIAMOND_CLARITY_GRADES.each do |grade|
-  DiamondClarity.create!(
+  Product::Gemstone::DiamondClarity.create!(
     grade: grade
   )
 end
 
-puts '-- DiamondColor: seeding'
+puts '-- Product::Gemstone::DiamondColor: seeding'
 
 DIAMOND_COLOR_GRADES = ('D'..'Z').to_a
 
 DIAMOND_COLOR_GRADES.each do |grade|
-  DiamondColor.create!(
+  Product::Gemstone::DiamondColor.create!(
     grade: grade
   )
 end
