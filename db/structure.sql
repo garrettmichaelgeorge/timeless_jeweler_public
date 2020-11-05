@@ -592,6 +592,37 @@ ALTER SEQUENCE public.product_eras_id_seq OWNED BY public.product_eras.id;
 
 
 --
+-- Name: product_jewelry_metals; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.product_jewelry_metals (
+    id bigint NOT NULL,
+    name character varying(20),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: product_jewelry_metals_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.product_jewelry_metals_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: product_jewelry_metals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.product_jewelry_metals_id_seq OWNED BY public.product_jewelry_metals.id;
+
+
+--
 -- Name: product_styles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -991,6 +1022,13 @@ ALTER TABLE ONLY public.product_eras ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: product_jewelry_metals id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.product_jewelry_metals ALTER COLUMN id SET DEFAULT nextval('public.product_jewelry_metals_id_seq'::regclass);
+
+
+--
 -- Name: product_styles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1180,6 +1218,14 @@ ALTER TABLE ONLY public.phone_numbers
 
 ALTER TABLE ONLY public.product_eras
     ADD CONSTRAINT product_eras_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_jewelry_metals product_jewelry_metals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.product_jewelry_metals
+    ADD CONSTRAINT product_jewelry_metals_pkey PRIMARY KEY (id);
 
 
 --
@@ -1392,6 +1438,13 @@ CREATE INDEX index_phone_numbers_on_phoneable_type_and_phoneable_id ON public.ph
 --
 
 CREATE UNIQUE INDEX index_product_eras_on_name ON public.product_eras USING btree (name);
+
+
+--
+-- Name: index_product_jewelry_metals_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_product_jewelry_metals_on_name ON public.product_jewelry_metals USING btree (name);
 
 
 --
@@ -1649,6 +1702,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201031194123'),
 ('20201103183352'),
 ('20201103185250'),
-('20201105000549');
+('20201105000549'),
+('20201105022515');
 
 
