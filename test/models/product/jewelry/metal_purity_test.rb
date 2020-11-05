@@ -19,8 +19,8 @@ class Product::Jewelry::MetalPurityTest < ActiveSupport::TestCase
   end
 
   context 'validations' do
-    should validate_presence_of(:name)
-    should validate_uniqueness_of(:name)
-    should validate_length_of(:name).is_at_most(4)
+    should validate_presence_of(:value)
+    should validate_uniqueness_of(:value)
+    should validate_length_of(:value).is_at_most(4)
   end
 end

@@ -416,6 +416,16 @@ CREATE TABLE public.jewelry_pieces_metal_colors (
 
 
 --
+-- Name: jewelry_pieces_metal_purities; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.jewelry_pieces_metal_purities (
+    metal_purity_id bigint NOT NULL,
+    jewelry_piece_id bigint NOT NULL
+);
+
+
+--
 -- Name: jewelry_pieces_metals; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1901,6 +1911,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201105155804'),
 ('20201105161323'),
 ('20201105161803'),
-('20201105164955');
+('20201105164955'),
+('20201105165427');
 
 
