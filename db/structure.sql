@@ -467,6 +467,37 @@ ALTER SEQUENCE public.metal_colors_id_seq OWNED BY public.metal_colors.id;
 
 
 --
+-- Name: metal_purities; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.metal_purities (
+    id bigint NOT NULL,
+    value character varying(4),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: metal_purities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.metal_purities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: metal_purities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.metal_purities_id_seq OWNED BY public.metal_purities.id;
+
+
+--
 -- Name: metals; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1076,6 +1107,13 @@ ALTER TABLE ONLY public.metal_colors ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
+-- Name: metal_purities id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metal_purities ALTER COLUMN id SET DEFAULT nextval('public.metal_purities_id_seq'::regclass);
+
+
+--
 -- Name: metals id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1282,6 +1320,14 @@ ALTER TABLE ONLY public.jewelry_pieces
 
 ALTER TABLE ONLY public.metal_colors
     ADD CONSTRAINT metal_colors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: metal_purities metal_purities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metal_purities
+    ADD CONSTRAINT metal_purities_pkey PRIMARY KEY (id);
 
 
 --
@@ -1529,6 +1575,13 @@ CREATE INDEX index_loose_gemstones_on_product_id ON public.loose_gemstones USING
 --
 
 CREATE UNIQUE INDEX index_metal_colors_on_name ON public.metal_colors USING btree (name);
+
+
+--
+-- Name: index_metal_purities_on_value; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_metal_purities_on_value ON public.metal_purities USING btree (value);
 
 
 --
@@ -1847,6 +1900,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201105145510'),
 ('20201105155804'),
 ('20201105161323'),
-('20201105161803');
+('20201105161803'),
+('20201105164955');
 
 
