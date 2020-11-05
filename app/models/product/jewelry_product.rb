@@ -27,7 +27,11 @@ class Product
                                  inverse_of: :jewelry_product
 
     has_many :gemstones, through: :mounted_gemstones
+
     has_and_belongs_to_many :metals, class_name: 'Product::Jewelry::Metal',
                                      foreign_key: 'jewelry_piece_id'
+
+    has_and_belongs_to_many :metal_colors, class_name: 'Product::Jewelry::MetalColor',
+                                           foreign_key: 'jewelry_piece_id'
   end
 end

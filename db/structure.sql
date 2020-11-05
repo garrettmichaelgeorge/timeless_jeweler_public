@@ -406,6 +406,16 @@ ALTER SEQUENCE public.jewelry_pieces_id_seq OWNED BY public.jewelry_pieces.id;
 
 
 --
+-- Name: jewelry_pieces_metal_colors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.jewelry_pieces_metal_colors (
+    jewelry_piece_id bigint NOT NULL,
+    metal_color_id bigint NOT NULL
+);
+
+
+--
 -- Name: jewelry_pieces_metals; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1836,6 +1846,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201105022515'),
 ('20201105145510'),
 ('20201105155804'),
-('20201105161323');
+('20201105161323'),
+('20201105161803');
 
 

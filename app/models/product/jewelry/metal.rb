@@ -24,5 +24,5 @@ class Product::Jewelry::Metal < ApplicationRecord
   # Validations
   validates :name, presence: true,
                    uniqueness: true,
-                   length: 20
+                   length: { maximum: 20 }
 end

@@ -21,6 +21,6 @@ class Product::Jewelry::MetalTest < ActiveSupport::TestCase
   context 'validations' do
     should validate_presence_of(:name)
     should validate_uniqueness_of(:name)
-    should validate_length_of(:name, 20)
+    should validate_length_of(:name)
   end
 end
