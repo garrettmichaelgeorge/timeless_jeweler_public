@@ -21,9 +21,11 @@ class Product
   class JewelryProductTest < ActiveSupport::TestCase
     context 'associations' do
       should have_many(:mounted_gemstones)
-      should have_many(:gemstones).through(:mounted_gemstones)
+      should have_many(:gemstones)
+        .through(:mounted_gemstones)
       should belong_to(:product)
         .conditions(category: 'JEWELRY')
+      should have_and_belong_to_many(:metals)
     end
 
     context 'delegations' do

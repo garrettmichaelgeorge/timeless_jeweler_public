@@ -406,6 +406,16 @@ ALTER SEQUENCE public.jewelry_pieces_id_seq OWNED BY public.jewelry_pieces.id;
 
 
 --
+-- Name: jewelry_pieces_metals; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.jewelry_pieces_metals (
+    jewelry_piece_id bigint NOT NULL,
+    metal_id bigint NOT NULL
+);
+
+
+--
 -- Name: loose_gemstones; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1424,6 +1434,20 @@ CREATE INDEX index_households_on_phone_numbers_type_and_phone_numbers_id ON publ
 
 
 --
+-- Name: index_jewelry_pieces_metals_on_jewelry_piece_id_and_metal_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_jewelry_pieces_metals_on_jewelry_piece_id_and_metal_id ON public.jewelry_pieces_metals USING btree (jewelry_piece_id, metal_id);
+
+
+--
+-- Name: index_jewelry_pieces_metals_on_metal_id_and_jewelry_piece_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_jewelry_pieces_metals_on_metal_id_and_jewelry_piece_id ON public.jewelry_pieces_metals USING btree (metal_id, jewelry_piece_id);
+
+
+--
 -- Name: index_jewelry_pieces_on_product_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1757,6 +1781,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201103185250'),
 ('20201105000549'),
 ('20201105022515'),
-('20201105145510');
+('20201105145510'),
+('20201105155804');
 
 
