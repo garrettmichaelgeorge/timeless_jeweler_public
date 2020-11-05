@@ -426,6 +426,37 @@ CREATE TABLE public.loose_gemstones (
 
 
 --
+-- Name: metal_colors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.metal_colors (
+    id bigint NOT NULL,
+    name character varying(10),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: metal_colors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.metal_colors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: metal_colors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.metal_colors_id_seq OWNED BY public.metal_colors.id;
+
+
+--
 -- Name: metals; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1028,6 +1059,13 @@ ALTER TABLE ONLY public.jewelry_pieces ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: metal_colors id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metal_colors ALTER COLUMN id SET DEFAULT nextval('public.metal_colors_id_seq'::regclass);
+
+
+--
 -- Name: metals id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1226,6 +1264,14 @@ ALTER TABLE ONLY public.households
 
 ALTER TABLE ONLY public.jewelry_pieces
     ADD CONSTRAINT jewelry_pieces_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: metal_colors metal_colors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metal_colors
+    ADD CONSTRAINT metal_colors_pkey PRIMARY KEY (id);
 
 
 --
@@ -1466,6 +1512,13 @@ CREATE INDEX index_loose_gemstones_on_gemstone_id ON public.loose_gemstones USIN
 --
 
 CREATE INDEX index_loose_gemstones_on_product_id ON public.loose_gemstones USING btree (product_id);
+
+
+--
+-- Name: index_metal_colors_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_metal_colors_on_name ON public.metal_colors USING btree (name);
 
 
 --
@@ -1782,6 +1835,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201105000549'),
 ('20201105022515'),
 ('20201105145510'),
-('20201105155804');
+('20201105155804'),
+('20201105161323');
 
 
