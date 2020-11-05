@@ -416,6 +416,37 @@ CREATE TABLE public.loose_gemstones (
 
 
 --
+-- Name: metals; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.metals (
+    id bigint NOT NULL,
+    name character varying(40),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: metals_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.metals_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: metals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.metals_id_seq OWNED BY public.metals.id;
+
+
+--
 -- Name: miscellaneous_products; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -987,6 +1018,13 @@ ALTER TABLE ONLY public.jewelry_pieces ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: metals id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metals ALTER COLUMN id SET DEFAULT nextval('public.metals_id_seq'::regclass);
+
+
+--
 -- Name: miscellaneous_products id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1178,6 +1216,14 @@ ALTER TABLE ONLY public.households
 
 ALTER TABLE ONLY public.jewelry_pieces
     ADD CONSTRAINT jewelry_pieces_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: metals metals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metals
+    ADD CONSTRAINT metals_pkey PRIMARY KEY (id);
 
 
 --
@@ -1396,6 +1442,13 @@ CREATE INDEX index_loose_gemstones_on_gemstone_id ON public.loose_gemstones USIN
 --
 
 CREATE INDEX index_loose_gemstones_on_product_id ON public.loose_gemstones USING btree (product_id);
+
+
+--
+-- Name: index_metals_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_metals_on_name ON public.metals USING btree (name);
 
 
 --
@@ -1703,6 +1756,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201103183352'),
 ('20201103185250'),
 ('20201105000549'),
-('20201105022515');
+('20201105022515'),
+('20201105145510');
 
 
