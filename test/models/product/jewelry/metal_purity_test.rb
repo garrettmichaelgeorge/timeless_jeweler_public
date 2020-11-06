@@ -13,14 +13,18 @@
 #
 require 'test_helper'
 
-class Product::Jewelry::MetalPurityTest < ActiveSupport::TestCase
-  context 'associations' do
-    should have_and_belong_to_many(:jewelry_products)
-  end
+class Product
+  module Jewelry
+    class MetalPurityTest < ActiveSupport::TestCase
+      context 'associations' do
+        should have_and_belong_to_many(:jewelry_products)
+      end
 
-  context 'validations' do
-    should validate_presence_of(:value)
-    should validate_uniqueness_of(:value)
-    should validate_length_of(:value).is_at_most(4)
+      context 'validations' do
+        should validate_presence_of(:value)
+        should validate_uniqueness_of(:value)
+        should validate_length_of(:value).is_at_most(4)
+      end
+    end
   end
 end

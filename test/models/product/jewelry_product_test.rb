@@ -25,6 +25,7 @@ class Product
       should belong_to(:product).conditions(category: 'JEWELRY')
       should have_and_belong_to_many(:metals)
       should have_and_belong_to_many(:metal_colors)
+      should have_and_belong_to_many(:metal_purities)
     end
 
     context 'delegations' do

@@ -24,10 +24,10 @@ class IntakeFormComponentTest < ViewComponent::TestCase
         # page.choose('Jewelry')
       end
 
-      should('have metal field')                     { page.must_have_field('Metal',         type: 'select') }
-      should('have purity field')                    { page.must_have_field('Purity',        type: 'select') }
-      should('have color field')                     { page.must_have_field('Color',         type: 'select') }
-      should('have jewelry category field')          { page.must_have_field('Jewelry Category', type: 'select') }
+      should('have metal field')                     { page.must_have_field('Metal',               type: 'select') }
+      should('have metal purity field')              { page.must_have_field('Metal purity',        type: 'select') }
+      should('have metal color field')               { page.must_have_field('Metal color',         type: 'select') }
+      should('have jewelry category field')          { page.must_have_field('Jewelry Category',    type: 'select') }
       should('have add mounted gemstone button')     { page.must_have_button('Add mounted gemstone') }
     end
 

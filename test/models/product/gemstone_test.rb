@@ -24,6 +24,9 @@ class Product
       should belong_to(:subcategory)
       should have_one(:mounted_gemstone)
       should have_one(:gemstone_product)
+      should have_one(:diamond_color)
+      should have_one(:diamond_cut)
+      should have_one(:diamond_clarity)
     end
 
     context 'validations' do

@@ -47,7 +47,6 @@ class ProductTest < ActiveSupport::TestCase
   context 'associations' do
     should have_many(:store_transaction_line_items)
     should belong_to(:style)
-    should belong_to(:era)
 
     context 'product subtypes' do
       should have_one(:gemstone_product)
@@ -88,6 +87,10 @@ class ProductTest < ActiveSupport::TestCase
 
   context 'validations' do
     should validate_presence_of(:name)
+    should validate_length_of(:name).is_at_most(40)
+    should validate_presence_of(:category)
+    should validate_inclusion_of(:category)
+      .in_array(%w[JEWELRY GEMSTONE MISCELLANEOUS])
   end
 
   context 'delegations' do

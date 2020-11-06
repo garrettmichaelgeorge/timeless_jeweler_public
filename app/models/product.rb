@@ -31,6 +31,8 @@ class Product < ApplicationRecord
 
   # Callbacks
   before_save :build_subtype
+  # FIXME: breaks tests for unknown reason
+  # before_validation :normalize_category
 
   # Scopes
   scope :jewelry,       -> { where category: 'JEWELRY' }
@@ -43,10 +45,6 @@ class Product < ApplicationRecord
   belongs_to :style, class_name: 'Product::Style',
                      inverse_of: :products,
                      foreign_key: 'product_style_id'
-
-  belongs_to :era,   class_name: 'Product::Era',
-                     inverse_of: :products,
-                     foreign_key: 'product_era_id'
 
   ## subtype associations
   has_one :jewelry_product,       class_name: 'Product::JewelryProduct',
@@ -75,10 +73,17 @@ class Product < ApplicationRecord
 
   accepts_nested_attributes_for :jewelry_product,
                                 :gemstone_product,
+                                :gemstone,
                                 :miscellaneous_product
 
   # Validations
-  validates_presence_of :name
+  validates :name, presence: true,
+                   length: { maximum: 40 }
+
+  validates :category, presence: true,
+                       inclusion: { in: %w[JEWELRY
+                                           GEMSTONE
+                                           MISCELLANEOUS] }
 
   def validate_exclusive(product_id, product_category_id)
     # TODO
@@ -111,5 +116,9 @@ class Product < ApplicationRecord
     else
       raise StandardError, 'Cannot create product subtype due to invalid category'
     end
+  end
+
+  def normalize_category
+    self.category = category.upcase
   end
 end

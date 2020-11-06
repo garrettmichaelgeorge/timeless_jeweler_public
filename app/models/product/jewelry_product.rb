@@ -33,5 +33,8 @@ class Product
 
     has_and_belongs_to_many :metal_colors, class_name: 'Product::Jewelry::MetalColor',
                                            foreign_key: 'jewelry_piece_id'
+
+    has_and_belongs_to_many :metal_purities, class_name: 'Product::Jewelry::MetalColor',
+                                             foreign_key: 'jewelry_piece_id'
   end
 end

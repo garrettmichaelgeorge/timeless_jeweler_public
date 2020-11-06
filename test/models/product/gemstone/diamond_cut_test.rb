@@ -9,8 +9,12 @@
 #
 require 'test_helper'
 
-class DiamondCutTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class Product
+  class Gemstone
+    class DiamondCutTest < ActiveSupport::TestCase
+      context 'associations' do
+        should have_many(:gemstones)
+      end
+    end
+  end
 end

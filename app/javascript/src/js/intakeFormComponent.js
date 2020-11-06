@@ -7,6 +7,7 @@ export default function initIntakeFormComponent() {
   const jewelryFieldset = form.querySelector('#jewelry_product_fields')
   const gemstoneFieldset = form.querySelector('#gemstone_product_fields')
   const miscellaneousFieldset = form.querySelector('#miscellaneous_product_fields')
+  const addMountedGemstoneBtn = form.querySelector('#addMountedGemstoneBtn')
 
   const fieldsets = {
     jewelry: jewelryFieldset,
@@ -18,9 +19,12 @@ export default function initIntakeFormComponent() {
     currentCategory: ''
   }
 
+  // Event listeners
   productCategorySelectors.forEach(sel => {
     sel.addEventListener('click', e => handleChange(e))
   })
+
+  addMountedGemstoneBtn.addEventListener('click', e => handleClick(e))
 
   render()
 
@@ -31,6 +35,11 @@ export default function initIntakeFormComponent() {
 
   function handleChange(e) {
     state.currentCategory = e.target.value.toLowerCase()
+    render()
+  }
+
+  function handleClick(e) {
+    e.preventDefault()
     render()
   }
 

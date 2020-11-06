@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
   def index
-    @products = Product.includes(:category, :style).all
+    @products = Product.includes(:style).all
   end
 
   def show; end
@@ -14,7 +14,6 @@ class ProductsController < ApplicationController
     @product.build_jewelry_product
     @product.build_gemstone_product
     @product.build_miscellaneous_product
-    @styles = Product::Style.all
   end
 
   def edit; end
@@ -58,16 +57,33 @@ class ProductsController < ApplicationController
   end
 
   def permitted_params
-    %i[
-      name
-      category
-      creator
-      cost
-      price
-      size
-      size_unit
-      weight
-      weight_unit
+    [
+      :name,
+      :description,
+      :notes,
+      :product_style_id,
+      :category,
+      :cost_cents,
+      :price_cents,
+      permitted_jewelry_product_params,
+      permitted_gemstone_product_params
     ]
+  end
+
+  def permitted_jewelry_product_params
+    {
+      jewelry_product_attributes: [
+        metal_ids: [],
+        metal_purity_ids: [],
+        metal_color_ids: [],
+        gemstone_ids: []
+      ]
+    }
+  end
+
+  def permitted_gemstone_product_params
+    {
+      gemstone_product_attributes: []
+    }
   end
 end

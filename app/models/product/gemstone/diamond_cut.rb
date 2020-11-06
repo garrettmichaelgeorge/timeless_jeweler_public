@@ -14,6 +14,8 @@ class Product
       validates :grade, presence: true
       validates :grade, uniqueness: true
       validates :grade, length: { maximum: 9 }
+
+      has_many :gemstones
     end
   end
 end
