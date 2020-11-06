@@ -23,25 +23,38 @@ class Product
       should have_many(:mounted_gemstones)
       should have_many(:gemstones).through(:mounted_gemstones)
       should belong_to(:product).conditions(category: 'JEWELRY')
-      should have_and_belong_to_many(:metals)
-      should have_and_belong_to_many(:metal_colors)
-      should have_and_belong_to_many(:metal_purities)
+      should have_many(:metals)
     end
 
     context 'delegations' do
-      delegated_methods = %i[name
+      context 'product' do
+        product_methods = %i[name
                              description
                              notes
                              cost
                              price]
-      delegated_methods.each do |method|
-        should delegate_method(method).to(:product)
+        product_methods.each do |method|
+          should delegate_method(method).to(:product)
+        end
+      end
+
+      context 'metals' do
+        metal_methods = %i[category
+                           color
+                           purity]
+
+        metal_methods.each do |method|
+          should delegate_method(method).to(:metals).with_prefix
+        end
       end
     end
 
-    test "doesn't save when associated product's category is not JEWELRY" do
-      @jewelry_product = FactoryBot.build(:jewelry_product)
-      assert_not_nil @jewelry_product.product
+    context '.build' do
+      should "not save when associated product's category is not JEWELRY" do
+        # FIXME
+        @jewelry_product = FactoryBot.build(:jewelry_product)
+        _(@jewelry_product.product).wont_be_nil
+      end
     end
   end
 end

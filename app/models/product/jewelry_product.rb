@@ -28,13 +28,14 @@ class Product
 
     has_many :gemstones, through: :mounted_gemstones
 
-    has_and_belongs_to_many :metals, class_name: 'Product::Jewelry::Metal',
-                                     foreign_key: 'jewelry_piece_id'
+    has_many :metals, class_name: 'Product::Jewelry::Metal',
+                      inverse_of: :jewelry_product
 
-    has_and_belongs_to_many :metal_colors, class_name: 'Product::Jewelry::MetalColor',
-                                           foreign_key: 'jewelry_piece_id'
-
-    has_and_belongs_to_many :metal_purities, class_name: 'Product::Jewelry::MetalColor',
-                                             foreign_key: 'jewelry_piece_id'
+    # Delegations
+    delegate :category,
+             :color,
+             :purity,
+             to: :metals,
+             prefix: true
   end
 end

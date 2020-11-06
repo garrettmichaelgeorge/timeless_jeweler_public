@@ -446,6 +446,37 @@ CREATE TABLE public.loose_gemstones (
 
 
 --
+-- Name: metal_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.metal_categories (
+    id bigint NOT NULL,
+    name character varying(20),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: metal_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.metal_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: metal_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.metal_categories_id_seq OWNED BY public.metal_categories.id;
+
+
+--
 -- Name: metal_colors; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -515,7 +546,8 @@ CREATE TABLE public.metals (
     id bigint NOT NULL,
     name character varying(40),
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    jewelry_piece_id bigint NOT NULL
 );
 
 
@@ -1110,6 +1142,13 @@ ALTER TABLE ONLY public.jewelry_pieces ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: metal_categories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metal_categories ALTER COLUMN id SET DEFAULT nextval('public.metal_categories_id_seq'::regclass);
+
+
+--
 -- Name: metal_colors id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1322,6 +1361,14 @@ ALTER TABLE ONLY public.households
 
 ALTER TABLE ONLY public.jewelry_pieces
     ADD CONSTRAINT jewelry_pieces_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: metal_categories metal_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metal_categories
+    ADD CONSTRAINT metal_categories_pkey PRIMARY KEY (id);
 
 
 --
@@ -1581,6 +1628,13 @@ CREATE INDEX index_loose_gemstones_on_product_id ON public.loose_gemstones USING
 
 
 --
+-- Name: index_metal_categories_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_metal_categories_on_name ON public.metal_categories USING btree (name);
+
+
+--
 -- Name: index_metal_colors_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1592,6 +1646,13 @@ CREATE UNIQUE INDEX index_metal_colors_on_name ON public.metal_colors USING btre
 --
 
 CREATE UNIQUE INDEX index_metal_purities_on_value ON public.metal_purities USING btree (value);
+
+
+--
+-- Name: index_metals_on_jewelry_piece_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_metals_on_jewelry_piece_id ON public.metals USING btree (jewelry_piece_id);
 
 
 --
@@ -1755,6 +1816,14 @@ ALTER TABLE ONLY public.people
 
 
 --
+-- Name: metals fk_rails_85044eaeb5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metals
+    ADD CONSTRAINT fk_rails_85044eaeb5 FOREIGN KEY (jewelry_piece_id) REFERENCES public.jewelry_pieces(id);
+
+
+--
 -- Name: miscellaneous_products fk_rails_8bf128d7a0; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1912,6 +1981,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201105161323'),
 ('20201105161803'),
 ('20201105164955'),
-('20201105165427');
+('20201105165427'),
+('20201106231246'),
+('20201106234314');
 
 
