@@ -11,8 +11,10 @@
 #
 #  index_metal_categories_on_name  (name) UNIQUE
 #
+
 FactoryBot.define do
-  factory :metal_category, class: 'Product::Jewelry::MetalCategory' do
+  factory :metal_category, aliases: [:gold],
+                           class: 'Product::Jewelry::MetalCategory' do
     name { 'Gold' }
   end
 end
