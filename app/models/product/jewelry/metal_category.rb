@@ -11,10 +11,29 @@
 #
 #  index_metal_categories_on_name  (name) UNIQUE
 #
+
 class Product
   module Jewelry
     class MetalCategory < ApplicationRecord
       self.table_name = 'metal_categories'
+
+      ALLOWED_VALUES = ['Aluminum',
+                        'Brass',
+                        'Bronze',
+                        'Copper',
+                        'Copper Plate',
+                        'Gold',
+                        'Iron',
+                        'Platinum',
+                        'Silver',
+                        'Sterling Silver',
+                        'Fine Silver',
+                        'Mexican Silver',
+                        'Silver Plate',
+                        'Steel',
+                        'Stainless Steel',
+                        'Titanium',
+                        'Unknown'].freeze
 
       # Associations
       has_many :metals, class_name: 'Product::Jewelry::Metal',
@@ -24,7 +43,8 @@ class Product
       # Validations
       validates :name, presence: true,
                        uniqueness: true,
-                       length: { maximum: 20 }
+                       length: { maximum: 20 },
+                       inclusion: { in: ALLOWED_VALUES }
     end
   end
 end

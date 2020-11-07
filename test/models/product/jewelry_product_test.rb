@@ -11,10 +11,6 @@
 #
 #  index_jewelry_pieces_on_product_id  (product_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (product_id => products.id)
-#
 require 'test_helper'
 
 class Product

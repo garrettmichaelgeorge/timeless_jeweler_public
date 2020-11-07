@@ -13,7 +13,7 @@ SET row_security = off;
 -- Name: validate_exclusive_fn(bigint, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE OR REPLACE FUNCTION public.validate_exclusive_fn(product_id bigint, product_category_id integer) RETURNS boolean
+CREATE FUNCTION public.validate_exclusive_fn(product_id bigint, product_category_id integer) RETURNS boolean
     LANGUAGE plpgsql
     AS $_$
       DECLARE
@@ -513,7 +513,7 @@ ALTER SEQUENCE public.metal_colors_id_seq OWNED BY public.metal_colors.id;
 
 CREATE TABLE public.metal_purities (
     id bigint NOT NULL,
-    value character varying(4),
+    value character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -548,7 +548,9 @@ CREATE TABLE public.metals (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     jewelry_piece_id bigint NOT NULL,
-    metal_category_id bigint NOT NULL
+    metal_category_id bigint NOT NULL,
+    metal_color_id bigint NOT NULL,
+    metal_purity_id bigint NOT NULL
 );
 
 
@@ -717,6 +719,37 @@ ALTER SEQUENCE public.phone_numbers_id_seq OWNED BY public.phone_numbers.id;
 
 
 --
+-- Name: product_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.product_categories (
+    id bigint NOT NULL,
+    name character varying(40),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: product_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.product_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: product_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.product_categories_id_seq OWNED BY public.product_categories.id;
+
+
+--
 -- Name: product_eras; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -823,9 +856,9 @@ CREATE TABLE public.products (
     cost_currency character varying DEFAULT 'USD'::character varying NOT NULL,
     price_cents integer DEFAULT 0 NOT NULL,
     price_currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    product_category_id bigint NOT NULL,
     notes text,
-    product_style_id bigint NOT NULL,
-    category character varying(20)
+    product_style_id bigint NOT NULL
 );
 
 
@@ -1039,10 +1072,7 @@ CREATE TABLE public.users (
     current_sign_in_ip inet,
     last_sign_in_ip inet,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    confirmation_token character varying,
-    confirmed_at timestamp without time zone,
-    confirmation_sent_at timestamp without time zone
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
@@ -1196,6 +1226,13 @@ ALTER TABLE ONLY public.people ALTER COLUMN id SET DEFAULT nextval('public.peopl
 --
 
 ALTER TABLE ONLY public.phone_numbers ALTER COLUMN id SET DEFAULT nextval('public.phone_numbers_id_seq'::regclass);
+
+
+--
+-- Name: product_categories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.product_categories ALTER COLUMN id SET DEFAULT nextval('public.product_categories_id_seq'::regclass);
 
 
 --
@@ -1426,6 +1463,14 @@ ALTER TABLE ONLY public.people
 
 ALTER TABLE ONLY public.phone_numbers
     ADD CONSTRAINT phone_numbers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product_categories product_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.product_categories
+    ADD CONSTRAINT product_categories_pkey PRIMARY KEY (id);
 
 
 --
@@ -1664,6 +1709,20 @@ CREATE INDEX index_metals_on_metal_category_id ON public.metals USING btree (met
 
 
 --
+-- Name: index_metals_on_metal_color_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_metals_on_metal_color_id ON public.metals USING btree (metal_color_id);
+
+
+--
+-- Name: index_metals_on_metal_purity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_metals_on_metal_purity_id ON public.metals USING btree (metal_purity_id);
+
+
+--
 -- Name: index_metals_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1727,6 +1786,13 @@ CREATE UNIQUE INDEX index_product_styles_on_name ON public.product_styles USING 
 
 
 --
+-- Name: index_products_on_product_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_products_on_product_category_id ON public.products USING btree (product_category_id);
+
+
+--
 -- Name: index_products_on_product_style_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1776,14 +1842,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
--- Name: diamond_grades fk_rails_113a66e536; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.diamond_grades
-    ADD CONSTRAINT fk_rails_113a66e536 FOREIGN KEY (diamond_cut_id) REFERENCES public.diamond_cuts(id);
-
-
---
 -- Name: store_transactions fk_rails_13591f4845; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1792,11 +1850,11 @@ ALTER TABLE ONLY public.store_transactions
 
 
 --
--- Name: diamond_grades fk_rails_6175ef843c; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: metals fk_rails_34251d0b2b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.diamond_grades
-    ADD CONSTRAINT fk_rails_6175ef843c FOREIGN KEY (diamond_clarity_id) REFERENCES public.diamond_clarities(id);
+ALTER TABLE ONLY public.metals
+    ADD CONSTRAINT fk_rails_34251d0b2b FOREIGN KEY (metal_purity_id) REFERENCES public.metal_purities(id);
 
 
 --
@@ -1832,14 +1890,6 @@ ALTER TABLE ONLY public.metals
 
 
 --
--- Name: miscellaneous_products fk_rails_8bf128d7a0; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.miscellaneous_products
-    ADD CONSTRAINT fk_rails_8bf128d7a0 FOREIGN KEY (product_id) REFERENCES public.products(id);
-
-
---
 -- Name: gemstone_subcategories fk_rails_94115774e7; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1848,19 +1898,11 @@ ALTER TABLE ONLY public.gemstone_subcategories
 
 
 --
--- Name: jewelry_pieces fk_rails_9c5563f7bd; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: metals fk_rails_9832456671; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.jewelry_pieces
-    ADD CONSTRAINT fk_rails_9c5563f7bd FOREIGN KEY (product_id) REFERENCES public.products(id);
-
-
---
--- Name: diamond_grades fk_rails_a430fb1905; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.diamond_grades
-    ADD CONSTRAINT fk_rails_a430fb1905 FOREIGN KEY (diamond_color_id) REFERENCES public.diamond_colors(id);
+ALTER TABLE ONLY public.metals
+    ADD CONSTRAINT fk_rails_9832456671 FOREIGN KEY (metal_color_id) REFERENCES public.metal_colors(id);
 
 
 --
@@ -1885,6 +1927,14 @@ ALTER TABLE ONLY public.store_transaction_line_items
 
 ALTER TABLE ONLY public.gemstones
     ADD CONSTRAINT fk_rails_c1d36c249a FOREIGN KEY (gemstone_subcategory_id) REFERENCES public.gemstone_subcategories(id);
+
+
+--
+-- Name: products fk_rails_efe167855e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT fk_rails_efe167855e FOREIGN KEY (product_category_id) REFERENCES public.product_categories(id);
 
 
 --
@@ -2000,6 +2050,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201105165427'),
 ('20201106231246'),
 ('20201106234314'),
-('20201106235234');
+('20201106235234'),
+('20201107001150'),
+('20201107210225');
 
 

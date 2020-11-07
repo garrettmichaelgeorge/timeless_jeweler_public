@@ -11,21 +11,23 @@
 #
 #  index_metal_colors_on_name  (name) UNIQUE
 #
+
 class Product
   module Jewelry
     class MetalColor < ApplicationRecord
-      def self.table_name
-        'metal_colors'
-      end
+      # This is a lookup class
+      self.table_name = 'metal_colors'
+
+      ALLOWED_VALUES = ['White', 'Yellow', 'Rose', 'N/A'].freeze
 
       # Associations
-      has_and_belongs_to_many :jewelry_products, class_name: 'Product::JewelryProduct',
-                                                 association_foreign_key: 'jewelry_piece_id'
+      has_many :metals, class_name: 'Product::Jewelry::Metal'
 
       # Validations
       validates :name, presence: true,
                        uniqueness: true,
-                       length: { maximum: 10 }
+                       length: { maximum: 10 },
+                       inclusion: { in: ALLOWED_VALUES }
     end
   end
 end

@@ -3,9 +3,6 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
-#  confirmation_sent_at   :datetime
-#  confirmation_token     :string
-#  confirmed_at           :datetime
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :inet
 #  email                  :string           default(""), not null

@@ -3,7 +3,7 @@
 # Table name: metal_purities
 #
 #  id         :bigint           not null, primary key
-#  value      :string(4)
+#  value      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
