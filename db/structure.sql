@@ -13,7 +13,7 @@ SET row_security = off;
 -- Name: validate_exclusive_fn(bigint, integer); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.validate_exclusive_fn(product_id bigint, product_category_id integer) RETURNS boolean
+CREATE OR REPLACE FUNCTION public.validate_exclusive_fn(product_id bigint, product_category_id integer) RETURNS boolean
     LANGUAGE plpgsql
     AS $_$
       DECLARE
@@ -547,7 +547,8 @@ CREATE TABLE public.metals (
     name character varying(40),
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    jewelry_piece_id bigint NOT NULL
+    jewelry_piece_id bigint NOT NULL,
+    metal_category_id bigint NOT NULL
 );
 
 
@@ -1656,6 +1657,13 @@ CREATE INDEX index_metals_on_jewelry_piece_id ON public.metals USING btree (jewe
 
 
 --
+-- Name: index_metals_on_metal_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_metals_on_metal_category_id ON public.metals USING btree (metal_category_id);
+
+
+--
 -- Name: index_metals_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1880,6 +1888,14 @@ ALTER TABLE ONLY public.gemstones
 
 
 --
+-- Name: metals fk_rails_f645012efd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metals
+    ADD CONSTRAINT fk_rails_f645012efd FOREIGN KEY (metal_category_id) REFERENCES public.metal_categories(id);
+
+
+--
 -- Name: addresses fk_rails_fe85803a1e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1983,6 +1999,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201105164955'),
 ('20201105165427'),
 ('20201106231246'),
-('20201106234314');
+('20201106234314'),
+('20201106235234');
 
 
