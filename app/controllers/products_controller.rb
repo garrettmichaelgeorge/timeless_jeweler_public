@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
     @product.build_jewelry_product
     @product.build_gemstone_product
     @product.build_miscellaneous_product
+    # @product.jewelry_product.metals.build
   end
 
   def edit; end
@@ -66,24 +67,33 @@ class ProductsController < ApplicationController
       :cost_cents,
       :price_cents,
       permitted_jewelry_product_params,
-      permitted_gemstone_product_params
+      permitted_gemstone_params
     ]
   end
 
   def permitted_jewelry_product_params
     {
       jewelry_product_attributes: [
-        metal_ids: [],
-        metal_purity_ids: [],
-        metal_color_ids: [],
-        gemstone_ids: []
+        permitted_metal_params,
+        permitted_gemstone_params
       ]
     }
   end
 
-  def permitted_gemstone_product_params
+  def permitted_gemstone_params
     {
       gemstone_product_attributes: []
+    }
+  end
+
+  def permitted_metal_params
+    {
+      metal_attributes: %i[
+        id
+        metal_category_id
+        metal_color_id
+        metal_purity_id
+      ]
     }
   end
 end

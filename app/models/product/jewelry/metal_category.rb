@@ -15,6 +15,7 @@
 class Product
   module Jewelry
     class MetalCategory < ApplicationRecord
+      # This is a lookup class
       self.table_name = 'metal_categories'
 
       ALLOWED_VALUES = ['Aluminum',

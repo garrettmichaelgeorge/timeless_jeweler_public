@@ -4,6 +4,7 @@ module Salable
   @@delegated_attributes = %i[name
                               description
                               notes
+                              category
                               cost
                               price].freeze
 

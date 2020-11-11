@@ -13,18 +13,22 @@
 #
 #  index_email_addresses_on_emailable_type_and_emailable_id  (emailable_type,emailable_id)
 #
+
 class EmailAddress < ApplicationRecord
   belongs_to :emailable, polymorphic: true
-  before_save :downcase_email
+  before_validation :normalize_email
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email_address, presence: true, length: { maximum: 255 },
+  # credit: Michael Hartl, Rails Tutorial
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
+
+  validates :email_address, presence: true,
+                            length: { maximum: 255 },
                             format: { with: VALID_EMAIL_REGEX },
                             uniqueness: true
 
   private
 
-  def downcase_email
+  def normalize_email
     self.email_address = email_address.downcase
   end
 end

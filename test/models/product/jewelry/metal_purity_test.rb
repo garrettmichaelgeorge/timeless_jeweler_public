@@ -26,7 +26,8 @@ class Product
                           0.925
                           0.950
                           0.999
-                          GF ].freeze
+                          GF
+                          Unknown].freeze
 
       context 'associations' do
         should have_many(:metals)
@@ -35,7 +36,7 @@ class Product
       context 'validations' do
         should validate_presence_of(:value)
         should validate_uniqueness_of(:value)
-        should validate_length_of(:value).is_at_most(5)
+        should validate_length_of(:value).is_at_most(10)
         should validate_inclusion_of(:value)
           .in_array(ALLOWED_VALUES)
       end

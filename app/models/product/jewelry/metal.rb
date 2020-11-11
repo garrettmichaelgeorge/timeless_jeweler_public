@@ -30,9 +30,7 @@
 class Product
   module Jewelry
     class Metal < ApplicationRecord
-      def self.table_name
-        'metals'
-      end
+      self.table_name = 'metals'
 
       # Associations
       belongs_to :jewelry_product, class_name: 'Product::JewelryProduct',
@@ -49,9 +47,9 @@ class Product
                             foreign_key: 'metal_purity_id'
 
       # Delegations
-      delegate :name,    to: :category, prefix: true
-      delegate :name,    to: :color,    prefix: true
-      delegate :value,   to: :purity,   prefix: true
+      delegate :name,  to: :category, prefix: true
+      delegate :name,  to: :color,    prefix: true
+      delegate :value, to: :purity,   prefix: true
     end
   end
 end

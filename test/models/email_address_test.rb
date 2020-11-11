@@ -16,7 +16,17 @@
 require 'test_helper'
 
 class EmailAddressTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  context 'associations' do
+    should belong_to(:emailable)
+  end
+
+  context 'validations' do
+    should validate_presence_of(:email_address)
+    should validate_length_of(:email_address).is_at_most(255)
+    should validate_uniqueness_of(:email_address)
+    should allow_values('vALID@e.o, g48381274if@e2.a')
+      .for(:email_address)
+    should_not allow_values('invalidEmail', 'invalid@email')
+      .for(:email_address)
+  end
 end

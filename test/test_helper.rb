@@ -41,3 +41,7 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+class ViewComponent::TestCase
+  include SimpleForm::ActionViewExtensions::FormHelper
+end

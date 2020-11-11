@@ -15,7 +15,7 @@
 class Product
   module Jewelry
     class MetalPurity < ApplicationRecord
-      # This is a lookup table
+      # This is a lookup class
       self.table_name = 'metal_purities'
 
       ALLOWED_VALUES = %w[9K
@@ -28,14 +28,16 @@ class Product
                           0.925
                           0.950
                           0.999
-                          GF ].freeze
+                          GF
+                          Unknown].freeze
+
       # Associations
       has_many :metals, class_name: 'Product::Jewelry::Metal'
 
       # Validations
       validates :value, presence: true,
                         uniqueness: true,
-                        length: { maximum: 5 },
+                        length: { maximum: 10 },
                         inclusion: { in: ALLOWED_VALUES }
 
       # Aliases

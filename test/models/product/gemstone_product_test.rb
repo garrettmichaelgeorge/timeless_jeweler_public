@@ -22,5 +22,14 @@ class Product
 
     context 'validations' do
     end
+
+    context 'callbacks' do
+      subject { FactoryBot.build(:gemstone_product) }
+
+      should 'build new Gemstone object when saved' do
+        subject.save
+        _(subject.gemstone).must_exist
+      end
+    end
   end
 end

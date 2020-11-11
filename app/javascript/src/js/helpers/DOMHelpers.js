@@ -8,7 +8,13 @@ function hide (el) {
   el.classList.add('d-none')
 }
 
+function hideAll (els) {
+  if(!els) return
+  els.forEach(el => hide(el))
+}
+
 export {
   show,
-  hide
+  hide,
+  hideAll
 }

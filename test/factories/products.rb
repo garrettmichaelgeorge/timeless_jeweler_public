@@ -2,27 +2,25 @@
 #
 # Table name: products
 #
-#  id                  :bigint           not null, primary key
-#  cost_cents          :integer          default(0), not null
-#  cost_currency       :string           default("USD"), not null
-#  description         :text
-#  name                :string(40)       not null
-#  notes               :text
-#  price_cents         :integer          default(0), not null
-#  price_currency      :string           default("USD"), not null
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  product_category_id :bigint           not null
-#  product_style_id    :bigint           not null
+#  id               :bigint           not null, primary key
+#  category         :string(20)       not null
+#  cost_cents       :integer          default(0), not null
+#  cost_currency    :string           default("USD"), not null
+#  description      :text
+#  name             :string(40)       not null
+#  notes            :text
+#  price_cents      :integer          default(0), not null
+#  price_currency   :string           default("USD"), not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  product_style_id :bigint           not null
 #
 # Indexes
 #
-#  index_products_on_product_category_id  (product_category_id)
-#  index_products_on_product_style_id     (product_style_id)
+#  index_products_on_product_style_id  (product_style_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (product_category_id => product_categories.id)
 #  fk_rails_...  (product_style_id => product_styles.id)
 #
 FactoryBot.define do

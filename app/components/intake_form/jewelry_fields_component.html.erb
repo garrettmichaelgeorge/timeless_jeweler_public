@@ -1,3 +1,18 @@
-<fieldset>
-  <%= f.association :mounted_gemstone %>
+<fieldset id="jewelry_product_fields" class="d-none form-group">
+  <legend>Jewelry</legend>
+
+  <% unless f.object.metals.empty? %>
+    <%= f.simple_fields_for :metals do |f| %>
+      <%= render(IntakeForm::MetalFieldsComponent.new(f: f)) %>
+    <% end %>
+  <% end %>
+
+  <% unless f.object.gemstones.empty? %>
+    <%= f.simple_fields_for :gemstones do |f| %>
+      <%= render(IntakeForm::GemstoneFieldsComponent.new(f: f)) %>
+    <% end %>
+  <% end %>
+
+  <%= link_to_add_fields 'Add Metal',    f, :metals %>
+  <%= link_to_add_fields 'Add Gemstone', f, :gemstones %>
 </fieldset>
