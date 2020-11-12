@@ -11,8 +11,7 @@
 #  index_loose_gemstones_on_product_id   (product_id)
 #
 FactoryBot.define do
-  factory :gemstone_product, class: 'Product::Gemstone' do
-    association :gemstone
+  factory :gemstone_product, class: 'Product::GemstoneProduct' do
     association :product, :gemstone
   end
 end

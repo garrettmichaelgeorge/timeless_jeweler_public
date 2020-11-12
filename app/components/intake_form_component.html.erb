@@ -1,4 +1,4 @@
-<%= simple_form_for resource, wrapper_mappings: wrapper_mappings do |f| %>
+<%= simple_form_for helpers.setup_product(product), wrapper_mappings: wrapper_mappings do |f| %>
 
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -8,9 +8,9 @@
     <%= f.input :name%>
     <%= f.input :description %>
     <%= f.association :style, label_method: :name,
+                              prompt: 'Select a style',
                               input_html: { class: "",
-                                               id: "new-product-style-association" },
-                              prompt: 'Select a style' %>
+                                               id: "new-product-style-association" } %>
     <%= f.input :cost_cents %>
     <%= f.input :price_cents %>
     <%= f.input :notes %>

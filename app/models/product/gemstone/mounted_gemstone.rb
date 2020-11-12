@@ -14,14 +14,16 @@
 class Product
   class Gemstone
     class MountedGemstone < ApplicationRecord
-      # Serves two roles:
-      # 1. as one of two subtypes of Gemstone
-      # 2. as a join table between Gemstone and Jewelry Product
-
       self.table_name = 'mountings'
-      belongs_to :gemstone,         class_name: 'Product::Gemstone'
-      belongs_to :jewelry_product,  class_name: 'Product::JewelryProduct',
-                                    foreign_key: 'jewelry_piece_id'
+
+      belongs_to :profile,         class_name: 'Product::Gemstone::Profile',
+                                   foreign_key: 'gemstone_id'
+
+      belongs_to :jewelry_product, class_name: 'Product::JewelryProduct',
+                                   foreign_key: 'jewelry_piece_id'
+
+      # Delegations
+      delegate_missing_to :profile
     end
   end
 end

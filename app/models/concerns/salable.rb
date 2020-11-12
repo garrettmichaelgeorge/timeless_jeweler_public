@@ -15,7 +15,8 @@ module Salable
     # or...
     # delegate_missing_to :product
 
-    case to_s.demodulize.gsub('Product', '').upcase
+    category_name = to_s.demodulize.gsub('Product', '').upcase
+    case category_name
     when 'JEWELRY'
       belongs_to :product, -> { jewelry },
                  inverse_of: :jewelry_product

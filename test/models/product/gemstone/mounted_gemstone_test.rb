@@ -16,7 +16,7 @@ class Product
   class Gemstone
     class MountedGemstoneTest < ActiveSupport::TestCase
       context 'associations' do
-        should belong_to(:gemstone)
+        should belong_to(:profile)
         should belong_to(:jewelry_product)
       end
     end

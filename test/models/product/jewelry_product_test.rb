@@ -17,7 +17,6 @@ class Product
   class JewelryProductTest < ActiveSupport::TestCase
     context 'associations' do
       should have_many(:mounted_gemstones)
-      should have_many(:gemstones).through(:mounted_gemstones)
       should belong_to(:product).conditions(category: 'JEWELRY')
       should have_many(:metals)
     end
@@ -46,7 +45,7 @@ class Product
     end
 
     context '.build' do
-      should "not save when associated product's category is not JEWELRY" do
+      should_eventually "not save when associated product's category is not JEWELRY" do
         # FIXME
         @jewelry_product = FactoryBot.build(:jewelry_product)
         _(@jewelry_product.product).wont_be_nil

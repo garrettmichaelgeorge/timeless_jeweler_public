@@ -22,8 +22,6 @@ class Product
     has_many :mounted_gemstones, class_name: 'Product::Gemstone::MountedGemstone',
                                  inverse_of: :jewelry_product
 
-    has_many :gemstones, through: :mounted_gemstones
-
     has_many :metals, class_name: 'Product::Jewelry::Metal',
                       inverse_of: :jewelry_product
 
@@ -33,5 +31,7 @@ class Product
              :purity,
              to: :metals,
              prefix: true
+
+    alias_attribute :gemstones, :mounted_gemstones
   end
 end

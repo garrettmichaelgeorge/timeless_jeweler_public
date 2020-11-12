@@ -13,8 +13,17 @@
 #
 require 'test_helper'
 
-class ProductStyleTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class Product
+  class StyleTest < ActiveSupport::TestCase
+    context 'associations' do
+      should have_many(:products)
+    end
+
+    context 'validations' do
+      subject { FactoryBot.build(:product_style) }
+      should validate_length_of(:name).is_at_most(40)
+      should validate_presence_of(:name)
+      should validate_uniqueness_of(:name)
+    end
+  end
 end

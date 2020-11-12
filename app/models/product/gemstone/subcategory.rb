@@ -20,7 +20,9 @@
 class Product
   class Gemstone
     class Subcategory < ApplicationRecord
-      belongs_to :category, class_name: 'Gemstone::Category',
+      self.table_name = 'gemstone_subcategories'
+
+      belongs_to :category, class_name: 'Product::Gemstone::Category',
                             inverse_of: :subcategories,
                             foreign_key: 'gemstone_category_id'
 

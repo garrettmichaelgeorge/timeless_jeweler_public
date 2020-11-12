@@ -11,9 +11,9 @@ class Product
   class Gemstone
     class Category < ApplicationRecord
       self.table_name = 'gemstone_categories'
+
       has_many :subcategories, class_name: 'Product::Gemstone::Subcategory',
-                               inverse_of: :category,
-                               foreign_key: 'gemstone_subcategory_id'
+                               inverse_of: :category
 
       validates_presence_of :name
       validates_length_of :name, maximum: 40

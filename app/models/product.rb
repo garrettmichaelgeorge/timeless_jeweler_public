@@ -30,7 +30,7 @@ class Product < ApplicationRecord
                           gemstone_product].freeze
 
   # Callbacks
-  before_save :build_subtype
+  # after_initialize :build_subtype
   # FIXME: breaks tests for unknown reason
   # before_validation :normalize_category
 
@@ -65,16 +65,11 @@ class Product < ApplicationRecord
                                   validate: true,
                                   touch: true
 
-  has_one :gemstone,              through: :gemstone_product,
-                                  autosave: true,
-                                  dependent: :destroy,
-                                  validate: true,
-                                  touch: true
-
   accepts_nested_attributes_for :jewelry_product,
                                 :gemstone_product,
-                                :gemstone,
-                                :miscellaneous_product
+                                :miscellaneous_product,
+                                allow_destroy: true,
+                                reject_if: :all_blank
 
   # Validations
   validates :name, presence: true,
@@ -84,6 +79,8 @@ class Product < ApplicationRecord
                        inclusion: { in: %w[JEWELRY
                                            GEMSTONE
                                            MISCELLANEOUS] }
+
+  validates_associated :gemstone_product
 
   def validate_exclusive(product_id, product_category_id)
     # TODO
@@ -114,7 +111,8 @@ class Product < ApplicationRecord
     when 'MISCELLANEOUS'
       build_miscellaneous_product if miscellaneous_product.nil?
     else
-      raise StandardError, 'Cannot create product subtype due to invalid category'
+      raise StandardError,
+            'Cannot create product subtype due to invalid category'
     end
   end
 

@@ -55,13 +55,6 @@ class ProductTest < ActiveSupport::TestCase
         .touch(true)
         .autosave(true)
 
-      should have_one(:gemstone)
-        .through(:gemstone_product)
-        .dependent(:destroy)
-        .validate(true)
-        .touch(true)
-        .autosave(true)
-
       should have_one(:miscellaneous_product)
         .dependent(:destroy)
         .validate(true)
@@ -76,7 +69,7 @@ class ProductTest < ActiveSupport::TestCase
     end
   end
 
-  context 'nested_attributes' do
+  context 'nested attributes' do
     should accept_nested_attributes_for(:jewelry_product)
     should accept_nested_attributes_for(:gemstone_product)
     should accept_nested_attributes_for(:miscellaneous_product)

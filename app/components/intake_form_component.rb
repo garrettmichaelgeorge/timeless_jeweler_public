@@ -1,8 +1,10 @@
 class IntakeFormComponent < ApplicationComponent
-  attr_reader :resource
+  delegate :setup_product, to: :helpers
 
-  def initialize(resource:)
-    @resource = resource
+  attr_reader :product
+
+  def initialize(product:)
+    @product = product
   end
 
   def wrapper_mappings

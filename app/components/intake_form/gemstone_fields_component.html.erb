@@ -1,7 +1,7 @@
 <fieldset id="gemstone_product_fields" class="form-group">
   <legend>Gemstone</legend>
-  <%# f.association :subcategory %>
-  <%# f.input :carat %>
+  <%# f.association :subcategory, collection: Product::Gemstone::Subcategory.all %>
+  <%= f.input :carat %>
   <%# f.input :is_diamond %>
   <%# f.association :diamond_cut %>
   <%# f.association :diamond_color %>

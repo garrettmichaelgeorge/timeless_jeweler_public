@@ -9,12 +9,6 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
-    # FIXME: need to conditionally call build_jewelry_product,
-    # build_gemstone_product, and build_miscellaneous_product
-    @product.build_jewelry_product
-    @product.build_gemstone_product
-    @product.build_miscellaneous_product
-    # @product.jewelry_product.metals.build
   end
 
   def edit; end
