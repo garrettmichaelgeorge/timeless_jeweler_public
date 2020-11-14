@@ -280,6 +280,7 @@ ALTER SEQUENCE public.gemstone_categories_id_seq OWNED BY public.gemstone_catego
 
 CREATE TABLE public.gemstone_products (
     gemstone_id bigint NOT NULL,
+    gemstone_profile_id bigint NOT NULL,
     product_id bigint NOT NULL
 );
 
@@ -1568,6 +1569,13 @@ CREATE INDEX index_gemstone_products_on_gemstone_id ON public.gemstone_products 
 
 
 --
+-- Name: index_gemstone_products_on_gemstone_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gemstone_products_on_gemstone_profile_id ON public.gemstone_products USING btree (gemstone_profile_id);
+
+
+--
 -- Name: index_gemstone_products_on_product_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1808,6 +1816,22 @@ ALTER TABLE ONLY public.metals
 
 
 --
+-- Name: gemstone_products fk_rails_3b10934542; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_products
+    ADD CONSTRAINT fk_rails_3b10934542 FOREIGN KEY (product_id) REFERENCES public.products(id);
+
+
+--
+-- Name: gemstone_products fk_rails_4265cebf7b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_products
+    ADD CONSTRAINT fk_rails_4265cebf7b FOREIGN KEY (gemstone_profile_id) REFERENCES public.gemstone_profiles(id);
+
+
+--
 -- Name: products fk_rails_6d374caf01; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2002,6 +2026,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201113224326'),
 ('20201113230428'),
 ('20201113230833'),
-('20201113230923');
+('20201113230923'),
+('20201114200621'),
+('20201114201523'),
+('20201114202130');
 
 
