@@ -14,11 +14,16 @@
 class Product
   class GemstoneProduct < ApplicationRecord
     # Subtype of Product. All meaningful attributes are in :profile
-    self.table_name = 'loose_gemstones'
+    self.table_name = 'gemstone_products'
 
     include Salable
 
     after_initialize :ensure_profile_exists
+
+    # def initialize
+    #   super
+    #   build_profile if profile.nil?
+    # end
 
     # Associations
     belongs_to :profile, class_name: 'Product::Gemstone::Profile',
@@ -29,17 +34,16 @@ class Product
                          validate: true
 
     # Validations
-    validates_associated :profile
+    # validates_associated :profile
 
     # Delegations
     delegate_missing_to :profile
+    # delegate :carat, to: :profile
 
     private
 
     def ensure_profile_exists
-      return unless profile.nil?
-
-      build_profile
+      build_profile if profile.nil?
     end
   end
 end

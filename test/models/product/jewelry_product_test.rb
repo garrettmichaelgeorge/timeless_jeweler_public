@@ -11,13 +11,17 @@
 #
 #  index_jewelry_pieces_on_product_id  (product_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (product_id => products.id)
+#
 require 'test_helper'
 
 class Product
   class JewelryProductTest < ActiveSupport::TestCase
     context 'associations' do
+      should belong_to(:product)
       should have_many(:mounted_gemstones)
-      should belong_to(:product).conditions(category: 'JEWELRY')
       should have_many(:metals)
     end
 

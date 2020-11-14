@@ -275,6 +275,47 @@ ALTER SEQUENCE public.gemstone_categories_id_seq OWNED BY public.gemstone_catego
 
 
 --
+-- Name: gemstone_products; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.gemstone_products (
+    gemstone_id bigint NOT NULL,
+    product_id bigint NOT NULL
+);
+
+
+--
+-- Name: gemstone_profiles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.gemstone_profiles (
+    id bigint NOT NULL,
+    carat numeric(5,2),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: gemstone_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.gemstone_profiles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gemstone_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.gemstone_profiles_id_seq OWNED BY public.gemstone_profiles.id;
+
+
+--
 -- Name: gemstone_subcategories; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -304,38 +345,6 @@ CREATE SEQUENCE public.gemstone_subcategories_id_seq
 --
 
 ALTER SEQUENCE public.gemstone_subcategories_id_seq OWNED BY public.gemstone_subcategories.id;
-
-
---
--- Name: gemstones; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.gemstones (
-    id bigint NOT NULL,
-    gemstone_subcategory_id bigint NOT NULL,
-    carat numeric(5,2),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: gemstones_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.gemstones_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: gemstones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.gemstones_id_seq OWNED BY public.gemstones.id;
 
 
 --
@@ -432,16 +441,6 @@ CREATE TABLE public.jewelry_pieces_metal_purities (
 CREATE TABLE public.jewelry_pieces_metals (
     jewelry_piece_id bigint NOT NULL,
     metal_id bigint NOT NULL
-);
-
-
---
--- Name: loose_gemstones; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.loose_gemstones (
-    gemstone_id bigint NOT NULL,
-    product_id bigint NOT NULL
 );
 
 
@@ -1118,17 +1117,17 @@ ALTER TABLE ONLY public.gemstone_categories ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
+-- Name: gemstone_profiles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_profiles ALTER COLUMN id SET DEFAULT nextval('public.gemstone_profiles_id_seq'::regclass);
+
+
+--
 -- Name: gemstone_subcategories id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gemstone_subcategories ALTER COLUMN id SET DEFAULT nextval('public.gemstone_subcategories_id_seq'::regclass);
-
-
---
--- Name: gemstones id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.gemstones ALTER COLUMN id SET DEFAULT nextval('public.gemstones_id_seq'::regclass);
 
 
 --
@@ -1336,19 +1335,19 @@ ALTER TABLE ONLY public.gemstone_categories
 
 
 --
+-- Name: gemstone_profiles gemstone_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_profiles
+    ADD CONSTRAINT gemstone_profiles_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: gemstone_subcategories gemstone_subcategories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gemstone_subcategories
     ADD CONSTRAINT gemstone_subcategories_pkey PRIMARY KEY (id);
-
-
---
--- Name: gemstones gemstones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.gemstones
-    ADD CONSTRAINT gemstones_pkey PRIMARY KEY (id);
 
 
 --
@@ -1562,17 +1561,24 @@ CREATE INDEX index_email_addresses_on_emailable_type_and_emailable_id ON public.
 
 
 --
+-- Name: index_gemstone_products_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gemstone_products_on_gemstone_id ON public.gemstone_products USING btree (gemstone_id);
+
+
+--
+-- Name: index_gemstone_products_on_product_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gemstone_products_on_product_id ON public.gemstone_products USING btree (product_id);
+
+
+--
 -- Name: index_gemstone_subcategories_on_gemstone_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_gemstone_subcategories_on_gemstone_category_id ON public.gemstone_subcategories USING btree (gemstone_category_id);
-
-
---
--- Name: index_gemstones_on_gemstone_subcategory_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_gemstones_on_gemstone_subcategory_id ON public.gemstones USING btree (gemstone_subcategory_id);
 
 
 --
@@ -1615,20 +1621,6 @@ CREATE INDEX index_jewelry_pieces_metals_on_metal_id_and_jewelry_piece_id ON pub
 --
 
 CREATE INDEX index_jewelry_pieces_on_product_id ON public.jewelry_pieces USING btree (product_id);
-
-
---
--- Name: index_loose_gemstones_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_loose_gemstones_on_gemstone_id ON public.loose_gemstones USING btree (gemstone_id);
-
-
---
--- Name: index_loose_gemstones_on_product_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_loose_gemstones_on_product_id ON public.loose_gemstones USING btree (product_id);
 
 
 --
@@ -1864,6 +1856,14 @@ ALTER TABLE ONLY public.metals
 
 
 --
+-- Name: jewelry_pieces fk_rails_9c5563f7bd; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.jewelry_pieces
+    ADD CONSTRAINT fk_rails_9c5563f7bd FOREIGN KEY (product_id) REFERENCES public.products(id);
+
+
+--
 -- Name: store_transaction_line_items fk_rails_af4a850152; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1877,14 +1877,6 @@ ALTER TABLE ONLY public.store_transaction_line_items
 
 ALTER TABLE ONLY public.store_transaction_line_items
     ADD CONSTRAINT fk_rails_ba768cee4d FOREIGN KEY (product_id) REFERENCES public.products(id);
-
-
---
--- Name: gemstones fk_rails_c1d36c249a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.gemstones
-    ADD CONSTRAINT fk_rails_c1d36c249a FOREIGN KEY (gemstone_subcategory_id) REFERENCES public.gemstone_subcategories(id);
 
 
 --
@@ -2005,6 +1997,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201107210225'),
 ('20201107215018'),
 ('20201107231942'),
-('20201107232042');
+('20201107232042'),
+('20201113144451'),
+('20201113224326'),
+('20201113230428'),
+('20201113230833'),
+('20201113230923');
 
 

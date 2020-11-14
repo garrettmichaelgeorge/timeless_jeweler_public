@@ -1,20 +1,11 @@
 # == Schema Information
 #
-# Table name: gemstones
+# Table name: gemstone_profiles
 #
-#  id                      :bigint           not null, primary key
-#  carat                   :decimal(5, 2)
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  gemstone_subcategory_id :bigint           not null
-#
-# Indexes
-#
-#  index_gemstones_on_gemstone_subcategory_id  (gemstone_subcategory_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (gemstone_subcategory_id => gemstone_subcategories.id)
+#  id         :bigint           not null, primary key
+#  carat      :decimal(5, 2)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 require 'test_helper'
 
@@ -22,9 +13,9 @@ class Product
   class Gemstone
     class ProfileTest < ActiveSupport::TestCase
       context 'associations' do
-        should belong_to(:subcategory)
         should have_one(:mounted_gemstone)
         should have_one(:gemstone_product)
+        should_eventually belong_to(:subcategory)
         should_eventually have_one(:diamond_color).through(:color_grade)
         should_eventually have_one(:diamond_cut).through(:cut_grade)
         should_eventually have_one(:diamond_clarity).through(:clarity_grade)

@@ -20,4 +20,12 @@ class IntakeFormComponent < ApplicationComponent
       select: :custom_multi_select
     }
   end
+
+  def category_collection
+    [
+      %w[Jewelry JEWELRY],
+      %w[Gemstone GEMSTONE],
+      %w[Miscellaneous MISCELLANEOUS]
+    ]
+  end
 end

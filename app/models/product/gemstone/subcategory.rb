@@ -26,7 +26,7 @@ class Product
                             inverse_of: :subcategories,
                             foreign_key: 'gemstone_category_id'
 
-      has_many :gemstones, inverse_of: :subcategory
+      # has_many :gemstones, inverse_of: :subcategory
 
       validates_presence_of :name
       validates_length_of :name, maximum: 40

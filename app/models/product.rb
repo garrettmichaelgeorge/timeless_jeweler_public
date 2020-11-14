@@ -30,7 +30,7 @@ class Product < ApplicationRecord
                           gemstone_product].freeze
 
   # Callbacks
-  # after_initialize :build_subtype
+  # after_initialize :build_salable
   # FIXME: breaks tests for unknown reason
   # before_validation :normalize_category
 
@@ -76,11 +76,9 @@ class Product < ApplicationRecord
                    length: { maximum: 40 }
 
   validates :category, presence: true,
-                       inclusion: { in: %w[JEWELRY
-                                           GEMSTONE
-                                           MISCELLANEOUS] }
+                       inclusion: { in: %w[JEWELRY GEMSTONE MISCELLANEOUS] }
 
-  validates_associated :gemstone_product
+  validates_associated :gemstone_product, :jewelry_product, :miscellaneous_product
 
   def validate_exclusive(product_id, product_category_id)
     # TODO
@@ -90,8 +88,11 @@ class Product < ApplicationRecord
   delegate :name, to: :style,
                   prefix: true
 
-  # Presenters/Decorators
-  # TODO: move to decorator/presenter/helper class
+  # delegate_missing_to :salable
+  delegate :carat, :carat=, to: :gemstone_product
+
+  # Presenters
+  # TODO: move to presenter class
   def to_label
     "#{name} (#{price})"
   end
@@ -100,9 +101,44 @@ class Product < ApplicationRecord
   monetize :cost_cents, numericality: { greater_than_or_equal_to: 0 }
   monetize :price_cents, numericality: { greater_than_or_equal_to: 0 }
 
+  alias_attribute :salable_type, :category
+
+  def assign_category(category)
+    self.category = category.to_s.upcase
+    build_salable
+  end
+
+  class << self
+    # Factory methods
+    def build_as(category = :jewelry, **options)
+      new(**options) do |product|
+        product.assign_category(category)
+      end
+    end
+  end
+
+  def salable
+    case salable_type
+    when 'JEWELRY'
+      jewelry_product
+    when 'GEMSTONE'
+      gemstone_product
+    when 'MISCELLANEOUS'
+      miscellaneous_product
+    end
+  end
+
   private
 
-  def build_subtype
+  def salable_class
+    salable_type.constantize
+  end
+
+  def salable_name
+    salable_class.model_name.singular.inquiry
+  end
+
+  def build_salable
     case category
     when 'JEWELRY'
       build_jewelry_product if jewelry_product.nil?
@@ -112,7 +148,7 @@ class Product < ApplicationRecord
       build_miscellaneous_product if miscellaneous_product.nil?
     else
       raise StandardError,
-            'Cannot create product subtype due to invalid category'
+            'Cannot create salable due to invalid category'
     end
   end
 

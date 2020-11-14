@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
   def show; end
 
   def new
-    @product = Product.new
+    @product = helpers.setup_product(Product.new)
   end
 
   def edit; end
@@ -60,34 +60,28 @@ class ProductsController < ApplicationController
       :category,
       :cost_cents,
       :price_cents,
-      permitted_jewelry_product_params,
-      permitted_gemstone_params
+      jewelry_product_attributes: permitted_jewelry_product_params,
+      gemstone_product_attributes: permitted_gemstone_params
     ]
   end
 
   def permitted_jewelry_product_params
-    {
-      jewelry_product_attributes: [
-        permitted_metal_params,
-        permitted_gemstone_params
-      ]
-    }
+    [
+      mounted_gemstone_attributes: permitted_gemstone_params,
+      metal_attributes: permitted_metal_params
+    ]
   end
 
   def permitted_gemstone_params
-    {
-      gemstone_product_attributes: []
-    }
+    []
   end
 
   def permitted_metal_params
-    {
-      metal_attributes: %i[
-        id
-        metal_category_id
-        metal_color_id
-        metal_purity_id
-      ]
-    }
+    %i[
+      id
+      metal_category_id
+      metal_color_id
+      metal_purity_id
+    ]
   end
 end

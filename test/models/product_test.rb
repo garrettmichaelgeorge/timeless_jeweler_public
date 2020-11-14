@@ -48,7 +48,7 @@ class ProductTest < ActiveSupport::TestCase
     should have_many(:store_transaction_line_items)
     should belong_to(:style)
 
-    context 'product subtypes' do
+    context 'salable types' do
       should have_one(:gemstone_product)
         .dependent(:destroy)
         .validate(true)
@@ -97,5 +97,15 @@ class ProductTest < ActiveSupport::TestCase
 
   context '#gemstones' do
     subject { FactoryBot.build(:product) }
+  end
+
+  context '.build_as' do
+    should 'build gemstone' do
+      p = Product.build_as(:gemstone)
+      p.name = 'My Ruby'
+      p.style = FactoryBot.build(:product_style)
+      p.carat = 3.55
+      assert p.save!
+    end
   end
 end
