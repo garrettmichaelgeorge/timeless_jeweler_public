@@ -33,46 +33,18 @@ class ProductTest < ActiveSupport::TestCase
 
   def setup; end
 
-  test 'creates new product' do
-    @new_product = FactoryBot.build(:product)
-    assert @new_product.save, 'Expected to save Product with valid attributes'
-  end
-
-  test 'creates new jewelry product on save' do
-    @new_product = FactoryBot.build(:product, category: 'JEWELRY')
-    @new_product.save
-    assert_not @new_product.jewelry_product.nil?
-  end
-
   context 'associations' do
     should have_many(:store_transaction_line_items)
     should belong_to(:style)
 
     context 'salable types' do
-      should have_one(:gemstone_product)
-        .dependent(:destroy)
-        .validate(true)
-        .touch(true)
-        .autosave(true)
-
-      should have_one(:miscellaneous_product)
-        .dependent(:destroy)
-        .validate(true)
-        .touch(true)
-        .autosave(true)
-
-      should have_one(:jewelry_product)
-        .dependent(:destroy)
-        .validate(true)
-        .touch(true)
-        .autosave(true)
+      PRODUCT_CATEGORIES.each do |category|
+        should have_one(category)
+          .dependent(:destroy)
+          .touch(true)
+        should accept_nested_attributes_for(category)
+      end
     end
-  end
-
-  context 'nested attributes' do
-    should accept_nested_attributes_for(:jewelry_product)
-    should accept_nested_attributes_for(:gemstone_product)
-    should accept_nested_attributes_for(:miscellaneous_product)
   end
 
   context 'scopes' do
@@ -88,6 +60,7 @@ class ProductTest < ActiveSupport::TestCase
 
   context 'delegations' do
     should delegate_method(:name).to(:style).with_prefix
+    should delegate_method(:carat).to(:salable)
   end
 
   context 'monetize' do
@@ -95,17 +68,31 @@ class ProductTest < ActiveSupport::TestCase
     should('monetize cost')  { _(subject.cost).must_be_instance_of Money }
   end
 
-  context '#gemstones' do
-    subject { FactoryBot.build(:product) }
+  should_eventually 'create new product' do
+    @new_product = FactoryBot.build(:product)
+    assert @new_product.save, 'Expected to save Product with valid attributes'
+  end
+
+  should_eventually 'create new jewelry product on save' do
+    @new_product = FactoryBot.build(:product, category: 'JEWELRY')
+    @new_product.save
+    assert_not @new_product.jewelry_product.nil?
   end
 
   context '.build_as' do
+    subject { Product.build_as(:gemstone) }
+
+    should 'create gemstone object' do
+      _(subject.salable.product).must_equal subject, 'Salable association invalid'
+    end
+
     should 'build gemstone' do
-      p = Product.build_as(:gemstone)
-      p.name = 'My Ruby'
-      p.style = FactoryBot.build(:product_style)
-      p.carat = 3.55
-      assert p.save!
+      subject.name = 'My Ruby'
+      subject.style = FactoryBot.build(:product_style)
+      subject.profile.carat = 3.55
+      subject.valid?
+      errors = [subject.errors.messages, subject.salable.errors.messages]
+      _(subject.save).wont_be_nil "Product save failed with errors: #{errors}"
     end
   end
 end

@@ -279,10 +279,29 @@ ALTER SEQUENCE public.gemstone_categories_id_seq OWNED BY public.gemstone_catego
 --
 
 CREATE TABLE public.gemstone_products (
-    gemstone_id bigint NOT NULL,
     gemstone_profile_id bigint NOT NULL,
-    product_id bigint NOT NULL
+    product_id bigint NOT NULL,
+    id bigint NOT NULL
 );
+
+
+--
+-- Name: gemstone_products_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.gemstone_products_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gemstone_products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.gemstone_products_id_seq OWNED BY public.gemstone_products.id;
 
 
 --
@@ -1118,6 +1137,13 @@ ALTER TABLE ONLY public.gemstone_categories ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
+-- Name: gemstone_products id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_products ALTER COLUMN id SET DEFAULT nextval('public.gemstone_products_id_seq'::regclass);
+
+
+--
 -- Name: gemstone_profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1333,6 +1359,14 @@ ALTER TABLE ONLY public.email_addresses
 
 ALTER TABLE ONLY public.gemstone_categories
     ADD CONSTRAINT gemstone_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gemstone_products gemstone_products_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_products
+    ADD CONSTRAINT gemstone_products_pkey PRIMARY KEY (id);
 
 
 --
@@ -1559,13 +1593,6 @@ CREATE INDEX index_diamond_grades_on_diamond_cut_id ON public.diamond_grades USI
 --
 
 CREATE INDEX index_email_addresses_on_emailable_type_and_emailable_id ON public.email_addresses USING btree (emailable_type, emailable_id);
-
-
---
--- Name: index_gemstone_products_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_gemstone_products_on_gemstone_id ON public.gemstone_products USING btree (gemstone_id);
 
 
 --
@@ -2029,6 +2056,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201113230923'),
 ('20201114200621'),
 ('20201114201523'),
-('20201114202130');
+('20201114202130'),
+('20201116223912');
 
 

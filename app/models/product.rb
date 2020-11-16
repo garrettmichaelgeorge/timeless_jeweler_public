@@ -47,29 +47,21 @@ class Product < ApplicationRecord
                      foreign_key: 'product_style_id'
 
   #-- Subtypes
-  has_one :jewelry_product,       class_name: 'Product::JewelryProduct',
-                                  autosave: true,
-                                  dependent: :destroy,
-                                  validate: true,
-                                  touch: true
+  PRODUCT_CATEGORIES.each do |category|
+    class_name = 'Product::' + category.to_s.classify
+    has_one category, class_name: class_name,
+                      inverse_of: :product,
+                      dependent: :destroy,
+                      touch: true
 
-  has_one :miscellaneous_product, class_name: 'Product::MiscellaneousProduct',
-                                  autosave: true,
-                                  dependent: :destroy,
-                                  validate: true,
-                                  touch: true
+    accepts_nested_attributes_for category, allow_destroy: true,
+                                            update_only: true
 
-  has_one :gemstone_product,      class_name: 'Product::GemstoneProduct',
-                                  autosave: true,
-                                  dependent: :destroy,
-                                  validate: true,
-                                  touch: true
+    validates_associated category, reject_if: :all_blank
 
-  accepts_nested_attributes_for :jewelry_product,
-                                :gemstone_product,
-                                :miscellaneous_product,
-                                allow_destroy: true,
-                                reject_if: :all_blank
+    category_short_name = category.to_s.camelize.gsub('Product', '').to_sym
+    scope category_short_name, -> { where category: category_short_name.to_s.uppercase }
+  end
 
   # Validations
   validates :name, presence: true,
@@ -78,18 +70,12 @@ class Product < ApplicationRecord
   validates :category, presence: true,
                        inclusion: { in: %w[JEWELRY GEMSTONE MISCELLANEOUS] }
 
-  validates_associated :gemstone_product, :jewelry_product, :miscellaneous_product
-
-  def validate_exclusive(product_id, product_category_id)
-    # TODO
-  end
-
   # Delegations
   delegate :name, to: :style,
                   prefix: true
 
-  # delegate_missing_to :salable
-  delegate :carat, :carat=, to: :gemstone_product
+  delegate_missing_to :salable
+  # delegate :carat, :carat=, to: :gemstone_product
 
   # Presenters
   # TODO: move to presenter class
@@ -108,15 +94,6 @@ class Product < ApplicationRecord
     build_salable
   end
 
-  class << self
-    # Factory methods
-    def build_as(category = :jewelry, **options)
-      new(**options) do |product|
-        product.assign_category(category)
-      end
-    end
-  end
-
   def salable
     case salable_type
     when 'JEWELRY'
@@ -125,6 +102,15 @@ class Product < ApplicationRecord
       gemstone_product
     when 'MISCELLANEOUS'
       miscellaneous_product
+    end
+  end
+
+  class << self
+    # Factory methods
+    def build_as(category = :jewelry, **options)
+      new(**options) do |product|
+        product.assign_category category
+      end
     end
   end
 

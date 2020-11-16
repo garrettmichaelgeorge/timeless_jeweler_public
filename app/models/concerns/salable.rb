@@ -5,6 +5,7 @@ module Salable
                               description
                               notes
                               category
+                              style
                               cost
                               price].freeze
 

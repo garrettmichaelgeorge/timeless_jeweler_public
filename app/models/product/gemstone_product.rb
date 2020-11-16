@@ -2,13 +2,12 @@
 #
 # Table name: gemstone_products
 #
-#  gemstone_id         :bigint           not null
+#  id                  :bigint           not null, primary key
 #  gemstone_profile_id :bigint           not null
 #  product_id          :bigint           not null
 #
 # Indexes
 #
-#  index_gemstone_products_on_gemstone_id          (gemstone_id)
 #  index_gemstone_products_on_gemstone_profile_id  (gemstone_profile_id)
 #  index_gemstone_products_on_product_id           (product_id)
 #
@@ -23,34 +22,43 @@ class Product
     # Subtype of Product. All meaningful attributes are in :profile
     self.table_name = 'gemstone_products'
 
-    include Salable
+    # include Salable
 
-    after_initialize :ensure_profile_exists
-
-    # def initialize
-    #   super
-    #   build_profile if profile.nil?
-    # end
+    before_create :build_default_profile
 
     # Associations
     belongs_to :profile, class_name: 'Product::Gemstone::Profile',
-                         foreign_key: 'gemstone_id',
+                         foreign_key: 'gemstone_profile_id',
                          inverse_of: :gemstone_product,
                          dependent: :destroy,
-                         touch: true,
-                         validate: true
+                         touch: true
+
+    accepts_nested_attributes_for :profile, update_only: true
+
+    belongs_to :product, -> { gemstone },
+               inverse_of: :gemstone_product
 
     # Validations
     # validates_associated :profile
 
+    def profile
+      # https://stackoverflow.com/questions/3808782/rails-best-practice-how-to-create-dependent-has-one-relations
+      super || build_profile
+    end
+
     # Delegations
     delegate_missing_to :profile
-    # delegate :carat, to: :profile
+    # delegate :carat, :carat=, to: :profile
 
     private
 
-    def ensure_profile_exists
+    def build_default_profile
       build_profile if profile.nil?
+      true
+    end
+
+    def build_associations
+      profile || true
     end
   end
 end

@@ -2,13 +2,12 @@
 #
 # Table name: gemstone_products
 #
-#  gemstone_id         :bigint           not null
+#  id                  :bigint           not null, primary key
 #  gemstone_profile_id :bigint           not null
 #  product_id          :bigint           not null
 #
 # Indexes
 #
-#  index_gemstone_products_on_gemstone_id          (gemstone_id)
 #  index_gemstone_products_on_gemstone_profile_id  (gemstone_profile_id)
 #  index_gemstone_products_on_product_id           (product_id)
 #
@@ -24,8 +23,8 @@ class Product
     context 'associations' do
       should belong_to(:profile)
         .dependent(:destroy)
+        .autosave(true)
         .touch(true)
-        .validate(true)
       should belong_to(:product)
         .conditions(category: 'GEMSTONE')
     end

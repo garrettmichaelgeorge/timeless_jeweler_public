@@ -15,10 +15,12 @@ class Product
 
       # Associations
       has_one :mounted_gemstone, class_name: 'Product::Gemstone::MountedGemstone',
-                                 inverse_of: :profile
+                                 inverse_of: :profile,
+                                 foreign_key: 'gemstone_profile_id'
 
       has_one :gemstone_product, class_name: 'Product::GemstoneProduct',
-                                 inverse_of: :profile
+                                 inverse_of: :profile,
+                                 foreign_key: 'gemstone_profile_id'
 
       # Validations
       validates_numericality_of :carat
