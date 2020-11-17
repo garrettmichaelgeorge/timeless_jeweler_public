@@ -36,3 +36,5 @@ Turbolinks.start()
 ActiveStorage.start()
 
 document.addEventListener('turbolinks:load', initApplication)
+
+import "controllers"

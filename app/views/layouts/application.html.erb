@@ -6,7 +6,9 @@
     <title><%= yield :title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= action_cable_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <%= render 'layouts/components/shim' %>
 
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -21,7 +23,7 @@
       <div class="container-fluid">
 
         <% flash.each do |message_type, message| %>
-        <%= render FlashComponent.new(message_type: message_type, message: message) %>
+          <%= render FlashComponent.new(message_type: message_type, message: message) %>
         <% end %>
 
         <%= yield %>
