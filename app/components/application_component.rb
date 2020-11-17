@@ -21,7 +21,7 @@ class ApplicationComponent < ViewComponent::Base
   private
 
   def fields_component_from(builder, association)
-    "#{namespace_from(builder)}::#{field_type_from(association)}FieldsComponent"
+    (namespace_from(builder) + '::' + field_type_from(association) + 'FieldsComponent')
       .constantize
   end
 

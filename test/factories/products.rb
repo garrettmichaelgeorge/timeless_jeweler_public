@@ -23,12 +23,12 @@
 #
 #  fk_rails_...  (product_style_id => product_styles.id)
 #
+
 FactoryBot.define do
   factory :product do
     name { 'Small ring' }
     description { 'Lorem ipsum sic dolor amet.' }
     association :style, factory: :product_style
-    jewelry
 
     trait :jewelry do
       category { 'JEWELRY' }
@@ -36,6 +36,7 @@ FactoryBot.define do
 
     trait :gemstone do
       category { 'GEMSTONE' }
+      carat { 3.55 }
     end
 
     trait :miscellaneous do

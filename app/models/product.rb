@@ -107,8 +107,8 @@ class Product < ApplicationRecord
 
   class << self
     # Factory methods
-    def build_as(category = :jewelry, **options)
-      new(**options) do |product|
+    def build_as(category = :jewelry, *options)
+      new(*options) do |product|
         product.assign_category category
       end
     end

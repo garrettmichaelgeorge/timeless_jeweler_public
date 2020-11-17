@@ -59,8 +59,12 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   context 'delegations' do
+    subject { Product.build_as(:gemstone) }
     should delegate_method(:name).to(:style).with_prefix
-    should delegate_method(:carat).to(:salable)
+
+    context '.delegate_missing_to' do
+      should delegate_method(:public_send).to(:salable).with_arguments(:carat)
+    end
   end
 
   context 'monetize' do
@@ -68,31 +72,25 @@ class ProductTest < ActiveSupport::TestCase
     should('monetize cost')  { _(subject.cost).must_be_instance_of Money }
   end
 
-  should_eventually 'create new product' do
-    @new_product = FactoryBot.build(:product)
-    assert @new_product.save, 'Expected to save Product with valid attributes'
-  end
-
-  should_eventually 'create new jewelry product on save' do
-    @new_product = FactoryBot.build(:product, category: 'JEWELRY')
-    @new_product.save
-    assert_not @new_product.jewelry_product.nil?
-  end
-
   context '.build_as' do
-    subject { Product.build_as(:gemstone) }
-
     should 'create gemstone object' do
+      subject { Product.build_as(:gemstone) }
       _(subject.salable.product).must_equal subject, 'Salable association invalid'
     end
 
-    should 'build gemstone' do
-      subject.name = 'My Ruby'
-      subject.style = FactoryBot.build(:product_style)
-      subject.profile.carat = 3.55
-      subject.valid?
-      errors = [subject.errors.messages, subject.salable.errors.messages]
-      _(subject.save).wont_be_nil "Product save failed with errors: #{errors}"
+    should 'create new gemstone product' do
+      subject { Product.build_as(:gemstone, *FactoryBot.attributes_for(:product, :gemstone)) }
+      assert subject.save, "Product save failed with errors: #{subject.errors.messages}"
+    end
+
+    should 'create new jewelry product' do
+      subject { Product.build_as(:jewelry, *FactoryBot.attributes_for(:product, :jewelry)) }
+      assert subject.save, "Product save failed with errors: #{subject.errors.messages}"
+    end
+
+    should 'create new miscellaneous product' do
+      subject { Product.build_as(:miscellaneous, *FactoryBot.attributes_for(:product, :miscellaneous)) }
+      assert subject.save, "Product save failed with errors: #{subject.errors.messages}"
     end
   end
 end

@@ -13,6 +13,14 @@
     <%= f.input :cost_cents %>
     <%= f.input :price_cents %>
     <%= f.input :notes %>
+
+    <a href='#'
+       data-reflex='click->FieldsReflex#add_field'
+       data-form="<%= f %>"
+       >
+       Gemstone
+    </a>
+
     <%= f.input :category, as: :select,
                            prompt: 'Please select a category',
                            collection: category_collection %>
