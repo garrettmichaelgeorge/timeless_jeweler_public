@@ -30,7 +30,7 @@ FactoryBot.define do
   factory :item do
     name { 'Small ring' }
     description { 'Lorem ipsum sic dolor amet.' }
-    association :style, factory: :product_style
+    association :style, factory: :item_style
 
     trait :jewelry do
       salable { 'Jewelry' }
