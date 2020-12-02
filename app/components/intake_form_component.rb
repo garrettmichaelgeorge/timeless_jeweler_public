@@ -1,10 +1,10 @@
 class IntakeFormComponent < ApplicationComponent
-  delegate :setup_product, to: :helpers
+  SALABLE_TYPES = %w[Piece Gemstone MiscellaneousItem].freeze
 
-  attr_reader :product
+  attr_reader :item
 
-  def initialize(product:)
-    @product = product
+  def initialize(item:)
+    @item = item
   end
 
   def wrapper_mappings
@@ -21,11 +21,24 @@ class IntakeFormComponent < ApplicationComponent
     }
   end
 
-  def category_collection
-    [
-      %w[Jewelry JEWELRY],
-      %w[Gemstone GEMSTONE],
-      %w[Miscellaneous MISCELLANEOUS]
-    ]
+  def data_reflex_build_salable
+    {
+      reflex: 'change->ItemReflex#build_salable',
+      reflex_dataset: 'combined',
+      controller: 'item'
+    }
+  end
+
+  def data_reflex_submit
+    {
+      reflex: 'input->ItemReflex#submit',
+      reflex_dataset: 'combined',
+      controller: 'item',
+      id: item.id
+    }
+  end
+
+  def form_defaults
+    { input_html: { data: data_reflex_submit } }
   end
 end

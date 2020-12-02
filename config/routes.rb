@@ -10,14 +10,13 @@ Rails.application.routes.draw do
   # root to:      'devise/sessions#new'
   resources :people
   resources :households
-  resources :products
-  resources :parties
+  resources :items
 
   resources :store_transactions do
     resources :store_transaction_line_items
   end
 
-  get       'transactions'  => 'store_transactions#index'
+  get       'inventory'     => 'items#index'
   get       'customers'     => 'people#index'
   get       'dashboard'     => 'static_pages#dashboard'
   get       'charts'        => 'static_pages#dashboard'

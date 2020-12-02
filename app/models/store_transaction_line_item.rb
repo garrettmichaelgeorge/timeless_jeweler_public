@@ -21,7 +21,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (product_id => products.id)
+#  fk_rails_...  (product_id => items.id)
 #  fk_rails_...  (store_transaction_id => store_transactions.id)
 #
 class StoreTransactionLineItem < ApplicationRecord

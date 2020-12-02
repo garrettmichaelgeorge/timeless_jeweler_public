@@ -1,0 +1,12 @@
+<% f.simple_fields_for :piece do |f| %>
+  <fieldset id="piece_fields" class="form-group">
+    <legend>Jewelry</legend>
+    <%= render(ProductFields::GemstoneComponent.new(f: f)) %>
+    <%= render(ProductFields::MetalComponent.new(f: f)) %>
+
+    <%= link_to 'Add metal', '#', class: 'btn btn-sm btn-secondary',
+                                  data: { reflex: 'click->Item#build_metal' } %>
+    <%= link_to 'Add mounted gemstone', '#', class: 'btn btn-sm btn-secondary',
+                                             data: { reflex: 'click->Item#build_mounted_gemstone' } %>
+  </fieldset>
+<% end %>

@@ -3,7 +3,7 @@ require 'test_helper'
 class IntakeFormComponentTest < ViewComponent::TestCase
   context 'form fields' do
     setup do
-      render_inline(IntakeFormComponent.new(resource: Product.new))
+      render_inline(IntakeFormComponent.new(resource: Item.new))
     end
 
     should('have name field')                        { page.must_have_field('Name',          type: 'text') }
@@ -20,7 +20,7 @@ class IntakeFormComponentTest < ViewComponent::TestCase
 
     context 'jewelry fields' do
       setup do
-        render_inline(IntakeFormComponent.new(resource: Product.new))
+        render_inline(IntakeFormComponent.new(resource: Item.new))
         # page.choose('Jewelry')
       end
 
@@ -34,7 +34,7 @@ class IntakeFormComponentTest < ViewComponent::TestCase
 
     context 'gemstone fields' do
       setup do
-        render_inline(IntakeFormComponent.new(resource: Product.new))
+        render_inline(IntakeFormComponent.new(resource: Item.new))
         # page.choose('Gemstone')
       end
 
@@ -48,7 +48,7 @@ class IntakeFormComponentTest < ViewComponent::TestCase
 
     context 'miscellaneous fields' do
       setup do
-        render_inline(IntakeFormComponent.new(resource: Product.new))
+        render_inline(IntakeFormComponent.new(resource: Item.new))
         # page.choose('Miscellaneous')
       end
 

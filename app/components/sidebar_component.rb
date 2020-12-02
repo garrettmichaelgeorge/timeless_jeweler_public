@@ -18,7 +18,7 @@ class SidebarComponent < ApplicationComponent
       inventory: {
         name: 'Inventory',
         icon: 'fe fe-briefcase',
-        link_path: products_path
+        link_path: items_path
       },
       transactions: {
         name: 'Transactions',

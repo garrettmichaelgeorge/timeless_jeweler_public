@@ -1,0 +1,14 @@
+- title = 'New Item Intake'
+- pre_title = 'Inventory'
+
+- provide(:title, title)
+- provide(:body_class, '')
+
+.row.justify-content-center
+  .col-12.col-lg-10.col-xl-8
+    = render(PageHeaderComponent.new(title: title,
+      pre_title: pre_title,
+      buttons: [],
+      tabs: nil))
+
+    = render(IntakeFormComponent.new(item: @item))

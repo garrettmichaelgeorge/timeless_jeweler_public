@@ -141,7 +141,7 @@
                 %th.mb-0.text-muted Trans ID
                 %th.mb-0.text-muted Date
                 %th.mb-0.text-muted Total
-                %th.mb-0.text-muted Product
+                %th.mb-0.text-muted Item
             %tbody
               - @store_transactions.each do |st|
                 %tr
@@ -155,6 +155,6 @@
                     - st.products.each_with_index do |product, i|
                       = link_to product.id, product, data: { 'tippy-content' => product.name }, class: "tippy-instance"
                       = "| " unless i == st.products.size - 1
-.row.justify-content-end                
+.row.justify-content-end
   .col.col-2
     = link_to "Delete customer", person_path(@person), method: :delete, class: "btn btn-danger lift"

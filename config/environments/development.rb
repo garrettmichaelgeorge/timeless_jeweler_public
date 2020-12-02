@@ -57,6 +57,10 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = false
 
+  # Set logger level (options are :debug, :info, :warn, :error, :fatal, :unknown)
+  # https://docs.stimulusreflex.com/troubleshooting#server-side
+  config.log_level = :warn
+
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 

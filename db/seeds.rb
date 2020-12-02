@@ -26,11 +26,18 @@ tables = [
   Person,
   Household,
   Party,
-  Product,
-  Product::Gemstone::DiamondCut,
-  Product::Gemstone::DiamondClarity,
-  Product::Gemstone::DiamondColor,
-  Product::Style,
+  Gemstone,
+  DiamondCut,
+  DiamondClarity,
+  DiamondColor,
+  Piece,
+  MiscellaneousItem,
+  Metal,
+  MetalCategory,
+  MetalColor,
+  MetalPurity,
+  Item,
+  ItemStyle,
   Address,
   StateProvince,
   EmailAddress,
@@ -57,43 +64,8 @@ STATE_NAMES = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colora
 
 states = Hash[STATE_CODES.zip(STATE_NAMES)]
 states.each do |code, name|
-  StateProvince.create!(
-    code: code,
-    name: name
-  )
+  StateProvince.create!(code: code, name: name)
 end
-
-# Hardcode specific customer records
-puts '-- robert and clara: seeding'
-
-clara = Person.create!(
-  title: 'Mrs.',
-  first_name: 'Clara',
-  last_name: 'Schumann',
-  suffix: nil,
-  ring_size: 6.0,
-  ring_size_notes: 'Will need to resize next visit',
-  necklace_length: 8.0,
-  necklace_length_notes: 'Prefers very lightweight necklaces. Too short better than too long.'
-)
-
-robert = Person.create!(
-  title: 'Mr.',
-  first_name: 'Robert',
-  last_name: 'Schumann',
-  suffix: nil,
-  ring_size: 8.0,
-  ring_size_notes: '',
-  necklace_length: nil,
-  necklace_length_notes: ''
-)
-
-schumann = clara.create_household!(
-  household_name: 'Schumann',
-  anniversary: '1840-09-12'
-)
-
-schumann.people << robert
 
 # Create people
 puts '-- Person with Address, Email Address, Phone Number: seeding'
@@ -153,30 +125,9 @@ Person.last(20).each do |person|
   person.create_household_from_last_name!
 end
 
-puts '-- Product::Category: seeding'
+puts '-- ItemStyle: seeding'
 
-PRODUCT_CATEGORIES = [
-  'ring',
-  'brooch/pin',
-  'necklace',
-  'earrings',
-  'bracelet',
-  'pendant/locket',
-  'charm',
-  'cufflink',
-  'jewelry set/parune',
-  'watch'
-].freeze
-
-PRODUCT_CATEGORIES.each do |category|
-  Product::Category.create!(
-    name: category
-  )
-end
-
-puts '-- Product::Style: seeding'
-
-PRODUCT_STYLES = [
+ITEM_STYLES = [
   '21st Century',
   'Art Deco',
   'Art Nouveau',
@@ -233,19 +184,19 @@ PRODUCT_STYLES = [
   'William IV'
 ].freeze
 
-PRODUCT_STYLES.each do |style|
-  Product::Style.create!(name: style)
+ITEM_STYLES.each do |style|
+  ItemStyle.create!(name: style)
 end
 
-puts '-- Source: seeding'
+# puts '-- Source: seeding'
 
-SOURCES = %w[E B T].freeze
+# SOURCES = %w[E B T].freeze
 
-SOURCES.each do |code|
-  Source.create!(code: code)
-end
+# SOURCES.each do |code|
+#   Source.create!(code: code)
+# end
 
-puts '-- Product::Gemstone::DiamondCut: seeding'
+puts '-- DiamondCut: seeding'
 
 DIAMOND_CUT_GRADES = [
   'Excellent',
@@ -256,12 +207,12 @@ DIAMOND_CUT_GRADES = [
 ].freeze
 
 DIAMOND_CUT_GRADES.each do |grade|
-  Product::Gemstone::DiamondCut.create!(
+  DiamondCut.create!(
     grade: grade
   )
 end
 
-puts '-- Product::Gemstone::DiamondClarity: seeding'
+puts '-- DiamondClarity: seeding'
 
 DIAMOND_CLARITY_GRADES = %w[
   I1
@@ -278,70 +229,70 @@ DIAMOND_CLARITY_GRADES = %w[
 ].freeze
 
 DIAMOND_CLARITY_GRADES.each do |grade|
-  Product::Gemstone::DiamondClarity.create!(
+  DiamondClarity.create!(
     grade: grade
   )
 end
 
-puts '-- Product::Gemstone::DiamondColor: seeding'
+puts '-- DiamondColor: seeding'
 
 DIAMOND_COLOR_GRADES = ('D'..'Z').to_a
 
 DIAMOND_COLOR_GRADES.each do |grade|
-  Product::Gemstone::DiamondColor.create!(
+  DiamondColor.create!(
     grade: grade
   )
 end
 
-puts '-- Product: seeding'
+# puts '-- Item: seeding'
 
-750.times do |_n|
-  name                  = Faker::Commerce.product_name
-  description           = Faker::Lorem.sentence
-  cost                  = Money.new(rand(10..100_000), 'USD')
-  price                 = cost * rand(11.0..17.0) / 10.0 # simulate profit margins
-  product_category_id   = rand(1..PRODUCT_CATEGORIES.count)
-  product_style_id      = rand(1..PRODUCT_STYLES.count)
+# 750.times do |_n|
+#   name                  = Faker::Commerce.product_name
+#   description           = Faker::Lorem.sentence
+#   cost                  = Money.new(rand(10..100_000), 'USD')
+#   price                 = cost * rand(11.0..17.0) / 10.0 # simulate profit margins
+#   category              = rand(1..PRODUCT_CATEGORIES.count)
+#   product_style_id      = rand(1..ITEM_STYLES.count)
 
-  Product.create!(
-    name: name,
-    description: description,
-    cost: cost,
-    price: price,
-    product_category_id: product_category_id,
-    product_style_id: product_style_id
-  )
-end
+#   Item.create!(
+#     name: name,
+#     description: description,
+#     cost: cost,
+#     price: price,
+#     product_category_id: product_category_id,
+#     product_style_id: product_style_id
+#   )
+# end
 
-puts '-- StoreTransactionCategory: seeding'
+# puts '-- StoreTransactionCategory: seeding'
 
-StoreTransactionCategory.create!(
-  name: 'sales'
-)
+# StoreTransactionCategory.create!(
+#   name: 'sales'
+# )
 
-puts '-- StoreTransaction with LineItem: seeding'
+# puts '-- StoreTransaction with LineItem: seeding'
 
-300.times do |_n|
-  # Transaction attributes
-  transaction_datetime            = Faker::Date.backward(days: 365)
-  store_transaction_category_id   = 1
-  party_id                        = rand(Party.first.id..Party.last.id)
+# 300.times do |_n|
+#   # Transaction attributes
+#   transaction_datetime            = Faker::Date.backward(days: 365)
+#   store_transaction_category_id   = 1
+#   party_id                        = rand(Party.first.id..Party.last.id)
 
-  store_transaction = StoreTransaction.create!(
-    transaction_datetime: transaction_datetime,
-    store_transaction_category_id: store_transaction_category_id,
-    party_id: party_id
-  )
+#   store_transaction = StoreTransaction.create!(
+#     transaction_datetime: transaction_datetime,
+#     store_transaction_category_id: store_transaction_category_id,
+#     party_id: party_id
+#   )
 
-  rand(1..5).times do
-    store_transaction.line_items.create!(
-      quantity: rand(1..10),
-      tax_cents: 0,
-      discount_cents: 0,
-      store_transaction_id: rand(StoreTransaction.first.id..StoreTransaction.last.id),
-      product_id: rand(Product.first.id..Product.last.id)
-    )
-  end
-end
+#   rand(1..5).times do
+#     store_transaction.line_items.create!(
+#       quantity: rand(1..10),
+#       tax_cents: 0,
+#       discount_cents: 0,
+#       store_transaction_id: rand(StoreTransaction.first.id..StoreTransaction.last.id),
+#       product_id: rand(Item.first.id..Item.last.id)
+#     )
+#   end
+# end
 
 puts '== Database: seeded!'

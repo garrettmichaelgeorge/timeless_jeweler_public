@@ -2,13 +2,13 @@
 
 Given(/^I have started the intake process$/) do
   # click_on 'Inventory'
-  # click_on 'New Product'
-  visit new_product_path
+  # click_on 'New Item'
+  visit new_item_path
 end
 
-Given(/^the following product categories exist:$/) do |categories_table|
+Given(/^the following item categories exist:$/) do |categories_table|
   categories_table.raw.flatten.each do |category|
-    FactoryBot.create(:product_category, name: category.upcase)
+    FactoryBot.create(:item_category, name: category.upcase)
   end
 end
 
@@ -18,13 +18,13 @@ When(/^I complete the intake process$/) do
   click_on('', name: 'commit')
 end
 
-When(/^I specify that the product is a (\w*) product$/) do |product_category|
+When(/^I specify that the item is a (\w*) item$/) do |item_category|
   page.save_page
-  select(product_category.capitalize, from: 'Category')
+  select(item_category.capitalize, from: 'Category')
 end
 
 ### THEN ###
 
 Then(/^I should see the loose diamond in my inventory$/) do
-  page.has_content?(@gemstone_product.name)
+  page.has_content?(@gemstone.name)
 end

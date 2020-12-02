@@ -1,43 +1,36 @@
-<%= simple_form_for product, wrapper_mappings: wrapper_mappings do |f| %>
+<%= simple_form_for @item, wrapper_mappings: wrapper_mappings,
+                             defaults: form_defaults,
+                             data: { reflex: 'submit->ItemReflex#submit', id: item.id } do |f| %>
 
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <section id="basic-info-section">
-    <h2>Basic info</h2>
-    <%= f.input :name%>
-    <%= f.input :description %>
-    <%= f.association :style, label_method: :name,
-                              prompt: 'Please select a style',
-                              input_html: { class: "", id: "new-product-style-association" } %>
-    <%= f.input :cost_cents %>
-    <%= f.input :price_cents %>
-    <%= f.input :notes %>
+  <%= tag.fieldset class: 'form-group' do %>
+    <legend>Choose an item type</legend>
 
-    <a href='#'
-       data-reflex='click->FieldsReflex#add_field'
-       data-form="<%= f %>"
-       >
-       Gemstone
-    </a>
-
-    <%= f.input :category, as: :select,
-                           prompt: 'Please select a category',
-                           collection: category_collection %>
-  </section>
-
-  <section id="product-category-section">
-    <%= f.simple_fields_for :jewelry_product do |f| %>
-      <%= render(IntakeForm::JewelryFieldsComponent.new(f: f)) %>
+    <% SALABLE_TYPES.each do |salable_type| %>
+    <div class="custom-control custom-radio">
+      <%= radio_button_tag 'salable_type', salable_type,
+                                           class: 'custom-control-input',
+                                           data: data_reflex_build_salable %>
+      <%= label_tag 'salable_type', salable_type.humanize,
+                                    for: "salable_type_#{salable_type}",
+                                    class: 'custom-control-label' %>
+    </div>
     <% end %>
 
-    <%= f.simple_fields_for :gemstone_product do |f| %>
-      <%= render(IntakeForm::GemstoneFieldsComponent.new(f: f)) %>
-    <% end %>
+  <% end %>
 
-    <%= f.simple_fields_for :miscellaneous_product do |f| %>
-      <%= render(IntakeForm::MiscellaneousFieldsComponent.new(f: f)) %>
-    <% end %>
+  <%= f.input :salable_type, collection: SALABLE_TYPES.map(&:constantize),
+                             group_method: :all,
+                             value_method: :to_global_id %>
+
+  <%= render(ProductFields::BasicComponent.new(f: f)) %>
+
+  <section id="item-category-section">
+    <%= render(ProductFields::PieceComponent.new(f: f)) %>
+    <%# render(ProductFields::GemstoneComponent.new(f: f)) %>
+    <%# render(ProductFields::MiscellaneousComponent.new(f: f)) %>
   </section>
 
   <%= f.button :submit, class: "btn-primary" %>

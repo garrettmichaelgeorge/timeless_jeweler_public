@@ -275,67 +275,6 @@ ALTER SEQUENCE public.gemstone_categories_id_seq OWNED BY public.gemstone_catego
 
 
 --
--- Name: gemstone_products; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.gemstone_products (
-    gemstone_profile_id bigint NOT NULL,
-    product_id bigint NOT NULL,
-    id bigint NOT NULL
-);
-
-
---
--- Name: gemstone_products_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.gemstone_products_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: gemstone_products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.gemstone_products_id_seq OWNED BY public.gemstone_products.id;
-
-
---
--- Name: gemstone_profiles; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.gemstone_profiles (
-    id bigint NOT NULL,
-    carat numeric(5,2),
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: gemstone_profiles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.gemstone_profiles_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: gemstone_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.gemstone_profiles_id_seq OWNED BY public.gemstone_profiles.id;
-
-
---
 -- Name: gemstone_subcategories; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -365,6 +304,47 @@ CREATE SEQUENCE public.gemstone_subcategories_id_seq
 --
 
 ALTER SEQUENCE public.gemstone_subcategories_id_seq OWNED BY public.gemstone_subcategories.id;
+
+
+--
+-- Name: gemstones; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.gemstones (
+    id bigint NOT NULL,
+    carat numeric(5,2),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: gemstones_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.gemstones_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gemstones_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.gemstones_id_seq OWNED BY public.gemstones.id;
+
+
+--
+-- Name: gemstones_items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.gemstones_items (
+    gemstone_id bigint NOT NULL,
+    item_id bigint NOT NULL
+);
 
 
 --
@@ -404,22 +384,22 @@ ALTER SEQUENCE public.households_id_seq OWNED BY public.households.id;
 
 
 --
--- Name: jewelry_pieces; Type: TABLE; Schema: public; Owner: -
+-- Name: item_styles; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.jewelry_pieces (
+CREATE TABLE public.item_styles (
     id bigint NOT NULL,
+    name character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    product_id bigint NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL
 );
 
 
 --
--- Name: jewelry_pieces_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: item_styles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.jewelry_pieces_id_seq
+CREATE SEQUENCE public.item_styles_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -428,10 +408,50 @@ CREATE SEQUENCE public.jewelry_pieces_id_seq
 
 
 --
--- Name: jewelry_pieces_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: item_styles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.jewelry_pieces_id_seq OWNED BY public.jewelry_pieces.id;
+ALTER SEQUENCE public.item_styles_id_seq OWNED BY public.item_styles.id;
+
+
+--
+-- Name: items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.items (
+    id bigint NOT NULL,
+    description text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    name character varying(40) NOT NULL,
+    cost_cents integer DEFAULT 0 NOT NULL,
+    cost_currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    price_cents integer DEFAULT 0 NOT NULL,
+    price_currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    notes text,
+    item_style_id bigint NOT NULL,
+    salable_type character varying NOT NULL,
+    salable_id bigint NOT NULL
+);
+
+
+--
+-- Name: items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.items_id_seq OWNED BY public.items.id;
 
 
 --
@@ -593,22 +613,21 @@ ALTER SEQUENCE public.metals_id_seq OWNED BY public.metals.id;
 
 
 --
--- Name: miscellaneous_products; Type: TABLE; Schema: public; Owner: -
+-- Name: miscellaneous_items; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.miscellaneous_products (
+CREATE TABLE public.miscellaneous_items (
     id bigint NOT NULL,
-    product_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
 
 
 --
--- Name: miscellaneous_products_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: miscellaneous_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.miscellaneous_products_id_seq
+CREATE SEQUENCE public.miscellaneous_items_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -617,10 +636,10 @@ CREATE SEQUENCE public.miscellaneous_products_id_seq
 
 
 --
--- Name: miscellaneous_products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: miscellaneous_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.miscellaneous_products_id_seq OWNED BY public.miscellaneous_products.id;
+ALTER SEQUENCE public.miscellaneous_items_id_seq OWNED BY public.miscellaneous_items.id;
 
 
 --
@@ -738,6 +757,36 @@ ALTER SEQUENCE public.phone_numbers_id_seq OWNED BY public.phone_numbers.id;
 
 
 --
+-- Name: pieces; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pieces (
+    id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: pieces_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.pieces_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pieces_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.pieces_id_seq OWNED BY public.pieces.id;
+
+
+--
 -- Name: product_eras; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -797,76 +846,6 @@ CREATE SEQUENCE public.product_jewelry_metals_id_seq
 --
 
 ALTER SEQUENCE public.product_jewelry_metals_id_seq OWNED BY public.product_jewelry_metals.id;
-
-
---
--- Name: product_styles; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.product_styles (
-    id bigint NOT NULL,
-    name character varying NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: product_styles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.product_styles_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: product_styles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.product_styles_id_seq OWNED BY public.product_styles.id;
-
-
---
--- Name: products; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.products (
-    id bigint NOT NULL,
-    description text,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    name character varying(40) NOT NULL,
-    cost_cents integer DEFAULT 0 NOT NULL,
-    cost_currency character varying DEFAULT 'USD'::character varying NOT NULL,
-    price_cents integer DEFAULT 0 NOT NULL,
-    price_currency character varying DEFAULT 'USD'::character varying NOT NULL,
-    notes text,
-    product_style_id bigint NOT NULL,
-    category character varying(20) NOT NULL
-);
-
-
---
--- Name: products_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.products_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: products_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.products_id_seq OWNED BY public.products.id;
 
 
 --
@@ -1137,24 +1116,17 @@ ALTER TABLE ONLY public.gemstone_categories ALTER COLUMN id SET DEFAULT nextval(
 
 
 --
--- Name: gemstone_products id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.gemstone_products ALTER COLUMN id SET DEFAULT nextval('public.gemstone_products_id_seq'::regclass);
-
-
---
--- Name: gemstone_profiles id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.gemstone_profiles ALTER COLUMN id SET DEFAULT nextval('public.gemstone_profiles_id_seq'::regclass);
-
-
---
 -- Name: gemstone_subcategories id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gemstone_subcategories ALTER COLUMN id SET DEFAULT nextval('public.gemstone_subcategories_id_seq'::regclass);
+
+
+--
+-- Name: gemstones id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstones ALTER COLUMN id SET DEFAULT nextval('public.gemstones_id_seq'::regclass);
 
 
 --
@@ -1165,10 +1137,17 @@ ALTER TABLE ONLY public.households ALTER COLUMN id SET DEFAULT nextval('public.h
 
 
 --
--- Name: jewelry_pieces id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: item_styles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.jewelry_pieces ALTER COLUMN id SET DEFAULT nextval('public.jewelry_pieces_id_seq'::regclass);
+ALTER TABLE ONLY public.item_styles ALTER COLUMN id SET DEFAULT nextval('public.item_styles_id_seq'::regclass);
+
+
+--
+-- Name: items id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items ALTER COLUMN id SET DEFAULT nextval('public.items_id_seq'::regclass);
 
 
 --
@@ -1200,10 +1179,10 @@ ALTER TABLE ONLY public.metals ALTER COLUMN id SET DEFAULT nextval('public.metal
 
 
 --
--- Name: miscellaneous_products id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: miscellaneous_items id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.miscellaneous_products ALTER COLUMN id SET DEFAULT nextval('public.miscellaneous_products_id_seq'::regclass);
+ALTER TABLE ONLY public.miscellaneous_items ALTER COLUMN id SET DEFAULT nextval('public.miscellaneous_items_id_seq'::regclass);
 
 
 --
@@ -1228,6 +1207,13 @@ ALTER TABLE ONLY public.phone_numbers ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
+-- Name: pieces id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pieces ALTER COLUMN id SET DEFAULT nextval('public.pieces_id_seq'::regclass);
+
+
+--
 -- Name: product_eras id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1239,20 +1225,6 @@ ALTER TABLE ONLY public.product_eras ALTER COLUMN id SET DEFAULT nextval('public
 --
 
 ALTER TABLE ONLY public.product_jewelry_metals ALTER COLUMN id SET DEFAULT nextval('public.product_jewelry_metals_id_seq'::regclass);
-
-
---
--- Name: product_styles id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.product_styles ALTER COLUMN id SET DEFAULT nextval('public.product_styles_id_seq'::regclass);
-
-
---
--- Name: products id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.products ALTER COLUMN id SET DEFAULT nextval('public.products_id_seq'::regclass);
 
 
 --
@@ -1362,27 +1334,19 @@ ALTER TABLE ONLY public.gemstone_categories
 
 
 --
--- Name: gemstone_products gemstone_products_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.gemstone_products
-    ADD CONSTRAINT gemstone_products_pkey PRIMARY KEY (id);
-
-
---
--- Name: gemstone_profiles gemstone_profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.gemstone_profiles
-    ADD CONSTRAINT gemstone_profiles_pkey PRIMARY KEY (id);
-
-
---
 -- Name: gemstone_subcategories gemstone_subcategories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.gemstone_subcategories
     ADD CONSTRAINT gemstone_subcategories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gemstones gemstones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstones
+    ADD CONSTRAINT gemstones_pkey PRIMARY KEY (id);
 
 
 --
@@ -1394,11 +1358,19 @@ ALTER TABLE ONLY public.households
 
 
 --
--- Name: jewelry_pieces jewelry_pieces_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: item_styles item_styles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.jewelry_pieces
-    ADD CONSTRAINT jewelry_pieces_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.item_styles
+    ADD CONSTRAINT item_styles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: items items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT items_pkey PRIMARY KEY (id);
 
 
 --
@@ -1434,11 +1406,11 @@ ALTER TABLE ONLY public.metals
 
 
 --
--- Name: miscellaneous_products miscellaneous_products_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: miscellaneous_items miscellaneous_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.miscellaneous_products
-    ADD CONSTRAINT miscellaneous_products_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.miscellaneous_items
+    ADD CONSTRAINT miscellaneous_items_pkey PRIMARY KEY (id);
 
 
 --
@@ -1466,6 +1438,14 @@ ALTER TABLE ONLY public.phone_numbers
 
 
 --
+-- Name: pieces pieces_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pieces
+    ADD CONSTRAINT pieces_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: product_eras product_eras_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1479,22 +1459,6 @@ ALTER TABLE ONLY public.product_eras
 
 ALTER TABLE ONLY public.product_jewelry_metals
     ADD CONSTRAINT product_jewelry_metals_pkey PRIMARY KEY (id);
-
-
---
--- Name: product_styles product_styles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.product_styles
-    ADD CONSTRAINT product_styles_pkey PRIMARY KEY (id);
-
-
---
--- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.products
-    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
 
 
 --
@@ -1596,24 +1560,24 @@ CREATE INDEX index_email_addresses_on_emailable_type_and_emailable_id ON public.
 
 
 --
--- Name: index_gemstone_products_on_gemstone_profile_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_gemstone_products_on_gemstone_profile_id ON public.gemstone_products USING btree (gemstone_profile_id);
-
-
---
--- Name: index_gemstone_products_on_product_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_gemstone_products_on_product_id ON public.gemstone_products USING btree (product_id);
-
-
---
 -- Name: index_gemstone_subcategories_on_gemstone_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_gemstone_subcategories_on_gemstone_category_id ON public.gemstone_subcategories USING btree (gemstone_category_id);
+
+
+--
+-- Name: index_gemstones_items_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gemstones_items_on_gemstone_id ON public.gemstones_items USING btree (gemstone_id);
+
+
+--
+-- Name: index_gemstones_items_on_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gemstones_items_on_item_id ON public.gemstones_items USING btree (item_id);
 
 
 --
@@ -1638,6 +1602,20 @@ CREATE INDEX index_households_on_phone_numbers_type_and_phone_numbers_id ON publ
 
 
 --
+-- Name: index_item_styles_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_item_styles_on_name ON public.item_styles USING btree (name);
+
+
+--
+-- Name: index_items_on_item_style_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_items_on_item_style_id ON public.items USING btree (item_style_id);
+
+
+--
 -- Name: index_jewelry_pieces_metals_on_jewelry_piece_id_and_metal_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1649,13 +1627,6 @@ CREATE INDEX index_jewelry_pieces_metals_on_jewelry_piece_id_and_metal_id ON pub
 --
 
 CREATE INDEX index_jewelry_pieces_metals_on_metal_id_and_jewelry_piece_id ON public.jewelry_pieces_metals USING btree (metal_id, jewelry_piece_id);
-
-
---
--- Name: index_jewelry_pieces_on_product_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_jewelry_pieces_on_product_id ON public.jewelry_pieces USING btree (product_id);
 
 
 --
@@ -1715,13 +1686,6 @@ CREATE UNIQUE INDEX index_metals_on_name ON public.metals USING btree (name);
 
 
 --
--- Name: index_miscellaneous_products_on_product_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_miscellaneous_products_on_product_id ON public.miscellaneous_products USING btree (product_id);
-
-
---
 -- Name: index_mountings_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1764,17 +1728,10 @@ CREATE UNIQUE INDEX index_product_jewelry_metals_on_name ON public.product_jewel
 
 
 --
--- Name: index_product_styles_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_products_on_salable; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_product_styles_on_name ON public.product_styles USING btree (name);
-
-
---
--- Name: index_products_on_product_style_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_products_on_product_style_id ON public.products USING btree (product_style_id);
+CREATE INDEX index_products_on_salable ON public.items USING btree (salable_type, salable_id);
 
 
 --
@@ -1843,27 +1800,11 @@ ALTER TABLE ONLY public.metals
 
 
 --
--- Name: gemstone_products fk_rails_3b10934542; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: items fk_rails_6d374caf01; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.gemstone_products
-    ADD CONSTRAINT fk_rails_3b10934542 FOREIGN KEY (product_id) REFERENCES public.products(id);
-
-
---
--- Name: gemstone_products fk_rails_4265cebf7b; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.gemstone_products
-    ADD CONSTRAINT fk_rails_4265cebf7b FOREIGN KEY (gemstone_profile_id) REFERENCES public.gemstone_profiles(id);
-
-
---
--- Name: products fk_rails_6d374caf01; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.products
-    ADD CONSTRAINT fk_rails_6d374caf01 FOREIGN KEY (product_style_id) REFERENCES public.product_styles(id);
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT fk_rails_6d374caf01 FOREIGN KEY (item_style_id) REFERENCES public.item_styles(id);
 
 
 --
@@ -1887,7 +1828,7 @@ ALTER TABLE ONLY public.people
 --
 
 ALTER TABLE ONLY public.metals
-    ADD CONSTRAINT fk_rails_85044eaeb5 FOREIGN KEY (jewelry_piece_id) REFERENCES public.jewelry_pieces(id);
+    ADD CONSTRAINT fk_rails_85044eaeb5 FOREIGN KEY (jewelry_piece_id) REFERENCES public.pieces(id);
 
 
 --
@@ -1907,14 +1848,6 @@ ALTER TABLE ONLY public.metals
 
 
 --
--- Name: jewelry_pieces fk_rails_9c5563f7bd; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.jewelry_pieces
-    ADD CONSTRAINT fk_rails_9c5563f7bd FOREIGN KEY (product_id) REFERENCES public.products(id);
-
-
---
 -- Name: store_transaction_line_items fk_rails_af4a850152; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1927,7 +1860,7 @@ ALTER TABLE ONLY public.store_transaction_line_items
 --
 
 ALTER TABLE ONLY public.store_transaction_line_items
-    ADD CONSTRAINT fk_rails_ba768cee4d FOREIGN KEY (product_id) REFERENCES public.products(id);
+    ADD CONSTRAINT fk_rails_ba768cee4d FOREIGN KEY (product_id) REFERENCES public.items(id);
 
 
 --
@@ -2057,6 +1990,11 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201114200621'),
 ('20201114201523'),
 ('20201114202130'),
-('20201116223912');
+('20201116223912'),
+('20201119004709'),
+('20201119010101'),
+('20201119171356'),
+('20201119225818'),
+('20201120013645');
 
 

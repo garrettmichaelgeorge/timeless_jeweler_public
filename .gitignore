@@ -52,3 +52,5 @@ vendor/bundle
 erd.pdf
 models.txt
 *.tags
+
+/config/credentials/test.key
