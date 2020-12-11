@@ -586,10 +586,10 @@ CREATE TABLE public.metals (
     name character varying(40),
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    jewelry_piece_id bigint NOT NULL,
     metal_category_id bigint NOT NULL,
     metal_color_id bigint NOT NULL,
-    metal_purity_id bigint NOT NULL
+    metal_purity_id bigint NOT NULL,
+    piece_id bigint NOT NULL
 );
 
 
@@ -647,8 +647,8 @@ ALTER SEQUENCE public.miscellaneous_items_id_seq OWNED BY public.miscellaneous_i
 --
 
 CREATE TABLE public.mountings (
-    jewelry_piece_id bigint NOT NULL,
-    gemstone_id bigint NOT NULL
+    gemstone_id bigint NOT NULL,
+    piece_id bigint NOT NULL
 );
 
 
@@ -1651,13 +1651,6 @@ CREATE UNIQUE INDEX index_metal_purities_on_value ON public.metal_purities USING
 
 
 --
--- Name: index_metals_on_jewelry_piece_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_metals_on_jewelry_piece_id ON public.metals USING btree (jewelry_piece_id);
-
-
---
 -- Name: index_metals_on_metal_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1686,6 +1679,13 @@ CREATE UNIQUE INDEX index_metals_on_name ON public.metals USING btree (name);
 
 
 --
+-- Name: index_metals_on_piece_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_metals_on_piece_id ON public.metals USING btree (piece_id);
+
+
+--
 -- Name: index_mountings_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1693,10 +1693,10 @@ CREATE INDEX index_mountings_on_gemstone_id ON public.mountings USING btree (gem
 
 
 --
--- Name: index_mountings_on_jewelry_piece_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_mountings_on_piece_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_mountings_on_jewelry_piece_id ON public.mountings USING btree (jewelry_piece_id);
+CREATE INDEX index_mountings_on_piece_id ON public.mountings USING btree (piece_id);
 
 
 --
@@ -1784,6 +1784,14 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
+-- Name: mountings fk_rails_05253c703d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mountings
+    ADD CONSTRAINT fk_rails_05253c703d FOREIGN KEY (gemstone_id) REFERENCES public.gemstones(id);
+
+
+--
 -- Name: store_transactions fk_rails_13591f4845; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1797,6 +1805,22 @@ ALTER TABLE ONLY public.store_transactions
 
 ALTER TABLE ONLY public.metals
     ADD CONSTRAINT fk_rails_34251d0b2b FOREIGN KEY (metal_purity_id) REFERENCES public.metal_purities(id);
+
+
+--
+-- Name: mountings fk_rails_450234aa52; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.mountings
+    ADD CONSTRAINT fk_rails_450234aa52 FOREIGN KEY (piece_id) REFERENCES public.pieces(id);
+
+
+--
+-- Name: metals fk_rails_636b6dff83; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.metals
+    ADD CONSTRAINT fk_rails_636b6dff83 FOREIGN KEY (piece_id) REFERENCES public.pieces(id);
 
 
 --
@@ -1821,14 +1845,6 @@ ALTER TABLE ONLY public.store_transactions
 
 ALTER TABLE ONLY public.people
     ADD CONSTRAINT fk_rails_829e856eff FOREIGN KEY (household_id) REFERENCES public.households(id);
-
-
---
--- Name: metals fk_rails_85044eaeb5; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.metals
-    ADD CONSTRAINT fk_rails_85044eaeb5 FOREIGN KEY (jewelry_piece_id) REFERENCES public.pieces(id);
 
 
 --
@@ -1995,6 +2011,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201119010101'),
 ('20201119171356'),
 ('20201119225818'),
-('20201120013645');
+('20201120013645'),
+('20201207203217'),
+('20201207204047');
 
 
