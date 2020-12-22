@@ -22,3 +22,10 @@
 #
 #  fk_rails_...  (household_id => households.id)
 #
+
+FactoryBot.define do
+  factory :person do
+    first_name { 'John' }
+    last_name { 'Smith' }
+  end
+end

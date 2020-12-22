@@ -24,8 +24,7 @@ class ItemReflex < ApplicationReflex
   delegate :current_user, to: :connection
 
   before_reflex do
-    # @item = GlobalID::Locator.locate_signed(element.dataset.signed_id)
-    @item ||= Item.new
+    @item = GlobalID::Locator.locate_signed(element.dataset.signed_id)
     @item.assign_attributes(item_params)
   end
 
@@ -35,8 +34,10 @@ class ItemReflex < ApplicationReflex
 
   def build_salable
     salable_type = element.value
-    @item = Item.build_as(salable_type)
-    @item.assign_attributes(item_params)
+    Item.salable = Piece.new
+
+    # @item = Item.build_as(salable_type)
+    # @item.assign_attributes(item_params)
   end
 
   def build_metal
@@ -58,46 +59,36 @@ class ItemReflex < ApplicationReflex
   end
 
   def permitted_params
-    [
-      :name,
-      :description,
-      :notes,
-      :item_style_id,
-      :cost_cents,
-      :price_cents,
-      :salable_id,
-      :salable_type,
-      piece_attributes: permitted_piece_params,
-      gemstone_attributes: permitted_gemstone_params,
-      miscellaneous_item_attributes: permitted_miscellaneous_item_params
-    ]
+    [:name,
+     :description,
+     :notes,
+     :item_style_id,
+     :cost_cents,
+     :price_cents,
+     :salable_id,
+     :salable_type,
+     piece_attributes: permitted_piece_params,
+     gemstone_attributes: permitted_gemstone_params,
+     miscellaneous_item_attributes: permitted_miscellaneous_item_params]
   end
 
   def permitted_piece_params
-    [
-      mounting_attributes: permitted_gemstone_params,
-      metal_attributes: permitted_metal_params
-    ]
+    [mounting_attributes: permitted_gemstone_params,
+     metal_attributes: permitted_metal_params]
   end
 
   def permitted_gemstone_params
-    [
-      :carat
-    ]
+    [:carat]
   end
 
   def permitted_metal_params
-    %i[
-      id
-      metal_category_id
-      metal_color_id
-      metal_purity_id
-    ]
+    %i[ id
+        metal_category_id
+        metal_color_id
+        metal_purity_id ]
   end
 
   def permitted_miscellaneous_item_params
-    [
-      :id
-    ]
+    [:id]
   end
 end

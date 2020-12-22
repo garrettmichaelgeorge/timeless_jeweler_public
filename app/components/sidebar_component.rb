@@ -1,8 +1,4 @@
 class SidebarComponent < ApplicationComponent
-  def initialize(browser:)
-    @browser = browser
-  end
-
   def nav_items
     {
       dashboard: {
@@ -42,14 +38,6 @@ class SidebarComponent < ApplicationComponent
   end
 
   def sidebar_class
-    if browser.device.tablet?
-      'navbar navbar-vertical navbar-vertical-sm fixed-left navbar-expand-md navbar-dark navbar-vibrant'
-    else
-      'navbar navbar-vertical fixed-left navbar-expand-md navbar-light'
-    end
+    'navbar navbar-vertical fixed-left navbar-expand-md navbar-light'
   end
-
-  private
-
-  attr_reader :browser
 end

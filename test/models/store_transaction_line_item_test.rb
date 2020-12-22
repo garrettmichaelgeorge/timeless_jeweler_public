@@ -24,10 +24,17 @@
 #  fk_rails_...  (product_id => items.id)
 #  fk_rails_...  (store_transaction_id => store_transactions.id)
 #
+
 require 'test_helper'
 
 class StoreTransactionLineItemTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  context 'associations' do
+    should belong_to(:item)
+    should belong_to(:store_transaction)
+  end
+
+  context 'monetize' do
+    should('monetize discount') { _(subject.discount).must_be_instance_of Money }
+    should('monetize tax')      { _(subject.tax).must_be_instance_of Money }
+  end
 end

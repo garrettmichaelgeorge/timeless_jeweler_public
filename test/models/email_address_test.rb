@@ -21,9 +21,11 @@ class EmailAddressTest < ActiveSupport::TestCase
   end
 
   context 'validations' do
+    subject { FactoryBot.build(:email_address) }
+
     should validate_presence_of(:email_address)
     should validate_length_of(:email_address).is_at_most(255)
-    should validate_uniqueness_of(:email_address)
+    should validate_uniqueness_of(:email_address).ignoring_case_sensitivity
     should allow_values('vALID@e.o, g48381274if@e2.a')
       .for(:email_address)
     should_not allow_values('invalidEmail', 'invalid@email')

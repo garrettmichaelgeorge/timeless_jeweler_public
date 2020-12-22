@@ -9,7 +9,8 @@
 #
 
 class DiamondColor < ApplicationRecord
-  validates :grade, presence: true
-  validates :grade, uniqueness: true
-  validates :grade, length: { maximum: 1 }
+  # Lookup class
+  validates :grade, presence: true,
+                    uniqueness: true,
+                    length: { maximum: 1 }
 end

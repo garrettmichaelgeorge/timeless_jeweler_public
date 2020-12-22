@@ -5,8 +5,4 @@ class ProductFields::PieceComponent < ApplicationComponent
     @f = f
     @form_object = f.object
   end
-
-  def render?
-    form_object&.salable_type == 'Piece'
-  end
 end

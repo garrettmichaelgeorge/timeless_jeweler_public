@@ -12,7 +12,7 @@
 #  index_item_styles_on_name  (name) UNIQUE
 #
 FactoryBot.define do
-  factory :item_style, aliases: [:art_deco] do
-    name { 'Art Deco' }
+  factory :item_style do
+    
   end
 end

@@ -1,0 +1,15 @@
+<% title = 'New Item Intake' %>
+<% pre_title = 'Inventory' %>
+
+<% provide(:title, title) %>
+
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-10 col-xl-8">
+    <%= render(PageHeaderComponent.new(title: title,
+                                       pre_title: pre_title,
+                                       buttons: [],
+                                       tabs: nil)) %>
+
+     <%= render 'form', builder: @builder %>
+  </div>
+</div>

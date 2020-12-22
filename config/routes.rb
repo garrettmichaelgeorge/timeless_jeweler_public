@@ -1,23 +1,25 @@
 Rails.application.routes.draw do
   devise_for :users
   devise_scope :user do
-    get       'login'         => 'devise/sessions#new'
-    post      'login'         => 'devise/sessions#create'
-    get       '/users/sign_out' => 'devise/sessions#destroy'
-    root to:  'static_pages#dashboard'
+    get      'login'                  => 'devise/sessions#new'
+    post     'login'                  => 'devise/sessions#create'
+    get      '/users/sign_out'        => 'devise/sessions#destroy'
+    root to: 'static_pages#dashboard'
   end
 
-  # root to:      'devise/sessions#new'
-  resources :people
-  resources :households
-  resources :items
+  resources :people,
+            :households,
+            :items
 
   resources :store_transactions do
     resources :store_transaction_line_items
   end
 
-  get       'inventory'     => 'items#index'
-  get       'customers'     => 'people#index'
-  get       'dashboard'     => 'static_pages#dashboard'
-  get       'charts'        => 'static_pages#dashboard'
+  resources :intake, only: %i[new create]
+
+  get 'inventory' => 'items#index'
+  get 'customers' => 'people#index'
+  get 'dashboard' => 'static_pages#dashboard'
+  get 'charts'    => 'static_pages#dashboard'
+  get 'intake', to: 'intake#new', as: :intake
 end

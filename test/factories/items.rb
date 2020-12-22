@@ -3,6 +3,7 @@
 # Table name: items
 #
 #  id             :bigint           not null, primary key
+#  category       :string(20)
 #  cost_cents     :integer          default(0), not null
 #  cost_currency  :string           default("USD"), not null
 #  description    :text
@@ -10,16 +11,13 @@
 #  notes          :text
 #  price_cents    :integer          default(0), not null
 #  price_currency :string           default("USD"), not null
-#  salable_type   :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  item_style_id  :bigint           not null
-#  salable_id     :bigint           not null
 #
 # Indexes
 #
 #  index_items_on_item_style_id  (item_style_id)
-#  index_products_on_salable     (salable_type,salable_id)
 #
 # Foreign Keys
 #
@@ -32,17 +30,16 @@ FactoryBot.define do
     description { 'Lorem ipsum sic dolor amet.' }
     association :style, factory: :item_style
 
-    trait :jewelry do
-      salable { 'Jewelry' }
+    trait :as_piece do
+      association :salable, factory: :piece
     end
 
-    trait :gemstone do
-      salable { 'Gemstone' }
-      carat { 3.55 }
+    trait :as_gemstone do
+      association :salable, factory: :gemstone
     end
 
-    trait :miscellaneous do
-      salable { 'MiscellaneousItem' }
+    trait :as_miscellaneous_item do
+      association :salable, factory: :miscellaneous_item
     end
   end
 end

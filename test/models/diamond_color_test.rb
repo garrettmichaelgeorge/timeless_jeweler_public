@@ -10,7 +10,11 @@
 require 'test_helper'
 
 class DiamondColorTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  context 'validations' do
+    subject { described_class.new(grade: 'D') }
+
+    should validate_presence_of(:grade)
+    should validate_uniqueness_of(:grade)
+    should validate_length_of(:grade).is_at_most(1)
+  end
 end

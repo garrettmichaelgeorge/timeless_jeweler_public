@@ -59,7 +59,7 @@ Rails.application.configure do
 
   # Set logger level (options are :debug, :info, :warn, :error, :fatal, :unknown)
   # https://docs.stimulusreflex.com/troubleshooting#server-side
-  config.log_level = :warn
+  config.log_level = :debug
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true

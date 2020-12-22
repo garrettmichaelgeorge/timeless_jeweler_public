@@ -1,38 +1,9 @@
-<%= simple_form_for @item, wrapper_mappings: wrapper_mappings,
-                             defaults: form_defaults,
-                             data: { reflex: 'submit->ItemReflex#submit', id: item.id } do |f| %>
-
+<%= simple_form_for item, wrapper_mappings: wrapper_mappings do |f| %>
   <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-  <%= tag.fieldset class: 'form-group' do %>
-    <legend>Choose an item type</legend>
-
-    <% SALABLE_TYPES.each do |salable_type| %>
-    <div class="custom-control custom-radio">
-      <%= radio_button_tag 'salable_type', salable_type,
-                                           class: 'custom-control-input',
-                                           data: data_reflex_build_salable %>
-      <%= label_tag 'salable_type', salable_type.humanize,
-                                    for: "salable_type_#{salable_type}",
-                                    class: 'custom-control-label' %>
-    </div>
-    <% end %>
-
-  <% end %>
-
-  <%= f.input :salable_type, collection: SALABLE_TYPES.map(&:constantize),
-                             group_method: :all,
-                             value_method: :to_global_id %>
-
-  <%= render(ProductFields::BasicComponent.new(f: f)) %>
-
-  <section id="item-category-section">
-    <%= render(ProductFields::PieceComponent.new(f: f)) %>
-    <%# render(ProductFields::GemstoneComponent.new(f: f)) %>
-    <%# render(ProductFields::MiscellaneousComponent.new(f: f)) %>
-  </section>
+  <%= render ProductFields::BasicComponent.new(f: f) %>
 
   <%= f.button :submit, class: "btn-primary" %>
-  <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
+  <%= f.button :button, "Reset", type: "reset",
+                                 class: "btn-outline-secondary" %>
 <% end %>

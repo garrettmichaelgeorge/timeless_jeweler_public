@@ -7,6 +7,10 @@ class ProductFields::MetalComponent < ApplicationComponent
   end
 
   def render?
-    form_object.class.reflections.keys.any?(/metal/)
+    # form_object.class.reflections.keys.any?(/metal/)
+  end
+
+  def new_record?
+    f.object.new_record?
   end
 end

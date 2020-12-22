@@ -1,29 +1,26 @@
 # == Schema Information
 #
-# Table name: gemstones
+# Table name: gemstone_profiles
 #
 #  id         :bigint           not null, primary key
-#  carat      :decimal(5, 2)
+#  carat      :decimal(, )
+#  role       :string(20)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+
 require 'test_helper'
 
 class GemstoneTest < ActiveSupport::TestCase
+  ROLES = %w[Mounted Loose].freeze
+
   context 'associations' do
-    should have_one(:mounting)
-    should have_one(:gemstone_product)
-    should_eventually belong_to(:subcategory)
-    should_eventually have_one(:diamond_color).through(:color_grade)
-    should_eventually have_one(:diamond_cut).through(:cut_grade)
-    should_eventually have_one(:diamond_clarity).through(:clarity_grade)
+    should have_one(:loose_gemstone)
+    should have_one(:mounted_gemstone)
   end
 
   context 'validations' do
-    should validate_numericality_of(:carat)
-  end
-
-  context 'attributes' do
-    should respond_to?(:carat)
+    should validate_length_of(:role).is_at_most(20)
+    should validate_inclusion_of(:role).in_array(ROLES)
   end
 end

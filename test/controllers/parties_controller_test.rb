@@ -5,5 +5,4 @@ class PartiesControllerTest < ActionDispatch::IntegrationTest
     @party       = parties(:clara)
     @other_party = parties(:robert)
   end
-
 end

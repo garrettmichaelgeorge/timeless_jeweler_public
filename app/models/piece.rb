@@ -5,23 +5,19 @@
 #  id         :bigint           not null, primary key
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  item_id    :bigint           not null
+#
+# Indexes
+#
+#  index_pieces_on_item_id  (item_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (item_id => items.id)
 #
 
 class Piece < ApplicationRecord
-  include Salable
-
-  # Associations
-  has_many :mountings, inverse_of: :piece
-
-  has_many :gemstones, through: :mountings,
-                       inverse_of: :piece
-
-  has_many :metals, inverse_of: :piece
-
-  # Delegations
-  delegate :category,
-           :color,
-           :purity,
-           to: :metals,
-           prefix: true
+  has_many :metals,                inverse_of: :piece
+  has_many :mounted_gemstones,     inverse_of: :piece
+  belongs_to :item, -> { pieces }, inverse_of: :piece
 end

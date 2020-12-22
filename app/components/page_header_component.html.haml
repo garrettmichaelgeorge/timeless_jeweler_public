@@ -1,11 +1,3 @@
-- # Component Attribute Setters:
-- # title
-- # pre_title
-- # action_button_text
-- # action_button_link
-- # action_button_options
-- # wrapper_class
-
 .header{class: wrapper_class}
   .header-body
     .row.align-items-end
@@ -15,21 +7,18 @@
         / Title
         %h1.header-title= title
       .col-auto
-        - if buttons.present?
-          / Button
-          - buttons.each do |button|
-            / = link_to button[:text], button[:link], button[:options]
-            = link_to button[:text], button[:link], class: "btn btn-primary lift"
+        / Button
+        - buttons&.each do |button|
+          = link_to button[:text], button[:link], class: "btn btn-primary lift"
 
-        - elsif tabs.present?
-          / Tabs - primary
-          %ul.nav.nav-tabs.nav-overflow.header-tabs
-            - tabs.each do |tab|
-              %li.nav-item
-                = link_to tab[:name], tab[:link], class: "nav-link"
+        / Tabs - primary
+        %ul.nav.nav-tabs.nav-overflow.header-tabs
+          - tabs&.each do |tab|
+            %li.nav-item
+              = link_to tab[:name], tab[:link], class: "nav-link"
 
-      / Tabs - secondary 
-      - if buttons.present? && tabs.present?
+      / Tabs - secondary
+      - if buttons_and_tabs?
         .row
           .col-12
             %ul.nav.nav-tabs.nav-overflow.header-tabs

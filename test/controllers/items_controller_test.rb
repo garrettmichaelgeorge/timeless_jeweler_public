@@ -1,37 +1,48 @@
 require 'test_helper'
 
 class ItemsControllerTest < ActionDispatch::IntegrationTest
+  GET_METHODS = %i[index show new edit].freeze
+
   include Devise::Test::IntegrationHelpers
 
-  def setup; end
-
-  test 'should get index' do
-    get items_path
-    assert_response :success
+  def setup
+    user = FactoryBot.build(:user)
+    sign_in user
   end
 
-  test 'should get show' do
-    get items_path(@item)
-    assert_response :success
+  describe 'GET #index' do
+    it 'responds with 200' do
+      get items_path
+      assert_response :success
+    end
   end
 
-  test 'should get new' do
-    get new_item_path
-    assert_response :success
+  describe 'GET #show' do
+    it 'responds with 200' do
+      get item_path
+      assert_response :success
+    end
   end
 
-  test 'should get edit' do
-    get edit_item_path(@item)
-    assert_response :success
+  describe 'GET #new' do
+    it 'responds with 200' do
+      get new_item_path
+      assert_response :success
+    end
   end
 
-  test 'should redirect to Items#show and display flash after successful #new' do
-    # FIXME: mock successful POST request to controller
-    # post items_path
-    # assert_redirected_to items_path(Item.last)
-    # assert_equal 'Item was successfully created.', flash[:notice]
+  describe 'GET #edit' do
+    it 'responds with 200' do
+      get edit_item_path(1)
+      assert_response :success
+    end
   end
 
-  context 'flash' do
-  end
+  # GET_METHODS.each do |action|
+  #   context "GET ##{action}" do
+  #     setup { get action }
+
+  #     should respond_with(:success)
+  #   end
+  # end
 end

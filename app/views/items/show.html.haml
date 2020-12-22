@@ -1,10 +1,10 @@
-- title = "#{@product.id}. #{@product.name}"
+- title = "#{@item.id}. #{@item.name}"
 - pre_title = 'Inventory'
 
 = render(PageHeaderComponent.new(title: title,
   pre_title: pre_title,
   buttons: [{ text: 'Edit Item',
-              link: edit_product_path(@product),
+              link: edit_item_path(@item),
               options: nil }],
   tabs: nil))
 
@@ -13,28 +13,28 @@
     = render(CardComponent.new(image_top: {link_path: nil,
       source_path: "https://place-hold.it/600x400",
       alt: nil })) do |component|
-      -# = image_tag 'https://place-hold.it/300x200', alt: "Photo of #{@product.name}", height: '200', width: '300', class: 'card-img-top'
+      -# = image_tag 'https://place-hold.it/300x200', alt: "Photo of #{@item.name}", height: '200', width: '300', class: 'card-img-top'
       - component.with(:body) do
         = render CardDataContainerComponent.new do |component|
-          = render CardDataComponent.new(name: 'ID', data: @product.id)
-          = render CardDataComponent.new(name: 'Name', data: @product.name)
-          = render CardDataComponent.new(name: 'Category', data: @product.category_name)
-          = render CardDataComponent.new(name: 'Style', data: @product.style_name)
-          = render CardDataComponent.new(name: 'Description', data: @product.description)
+          = render CardDataComponent.new(name: 'ID', data: @item.id)
+          = render CardDataComponent.new(name: 'Name', data: @item.name)
+          = render CardDataComponent.new(name: 'Category', data: @item.category)
+          = render CardDataComponent.new(name: 'Style', data: @item.style_name)
+          = render CardDataComponent.new(name: 'Description', data: @item.description)
 
         .row.no-gutters.border-top.border-bottom
           .col-6.py-4.text-center
             / Heading
             %h6.text-uppercase.text-muted Cost
             / Value
-            %h2.mb-0= humanized_money_with_symbol(@product.cost)
+            %h2.mb-0= humanized_money_with_symbol(@item.cost)
           .col-6.py-4.text-center.border-left
             / Heading
             %h6.text-uppercase.text-muted Price
             / Value
-            %h2.mb-0= humanized_money_with_symbol(@product.price)
+            %h2.mb-0= humanized_money_with_symbol(@item.price)
             .col
   .col
-    -# FIXME: fix null value problem in product.description
+    -# FIXME: fix null value problem in item.description
     %h2 Notes
-    %p= @product.notes
+    %p= @item.notes

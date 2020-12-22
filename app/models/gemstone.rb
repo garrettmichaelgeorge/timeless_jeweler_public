@@ -1,20 +1,24 @@
 # == Schema Information
 #
-# Table name: gemstones
+# Table name: gemstone_profiles
 #
 #  id         :bigint           not null, primary key
-#  carat      :decimal(5, 2)
+#  carat      :decimal(, )
+#  role       :string(20)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 class Gemstone < ApplicationRecord
-  include Salable
-  # Associations
-  has_one :mounting, inverse_of: :gemstone
+  self.table_name = 'gemstone_profiles'
 
-  has_one :gemstone_product, inverse_of: :gemstone
+  ROLES = %w[Loose Mounted].freeze
 
-  # Validations
-  validates_numericality_of :carat
+  scope :loose,   -> { where(role: 'Loose') }
+  scope :mounted, -> { where(role: 'Mounted') }
+
+  has_one :loose_gemstone,   inverse_of: :profile
+  has_one :mounted_gemstone, inverse_of: :profile
+
+  validates :role, presence: true, length: { maximum: 20 }, inclusion: ROLES
 end

@@ -7,7 +7,7 @@
 = render(PageHeaderComponent.new(title: title,
   pre_title: pre_title,
   buttons: [{ text: 'New Item',
-    link: new_product_path,
+    link: new_item_path,
     options: nil }],
   tabs: nil))
 
@@ -18,5 +18,5 @@
     { value: :style_name },
     { value: :cost },
     { value: :price }],
-  resources: @products,
+  resources: @items,
   restful_actions: [:show, :edit, :destroy]))

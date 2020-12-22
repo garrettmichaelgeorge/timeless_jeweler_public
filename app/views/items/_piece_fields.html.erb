@@ -1,0 +1,22 @@
+<fieldset id="piece_fields" class="form-group">
+  <legend>Jewelry</legend>
+
+  <%= link_to 'Add metal', '#', class: 'btn btn-sm btn-secondary',
+                                data: { reflex: 'click->Item#build_metal' } %>
+
+  <% f.simple_fields_for :metals, do |metal_fields| %>
+    <%= render ProductFields::MetalComponent.new(f: metal_fields) %>
+  <% end %>
+
+  <%= tag 'div', data: { "nested-form-target": "target" } %>
+
+  <button type="button",
+          class: 'btn btn-sm btn-secondary'
+          data-action="nested-form#add">
+    Add metal
+  </button>
+
+  <%= link_to 'Add mounted gemstone', '#', class: 'btn btn-sm btn-secondary',
+                                           data: { reflex: 'click->Item#build_mounted_gemstone' } %>
+  <%= render ProductFields::GemstoneComponent.new(f: f) %>
+</fieldset>

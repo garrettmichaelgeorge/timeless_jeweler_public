@@ -1,8 +1,14 @@
-<% f.simple_fields_for :metals, form_object.metals do |f| %>
-  <fieldset id="metal_fields" class="form-group">
-    <legend>Metal</legend>
-    <%# f.association :category %>
-    <%# f.association :color %>
-    <%# f.association :purity %>
-  </fieldset>
-<% end %>
+<fieldset id="metal_fields" class="nested-form-wrapper form-group"
+                            data-new-record="<%= new_record? %>">
+  <legend>Metal</legend>
+  <%= f.association :category %>
+  <%= f.association :color %>
+  <%= f.association :purity %>
+
+  <button type="button" class="btn btn-danger"
+                        data-action="nested-form#remove">
+    Remove metal
+  </button>
+
+  <%= f.hidden_field :_destroy %>
+</fieldset>

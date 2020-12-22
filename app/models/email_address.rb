@@ -16,7 +16,6 @@
 
 class EmailAddress < ApplicationRecord
   belongs_to :emailable, polymorphic: true
-  before_validation :normalize_email
 
   # credit: Michael Hartl, Rails Tutorial
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
@@ -26,9 +25,9 @@ class EmailAddress < ApplicationRecord
                             format: { with: VALID_EMAIL_REGEX },
                             uniqueness: true
 
-  private
+  def email_address=(value)
+    return if value.nil?
 
-  def normalize_email
-    self.email_address = email_address.downcase
+    super(value.downcase)
   end
 end
