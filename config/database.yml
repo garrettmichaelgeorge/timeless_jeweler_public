@@ -25,7 +25,6 @@ development:
   <<: *default
   database: timeless_jeweler_development
   host: localhost
-  
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -84,4 +83,5 @@ production:
   <<: *default
   database: timeless_jeweler_production
   username: timeless_jeweler
+  url: <%= ENV['DATABASE_URL'] %>
   password: <%= ENV['TIMELESS_JEWELER_DATABASE_PASSWORD'] %>
