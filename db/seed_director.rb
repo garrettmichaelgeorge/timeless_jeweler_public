@@ -8,15 +8,21 @@ require_relative 'seeders/diamond_color_seeder'
 require_relative 'seeders/item_seeder'
 require_relative 'seeders/store_transaction_category_seeder'
 require_relative 'seeders/store_transaction_seeder'
+require_relative 'seeders/metal_category_seeder'
+require_relative 'seeders/metal_color_seeder'
+require_relative 'seeders/metal_purity_seeder'
 
 class SeedDirector
-  SEEDERS = %w[StateProvinceSeeder
-               PersonSeeder
-               HouseholdSeeder
-               ItemStyleSeeder
-               DiamondCutSeeder
-               DiamondClaritySeeder
-               DiamondColorSeeder].freeze
+  SEEDERS = %w[ StateProvinceSeeder
+                PersonSeeder
+                HouseholdSeeder
+                ItemStyleSeeder
+                DiamondCutSeeder
+                DiamondClaritySeeder
+                DiamondColorSeeder
+                MetalPuritySeeder
+                MetalCategorySeeder
+                MetalColorSeeder ].freeze
 
   def self.execute
     log_begin

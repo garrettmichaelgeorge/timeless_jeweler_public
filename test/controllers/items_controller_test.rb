@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class ItemsControllerTest < ActionDispatch::IntegrationTest
-  GET_METHODS = %i[index show new edit].freeze
-
   include Devise::Test::IntegrationHelpers
 
   def setup
@@ -19,7 +17,7 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
 
   describe 'GET #show' do
     it 'responds with 200' do
-      get item_path
+      get item_path(1)
       assert_response :success
     end
   end
@@ -37,12 +35,4 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
   end
-
-  # GET_METHODS.each do |action|
-  #   context "GET ##{action}" do
-  #     setup { get action }
-
-  #     should respond_with(:success)
-  #   end
-  # end
 end

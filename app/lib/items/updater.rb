@@ -10,10 +10,10 @@ class Items::Updater
   def execute(item)
     if item.update(item_params)
       msg = 'Item was successfully updated.'
-      context.update_item_succeeded(item, msg)
+      context.update_item_succeeded item: item, msg: msg
     else
       msg = 'Item was not updated.'
-      context.update_item_failed(item, msg)
+      context.update_item_failed item: item, msg: msg
     end
   end
 

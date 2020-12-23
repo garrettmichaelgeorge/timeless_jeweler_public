@@ -20,4 +20,8 @@ class Piece < ApplicationRecord
   has_many :metals,                inverse_of: :piece
   has_many :mounted_gemstones,     inverse_of: :piece
   belongs_to :item, -> { pieces }, inverse_of: :piece
+
+  accepts_nested_attributes_for :metals,
+                                :mounted_gemstones, allow_destroy: true,
+                                                    reject_if: :all_blank
 end

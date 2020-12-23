@@ -51,7 +51,10 @@ class Item < ApplicationRecord
 
   delegate :name, to: :style, prefix: true
 
-  accepts_nested_attributes_for :piece, :gemstone, :miscellaneous_item
+  accepts_nested_attributes_for :piece,
+                                :gemstone,
+                                :miscellaneous_item,
+                                reject_if: :all_blank
 
   monetize :cost_cents,  numericality: { greater_than_or_equal_to: 0 }
   monetize :price_cents, numericality: { greater_than_or_equal_to: 0 }

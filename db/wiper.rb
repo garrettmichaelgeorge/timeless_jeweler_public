@@ -32,13 +32,17 @@ class Wiper
 
   def execute
     MODELS.map(&:constantize).each do |table|
-      log_wipe_for table
-      wipe table
-      reset_pk_sequence_for table.table_name
+      execute_each(table)
     end
   end
 
   private
+
+  def execute_each(table)
+    log_wipe_for table
+    wipe table
+    reset_pk_sequence_for table.table_name
+  end
 
   def wipe(table)
     table.destroy_all

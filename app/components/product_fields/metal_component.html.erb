@@ -1,14 +1,17 @@
-<fieldset id="metal_fields" class="nested-form-wrapper form-group"
-                            data-new-record="<%= new_record? %>">
+<%= content_tag :fieldset, id: "metal_fields",
+                           class: "nested-fields",
+                           data: { new_record: new_record? } do %>
   <legend>Metal</legend>
-  <%= f.association :category %>
+
+  <%= f.association :category, collection: MetalCategory.all,
+                               prompt: "Choose a metal" %>
   <%= f.association :color %>
   <%= f.association :purity %>
 
-  <button type="button" class="btn btn-danger"
+  <button type="button" class="btn btn-sm btn-danger"
                         data-action="nested-form#remove">
     Remove metal
   </button>
 
   <%= f.hidden_field :_destroy %>
-</fieldset>
+<% end %>

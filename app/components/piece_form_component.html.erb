@@ -4,7 +4,9 @@
   <%= render ProductFields::BasicComponent.new(f: f) %>
 
   <section id="item-category-section">
-    <%= render ProductFields::PieceComponent.new(f: f) %>
+    <%= f.fields_for :piece do |f| %>
+      <%= render ProductFields::PieceComponent.new(f: f) %>
+    <% end %>
   </section>
 
   <%= f.button :submit, class: "btn-primary" %>

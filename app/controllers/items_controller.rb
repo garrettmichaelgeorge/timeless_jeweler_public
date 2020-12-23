@@ -1,13 +1,3 @@
-class ItemRepo
-  def find_all_items
-    Item.includes(:style).all
-  end
-
-  def find_item(id)
-    Item.find(id)
-  end
-end
-
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[show edit update destroy]
 
@@ -24,47 +14,48 @@ class ItemsController < ApplicationController
   def edit; end
 
   def create
-    creator = Items::Creator.new(context: self)
-    item = creator.build_item(item_params)
-    creator.persist(item)
+    item = item_creator.build_item(item_params)
+    item_creator.persist(item)
   end
 
   def update
-    Items::Updater.execute(context: self, item: @item)
+    item_updater.update_item(item: item)
   end
 
   def destroy
-    @item.destroy
-    msg = 'Item was successfully deleted.'
-    redirect_to items_path,
-                success: msg
+    item_destroyer.destroy_item(item: item)
   end
 
-  def create_item_succeeded(item, msg)
-
+  def create_item_succeeded(item:, msg:)
     redirect_to item,
                 success: msg
   end
 
-  def create_item_failed(item, msg)
+  def create_item_failed(item:, msg:)
     @item = item
     render :new
     flash.now[:info] = msg
   end
 
-  def update_item_succeeded(item, msg)
+  def update_item_succeeded(item:, msg:)
     redirect_to item,
                 success: msg
   end
 
-  def update_item_failed(item, msg)
+  def update_item_failed(item:, msg:)
     @item = item
     render :edit
     flash.now[:info] = msg
   end
 
-  def repo
-    @repo ||= ItemRepo.new
+  def destroy_item_suceeded(msg:)
+    redirect_to items_path,
+                success: msg
+  end
+
+  def destroy_item_failed(msg:)
+    redirect_to items_path,
+                notice: msg
   end
 
   private
@@ -74,26 +65,36 @@ class ItemsController < ApplicationController
     @item ||= repo.find_item(params[:id])
   end
 
-  def item
-    @item ||= Item.new
+  def repo
+    @repo ||= Items::Repo.new
   end
 
-  def builder
-    @builder ||= ItemBuilder.new(item_params)
+  def item
+    @item ||= item_creator.build_item
+  end
+
+  def item_creator
+    @item_creator ||= Items::Creator.new(context: self)
+  end
+
+  def item_updater
+    @item_updater ||= Items::Updater.new(context: self)
+  end
+
+  def item_destroyer
+    @item_destroyer ||= Items::Destroyer.new(self)
   end
 
   def item_params
-    params
-      .require(:item)
-      .permit(*permitted_params)
+    params.require(:item).permit(*permitted_params)
   end
 
   def permitted_params
     [:name,
      :description,
+     :category,
      :notes,
      :item_style_id,
-     :category,
      :cost_cents,
      :price_cents,
      piece_attributes: permitted_piece_params,
@@ -102,17 +103,20 @@ class ItemsController < ApplicationController
 
   def permitted_piece_params
     [mounted_gemstone_attributes: permitted_gemstone_params,
-     metal_attributes: permitted_metal_params]
+     metals_attributes: permitted_metal_params]
   end
 
   def permitted_gemstone_params
-    [:carat]
+    %i[id
+       carat
+       _destroy]
   end
 
   def permitted_metal_params
     %i[id
        metal_category_id
        metal_color_id
-       metal_purity_id]
+       metal_purity_id
+       _destroy]
   end
 end

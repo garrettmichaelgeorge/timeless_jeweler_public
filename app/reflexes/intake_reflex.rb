@@ -15,8 +15,20 @@ class IntakeReflex < ApplicationReflex
 
   def change_category
     category = element.value.underscore
-    item ||= Item.build_as(category)
+    morph '#new_item', render_intake_form_for(build_item_as(category))
+  end
 
-    morph '#new_item', render(IntakeFormSwitcherComponent.new(item: item))
+  private
+
+  def build_item_as(category)
+    Item.build_as(category)
+  end
+
+  def render_intake_form_for(item)
+    render intake_form_for(item)
+  end
+
+  def intake_form_for(item)
+    IntakeFormSwitcherComponent.new(item: item)
   end
 end
