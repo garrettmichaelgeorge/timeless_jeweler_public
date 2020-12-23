@@ -81,7 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: timeless_jeweler_production
-  username: timeless_jeweler
   url: <%= ENV['DATABASE_URL'] %>
-  password: <%= ENV['TIMELESS_JEWELER_DATABASE_PASSWORD'] %>

@@ -54,3 +54,4 @@ models.txt
 *.tags
 
 /config/credentials/test.key
+.env
