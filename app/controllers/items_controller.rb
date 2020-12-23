@@ -27,8 +27,7 @@ class ItemsController < ApplicationController
   end
 
   def create_item_succeeded(item:, msg:)
-    redirect_to item,
-                success: msg
+    redirect_to item, success: msg
   end
 
   def create_item_failed(item:, msg:)
@@ -38,8 +37,7 @@ class ItemsController < ApplicationController
   end
 
   def update_item_succeeded(item:, msg:)
-    redirect_to item,
-                success: msg
+    redirect_to item, success: msg
   end
 
   def update_item_failed(item:, msg:)
@@ -49,13 +47,11 @@ class ItemsController < ApplicationController
   end
 
   def destroy_item_suceeded(msg:)
-    redirect_to items_path,
-                success: msg
+    redirect_to items_path, success: msg
   end
 
   def destroy_item_failed(msg:)
-    redirect_to items_path,
-                notice: msg
+    redirect_to items_path, notice: msg
   end
 
   private
