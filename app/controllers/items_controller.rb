@@ -26,6 +26,7 @@ class ItemsController < ApplicationController
     item_destroyer.destroy_item(item: item)
   end
 
+  # Callback methods
   def create_item_succeeded(item:, msg:)
     redirect_to item, success: msg
   end
