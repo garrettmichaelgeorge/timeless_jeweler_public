@@ -1,8 +1,8 @@
-class ItemForm
-  include ActiveModel::Validations
-  include ActiveModel::Conversion
+class IntakeForm
+  include ActiveModel::Model
 
-  attr_accessor :name, :description, :notes, :style_id, :salable
+  attr_reader :name, :description, :notes, :style_id, :category,
+              :piece_attributes, :gemstone_attributes
 
   def persisted?
     false

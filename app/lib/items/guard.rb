@@ -1,7 +1,16 @@
-Items::Guard = Struct.new(:context) do
-  def protect
-    params.require(:item).permit(*permitted_params)
+class Items::Guard
+  def initialize(context:)
+    @context = context
   end
+
+  def protect
+    params.require(:item)
+          .permit(*permitted_params)
+  end
+
+  private
+
+  attr_reader :context
 
   def params
     context.params
@@ -10,27 +19,27 @@ Items::Guard = Struct.new(:context) do
   def permitted_params
     [:name,
      :description,
-     :category,
-     :notes,
      :item_style_id,
      :cost_cents,
      :price_cents,
-     piece_attributes: permitted_piece_params,
-     gemstone_attributes: permitted_gemstone_params]
+     :notes,
+     :category,
+     piece_attributes: piece_attributes,
+     gemstone_attributes: gemstone_attributes]
   end
 
-  def permitted_piece_params
-    [mounted_gemstone_attributes: permitted_gemstone_params,
-     metals_attributes: permitted_metal_params]
+  def piece_attributes
+    [mounted_gemstones_attributes: gemstone_attributes,
+     metals_attributes: metals_attributes]
   end
 
-  def permitted_gemstone_params
+  def gemstone_attributes
     %i[id
        carat
        _destroy]
   end
 
-  def permitted_metal_params
+  def metals_attributes
     %i[id
        metal_category_id
        metal_color_id

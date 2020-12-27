@@ -1,15 +1,11 @@
 class ProductFields::PieceComponent < ApplicationComponent
-  private
-
-  attr_reader :f
-
-  public
-
   def initialize(f:)
     @f = f
   end
 
   private
+
+  attr_reader :f
 
   def form_object
     f.object

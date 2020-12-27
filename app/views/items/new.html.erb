@@ -1,21 +1,21 @@
 <% title = 'New Item Intake' %>
 <% pre_title = 'Inventory' %>
 
-<% provide(:title, title) %>
-<% provide(:body_class, '') %>
+<% provide :title, title %>
 
 <div class="row justify-content-center">
   <div class="col-12 col-lg-10 col-xl-8">
     <%= render PageHeaderComponent.new(title: title, pre_title: pre_title) %>
 
-    <%= simple_fields_for @item do |f| %>
-      <legend>Choose an item type</legend>
+    <%= simple_form_for Item.new, html: { id: 'category_switcher',
+                                          class: 'category_switcher' } do |f| %>
       <%= f.input :category, as: :radio_buttons,
                              collection: f.object.class::CATEGORIES,
+                             label: 'Choose a category',
                              input_html: { data: { reflex: 'input->Intake#change_category' } } %>
     <% end %>
 
-    <form id="new_item">
+    <div id="form-wrapper">
     </div>
   </div>
 </div>

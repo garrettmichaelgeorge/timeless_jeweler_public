@@ -30,7 +30,7 @@ class Item < ApplicationRecord
   include GlobalID::Identification
 
   before_save :ensure_salable_exists, if: :new_record?,
-                                      unless: :has_category?
+                                      unless: :category?
 
   validates :name,     presence: true, length: { maximum: 40 }
   validates :category, presence: true, length: { maximum: 20 }, inclusion: CATEGORIES
@@ -68,7 +68,10 @@ class Item < ApplicationRecord
   end
 
   def category=(value)
-    raise ValidationError, 'Cannot change category for a saved record!' unless new_record?
+    if persisted?
+      raise ValidationError,
+            'Cannot change category for a saved record!'
+    end
 
     standardized_category = value.to_s.camelize
     super(standardized_category)
@@ -98,7 +101,7 @@ class Item < ApplicationRecord
     public_send "build_#{category.underscore}"
   end
 
-  def has_category?
+  def category?
     category.empty?
   end
 end

@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
   def show; end
 
   def new
-    @item ||= item
+    @item = item_creator.build_item
   end
 
   def edit; end
@@ -83,6 +83,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    Items::Guard.new(self).protect
+    Items::Guard.new(context: self).protect
   end
 end

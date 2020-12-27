@@ -15,7 +15,7 @@ class IntakeReflex < ApplicationReflex
 
   def change_category
     category = element.value.underscore
-    morph '#new_item', render_intake_form_for(build_item_as(category))
+    morph '#form-wrapper', render_intake_form_for(build_item_as(category))
   end
 
   private

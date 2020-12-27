@@ -3,17 +3,15 @@ class Items::Creator
     new(context).persist(item)
   end
 
-  def initialize(context)
+  def initialize(context:)
     @context = context
   end
 
-  def build_item(**args)
-    category = args.delete(:category)
-    if category
-      Item.build_as(category, **args)
-    else
-      Item.new
-    end
+  def build_item(attrs = nil)
+    return Item.new unless attrs && attrs[:category]
+
+    category = attrs.delete(:category)
+    Item.build_as(category, **attrs)
   end
 
   def persist(item)
