@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class IntakeReflex < ApplicationReflex
-  # All Reflex instances expose the following properties:
-  #
   #   - connection - the ActionCable connection
   #   - channel - the ActionCable channel
   #   - request - an ActionDispatch::Request proxy for the socket connection
@@ -15,20 +13,24 @@ class IntakeReflex < ApplicationReflex
 
   def change_category
     category = element.value.underscore
-    morph '#form-wrapper', render_intake_form_for(build_item_as(category))
+    morph '#intake-form-wrapper', render_intake_form_for(build_item(category))
   end
 
   private
-
-  def build_item_as(category)
-    Item.build_as(category)
-  end
 
   def render_intake_form_for(item)
     render intake_form_for(item)
   end
 
   def intake_form_for(item)
-    IntakeFormSwitcherComponent.new(item: item)
+    IntakeFormSwitcherComponent.new item: item
+  end
+
+  def build_item(category)
+    item_creator.build_item(category: category)
+  end
+
+  def item_creator
+    Items::Creator.new(context: self)
   end
 end

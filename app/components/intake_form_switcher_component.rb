@@ -3,20 +3,8 @@ class IntakeFormSwitcherComponent < ApplicationComponent
     @item = item
   end
 
-  def call_piece
-    'Hello piece!'
-  end
-
-  def call_gemstone
-    'Hello gemstone!'
-  end
-
-  def call_miscellaneous
-    'Hello miscellaneous!'
-  end
-
-  def call
-    render "#{item_category}FormComponent".constantize.new(item: item)
+  def item_component
+    "#{item_category}FormComponent".constantize.new(item: item)
   end
 
   private
@@ -25,5 +13,9 @@ class IntakeFormSwitcherComponent < ApplicationComponent
 
   def item_category
     item.category
+  end
+
+  def item_category?
+    !item_category.nil?
   end
 end

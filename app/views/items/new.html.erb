@@ -15,7 +15,6 @@
                              input_html: { data: { reflex: 'input->Intake#change_category' } } %>
     <% end %>
 
-    <div id="form-wrapper">
-    </div>
+    <%= render IntakeFormSwitcherComponent.new(item: @item) %> 
   </div>
 </div>

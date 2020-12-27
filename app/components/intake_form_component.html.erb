@@ -1,9 +1,11 @@
-<%= simple_form_for item, wrapper_mappings: wrapper_mappings do |f| %>
-  <%= f.error_notification %>
+<div id="form-wrapper">
+  <%= simple_form_for item, wrapper_mappings: wrapper_mappings do |f| %>
+    <%= f.error_notification %>
 
-  <%= render ProductFields::BasicComponent.new(f: f) %>
+    <%= render ProductFields::BasicComponent.new(f: f) %>
 
-  <%= f.button :submit, class: "btn-primary" %>
-  <%= f.button :button, "Reset", type: "reset",
-                                 class: "btn-outline-secondary" %>
-<% end %>
+    <%= f.button :submit, class: "btn-primary" %>
+    <%= f.button :button, "Reset", type: "reset",
+                                   class: "btn-outline-secondary" %>
+  <% end %>
+</div>
