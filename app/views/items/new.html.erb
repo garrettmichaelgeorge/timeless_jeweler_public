@@ -7,7 +7,8 @@
   <div class="col-12 col-lg-10 col-xl-8">
     <%= render PageHeaderComponent.new(title: title, pre_title: pre_title) %>
 
-    <%= simple_form_for Item.new, html: { id: 'category_switcher',
+    <%= simple_form_for Item.new, wrapper_mappings: { radio_buttons: :custom_collection },
+                                  html: { id: 'category_switcher',
                                           class: 'category_switcher' } do |f| %>
       <%= f.input :category, as: :radio_buttons,
                              collection: f.object.class::CATEGORIES,

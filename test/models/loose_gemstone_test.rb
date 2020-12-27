@@ -27,7 +27,11 @@ class LooseGemstoneTest < ActiveSupport::TestCase
     should belong_to(:profile)
   end
 
-  context 'delegations' do
-    should delegate_method(:carat).to(:profile)
+  describe 'delegations' do
+    it 'delegates missing to #profile' do
+      loose_gemstone = described_class.new
+      loose_gemstone.carat = 3.55
+      _(loose_gemstone.carat).must_equal 3.55
+    end
   end
 end

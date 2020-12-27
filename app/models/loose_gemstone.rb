@@ -22,6 +22,10 @@
 class LooseGemstone < ApplicationRecord
   delegate_missing_to :profile
 
+  after_initialize do
+    build_profile if profile.nil?
+  end
+
   belongs_to :item,    -> { gemstones }, inverse_of: :gemstone
   belongs_to :profile, -> { loose },     inverse_of: :loose_gemstone,
                                          class_name: 'Gemstone', foreign_key: :gemstone_profile_id

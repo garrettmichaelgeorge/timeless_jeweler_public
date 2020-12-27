@@ -1,5 +1,5 @@
-<% f.simple_fields_for :gemstone do |f| %>
-  <fieldset id="gemstone_product_fields" class="form-group">
-    <legend>Gemstone</legend>
-  </fieldset>
-<% end %>
+<fieldset id="gemstone_product_fields" class="form-group">
+  <% f.simple_fields_for :gemstone do |f| %>
+    <%= f.input :carat %>
+  <% end %>
+</fieldset>
