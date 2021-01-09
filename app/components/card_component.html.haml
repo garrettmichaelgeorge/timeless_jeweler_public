@@ -1,17 +1,14 @@
 %div{class: card_class}
   / Card Image: Top
-  - if image_top
+  - if image_src
     = link_to image_top[:link_path] do
-      %img{src: image_top[:source_path], alt: image_top[:alt], class: "card-img-top"}
+      %img.card-img-top{src: image_src, alt: image_alt}
 
   / Card Header
-  = render(CardHeaderComponent.new()) do |component|
+  = render CardHeaderComponent.new do
     = header
 
   / Card Body
-  - if has_body_margin
-    .card-body
-      .card-text
-        = body
-  - else
-    = body
+  .card-body
+    .card-text
+      = body

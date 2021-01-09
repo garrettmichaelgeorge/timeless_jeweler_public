@@ -1,0 +1,16 @@
+<div class="row no-gutters border-top border-bottom">
+
+  <% stats.each_with_index do |stat, i| %>
+    <%= tag.div class: column_class_for(i) do %>
+      <!-- Label -->
+      <h6 class="text-uppercase text-muted">
+        <%= stat[:label] %>
+      </h6>
+      <!-- Value -->
+      <h2 class="mb-0">
+        <%= stat[:value] %>
+      </h2>
+    <% end %>
+  <% end %>
+
+</div>

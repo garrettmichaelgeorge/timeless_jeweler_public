@@ -12,6 +12,8 @@
 #
 
 class MountedGemstone < ApplicationRecord
+  include Profilable
+
   belongs_to :piece,   inverse_of: :mounted_gemstones
   belongs_to :profile, inverse_of: :mounted_gemstone,
                        class_name: 'Gemstone', foreign_key: :gemstone_profile_id

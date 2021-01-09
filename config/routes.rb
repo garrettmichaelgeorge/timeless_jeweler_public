@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # Devise
   devise_for :users
   devise_scope :user do
     get      'login'                  => 'devise/sessions#new'
@@ -10,16 +11,17 @@ Rails.application.routes.draw do
   resources :people,
             :households,
             :items
+  get 'inventory' => 'items#index'
+  get 'customers' => 'people#index'
 
   resources :store_transactions do
     resources :store_transaction_line_items
   end
 
   resources :intake, only: %i[new create]
+  get 'intake', to: 'intake#new', as: :intake
 
-  get 'inventory' => 'items#index'
-  get 'customers' => 'people#index'
+  # Static pages
   get 'dashboard' => 'static_pages#dashboard'
   get 'charts'    => 'static_pages#dashboard'
-  get 'intake', to: 'intake#new', as: :intake
 end

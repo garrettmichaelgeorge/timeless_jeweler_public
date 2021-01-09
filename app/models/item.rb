@@ -14,46 +14,47 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  item_style_id  :bigint           not null
+#  merchant_id    :bigint           not null
 #
 # Indexes
 #
 #  index_items_on_item_style_id  (item_style_id)
+#  index_items_on_merchant_id    (merchant_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (item_style_id => item_styles.id)
+#  fk_rails_...  (merchant_id => merchants.id)
 #
 
 class Item < ApplicationRecord
   CATEGORIES = %w[Piece Gemstone MiscellaneousItem].freeze
 
-  include GlobalID::Identification
-
-  before_save :ensure_salable_exists, if: :new_record?,
-                                      unless: :category?
+  before_save :ensure_salable_exists, if: %i[new_record? category?]
 
   validates :name,     presence: true, length: { maximum: 40 }
   validates :category, presence: true, length: { maximum: 20 }, inclusion: CATEGORIES
   validates_associated :piece, :gemstone, :miscellaneous_item
 
+  belongs_to :merchant, inverse_of: :items
   has_many :store_transaction_line_items, inverse_of: :items
   belongs_to :style, inverse_of: :items,
                      class_name: 'ItemStyle', foreign_key: 'item_style_id'
 
-  has_one :piece,              inverse_of: :item
-  has_one :gemstone,           inverse_of: :item, class_name: 'LooseGemstone'
-  has_one :miscellaneous_item, inverse_of: :item
+  has_one :piece,              inverse_of: :item, dependent: :destroy
+  has_one :gemstone,           inverse_of: :item, class_name: 'LooseGemstone', dependent: :destroy
+  has_one :miscellaneous_item, inverse_of: :item, dependent: :destroy
 
-  scope :with_salables,       -> { includes(:salable) }
-  scope :pieces,              -> { where(category: 'Piece') }
-  scope :gemstones,           -> { where(category: 'Gemstone') }
-  scope :miscellaneous_items, -> { where(category: 'MiscellaneousItem') }
+  scope :pieces,                 -> { where(category: 'Piece') }
+  scope :gemstones,              -> { where(category: 'Gemstone') }
+  scope :miscellaneous_items,    -> { where(category: 'MiscellaneousItem') }
+  scope :with_salables,          -> { includes(:salable) }
+  scope :with_metals,            -> { includes(piece: [:metals]) }
+  scope :with_mounted_gemstones, -> { includes(piece: [:mounted_gemstones]) }
 
   delegate :name, to: :style, prefix: true
 
-  accepts_nested_attributes_for :piece,
-                                :gemstone,
-                                :miscellaneous_item,
+  accepts_nested_attributes_for :piece, :gemstone, :miscellaneous_item,
                                 reject_if: :all_blank
 
   monetize :cost_cents,  numericality: { greater_than_or_equal_to: 0 }
@@ -69,8 +70,8 @@ class Item < ApplicationRecord
 
   def category=(value)
     if persisted?
-      raise ValidationError,
-            'Cannot change category for a saved record!'
+      errors.add(category: 'Cannot change category for a saved record!')
+      return
     end
 
     standardized_category = value.to_s.camelize
@@ -78,6 +79,7 @@ class Item < ApplicationRecord
   end
 
   class << self
+    # Factory methods
     def build_as(category, **attrs)
       public_send "build_as_#{category.underscore}", **attrs
     end
@@ -102,6 +104,6 @@ class Item < ApplicationRecord
   end
 
   def category?
-    category.empty?
+    category.present?
   end
 end

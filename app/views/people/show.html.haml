@@ -1,16 +1,6 @@
 - title = @person.full_name
 - pre_title = 'Customers'
-- values = { biographical: { id: 'ID',
-    title: 'Title',
-    first_name: 'First Name',
-    last_name: 'Last Name',
-    suffix: 'Suffix',
-    ring_size: 'Ring Size',
-    ring_size_notes: 'Notes',
-    necklace_length: 'Necklace Length',
-    necklace_length_notes: 'Notes',
-    birthday: 'Birthday' },
-    addresses: { address_line_1: 'Address 1',
+- values = { addresses: { address_line_1: 'Address 1',
       address_line_2: 'Address 2',
       city: 'City',
       state_province: 'State',
@@ -27,20 +17,15 @@
 
 .row
   .col-12.col-md-5
-    = render CardComponent.new do |component|
-      - component.with(:header) do
-        Biographical
-      - component.with(:body) do
-        .list-group.list-group-flush.my-n3
-          - values[:biographical].each do |value|
-            .list-group-item
-              .row.align-items-baseline
-                .col-4
-                  / Label
-                  %h5.mb-0.text-muted= value[1]
-                .col.text-left
-                  / Value
-                  .small= @person.send(value[0])
+    = render ModelCardComponent.new(model: @person,
+      attrs: [:id,
+      :title,
+      :first_name,
+      :last_name,
+      :suffix,
+      :ring_size,
+      :ring_size_notes,
+      :necklace_length ])
 
   .col-12.col-md-7
     / Addresses
@@ -58,7 +43,7 @@
                     %h5.mb-0.text-muted= value[1]
                   .col-8
                     / Value
-                    .small= address.send(value[0])
+                    .small= address.public_send(value[0])
 
     / Phone Numbers
     = render CardComponent.new do |component|
@@ -75,7 +60,7 @@
                     %h5.mb-0.text-muted= value[1]
                   .col-8
                     / Value
-                    .small= phone_number.send(value[0])
+                    .small= phone_number.public_send(value[0])
 
     / Email Addresses
     = render CardComponent.new do |component|
@@ -92,7 +77,7 @@
                     %h5.mb-0.text-muted= value[1]
                   .col-8
                     / Value
-                    .small= email_address.send(value[0])
+                    .small= email_address.public_send(value[0])
 
     / Households
     = render CardComponent.new do |component|
@@ -155,6 +140,7 @@
                     - st.products.each_with_index do |product, i|
                       = link_to product.id, product, data: { 'tippy-content' => product.name }, class: "tippy-instance"
                       = "| " unless i == st.products.size - 1
+
 .row.justify-content-end
   .col.col-2
-    = link_to "Delete customer", person_path(@person), method: :delete, class: "btn btn-danger lift"
+    = button_to "Delete customer", person_path(@person), method: :delete, class: "btn btn-danger lift"

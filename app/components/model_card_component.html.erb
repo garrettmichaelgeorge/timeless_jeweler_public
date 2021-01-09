@@ -1,0 +1,9 @@
+<%= render CardComponent.new(card_options) do |component| %>
+
+<% component.with(:header) do %>
+    <%= model.class.to_s %>
+  <% end %>
+  <% component.with(:body) do %>
+    <%= render CardDataContainerComponent.new(attrs: attrs) %>
+  <% end %>
+<% end %>

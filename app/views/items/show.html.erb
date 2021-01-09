@@ -1,0 +1,42 @@
+<% title = "#{@item.id}. #{@item.name}" %>
+<% pre_title = 'Inventory' %>
+
+<%= render(PageHeaderComponent.new(title: title,
+                                   pre_title: pre_title,
+                                   buttons: [{ text: 'Edit Item', link: edit_item_path(@item), options: nil }],
+                                   tabs: nil)) %>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= image_tag 'https://place-hold.it/400x300', alt: "Photo of #{@item.name}",
+                                                   height: '300',
+                                                   class: 'card-img-top' %>
+  </div>
+
+  <div class="col">
+    <%= render CardComponent.new do |component| %>
+      <% component.with(:body) do %>
+        <%= render CardStatsComponent.new(stats: [{ label: 'Cost',
+                                                    value: @item.cost },
+                                                  { label: 'Price',
+                                                    value: @item.price }]) %>
+
+        <%= render CardDataContainerComponent.new(attrs: {id: @item.id,
+                                                          name: @item.name,
+                                                          description: @item.description,
+                                                          style_name: @item.style_name,
+                                                          created_at: @item.created_at }) %>
+
+      <% end %>
+    <% end %>
+
+    <% if @item.category == 'Piece' %>
+      <% @item.metals.each do |metal| %>
+        <%= render ModelCardComponent.new(model: metal,
+                                          attrs: {category_name: metal.category_name,
+                                                  color_name: metal.color_name,
+                                                  purity: metal.purity_value }) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

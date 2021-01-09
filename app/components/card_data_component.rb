@@ -1,8 +1,19 @@
 class CardDataComponent < ApplicationComponent
-  attr_reader :name, :data
+  with_collection_parameter :attr
 
-  def initialize(name:, data:)
-    @name = name
-    @data = data
+  def initialize(attr:)
+    @attr = attr
+  end
+
+  private
+
+  attr_reader :attr
+
+  def attr_name
+    attr[:name].to_s.humanize
+  end
+
+  def attr_value
+    attr[:value]
   end
 end

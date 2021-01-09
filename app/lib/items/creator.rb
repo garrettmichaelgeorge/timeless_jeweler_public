@@ -1,4 +1,7 @@
 class Items::Creator
+  FAILURE_MSG = 'Item was not created.'.freeze
+  SUCCESS_MSG = 'Item was successfully created.'.freeze
+
   def self.execute(context:, item:)
     new(context).persist(item)
   end
@@ -8,7 +11,7 @@ class Items::Creator
   end
 
   def build_item(attrs = nil)
-    return Item.new unless attrs && attrs[:category]
+    return Item.new unless includes_category?(attrs)
 
     category = attrs.delete(:category)
     Item.build_as(category, **attrs)
@@ -16,15 +19,17 @@ class Items::Creator
 
   def persist(item)
     if item.save
-      msg = 'Item was successfully created.'
-      context.create_item_succeeded item: item, msg: msg
+      context.create_item_succeeded item: item, msg: SUCCESS_MSG
     else
-      msg = 'Item was not created.'
-      context.create_item_failed item: item, msg: msg
+      context.create_item_failed item: item, msg: FAILURE_MSG
     end
   end
 
   private
 
   attr_reader :context, :item
+
+  def includes_category?(attrs)
+    attrs && attrs[:category]
+  end
 end

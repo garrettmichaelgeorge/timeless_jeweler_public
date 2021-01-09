@@ -1,11 +1,13 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[show edit update destroy]
+  before_action :set_item, only: %i[edit update destroy]
 
   def index
     @items = repo.find_all_items
   end
 
-  def show; end
+  def show
+    @item ||= item_presenter_for(repo.find_item(params[:id]))
+  end
 
   def new
     @item = item_creator.build_item
@@ -59,11 +61,15 @@ class ItemsController < ApplicationController
 
   def set_item
     # https://docs.stimulusreflex.com/working-with-forms#the-params-accessor
-    @item ||= repo.find_item(params[:id])
+    @item ||= find_item(params[:id])
+  end
+
+  def find_item(id)
+    repo.find_item id
   end
 
   def repo
-    @repo ||= Items::Repo.new
+    @repo ||= Items::Repo.new(context: self)
   end
 
   def item
@@ -80,6 +86,10 @@ class ItemsController < ApplicationController
 
   def item_destroyer
     @item_destroyer ||= Items::Destroyer.new(self)
+  end
+
+  def item_presenter_for(item)
+    Items::Presenter.new(item)
   end
 
   def item_params
