@@ -32,20 +32,5 @@
 #
 #  fk_rails_...  (merchant_id => merchants.id)
 #
-
-require 'test_helper'
-
-class UserTest < ActiveSupport::TestCase
-  subject { User.new }
-
-  context 'attributes' do
-    should belong_to(:merchant)
-    should have_many(:items).through(:merchant)
-  end
-
-  describe '.inheritance_column' do
-    it 'returns "role"' do
-      _(described_class.inheritance_column).must_equal 'role'
-    end
-  end
+class Admin < User
 end

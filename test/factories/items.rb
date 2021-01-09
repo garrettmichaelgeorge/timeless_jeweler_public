@@ -14,14 +14,17 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  item_style_id  :bigint           not null
+#  merchant_id    :bigint           not null
 #
 # Indexes
 #
 #  index_items_on_item_style_id  (item_style_id)
+#  index_items_on_merchant_id    (merchant_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (item_style_id => item_styles.id)
+#  fk_rails_...  (merchant_id => merchants.id)
 #
 
 FactoryBot.define do

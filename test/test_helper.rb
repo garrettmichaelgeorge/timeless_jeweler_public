@@ -1,16 +1,11 @@
-ENV['RAILS_ENV'] ||= 'test'
+require_relative 'test_helper_lite'
 require_relative '../config/environment'
 require 'rails/test_help'
-require 'minitest/reporters'
-require 'minitest/autorun'
-require 'minitest/spec'
 require 'capybara/rails'
 require 'capybara/minitest/spec'
 require 'simple_form'
 require 'view_component/test_helpers'
 require 'view_component/test_case'
-
-Minitest::Reporters.use!
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods

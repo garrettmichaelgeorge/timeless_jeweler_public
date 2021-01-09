@@ -1,4 +1,4 @@
-When(/^I try to view the inventory$/) do
+When(/^I (try to) view the inventory (page)$/) do
   visit items_path
 end
 

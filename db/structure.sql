@@ -462,7 +462,8 @@ CREATE TABLE public.items (
     price_currency character varying DEFAULT 'USD'::character varying NOT NULL,
     notes text,
     item_style_id bigint NOT NULL,
-    category character varying(20)
+    category character varying(20),
+    merchant_id bigint NOT NULL
 );
 
 
@@ -545,6 +546,37 @@ CREATE SEQUENCE public.loose_gemstones_id_seq
 --
 
 ALTER SEQUENCE public.loose_gemstones_id_seq OWNED BY public.loose_gemstones.id;
+
+
+--
+-- Name: merchants; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.merchants (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: merchants_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.merchants_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: merchants_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.merchants_id_seq OWNED BY public.merchants.id;
 
 
 --
@@ -1118,7 +1150,8 @@ CREATE TABLE public.users (
     confirmation_token character varying,
     confirmed_at timestamp without time zone,
     confirmation_sent_at timestamp without time zone,
-    unconfirmed_email character varying
+    unconfirmed_email character varying,
+    merchant_id bigint NOT NULL
 );
 
 
@@ -1237,6 +1270,13 @@ ALTER TABLE ONLY public.items ALTER COLUMN id SET DEFAULT nextval('public.items_
 --
 
 ALTER TABLE ONLY public.loose_gemstones ALTER COLUMN id SET DEFAULT nextval('public.loose_gemstones_id_seq'::regclass);
+
+
+--
+-- Name: merchants id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.merchants ALTER COLUMN id SET DEFAULT nextval('public.merchants_id_seq'::regclass);
 
 
 --
@@ -1476,6 +1516,14 @@ ALTER TABLE ONLY public.items
 
 ALTER TABLE ONLY public.loose_gemstones
     ADD CONSTRAINT loose_gemstones_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: merchants merchants_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.merchants
+    ADD CONSTRAINT merchants_pkey PRIMARY KEY (id);
 
 
 --
@@ -1721,6 +1769,13 @@ CREATE INDEX index_items_on_item_style_id ON public.items USING btree (item_styl
 
 
 --
+-- Name: index_items_on_merchant_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_items_on_merchant_id ON public.items USING btree (merchant_id);
+
+
+--
 -- Name: index_jewelry_pieces_metals_on_jewelry_piece_id_and_metal_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1746,6 +1801,13 @@ CREATE INDEX index_loose_gemstones_on_gemstone_profile_id ON public.loose_gemsto
 --
 
 CREATE INDEX index_loose_gemstones_on_item_id ON public.loose_gemstones USING btree (item_id);
+
+
+--
+-- Name: index_merchants_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_merchants_on_name ON public.merchants USING btree (name);
 
 
 --
@@ -1917,6 +1979,13 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
+-- Name: index_users_on_merchant_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_merchant_id ON public.users USING btree (merchant_id);
+
+
+--
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1945,6 +2014,14 @@ ALTER TABLE ONLY public.pieces
 
 ALTER TABLE ONLY public.store_transactions
     ADD CONSTRAINT fk_rails_13591f4845 FOREIGN KEY (store_transaction_category_id) REFERENCES public.store_transaction_categories(id);
+
+
+--
+-- Name: users fk_rails_2cc2ae8b0c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT fk_rails_2cc2ae8b0c FOREIGN KEY (merchant_id) REFERENCES public.merchants(id);
 
 
 --
@@ -2033,6 +2110,14 @@ ALTER TABLE ONLY public.metals
 
 ALTER TABLE ONLY public.store_transaction_line_items
     ADD CONSTRAINT fk_rails_af4a850152 FOREIGN KEY (store_transaction_id) REFERENCES public.store_transactions(id);
+
+
+--
+-- Name: items fk_rails_ba3b0b4b5e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT fk_rails_ba3b0b4b5e FOREIGN KEY (merchant_id) REFERENCES public.merchants(id);
 
 
 --
@@ -2193,6 +2278,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201217182046'),
 ('20201217202015'),
 ('20201217210128'),
-('20201219012013');
+('20201219012013'),
+('20210108194339'),
+('20210108230709'),
+('20210108231535'),
+('20210108233431');
 
 

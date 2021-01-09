@@ -24,4 +24,12 @@ class PieceTest < ActiveSupport::TestCase
     should have_many(:metals)
     should have_many(:mounted_gemstones)
   end
+
+  describe '#mounted_gemstones#build' do
+    it 'builds mounted gemstones' do
+      piece = described_class.new
+      piece.mounted_gemstones.build
+      _(piece.mounted_gemstones).wont_be_nil
+    end
+  end
 end

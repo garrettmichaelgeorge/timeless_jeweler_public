@@ -32,20 +32,16 @@
 #
 #  fk_rails_...  (merchant_id => merchants.id)
 #
+require_relative '../test_helper_lite'
+require_relative '../../app/models/user'
+require_relative '../../app/models/clerk'
 
-require 'test_helper'
+describe Clerk do
+  subject { Clerk.new }
 
-class UserTest < ActiveSupport::TestCase
-  subject { User.new }
-
-  context 'attributes' do
-    should belong_to(:merchant)
-    should have_many(:items).through(:merchant)
-  end
-
-  describe '.inheritance_column' do
-    it 'returns "role"' do
-      _(described_class.inheritance_column).must_equal 'role'
+  describe '#build_merchant' do
+    it 'raises an error' do
+      _ { subject.build_merchant }.must_raise InvalidMethodError
     end
   end
 end

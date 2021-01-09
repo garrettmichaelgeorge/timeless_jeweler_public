@@ -14,21 +14,26 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  item_style_id  :bigint           not null
+#  merchant_id    :bigint           not null
 #
 # Indexes
 #
 #  index_items_on_item_style_id  (item_style_id)
+#  index_items_on_merchant_id    (merchant_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (item_style_id => item_styles.id)
+#  fk_rails_...  (merchant_id => merchants.id)
 #
 
 require 'test_helper'
 
-class ItemTest < ActiveSupport::TestCase
+describe Item do
   CATEGORIES = %w[Piece Gemstone MiscellaneousItem].freeze
+
   context 'associations' do
+    should belong_to(:merchant)
     should have_many(:store_transaction_line_items)
     should belong_to(:style)
     should have_one(:piece)
@@ -38,8 +43,7 @@ class ItemTest < ActiveSupport::TestCase
 
   context 'validations' do
     should validate_presence_of(:name)
-    should validate_length_of(:name).is_at_most(40)
-    should validate_presence_of(:category)
+    should validate_length_of(:name).is_at_most(40) should validate_presence_of(:category)
     should validate_length_of(:category).is_at_most(20)
     should validate_inclusion_of(:category).in_array(CATEGORIES)
   end
@@ -50,11 +54,14 @@ class ItemTest < ActiveSupport::TestCase
   end
 
   context 'config' do
-    should('monetize price') { _(subject.price).must_be_instance_of Money }
-    should('monetize cost')  { _(subject.cost).must_be_instance_of Money }
     should accept_nested_attributes_for(:piece)
     should accept_nested_attributes_for(:gemstone)
     should accept_nested_attributes_for(:miscellaneous_item)
+  end
+
+  context 'monetize' do
+    should('monetize price') { _(subject.price).must_be_instance_of Money }
+    should('monetize cost')  { _(subject.cost).must_be_instance_of Money }
   end
 
   describe '.build_as_piece' do
