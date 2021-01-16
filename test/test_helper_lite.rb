@@ -1,5 +1,5 @@
-ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
+ENV['RAILS_ENV'] ||= 'test'
 require 'minitest/reporters'
 require 'minitest/autorun'
 require 'minitest/spec'
