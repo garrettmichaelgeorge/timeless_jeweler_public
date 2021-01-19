@@ -1,28 +1,37 @@
 # == Schema Information
 #
-# Table name: loose_gemstones
+# Table name: items
 #
-#  id                  :bigint           not null, primary key
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  gemstone_profile_id :bigint           not null
-#  item_id             :bigint           not null
+#  id             :bigint           not null, primary key
+#  category       :string(20)
+#  cost_cents     :integer          default(0), not null
+#  cost_currency  :string           default("USD"), not null
+#  description    :text
+#  name           :string(40)       not null
+#  notes          :text
+#  price_cents    :integer          default(0), not null
+#  price_currency :string           default("USD"), not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  item_style_id  :bigint           not null
+#  user_id        :bigint           not null
 #
 # Indexes
 #
-#  index_loose_gemstones_on_gemstone_profile_id  (gemstone_profile_id)
-#  index_loose_gemstones_on_item_id              (item_id)
+#  index_items_on_item_style_id  (item_style_id)
+#  index_items_on_user_id        (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (gemstone_profile_id => gemstone_profiles.id)
-#  fk_rails_...  (item_id => items.id)
+#  fk_rails_...  (item_style_id => item_styles.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
-class LooseGemstone < ApplicationRecord
+class LooseGemstone < Item
   include Profilable
 
-  belongs_to :item,    -> { gemstones }, inverse_of: :gemstone
-  belongs_to :profile, -> { loose },     inverse_of: :loose_gemstone,
-                                         class_name: 'Gemstone', foreign_key: :gemstone_profile_id
+  has_one :profile, class_name: 'LooseGemstoneProfile', inverse_of: :loose_gemstone,
+                    dependent: :destroy, autosave: true, foreign_key: 'item_id'
+
+  delegate_to_profile :carat, :carat=
 end

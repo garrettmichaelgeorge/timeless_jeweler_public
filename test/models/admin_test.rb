@@ -27,22 +27,20 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
+require 'test_helper'
 
-class User < ApplicationRecord
-  ROLES = %w[Clerk Merchant].freeze
-  self.inheritance_column = 'role'
+describe Admin do
+  subject { described_class.new }
 
-  # Include default devise modules. Others available are:
-  # :lockable, :timeoutable, and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :confirmable, :trackable
+  describe '#admin?' do
+    it 'returns true' do
+      _(subject).must_be :admin?
+    end
+  end
 
-  has_many :items
-
-  validates :role, inclusion: ROLES
-
-  def admin?
-    false
+  describe '#build_merchant' do
+    it 'creates a merchant' do
+      _ { subject.build_merchant }.must_raise StandardError
+    end
   end
 end

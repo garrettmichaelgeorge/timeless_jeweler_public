@@ -1,45 +1,48 @@
 require_relative '../../test_helper_lite'
+require_relative '../../../app/models/items/creator'
 
-class ItemDouble
-  def initialize(*); end
-
-  def save
-    true
-  end
+class TranslatorDouble
+  def t(*) = ''
 end
 
-describe Items::Creator do
-  let(:context) { MiniTest::Mock.new }
-  let(:item_class) { ItemDouble }
-  let(:item) { item_class.new }
-  subject do
-    item_class.stub :new, item do
-      Items::Creator.new(context: context,
-                         item_class: item_class)
+module Items
+  describe Creator do
+    let(:context) { MiniTest::Mock.new }
+    let(:item_class) { MiniTest::Mock }
+    let(:translator) { TranslatorDouble.new }
+    subject do
+      Creator.new(context: context,
+                  attrs: {},
+                  item_class: item_class,
+                  translator: translator)
     end
-  end
 
-  describe '#persist' do
-    it 'notifies the context on success' do
-      context.expect(:create_item_succeeded, nil) do |args|
-        correct_notification_sent?(args)
+    describe '#persist' do
+      it 'notifies the context on success' do
+        subject.item.expect(:save, true)
+
+        expect_context_to_receive(:create_item_succeeded)
+        subject.create!
+        context.verify
       end
-      subject.persist!
-      context.verify
-    end
 
-    it 'notifies the context on failure' do
-      item.stub :save, false do
-        context.expect(:create_item_succeeded, nil) do |args|
-          correct_notification_sent?(args)
-        end
-        subject.persist!
+      it 'notifies the context on failure' do
+        subject.item.expect(:save, false)
+
+        expect_context_to_receive(:create_item_failed)
+        subject.create!
         context.verify
       end
     end
-  end
 
-  def correct_notification_sent?(args)
-    args[:item].is_a?(ItemDouble) && args[:msg].is_a?(String)
+    private
+
+    def expect_context_to_receive(method)
+      context.expect(method, nil) { |args| status_message_args_ok?(args) }
+    end
+
+    def status_message_args_ok?(args)
+      args.count == 2
+    end
   end
 end

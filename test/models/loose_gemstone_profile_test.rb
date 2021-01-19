@@ -19,7 +19,11 @@
 #  fk_rails_...  (item_id => items.id)
 #
 
-FactoryBot.define do
-  factory :loose_gemstone do
+require 'test_helper'
+
+class LooseGemstoneProfileTest < ActiveSupport::TestCase
+  context 'associations' do
+    should belong_to(:loose_gemstone)
+    should belong_to(:gemstone)
   end
 end

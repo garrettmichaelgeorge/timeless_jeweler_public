@@ -19,7 +19,10 @@
 #  fk_rails_...  (item_id => items.id)
 #
 
-FactoryBot.define do
-  factory :loose_gemstone do
-  end
+class LooseGemstoneProfile < ApplicationRecord
+  self.table_name = 'loose_gemstones'
+
+  belongs_to :loose_gemstone, inverse_of: :profile, foreign_key: :item_id
+  belongs_to :gemstone, -> { loose }, inverse_of: :loose_gemstone,
+                                      foreign_key: :gemstone_profile_id
 end

@@ -1,40 +1,50 @@
-class Items::Creator
-  FAILURE_MSG = 'Item was not created.'.freeze
-  SUCCESS_MSG = 'Item was successfully created.'.freeze
+module Items
+  class Creator
+    attr_reader :context, :attrs, :item_class, :translator
+    attr_writer :item
 
-  attr_reader :context, :attrs, :item_class
-  attr_writer :item
-
-  def initialize(context:, attrs: {}, item_class: Item)
-    @context = context
-    @attrs = attrs
-    @item_class = item_class
-  end
-
-  def persist!
-    if item.save
-      context.create_item_succeeded(item: item, msg: SUCCESS_MSG)
-    else
-      context.create_item_failed(item: item, msg: FAILURE_MSG)
+    def initialize(context:, attrs: {}, item_class: Item, translator: I18n)
+      @context = context
+      @attrs = attrs
+      @item_class = item_class
+      @translator = translator
     end
-    reset!
-  end
 
-  def reset!
-    item = nil
-  end
+    def create!
+      if item.save
+        context.create_item_succeeded(item: item, msg: success_msg(item))
+      else
+        context.create_item_failed(item: item, msg: failure_msg(item))
+      end
+      reset!
+    end
 
-  def item
-    @item ||= build_item(item_class: item_class, **attrs)
-  end
+    def reset!
+      item = nil
+    end
 
-  private
+    def item
+      @item ||= build_item(item_class: item_class, **attrs)
+    end
 
-  def build_item(item_class:, **attrs)
-    if attrs.empty?
-      item_class.new
-    else
-      item_class.build_as(attrs[:category], **attrs.except(:category))
+    private
+
+    def build_item(item_class:, **attrs)
+      if attrs.has_key?(:category)
+        item_class.build_as(attrs[:category], **attrs.except(:category))
+      else
+        item_class.new
+      end
+    end
+
+    def success_msg(record)
+      lookup = 'activerecord.user_defined.errors.messages.create_record_succeeded'
+      translator.t(lookup, record: record.class.to_s)
+    end
+
+    def failure_msg(record)
+      lookup = 'activerecord.user_defined.errors.messages.create_record_failed'
+      translator.t(lookup, record: record.class.to_s)
     end
   end
 end

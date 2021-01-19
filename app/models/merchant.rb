@@ -17,5 +17,6 @@ class Merchant < ApplicationRecord
   has_many :clerks, inverse_of: :merchant, class_name: 'Clerk'
   has_many :items, inverse_of: :merchant
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true,
+                   uniqueness: true
 end

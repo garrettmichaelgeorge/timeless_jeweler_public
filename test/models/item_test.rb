@@ -14,49 +14,45 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  item_style_id  :bigint           not null
-#  merchant_id    :bigint           not null
+#  user_id        :bigint           not null
 #
 # Indexes
 #
 #  index_items_on_item_style_id  (item_style_id)
-#  index_items_on_merchant_id    (merchant_id)
+#  index_items_on_user_id        (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (item_style_id => item_styles.id)
-#  fk_rails_...  (merchant_id => merchants.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 require 'test_helper'
 
 describe Item do
-  CATEGORIES = %w[Piece Gemstone MiscellaneousItem].freeze
+  subject { FactoryBot.build(:item) }
+  let(:ar) { subject }
+  let(:attrs) { FactoryBot.attributes_for(:item) }
 
   context 'associations' do
-    should belong_to(:merchant)
+    should belong_to(:user)
     should have_many(:store_transaction_line_items)
     should belong_to(:style)
-    should have_one(:piece)
-    should have_one(:gemstone)
-    should have_one(:miscellaneous_item)
   end
 
   context 'validations' do
     should validate_presence_of(:name)
-    should validate_length_of(:name).is_at_most(40) should validate_presence_of(:category)
+    should validate_length_of(:name).is_at_most(40)
+    should validate_presence_of(:category)
     should validate_length_of(:category).is_at_most(20)
-    should validate_inclusion_of(:category).in_array(CATEGORIES)
+    should validate_inclusion_of(:category)
+      .in_array(described_class.categories)
+    should     allow_values('Piece', 'LooseGemstone').for(:category)
+    should_not allow_values('wrongwrong!', 'invalid').for(:category)
   end
 
   context 'delegations' do
     should delegate_method(:name).to(:style).with_prefix
-    should_eventually delegate_method(:public_send).to(:salable).with_arguments(:carat)
-  end
-
-  context 'config' do
-    should accept_nested_attributes_for(:piece)
-    should accept_nested_attributes_for(:gemstone)
-    should accept_nested_attributes_for(:miscellaneous_item)
   end
 
   context 'monetize' do
@@ -64,45 +60,39 @@ describe Item do
     should('monetize cost')  { _(subject.cost).must_be_instance_of Money }
   end
 
-  describe '.build_as_piece' do
-    before do
-      @item = described_class.build_as_piece(FactoryBot.attributes_for(:item))
+  describe '#category=' do
+    it 'standardizes the input' do
+      ar.stub :persisted?, false do
+        subject.category = 'piece'
+        expected = 'Piece'
+        _(subject.category).must_equal expected,
+                                       'Input was not converted to standard format when setting the' \
+                                       "attribute. Expected category to read back #{expected} but got" \
+                                       "#{subject.category} instead"
+      end
     end
 
-    it 'builds a piece' do
-      _(@item.piece).wont_be :nil?
-    end
-
-    it 'sets the category' do
-      _(@item.category).must_equal 'Piece'
-    end
-  end
-
-  describe '.build_as_gemstone' do
-    before do
-      @item = described_class.build_as_gemstone(FactoryBot.attributes_for(:item))
-    end
-
-    it 'builds a gemstone' do
-      _(@item.gemstone).wont_be :nil?
-    end
-
-    it 'sets the category' do
-      _(@item.category).must_equal 'Gemstone'
+    it 'raises an error when item is already persisted' do
+      ar.stub :persisted?, true do
+        _ { subject.category = 'piece' }.must_raise StandardError,
+                                                    'Should not allow item to' \
+                                                    'change category if it is' \
+                                                    'already persisted'
+      end
     end
   end
 
-  describe '.build_as_miscellaneous_item' do
-    before do
-      @item = described_class.build_as_miscellaneous_item(FactoryBot.attributes_for(:item))
-    end
-
-    it 'builds a piece' do
-      _(@item.miscellaneous_item).wont_be :nil?
-    end
-
-    it 'sets the category' do
-      _(@item.category).must_equal 'MiscellaneousItem'
+  describe '.categories' do
+    it 'returns an array of descendants' do
+      child1 = Class.new(described_class).to_s
+      child2 = Class.new(described_class).to_s
+      [child1, child2].each do |child|
+        _(described_class.categories).must_include child,
+                                                   'Expected ' \
+                                                   "#{described_class}.categories " \
+                                                   'to include the child class ' \
+                                                   "#{child}, but it did not"
+      end
     end
   end
 end

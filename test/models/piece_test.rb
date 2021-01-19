@@ -1,35 +1,46 @@
 # == Schema Information
 #
-# Table name: pieces
+# Table name: items
 #
-#  id         :bigint           not null, primary key
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  item_id    :bigint           not null
+#  id             :bigint           not null, primary key
+#  category       :string(20)
+#  cost_cents     :integer          default(0), not null
+#  cost_currency  :string           default("USD"), not null
+#  description    :text
+#  name           :string(40)       not null
+#  notes          :text
+#  price_cents    :integer          default(0), not null
+#  price_currency :string           default("USD"), not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  item_style_id  :bigint           not null
+#  user_id        :bigint           not null
 #
 # Indexes
 #
-#  index_pieces_on_item_id  (item_id)
+#  index_items_on_item_style_id  (item_style_id)
+#  index_items_on_user_id        (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (item_id => items.id)
+#  fk_rails_...  (item_style_id => item_styles.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 require 'test_helper'
 
 class PieceTest < ActiveSupport::TestCase
   context 'associations' do
-    should belong_to(:item)
-    should have_many(:metals)
-    should have_many(:mounted_gemstones)
+    should have_one(:profile)
   end
 
-  describe '#mounted_gemstones#build' do
-    it 'builds mounted gemstones' do
-      piece = described_class.new
-      piece.mounted_gemstones.build
-      _(piece.mounted_gemstones).wont_be_nil
+  context 'delegations' do
+    should delegate_method(:metals).to(:profile)
+  end
+
+  describe '#new' do
+    it 'sets the category' do
+      _(described_class.new.category).must_equal described_class.to_s
     end
   end
 end

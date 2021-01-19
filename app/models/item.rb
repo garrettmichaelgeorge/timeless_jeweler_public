@@ -14,96 +14,90 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  item_style_id  :bigint           not null
-#  merchant_id    :bigint           not null
+#  user_id        :bigint           not null
 #
 # Indexes
 #
 #  index_items_on_item_style_id  (item_style_id)
-#  index_items_on_merchant_id    (merchant_id)
+#  index_items_on_user_id        (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (item_style_id => item_styles.id)
-#  fk_rails_...  (merchant_id => merchants.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
+require 'sti_preload'
+
 class Item < ApplicationRecord
+  include STIPreload
+
+  # Warning: the following constant is deprecated
   CATEGORIES = %w[Piece Gemstone MiscellaneousItem].freeze
 
-  before_save :ensure_salable_exists, if: %i[new_record? category?]
+  self.inheritance_column = 'category'
 
   validates :name,     presence: true, length: { maximum: 40 }
-  validates :category, presence: true, length: { maximum: 20 }, inclusion: CATEGORIES
-  validates_associated :piece, :gemstone, :miscellaneous_item
+  validates :category, presence: true, length: { maximum: 20 },
+                       inclusion: { in: ->(*) { categories } }
 
-  belongs_to :merchant, inverse_of: :items
+  belongs_to :user, inverse_of: :items
   has_many :store_transaction_line_items, inverse_of: :items
   belongs_to :style, inverse_of: :items,
                      class_name: 'ItemStyle', foreign_key: 'item_style_id'
 
-  has_one :piece,              inverse_of: :item, dependent: :destroy
-  has_one :gemstone,           inverse_of: :item, class_name: 'LooseGemstone', dependent: :destroy
-  has_one :miscellaneous_item, inverse_of: :item, dependent: :destroy
+  scope :for_user,            ->(user) { where(user: user) }
 
-  scope :pieces,                 -> { where(category: 'Piece') }
-  scope :gemstones,              -> { where(category: 'Gemstone') }
-  scope :miscellaneous_items,    -> { where(category: 'MiscellaneousItem') }
-  scope :with_salables,          -> { includes(:salable) }
-  scope :with_metals,            -> { includes(piece: [:metals]) }
-  scope :with_mounted_gemstones, -> { includes(piece: [:mounted_gemstones]) }
+  scope :pieces,              -> { where(category: 'Piece') }
+  scope :gemstones,           -> { where(category: 'Gemstone') }
+  scope :miscellaneous_items, -> { where(category: 'MiscellaneousItem') }
 
   delegate :name, to: :style, prefix: true
-
-  accepts_nested_attributes_for :piece, :gemstone, :miscellaneous_item,
-                                reject_if: :all_blank
 
   monetize :cost_cents,  numericality: { greater_than_or_equal_to: 0 }
   monetize :price_cents, numericality: { greater_than_or_equal_to: 0 }
 
-  def to_label
-    "#{name} (#{price})"
-  end
-
   def salable
-    public_send category.underscore
+    category.underscore
   end
 
   def category=(value)
     if persisted?
-      errors.add(category: 'Cannot change category for a saved record!')
-      return
+      raise StandardError,
+            'Cannot change category of an item that has been persisted! ' \
+            'Need to create a new item instead.'
     end
 
-    standardized_category = value.to_s.camelize
-    super(standardized_category)
+    super(standardize_category(value))
+  end
+
+  # required for Simple Form
+  def to_label
+    "#{name} (#{price})"
   end
 
   class << self
-    # Factory methods
-    def build_as(category, **attrs)
-      public_send "build_as_#{category.underscore}", **attrs
+    def categories
+      Item.subclasses.map(&:to_s).sort
     end
 
-    def build_as_piece(**attrs)
-      pieces.build(**attrs, &:build_piece)
-    end
+    # https://www.christopherbloom.com/2012/02/01/notes-on-sti-in-rails-3-0/
+    # Allows subclasses to all route through the parent model's controller
+    def inherited(child)
+      parent_model_name = model_name
 
-    def build_as_gemstone(**attrs)
-      gemstones.build(**attrs, &:build_gemstone)
-    end
+      child.instance_eval do
+        alias :original_model_name :model_name
+        def model_name() = parent_model_name
+      end
 
-    def build_as_miscellaneous_item(**attrs)
-      miscellaneous_items.build(**attrs, &:build_miscellaneous_item)
+      super
     end
   end
 
   private
 
-  def ensure_salable_exists
-    public_send "build_#{category.underscore}"
-  end
-
-  def category?
-    category.present?
+  def standardize_category(value)
+    value.to_s.camelize
   end
 end

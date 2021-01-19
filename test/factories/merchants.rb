@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: item_styles
+# Table name: merchants
 #
 #  id         :bigint           not null, primary key
 #  name       :string           not null
@@ -9,15 +9,10 @@
 #
 # Indexes
 #
-#  index_item_styles_on_name  (name) UNIQUE
+#  index_merchants_on_name  (name) UNIQUE
 #
-
 FactoryBot.define do
-  factory :item_style do
-    name { 'My style' }
-
-    trait :art_deco do
-      name { 'Art Deco' }
-    end
+  factory :merchant do
+    name { 'My Merchant' }
   end
 end

@@ -1,27 +1,37 @@
 # == Schema Information
 #
-# Table name: pieces
+# Table name: items
 #
-#  id         :bigint           not null, primary key
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  item_id    :bigint           not null
+#  id             :bigint           not null, primary key
+#  category       :string(20)
+#  cost_cents     :integer          default(0), not null
+#  cost_currency  :string           default("USD"), not null
+#  description    :text
+#  name           :string(40)       not null
+#  notes          :text
+#  price_cents    :integer          default(0), not null
+#  price_currency :string           default("USD"), not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  item_style_id  :bigint           not null
+#  user_id        :bigint           not null
 #
 # Indexes
 #
-#  index_pieces_on_item_id  (item_id)
+#  index_items_on_item_style_id  (item_style_id)
+#  index_items_on_user_id        (user_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (item_id => items.id)
+#  fk_rails_...  (item_style_id => item_styles.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
-class Piece < ApplicationRecord
-  has_many :metals,                inverse_of: :piece
-  has_many :mounted_gemstones,     inverse_of: :piece
-  belongs_to :item, -> { pieces }, inverse_of: :piece
+class Piece < Item
+  include Profilable
 
-  accepts_nested_attributes_for :metals,
-                                :mounted_gemstones, allow_destroy: true,
-                                                    reject_if: :all_blank
+  has_one :profile, class_name: 'PieceProfile', inverse_of: :piece,
+                    dependent: :destroy, autosave: true, foreign_key: 'item_id'
+
+  delegate_to_profile :metals
 end

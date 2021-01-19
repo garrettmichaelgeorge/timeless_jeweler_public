@@ -1,0 +1,5 @@
+en:
+  pundit:
+    default: 'This account is not authorized to perform this action.'
+    merchant_policy:
+      create?: 'This account is not authorized to create merchants.'

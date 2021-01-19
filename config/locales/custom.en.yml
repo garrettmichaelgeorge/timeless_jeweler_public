@@ -1,0 +1,17 @@
+en:
+  actions:
+    confirm_registration: 'Confirm my registration'
+    sign_in: &sign_in 'Sign in'
+    sign_out: &sign_out 'Sign out'
+    log_in: *sign_in
+    log_out: *sign_out
+    sign_up: &sign_up 'Sign up'
+  titles:
+    signup: *sign_up
+    intake: 'New Item'
+  subtitles:
+    signin: *sign_in
+    signup: *sign_up
+    intake: 'Intake'
+  placeholders:
+    signup_email: 'name@example.com'

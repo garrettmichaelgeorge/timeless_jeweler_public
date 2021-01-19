@@ -15,22 +15,23 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  role                   :string(20)       default("Clerk")
 #  sign_in_count          :integer          default(0), not null
 #  unconfirmed_email      :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  merchant_id            :bigint           not null
 #
 # Indexes
 #
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
-#  index_users_on_merchant_id           (merchant_id)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (merchant_id => merchants.id)
-#
+
 class Clerk < User
+  def build_merchant
+    raise StandardError,
+          'A Clerk is not authorized to build a merchant.' +
+          'Only Admins are allowed to build merchants'
+  end
 end

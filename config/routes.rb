@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   # Devise
-  devise_for :users
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
+    passwords: 'users/passwords',
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
+
   devise_scope :user do
     get      'login'                  => 'devise/sessions#new'
     post     'login'                  => 'devise/sessions#create'
