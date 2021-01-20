@@ -1,32 +1,38 @@
-- provide(:title, 'Sign up')
+- provide(:title, t('titles.signup'))
 - provide(:body_class, 'bg-auth border-top border-top-2 border-primary')
-- subtitle = 'Authentication required.' 
-/ 
+- subtitle = t('actions.sign_up')
 
 .d-flex.justify-content-center.align-items-center.vh-100
   .col-12.col-md-5.col-xl-4.my-5
     / Heading
-    %h1.display-4.text-center.mb-3= yield :title 
+    %h1.display-4.text-center.mb-3= yield :title
     / Subheading
-    %p.text-muted.text-center.mb-5= subtitle 
+    %p.text-muted.text-center.mb-5= subtitle
 
     = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
       = f.error_notification
 
-      .form-group.form-inputs
+      %fieldset.form-group.form-inputs
         = f.input :email,
           required: true,
+          placeholder: t('placeholders.signup_email'),
           autofocus: true,
           input_html: { autocomplete: "email" }
+
+        = f.association :merchant,
+          required: true,
+          placeholder: "Hello merchant!"
+
         = f.input :password,
           required: true,
           hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
           input_html: { autocomplete: "new-password" }
+
         = f.input :password_confirmation,
           required: true,
           input_html: { autocomplete: "new-password" }
 
-      .form-actions
+      %fieldset.form-actions
         = f.submit 'Sign up', class: 'btn btn-lg btn-block btn-primary mb-3'
 
     = render "devise/shared/links"

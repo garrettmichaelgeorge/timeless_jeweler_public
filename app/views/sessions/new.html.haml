@@ -1,37 +1,41 @@
-- provide(:title, 'Log in')
-- provide(:body_class, 'd-flex align-items-center bg-auth border-top border-top-2 border-primary' )
-- @subtitle = 'Authentication required.' 
+- provide :title, t('devise.authentication.sign_in')
+- provide :body_class, 'd-flex align-items-center bg-auth border-top border-top-2 border-primary'
 
-/ CONTENT ================================================== 
-    
+/ CONTENT ==================================================
+
 .row.justify-content-center
   .col-12.col-md-5.col-xl-4.my-5
     / Heading
-    %h1.display-4.text-center.mb-3= yield :title 
+    %h1.display-4.text-center.mb-3= yield :title
     / Subheading
-    %p.text-muted.text-center.mb-5= @subtitle 
+    %h2.p.text-muted.text-center.mb-5= t('devise.authentication.sign_in_subtitle')
+
     / Login Form
-    = form_for(:session, url: login_path) do |f| 
+    = form_for(:session, url: login_path) do |f|
       .form-group
-        = f.label :email 
-        = f.email_field :email, class: 'form-control', placeholder: 'name@address.com' 
+        = f.label :email
+        = f.email_field :email, class: 'form-control', placeholder: t('devise.authentication.placeholders.email')
+
       / Password
       .form-group
         .row
           .col
             / Label
-            = f.label :password 
+            = f.label :password
           .col-auto
             / Help text
-            %a.form-text.small.text-muted(href="#") Forgot password?
+            %a.form-text.small.text-muted(href="#")= t('devise.authentication.forgot_password_link')
+
         / Input group
         .input-group.input-group-merge
           / Input
-          = f.password_field :password, class: 'form-control form-control-appended', placeholder: 'Enter your password' 
+          = f.password_field :password, class: 'form-control form-control-appended',
+            placeholder: t('devise.authentication.placeholders.password')
           / Icon
           .input-group-append
             %span.input-group-text
               %i.fe.fe-eye
+
       / Submit
-      = f.submit 'Log in', class: 'btn btn-lg btn-block btn-primary mb-3' 
-      = link_to 'Log in', dashboard_path, class: 'btn btn-lg btn-block btn-primary mb-3' 
+      = button_to t('devise.authentication.sign_in'), dashboard_path,
+        class: 'btn btn-lg btn-block btn-primary mb-3'

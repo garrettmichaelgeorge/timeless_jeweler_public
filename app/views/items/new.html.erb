@@ -11,7 +11,7 @@
                                   html: { id: 'category_switcher',
                                           class: 'category_switcher' } do |f| %>
       <%= f.input :category, as: :radio_buttons,
-                             collection: f.object.class::CATEGORIES,
+                             collection: %w[Piece LooseGemstone MiscellaneousItem],
                              label: 'Choose a category',
                              input_html: { data: { reflex: 'input->Intake#change_category' } } %>
     <% end %>

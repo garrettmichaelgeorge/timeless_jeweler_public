@@ -1,8 +1,3 @@
-- # To access data structures for @nav_items and @reports,
-- # use their instance getter methods like so:
-- #   self.nav_items
-- #   self.reports
-
 / NAVIGATION
 / ==================================================
 %nav#sidebar{class: sidebar_class}
@@ -16,8 +11,7 @@
     = link_to root_path, class: "navbar-brand text-align-left" do |link|
       = image_tag "logo.jpg", class: "navbar-brand-img mx-auto d-none d-md-block"
       %small.d-md-none.text-wrap Timeless Jeweler
-      - # %img{src: asset_pack_path("media/images/logo.jpg")}
-      
+
     %hr.navbar-divider.d-md-block.mt-0.mb-3
     / User (xs)
     .navbar-user.d-md-none
@@ -28,13 +22,10 @@
           .avatar.avatar-sm.avatar-online
         / Menu
         .dropdown-menu.dropdown-menu-right(aria-labelledby="sidebarIcon")
-          %a(href="#" class="dropdown-item")
-            Profile
-          %a(href="#" class="dropdown-item")
-            Settings
+          %a(href="#" class="dropdown-item") Profile
+          %a(href="#" class="dropdown-item") Settings
           %hr.dropdown-divider
-          %a(href="#" class="dropdown-item")
-            Logout
+          %a(href="#" class="dropdown-item")= sign_out_text
 
     / Collapse
     .collapse.navbar-collapse#sidebarCollapse
@@ -65,8 +56,7 @@
           .collapse#sidebarReports
             %ul.nav.nav-sm.flex-column
               - self.reports.each do |report|
-                %li.nav-item
-                  = link_to report, "#", class: "nav-link"
+                %li.nav-item= link_to report, "#", class: "nav-link"
       / Spacer
       .mt-lg-auto
       / "New" button

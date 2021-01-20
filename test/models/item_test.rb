@@ -36,7 +36,7 @@ describe Item do
 
   context 'associations' do
     should belong_to(:user)
-    should have_many(:store_transaction_line_items)
+    should have_many(:line_items)
     should belong_to(:style)
   end
 

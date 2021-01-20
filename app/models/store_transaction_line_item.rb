@@ -26,28 +26,23 @@
 #
 
 class StoreTransactionLineItem < ApplicationRecord
-  scope(:specific_transaction, lambda do |store_transaction_id|
-    joins(:item).where('store_transaction_id = ?', store_transaction_id)
-  end)
+  scope :with_items,          ->     { includes(:item) }
+  scope :for_transaction,     ->(id) { where('store_transaction_id = ?', id) }
+  scope :current_transaction, ->(id) { where('store_transaction_id = ?', id) }
+  scope :total_cents,         ->(id) { with_items.for_transaction(id).sum('price_cents') }
 
-  scope(:current_transaction, lambda do |store_transaction_id|
-    joins(:item).where('store_transaction_id = ?', store_transaction_id)
-  end)
+  belongs_to :store_transaction, inverse_of: :line_items, foreign_key: 'store_transaction_id'
 
-  belongs_to :store_transaction, inverse_of: :line_items,
-                                 foreign_key: 'store_transaction_id'
+  belongs_to :item, inverse_of: :line_items, foreign_key: 'product_id'
 
-  belongs_to :item
   accepts_nested_attributes_for :item
 
   monetize :discount_cents
   monetize :tax_cents
 
-  delegate :name, :price_cents, to: :item, prefix: true
-  delegate :party_name, :category_name, to: :store_transaction
+  delegate :name, :price_cents,
+           to: :item, prefix: true
+  delegate :party_name, :category_name,
+           to: :store_transaction
   delegate :total, to: :store_transaction, prefix: true
-
-  def self.total_cents(store_transaction_id)
-    specific_transaction(store_transaction_id).sum('price_cents')
-  end
 end

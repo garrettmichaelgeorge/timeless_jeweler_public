@@ -40,4 +40,8 @@ class SidebarComponent < ApplicationComponent
   def sidebar_class
     'navbar navbar-vertical fixed-left navbar-expand-md navbar-light'
   end
+
+  def sign_out_text(translator = I18n)
+    translator.t('devise.actions.sign_out')
+  end
 end

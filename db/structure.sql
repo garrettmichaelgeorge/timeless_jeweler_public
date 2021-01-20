@@ -463,7 +463,7 @@ CREATE TABLE public.items (
     notes text,
     item_style_id bigint NOT NULL,
     category character varying(20),
-    merchant_id bigint NOT NULL
+    user_id bigint NOT NULL
 );
 
 
@@ -1151,7 +1151,7 @@ CREATE TABLE public.users (
     confirmed_at timestamp without time zone,
     confirmation_sent_at timestamp without time zone,
     unconfirmed_email character varying,
-    merchant_id bigint NOT NULL
+    role character varying(20) DEFAULT 'Clerk'::character varying
 );
 
 
@@ -1769,10 +1769,10 @@ CREATE INDEX index_items_on_item_style_id ON public.items USING btree (item_styl
 
 
 --
--- Name: index_items_on_merchant_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_items_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_items_on_merchant_id ON public.items USING btree (merchant_id);
+CREATE INDEX index_items_on_user_id ON public.items USING btree (user_id);
 
 
 --
@@ -1979,13 +1979,6 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
--- Name: index_users_on_merchant_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_users_on_merchant_id ON public.users USING btree (merchant_id);
-
-
---
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2014,14 +2007,6 @@ ALTER TABLE ONLY public.pieces
 
 ALTER TABLE ONLY public.store_transactions
     ADD CONSTRAINT fk_rails_13591f4845 FOREIGN KEY (store_transaction_category_id) REFERENCES public.store_transaction_categories(id);
-
-
---
--- Name: users fk_rails_2cc2ae8b0c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT fk_rails_2cc2ae8b0c FOREIGN KEY (merchant_id) REFERENCES public.merchants(id);
 
 
 --
@@ -2113,14 +2098,6 @@ ALTER TABLE ONLY public.store_transaction_line_items
 
 
 --
--- Name: items fk_rails_ba3b0b4b5e; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.items
-    ADD CONSTRAINT fk_rails_ba3b0b4b5e FOREIGN KEY (merchant_id) REFERENCES public.merchants(id);
-
-
---
 -- Name: store_transaction_line_items fk_rails_ba768cee4d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2134,6 +2111,14 @@ ALTER TABLE ONLY public.store_transaction_line_items
 
 ALTER TABLE ONLY public.loose_gemstones
     ADD CONSTRAINT fk_rails_c0dd357d2a FOREIGN KEY (item_id) REFERENCES public.items(id);
+
+
+--
+-- Name: items fk_rails_d4b6334db2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT fk_rails_d4b6334db2 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2282,6 +2267,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210108194339'),
 ('20210108230709'),
 ('20210108231535'),
-('20210108233431');
+('20210108233431'),
+('20210115201212'),
+('20210116202058'),
+('20210116202158');
 
 

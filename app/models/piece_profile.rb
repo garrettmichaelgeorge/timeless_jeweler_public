@@ -19,8 +19,7 @@
 class PieceProfile < ApplicationRecord
   self.table_name = 'pieces'
 
-  belongs_to :piece,           inverse_of: :piece, foreign_key: 'item_id'
-
+  belongs_to :piece,           inverse_of: :profile, foreign_key: 'item_id'
   has_many :metals,            inverse_of: :piece, foreign_key: 'piece_id'
   has_many :mounted_gemstones, inverse_of: :piece, foreign_key: 'piece_id'
 

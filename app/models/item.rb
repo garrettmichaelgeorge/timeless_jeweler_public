@@ -42,7 +42,7 @@ class Item < ApplicationRecord
                        inclusion: { in: ->(*) { categories } }
 
   belongs_to :user, inverse_of: :items
-  has_many :store_transaction_line_items, inverse_of: :items
+  has_many :line_items, class_name: 'StoreTransactionLineItem', inverse_of: :items
   belongs_to :style, inverse_of: :items,
                      class_name: 'ItemStyle', foreign_key: 'item_style_id'
 
@@ -84,11 +84,9 @@ class Item < ApplicationRecord
     # https://www.christopherbloom.com/2012/02/01/notes-on-sti-in-rails-3-0/
     # Allows subclasses to all route through the parent model's controller
     def inherited(child)
-      parent_model_name = model_name
-
       child.instance_eval do
         alias :original_model_name :model_name
-        def model_name() = parent_model_name
+        def model_name() = Item.model_name
       end
 
       super

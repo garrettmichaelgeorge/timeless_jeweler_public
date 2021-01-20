@@ -16,6 +16,6 @@
 #  fk_rails_...  (item_id => items.id)
 #
 
-class MiscellaneousItem < ApplicationRecord
-  belongs_to :item, -> { miscellaneous_items }, inverse_of: :miscellaneous_item
+class MiscellaneousItem < Item
+  has_one :profile, inverse_of: :miscellaneous_item, class_name: 'MiscellaneousItemProfile', foreign_key: 'item_id'
 end

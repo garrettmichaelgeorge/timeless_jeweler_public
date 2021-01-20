@@ -33,6 +33,14 @@ class StoreTransactionLineItemTest < ActiveSupport::TestCase
     should belong_to(:store_transaction)
   end
 
+  context 'delegations' do
+    should delegate_method(:name).to(:item).with_prefix(true)
+    should delegate_method(:price_cents).to(:item).with_prefix(true)
+    should delegate_method(:party_name).to(:store_transaction)
+    should delegate_method(:category_name).to(:store_transaction)
+    should delegate_method(:total).to(:store_transaction).with_prefix(true)
+  end
+
   context 'monetize' do
     should('monetize discount') { _(subject.discount).must_be_instance_of Money }
     should('monetize tax')      { _(subject.tax).must_be_instance_of Money }

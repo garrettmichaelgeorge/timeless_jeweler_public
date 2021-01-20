@@ -1,23 +1,25 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[edit update destroy]
 
+  # RESTful methods
   def index
     @items = repo.find_all_items
   end
 
   def show
-    @item ||= item_presenter_for(repo.find_item(params[:id]))
+    item_record = repo.find_item(params[:id])
+    @item ||= item_presenter_for(item_record)
   end
 
   def new
-    @item = item_creator.build_item
+    @item = item_creator.item
   end
 
   def edit; end
 
   def create
-    item = item_creator.build_item(item_params)
-    item_creator.persist(item)
+    creator = Items::Creator.new(context: self, attrs: item_params)
+    creator.create!
   end
 
   def update
@@ -61,11 +63,7 @@ class ItemsController < ApplicationController
 
   def set_item
     # https://docs.stimulusreflex.com/working-with-forms#the-params-accessor
-    @item ||= find_item(params[:id])
-  end
-
-  def find_item(id)
-    repo.find_item id
+    @item ||= repo.find_item(params[:id])
   end
 
   def repo
@@ -73,7 +71,7 @@ class ItemsController < ApplicationController
   end
 
   def item
-    @item ||= item_creator.build_item
+    @item ||= item_creator.item
   end
 
   def item_creator

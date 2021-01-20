@@ -8,31 +8,9 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     sign_in user
   end
 
-  describe 'GET #index' do
-    it 'responds with 200' do
-      get items_path
-      assert_response :success
-    end
-  end
-
-  describe 'GET #show' do
-    it 'responds with 200' do
-      get item_path(1)
-      assert_response :success
-    end
-  end
-
-  describe 'GET #new' do
-    it 'responds with 200' do
-      get new_item_path
-      assert_response :success
-    end
-  end
-
-  describe 'GET #edit' do
-    it 'responds with 200' do
-      get edit_item_path(1)
-      assert_response :success
-    end
+  context 'routes' do
+    should route(:get, '/items').to('items#index')
+    should route(:get, '/items/1').to('items#show', id: 1)
+    should route(:get, '/items/new').to('items#new')
   end
 end

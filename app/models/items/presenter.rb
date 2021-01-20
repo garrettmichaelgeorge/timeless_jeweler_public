@@ -52,15 +52,7 @@ class Items::Presenter
     end
   end
 
-  def metals
-    salable.metals
-  end
-
   private
 
   attr_reader :item
-
-  def metal_presenter_for(metal)
-    MetalPresenter.new(metal)
-  end
 end

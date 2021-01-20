@@ -4,66 +4,71 @@ Given(/^I visit the homepage$/) do
   visit root_path
 end
 
-Given(/^I am a registered user$/) do
-  @registered_user = FactoryBot.create(:user)
-  # confirm @registered_user
+Given('I am a registered clerk/user') do
+  @registered_clerk = FactoryBot.create(:user)
+  # confirm @registered_clerk
 end
 
 Given(/^I have signed in$/) do
-  # visit root_path
-
-  # fill_in 'user_email', with: @registered_user.email
-  # fill_in 'user_password', with: @registered_user.password
-
-  # click_on 'Sign in'
-  sign_in @registered_user
+  sign_in @registered_clerk
 end
 
-Given(/^I am not a registered user$/) do
-  @unregistered_user = nil
+Given('I am not a registered clerk/user') do
+  @unregistered_clerk = nil
 end
 
 ### WHEN ###
 
 When(/^I fill in the signup form$/) do
-  click_link_or_button 'Sign up'
+  @clerk_attrs = FactoryBot.attributes_for(:clerk)
+  sign_up = I18n.t('actions.sign_up')
 
-  fill_in 'user_email',                 with: 'example@example.com'
-  fill_in 'user_password',              with: 'pa$$word'
-  fill_in 'user_password_confirmation', with: 'pa$$word'
-
-  click_button 'Sign up'
+  click_link_or_button sign_up
+  fill_in 'user_email',                 with: @clerk_attrs[:email]
+  fill_in 'user_password',              with: @clerk_attrs[:password]
+  fill_in 'user_password_confirmation', with: @clerk_attrs[:password]
+  click_button sign_up
 end
 
 When(/^I fill in the signin form$/) do
-  fill_in 'user_email',                 with: @registered_user.email
-  fill_in 'user_password',              with: @registered_user.password
+  sign_in = I18n.t('actions.sign_in')
 
-  click_button 'Sign in'
+  fill_in 'user_email',    with: @registered_clerk.email
+  fill_in 'user_password', with: @registered_clerk.password
+  click_button sign_in
 end
 
 When(/^I confirm the email$/) do
-  open_email('example@example.com')
+  confirm = I18n.t('actions.confirm')
+  @clerk_attrs ||= FactoryBot.attributes_for(:clerk)
 
-  visit_in_email('Confirm my account')
+  open_email(@clerk_attrs[:email])
+  visit_in_email(confirm)
 end
 
 When(/^I click on the signout button$/) do
-  click_on 'Log out'
+  sign_out = I18n.t('actions.sign_out')
+  click_on sign_out
 end
 
 ### THEN ###
 
 Then(/^I should see that I am signed in$/) do
-  page.has_content?('Logged in')
+  message = I18n.t('devise.sessions.signed_in')
+  page.has_content?(message)
 end
 
-Then(/^I should be (re)?directed to( the)? sign ?in( page)?$/) do
-  page.has_content?('Sign in')
+Then('I should be directed to sign in') do
+  sign_in = I18n.t('actions.sign_in')
+  page.has_content?(sign_in)
+end
+
+Then('I should be redirected to the signin page') do
+  sign_in = I18n.t('actions.sign_in')
+  page.has_content?(sign_in)
 end
 
 Then(/^I should see that my account is confirmed$/) do
-  message = 'Your email address has been successfully confirmed'
-
-  page.has_content?(message)
+  notification = I18n.t('devise.confirmations.confirmed')
+  page.has_content?(notification)
 end

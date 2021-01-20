@@ -1,7 +1,9 @@
 ### Capybara setup ###
+require 'capybara/apparition'
 
-# Capybara.register_driver :selenium_chrome do |app|
-#   Capybara::Selenium::Driver.new(app, :browser => :chrome)
-# end
+Capybara.javascript_driver = :apparition
 
-Capybara.default_driver = :selenium_headless
+Capybara.configure do |config|
+  config.default_max_wait_time = 2
+  config.automatic_label_click = true
+end

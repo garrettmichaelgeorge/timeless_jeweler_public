@@ -30,11 +30,11 @@ module Items
     private
 
     def build_item(item_class:, **attrs)
-      if attrs.has_key?(:category)
-        item_class.build_as(attrs[:category], **attrs.except(:category))
-      else
-        item_class.new
-      end
+      item_class.new(user: current_user, **attrs)
+    end
+
+    def current_user
+      context.current_user
     end
 
     def success_msg(record)

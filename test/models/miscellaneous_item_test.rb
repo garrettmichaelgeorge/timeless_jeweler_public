@@ -20,6 +20,6 @@ require 'test_helper'
 
 class MiscellaneousItemTest < ActiveSupport::TestCase
   context 'associations' do
-    should belong_to(:item)
+    should have_one(:profile)
   end
 end

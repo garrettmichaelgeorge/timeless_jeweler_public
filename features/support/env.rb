@@ -44,13 +44,12 @@ end
 #   # { except: [:widgets] } may not do what you expect here
 #   # as Cucumber::Rails::Database.javascript_strategy overrides
 #   # this setting.
-#   DatabaseCleaner.strategy = :transaction
+# DatabaseCleaner.strategy = :transaction
 # end
 
-#   Before('not @no-txn', 'not @selenium', 'not @culerity', 'not @celerity', 'not @javascript') do
-#     DatabaseCleaner.strategy = :transaction
-#   end
-#
+# Before('not @no-txn', 'not @selenium', 'not @culerity', 'not @celerity', 'not @javascript') do
+#   DatabaseCleaner.strategy = :transaction
+# end
 
 # Possible values are :truncation and :transaction
 # The :transaction strategy is faster, but might give you threading problems.
