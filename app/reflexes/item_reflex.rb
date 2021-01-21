@@ -68,9 +68,9 @@ class ItemReflex < ApplicationReflex
      :price_cents,
      :salable_id,
      :salable_type,
-     { piece_attributes: permitted_piece_params,
-       gemstone_attributes: permitted_gemstone_params,
-       miscellaneous_item_attributes: permitted_miscellaneous_item_params }]
+     piece_attributes: permitted_piece_params,
+     gemstone_attributes: permitted_gemstone_params,
+     miscellaneous_item_attributes: permitted_miscellaneous_item_params]
   end
 
   def permitted_piece_params
