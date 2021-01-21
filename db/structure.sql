@@ -1147,10 +1147,6 @@ CREATE TABLE public.users (
     last_sign_in_ip inet,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    confirmation_token character varying,
-    confirmed_at timestamp without time zone,
-    confirmation_sent_at timestamp without time zone,
-    unconfirmed_email character varying,
     role character varying(20) DEFAULT 'Clerk'::character varying
 );
 
@@ -1965,13 +1961,6 @@ CREATE INDEX index_store_transactions_on_store_transaction_category_id ON public
 
 
 --
--- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_confirmation_token ON public.users USING btree (confirmation_token);
-
-
---
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2270,6 +2259,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210108233431'),
 ('20210115201212'),
 ('20210116202058'),
-('20210116202158');
+('20210116202158'),
+('20210121194616');
 
 

@@ -1,32 +1,7 @@
 class Items::Presenter
+  attr_reader :item
+
   delegate_missing_to :item
-
-  INDEX_ATTRS = %i[
-    id
-    name
-    description
-    style_name
-    cost
-    price
-  ].freeze
-
-  SHOW_ATTRS = %i[
-    id
-    name
-    description
-    style_name
-    created_at
-  ].freeze
-
-  METAL_ATTRS = %i[
-    category_name
-    color_name
-    purity_value
-  ].freeze
-
-  MOUNTED_GEMSTONE_ATTRS = %i[
-    carat
-  ].freeze
 
   def initialize(item)
     @item = item
@@ -51,8 +26,4 @@ class Items::Presenter
       METAL_ATTRS.to_h { |attr| [attr, metal.public_send(attr)] }
     end
   end
-
-  private
-
-  attr_reader :item
 end

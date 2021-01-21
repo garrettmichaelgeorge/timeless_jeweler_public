@@ -20,7 +20,7 @@ class Seeders
 
     def execute
       STATE_DATA.each do |code, name|
-        ::StateProvince.create_or_find_by(code: code, name: name)
+        seed_with_value(code: code, name: name)
       end
     end
 

@@ -21,17 +21,13 @@ class Seeders
              'Unknown'].freeze
 
     def execute
-      NAMES.each { |name| seed_with_name(name) }
+      NAMES.each do |name|
+        seed_with_value(name: name)
+      end
     end
 
     def self.safe_for_production?
       true
-    end
-
-    private
-
-    def seed_with_name(name)
-      ::MetalCategory.create!(name: name)
     end
   end
 end

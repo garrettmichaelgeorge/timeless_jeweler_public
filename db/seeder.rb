@@ -1,24 +1,13 @@
-require_relative 'seeders/state_province_seeder'
-require_relative 'seeders/person_seeder'
-require_relative 'seeders/household_seeder'
-require_relative 'seeders/item_style_seeder'
-require_relative 'seeders/diamond_cut_seeder'
-require_relative 'seeders/diamond_clarity_seeder'
-require_relative 'seeders/diamond_color_seeder'
-require_relative 'seeders/item_seeder'
-require_relative 'seeders/store_transaction_category_seeder'
-require_relative 'seeders/store_transaction_seeder'
-require_relative 'seeders/metal_category_seeder'
-require_relative 'seeders/metal_color_seeder'
-require_relative 'seeders/metal_purity_seeder'
-
-# Dir['seeds/*.rb'].each do |file|
-#   puts "Processing #{file.split('/').last}"
-#   require_relative file
-# end
+puts '== Processing files'
+Dir[Rails.root.join('db/seeders/*.rb')].each do |file|
+  puts "-- Processing #{file.split('/').last}"
+  require_relative file
+end
+puts ''
 
 class Seeder
-  SEEDERS = %w[ StateProvinceSeeder
+  SEEDERS = %w[ UserSeeder
+                StateProvinceSeeder
                 PersonSeeder
                 HouseholdSeeder
                 ItemStyleSeeder
@@ -27,7 +16,8 @@ class Seeder
                 DiamondColorSeeder
                 MetalPuritySeeder
                 MetalCategorySeeder
-                MetalColorSeeder ].freeze
+                MetalColorSeeder
+                ItemSeeder ].freeze
 
   def self.execute
     new.execute
@@ -46,15 +36,23 @@ class Seeder
   end
 
   def seeders
-    SEEDERS.map { |seeder| "Seeders::#{seeder}".constantize }
+    SEEDERS.map { |seeder| constantize_seeder(seeder) }
+  end
+
+  def constantize_seeder(seeder)
+    "Seeders::#{seeder}".constantize
+  end
+
+  def log(string)
+    puts string
   end
 
   def log_begin
-    puts '== Database: seeding'
-    puts '== Seeding Tables'
+    log "== Database: seeding\n" \
+        '== Seeding Tables'
   end
 
   def log_success
-    puts '== Database: seeded!'
+    log '== Database: seeded!'
   end
 end

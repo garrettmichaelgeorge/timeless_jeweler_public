@@ -5,10 +5,8 @@ class Seeders
     CODES = %w[E B T].freeze
 
     def execute
-      puts '-- Source: seeding'
-
       CODES.each do |code|
-        ::Source.create!(code: code)
+        seed_with_value(code: code)
       end
     end
   end

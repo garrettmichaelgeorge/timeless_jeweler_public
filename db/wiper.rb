@@ -1,6 +1,7 @@
 class Wiper
-  # Make sure TABLES with foreign keys
-  # come before the tables they reference
+  # Hard-code sequence of tables to be wiped
+  # Note: Make sure TABLES with foreign keys
+  # appear before the tables they reference
   TABLES = %w[StoreTransactionLineItem
               StoreTransaction
               StoreTransactionCategory
@@ -22,7 +23,8 @@ class Wiper
               Address
               StateProvince
               EmailAddress
-              PhoneNumber].freeze
+              PhoneNumber
+              User].freeze
 
   def self.execute
     wiper = new
@@ -40,16 +42,16 @@ class Wiper
 
   private
 
-  def log_wipe_for(table)
-    puts "-- Wiping #{table}"
-  end
-
   def log_begin
     puts '== Wiping Tables'
   end
 
   def log_success
     puts "== Database: wiped!\n"
+  end
+
+  def log_wipe_for(table)
+    puts "-- Wiping #{table}"
   end
 
   def tables

@@ -18,7 +18,8 @@ class ItemsController < ApplicationController
   def edit; end
 
   def create
-    creator = Items::Creator.new(context: self, attrs: item_params)
+    creator = Items::Creator.new(context: self,
+                                 attrs: item_params)
     creator.create!
   end
 

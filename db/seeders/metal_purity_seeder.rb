@@ -16,17 +16,13 @@ class Seeders
                  Unknown ].freeze
 
     def execute
-      VALUES.each { |value| seed_with_value(value) }
+      VALUES.each do |value|
+        seed_with_value(value: value)
+      end
     end
 
     def self.safe_for_production?
       true
-    end
-
-    private
-
-    def seed_with_value(value)
-      ::MetalPurity.create! value: value
     end
   end
 end
