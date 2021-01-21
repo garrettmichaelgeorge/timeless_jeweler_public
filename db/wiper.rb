@@ -1,7 +1,7 @@
 class Wiper
-  # Make sure MODELS with foreign keys
+  # Make sure TABLES with foreign keys
   # come before the tables they reference
-  MODELS = %w[StoreTransactionLineItem
+  TABLES = %w[StoreTransactionLineItem
               StoreTransaction
               StoreTransactionCategory
               Person
@@ -25,45 +25,47 @@ class Wiper
               PhoneNumber].freeze
 
   def self.execute
-    log_begin
-    new.execute
-    log_success
+    wiper = new
+    wiper.wipe_tables
   end
 
-  def execute
-    MODELS.map(&:constantize).each do |table|
-      execute_each(table)
+  def wipe_tables
+    log_begin
+    tables.each do |table|
+      log_wipe_for(table)
+      wipe_table(table)
     end
+    log_success
   end
 
   private
 
-  def execute_each(table)
-    log_wipe_for table
-    wipe table
-    reset_pk_sequence_for table.table_name
+  def log_wipe_for(table)
+    puts "-- Wiping #{table}"
+  end
+
+  def log_begin
+    puts '== Wiping Tables'
+  end
+
+  def log_success
+    puts "== Database: wiped!\n"
+  end
+
+  def tables
+    TABLES.map(&:constantize)
+  end
+
+  def wipe_table(table)
+    wipe(table)
+    reset_pk_sequence_for(table)
   end
 
   def wipe(table)
     table.destroy_all
   end
 
-  def reset_pk_sequence_for(table_name)
-    ActiveRecord::Base.connection.reset_pk_sequence! table_name
-  end
-
-  def log_wipe_for(table)
-    puts "-- Wiping #{table}"
-  end
-
-  class << self
-    def log_begin
-      puts '== Wiping Tables'
-    end
-
-    def log_success
-      puts '== Database: wiped!'
-      puts ''
-    end
+  def reset_pk_sequence_for(table)
+    ActiveRecord::Base.connection.reset_pk_sequence!(table.table_name)
   end
 end

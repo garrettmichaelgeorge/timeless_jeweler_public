@@ -12,12 +12,12 @@ require_relative 'seeders/metal_category_seeder'
 require_relative 'seeders/metal_color_seeder'
 require_relative 'seeders/metal_purity_seeder'
 
-# Dir['db/seeds/*.rb'].each do |file|
+# Dir['seeds/*.rb'].each do |file|
 #   puts "Processing #{file.split('/').last}"
 #   require_relative file
 # end
 
-class SeedDirector
+class Seeder
   SEEDERS = %w[ StateProvinceSeeder
                 PersonSeeder
                 HouseholdSeeder
@@ -30,31 +30,31 @@ class SeedDirector
                 MetalColorSeeder ].freeze
 
   def self.execute
-    log_begin
     new.execute
-    log_success
   end
 
   def execute
+    log_begin
     call_seeders
+    log_success
   end
 
   private
 
   def call_seeders
-    constants_for(SEEDERS).each(&:execute)
+    seeders.each(&:execute)
   end
 
-  def constants_for(seeders)
-    seeders.map { |seeder| "Seeders::#{seeder}".constantize }
+  def seeders
+    SEEDERS.map { |seeder| "Seeders::#{seeder}".constantize }
   end
 
-  def self.log_begin
+  def log_begin
     puts '== Database: seeding'
     puts '== Seeding Tables'
   end
 
-  def self.log_success
+  def log_success
     puts '== Database: seeded!'
   end
 end

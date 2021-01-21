@@ -2,35 +2,47 @@ class Seeders
   class ApplicationSeeder
     # Abstract class: do not call directly
 
-    def self.execute
-      return unless safe_for_production? || Rails.env.development?
-
-      log
-      new.execute
+    def execute
+      raise NotImplementedError
     end
 
-    def self.log
+    def log
       puts "-- Seeding #{seeder_target}"
     end
 
-    def self.seeder_target
-      to_s.demodulize.gsub('Seeder', '')
+    def seeder_target
+      self.class.seeder_target
     end
 
-    # subclasses may override
-    def self.safe_for_production?
-      false
-    end
+    class << self
+      def execute
+        return unless executable?
 
-    def execute
-      raise NotImplementedError
+        seeder = new
+        seeder.log
+        seeder.execute
+      end
+
+      def executable?
+        safe_for_production? || Rails.env.development?
+      end
+
+      # subclasses may override
+      def safe_for_production?
+        false
+      end
+
+      def seeder_target
+        # Assumes the naming convention: 'Seeders::ModelClassSeeder' seeds 'ModelClass'
+        to_s.demodulize.gsub('Seeder', '')
+      end
     end
 
     private
 
     # helper method for creating records in lookup tables
     # Example usage: NAMES.each { |name| seed_with_value(name: name) }
-    def seed_with_value(record_class = seeder_target, **attrs)
+    def seed_with_value(record_class = seeder_target.constantize, **attrs)
       record_class.create_or_find_by(**attrs)
     end
   end
