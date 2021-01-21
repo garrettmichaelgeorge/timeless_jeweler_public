@@ -6,8 +6,12 @@ class Seeders
 
     def execute
       GRADES.each do |grade|
-        DiamondColor.create!(grade: grade)
+        seed_with_value(DiamondColor, grade: grade)
       end
+    end
+
+    def self.safe_for_production?
+      true
     end
   end
 end

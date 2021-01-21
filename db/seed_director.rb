@@ -12,6 +12,11 @@ require_relative 'seeders/metal_category_seeder'
 require_relative 'seeders/metal_color_seeder'
 require_relative 'seeders/metal_purity_seeder'
 
+# Dir['db/seeds/*.rb'].each do |file|
+#   puts "Processing #{file.split('/').last}"
+#   require_relative file
+# end
+
 class SeedDirector
   SEEDERS = %w[ StateProvinceSeeder
                 PersonSeeder

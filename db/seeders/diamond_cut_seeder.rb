@@ -13,5 +13,9 @@ class Seeders
         ::DiamondCut.create!(grade: grade)
       end
     end
+
+    def self.safe_for_production?
+      true
+    end
   end
 end

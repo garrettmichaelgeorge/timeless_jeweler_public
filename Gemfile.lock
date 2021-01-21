@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/faker-ruby/faker.git
+  revision: 664cbafe9d15bddb97843dcbe107204e6e7291cb
+  branch: master
+  specs:
+    faker (2.15.1)
+      i18n (>= 1.6, < 2)
+
+GIT
   remote: https://github.com/hopsoft/stimulus_reflex.git
   revision: 091617fb5445308cfa0bbd31622fae5e92ea59b4
   specs:
@@ -219,8 +227,6 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
-    faker (2.1.2)
-      i18n (>= 0.8)
     ffi (1.14.2)
     formatador (0.2.5)
     globalid (0.4.2)
@@ -471,7 +477,7 @@ DEPENDENCIES
   email_spec
   erb_lint
   factory_bot_rails (~> 6.1.0)
-  faker
+  faker!
   guard
   guard-bundler (~> 3.0)
   guard-ctags-bundler (~> 1.4)

@@ -2,7 +2,7 @@ require_relative 'application_seeder'
 
 class Seeders
   class DiamondClaritySeeder < ApplicationSeeder
-    GRADES = %w[
+    VALUES = %w[
       I1
       I2
       I3
@@ -17,11 +17,11 @@ class Seeders
     ].freeze
 
     def execute
-      GRADES.each do |grade|
-        DiamondClarity.create!(
-          grade: grade
-        )
-      end
+      VALUES.each { |value| seed_with_value(DiamondClarity, grade: value) }
+    end
+
+    def self.safe_for_production?
+      true
     end
   end
 end

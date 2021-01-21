@@ -19,6 +19,10 @@ class Seeders
       VALUES.each { |value| seed_with_value(value) }
     end
 
+    def self.safe_for_production?
+      true
+    end
+
     private
 
     def seed_with_value(value)
