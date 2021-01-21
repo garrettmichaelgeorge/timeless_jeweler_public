@@ -3,45 +3,52 @@
 Given(/^I have started intake$/) do
   # click_on 'Inventory'
   # click_on 'New Item'
+  @item_style     = FactoryBot.build(:item_style, :art_deco)
+  @metal_category = FactoryBot.build(:metal_category, name: 'Gold')
+  @metal_color    = FactoryBot.build(:metal_color, name: 'White')
+  @metal_purity   = FactoryBot.build(:metal_purity, value: '0.99')
   visit new_item_path
 end
 
 ### WHEN ###
 
 When(/^I specify that the item is a (.+)$/) do |item_category|
-  save_screenshot("category_selector_#{DateTime.now.to_s.underscore}.png")
   item_category = item_category.gsub(' ', '_').camelize
-
   choose item_category
 end
 
 When('I input information for a piece') do
   @item_attrs = FactoryBot.attributes_for(:item, :piece)
-
-  step('I specify that the item is a piece')
   step('I input information for an item')
-
-  save_screenshot "piece_fields_#{DateTime.now.to_s.underscore}.png"
 end
 
 When(/^I input information for a loose gemstone$/) do
   @item_attrs = FactoryBot.attributes_for(:item, :gemstone)
-
-  step('I specify that the item is a loose gemstone')
   step('I input information for an item')
 end
 
 When('I input information for an item') do
-  fill_in '', with: @item_attrs[:name],        id: '#item_name'
-  fill_in '', with: @item_attrs[:notes],       id: '#item_notes'
-  fill_in '', with: @item_attrs[:description], id: '#item_description'
-  save_screenshot "piece_fields_#{DateTime.now.to_s.underscore}.png"
+  page.driver.debug
+  fill_in 'Name',           with: @item_attrs[:name], wait: 10
+  fill_in 'Notes',          with: @item_attrs[:notes]
+  fill_in 'Description',    with: @item_attrs[:description]
+  select  @item_style.name, from: 'Style'
+  save_screenshot "item_fields_#{DateTime.now.to_s.underscore}.png"
 end
 
-When(/^I specify that the item has (\d+) gemstones$/) do |count|
-  count.times do |i|
+When('I add {int} metals( to the item/piece)') do |count|
+  count.times do |_i|
+    click_on 'Add metal'
+    select @metal_color.name,    from: 'Color'
+    select @metal_purity.value,  from: 'Purity'
+    select @metal_category.name, from: 'Category'
+  end
+end
+
+When('I add {int} gemstones( to the item/piece)') do |count|
+  count.times do |_i|
     click_on 'Add gemstone'
-    fill_in 'Gemstone name', with: "Small gemstone #{i}"
+    fill_in 'Carat', with: '3.55'
   end
 end
 
@@ -50,7 +57,7 @@ When('I (try to) view the inventory (page)') do
 end
 
 When(/^I complete intake$/) do
-  click_on '', name: 'commit'
+  click_on 'Create Item'
 end
 
 ### THEN ###
