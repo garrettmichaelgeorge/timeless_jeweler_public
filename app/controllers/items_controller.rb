@@ -12,52 +12,52 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @item = item_creator.item
+    @item = new_item
   end
 
   def edit; end
 
   def create
-    creator = Items::Creator.new(context: self,
-                                 attrs: item_params)
+    creator = Items::Creator.new(context: self, attrs: item_params)
     creator.create!
   end
 
   def update
-    item_updater.update_item(item: item)
+    Items::Updater.new(context: self, item: item, attrs: item_params)
+                  .update
   end
 
   def destroy
-    item_destroyer.destroy_item(item: item)
+    item_destroyer.destroy_item(context: self, item: item)
   end
 
   # Callback methods
-  def create_item_succeeded(item:, msg:)
-    redirect_to item, success: msg
+  def create_item_succeeded(item:, msg: '')
+    redirect_to item, success: t('success')
   end
 
-  def create_item_failed(item:, msg:)
+  def create_item_failed(item:, msg: '')
     @item = item
     render :new
-    flash.now[:info] = msg
+    flash.now[:info] = t('failure')
   end
 
-  def update_item_succeeded(item:, msg:)
-    redirect_to item, success: msg
+  def update_item_succeeded(item:, msg: '')
+    redirect_to item, success: t('success')
   end
 
-  def update_item_failed(item:, msg:)
+  def update_item_failed(item:, msg: '')
     @item = item
     render :edit
-    flash.now[:info] = msg
+    flash.now[:info] = t('failure')
   end
 
-  def destroy_item_suceeded(msg:)
-    redirect_to items_path, success: msg
+  def destroy_item_suceeded(msg: '')
+    redirect_to items_path, success: t('success')
   end
 
-  def destroy_item_failed(msg:)
-    redirect_to items_path, notice: msg
+  def destroy_item_failed(msg: '')
+    redirect_to items_path, notice: t('failure')
   end
 
   private
@@ -93,5 +93,9 @@ class ItemsController < ApplicationController
 
   def item_params
     Items::Guard.new(context: self).protect
+  end
+
+  def new_item
+    item_creator.item
   end
 end

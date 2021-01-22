@@ -1,23 +1,19 @@
 class Items::Updater
-  def self.execute(context:, item:)
-    new(context).execute(item)
-  end
-
-  def initialize(context)
+  def initialize(context:, item:, attrs:)
     @context = context
+    @item = item
+    @attrs = attrs
   end
 
-  def execute(item)
-    if item.update(item_params)
-      msg = 'Item was successfully updated.'
-      context.update_item_succeeded item: item, msg: msg
+  def update
+    if item.update(attrs)
+      context.update_item_succeeded(item: item)
     else
-      msg = 'Item was not updated.'
-      context.update_item_failed item: item, msg: msg
+      context.update_item_failed(item: item)
     end
   end
 
   private
 
-  attr_reader :context
+  attr_reader :context, :item, :attrs
 end

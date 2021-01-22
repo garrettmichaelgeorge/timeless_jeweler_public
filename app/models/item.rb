@@ -47,6 +47,7 @@ class Item < ApplicationRecord
                      class_name: 'ItemStyle', foreign_key: 'item_style_id'
 
   scope :for_user,            ->(user) { where(user: user) }
+  scope :with_styles,         -> { includes(:style) }
 
   scope :pieces,              -> { where(category: 'Piece') }
   scope :gemstones,           -> { where(category: 'Gemstone') }
@@ -62,7 +63,7 @@ class Item < ApplicationRecord
   end
 
   def category=(value)
-    if persisted?
+    if persisted? && value != category
       raise StandardError,
             'Cannot change category of an item that has been persisted! ' \
             'Need to create a new item instead.'

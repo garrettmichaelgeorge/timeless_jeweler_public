@@ -44,11 +44,6 @@ en:
       store_transaction_line_item: Line Item
       person: Customer
       party: Party
-    user_defined:
-      errors:
-        messages:
-          create_record_succeeded: "%{record} was successfully created."
-          create_record_failed: "%{record} was not created."
   date:
     abbr_day_names:
     - Sun
@@ -255,6 +250,3 @@ en:
       long: "%B %d, %Y %I:%M %p"
       short: "%d %b %I:%M %p"
     pm: pm
-  mailer:
-    default_from: 'no-reply@example.com'
-    example_email: 'example@example.com'

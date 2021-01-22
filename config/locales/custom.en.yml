@@ -15,3 +15,16 @@ en:
     intake: 'Intake'
   placeholders:
     signup_email: 'name@example.com'
+  mailer:
+    default_from: 'no-reply@example.com'
+    example_email: 'example@example.com'
+  items:
+    create:
+      success: "Item was successfully created."
+      failure: "Item was not created."
+    update:
+      success: "Item was successfully updated."
+      failure: "Item was not updated."
+    destroy:
+      success: "Item was successfully destroyed."
+      failure: "Item was not destroyed."

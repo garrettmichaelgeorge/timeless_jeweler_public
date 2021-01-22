@@ -1,12 +1,14 @@
 class Items::Repo
-  attr_reader :context
+  attr_reader :context, :model
 
-  def initialize(context:)
+  def initialize(context:, model: Item)
     @context = context
+    @model = model
   end
 
   def find_all_items
-    current_user.items
+    model.with_styles
+         .for_user(current_user)
   end
 
   def find_item(id)
