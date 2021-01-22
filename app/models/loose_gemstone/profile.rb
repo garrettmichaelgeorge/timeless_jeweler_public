@@ -19,11 +19,26 @@
 #  fk_rails_...  (item_id => items.id)
 #
 
-require 'test_helper'
+class LooseGemstone::Profile < ApplicationRecord
+  self.table_name = 'loose_gemstones'
 
-class LooseGemstoneProfileTest < ActiveSupport::TestCase
-  context 'associations' do
-    should belong_to(:loose_gemstone)
-    should belong_to(:gemstone)
+  belongs_to :loose_gemstone, inverse_of: :profile,
+                              foreign_key: :item_id
+
+  belongs_to :gemstone, inverse_of: :loose_gemstone,
+                        class_name: 'Gemstone::Listing',
+                        foreign_key: :gemstone_profile_id
+
+  delegate :carat, :carat=,
+           to: :lazily_built_gemstone
+
+  scope :with_gemstone, -> { includes(:gemstone) }
+
+  accepts_nested_attributes_for :gemstone
+
+  private
+
+  def lazily_built_gemstone
+    gemstone || build_gemstone
   end
 end

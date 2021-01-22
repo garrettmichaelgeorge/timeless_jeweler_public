@@ -30,8 +30,8 @@
 class LooseGemstone < Item
   include Profilable
 
-  has_one :profile, class_name: 'LooseGemstoneProfile', inverse_of: :loose_gemstone,
-                    dependent: :destroy, autosave: true, foreign_key: 'item_id'
+  has_one :profile, inverse_of: :loose_gemstone, foreign_key: 'item_id',
+                    dependent: :destroy, autosave: true
 
   delegate_to_profile :carat, :carat=
 end

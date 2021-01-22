@@ -19,11 +19,17 @@
 #  fk_rails_...  (item_id => items.id)
 #
 
-class LooseGemstoneProfile < ApplicationRecord
-  self.table_name = 'loose_gemstones'
+require 'test_helper'
 
-  belongs_to :loose_gemstone, inverse_of: :profile, foreign_key: :item_id
-  belongs_to :profile, -> { loose }, inverse_of: :loose_gemstone,
-                                     class_name: 'Gemstone',
-                                     foreign_key: :gemstone_profile_id
+class LooseGemstone::ProfileTest < ActiveSupport::TestCase
+  subject { described_class.new }
+
+  context 'associations' do
+    should belong_to(:loose_gemstone)
+    should belong_to(:gemstone)
+  end
+
+  context 'delegations' do
+    should delegate_method(:carat).to(:gemstone)
+  end
 end

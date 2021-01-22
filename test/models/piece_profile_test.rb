@@ -22,7 +22,8 @@ class PieceProfileTest < ActiveSupport::TestCase
   context 'associations' do
     should belong_to(:piece)
     should have_many(:metals)
-    should have_many(:mounted_gemstones)
+    should have_many(:mountings)
+    should have_many(:gemstones).through(:mountings)
   end
 
   describe '.table_name' do

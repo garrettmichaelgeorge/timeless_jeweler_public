@@ -2,7 +2,7 @@ module Profilable
   extend ActiveSupport::Concern
 
   included do
-    scope :with_profile, -> { joins(:lazily_built_profile) }
+    scope :with_profile, -> { includes(:lazily_built_profile) }
 
     validates_associated :profile
   end
