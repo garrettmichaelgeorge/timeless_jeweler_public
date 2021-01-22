@@ -23,6 +23,7 @@ class LooseGemstoneProfile < ApplicationRecord
   self.table_name = 'loose_gemstones'
 
   belongs_to :loose_gemstone, inverse_of: :profile, foreign_key: :item_id
-  belongs_to :gemstone, -> { loose }, inverse_of: :loose_gemstone,
-                                      foreign_key: :gemstone_profile_id
+  belongs_to :profile, -> { loose }, inverse_of: :loose_gemstone,
+                                     class_name: 'Gemstone',
+                                     foreign_key: :gemstone_profile_id
 end

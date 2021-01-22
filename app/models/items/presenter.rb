@@ -7,23 +7,11 @@ class Items::Presenter
     @item = item
   end
 
-  def index_attrs
-    INDEX_ATTRS.to_h { |attr| [attr, public_send(attr)] }
+  def category
+    item.category.underscore.humanize
   end
 
-  def show_attrs
-    SHOW_ATTRS.to_h { |attr| [attr, public_send(attr)] }
-  end
-
-  def mounted_gemstones_attrs
-    mounted_gemstones.map do |mounted_gemstone|
-      MOUNTED_GEMSTONE_ATTRS.to_h { |attr| [attr, mounted_gemstone.public_send(attr)] }
-    end
-  end
-
-  def metals_attrs
-    metals.map do |metal|
-      METAL_ATTRS.to_h { |attr| [attr, metal.public_send(attr)] }
-    end
+  def category_underscore
+    item.category.underscore
   end
 end

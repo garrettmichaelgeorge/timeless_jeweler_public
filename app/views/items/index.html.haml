@@ -1,19 +1,19 @@
 - title = 'Items'
 - pre_title = 'Overview'
 
-- provide(:title, title)
+- provide(:title, t('.title'))
 - provide(:body_class, '')
 
-= render(PageHeaderComponent.new(title: title,
-  pre_title: pre_title,
+= render(PageHeaderComponent.new(title: t('.title'),
+  pre_title: t('.subtitle'),
   buttons: [{ text: 'New Item',
     link: new_item_path,
     options: nil }],
   tabs: nil))
 
-= render(TableIndexComponent.new(title: title,
+= render(TableIndexComponent.new(title: t('.title'),
   columns: [{ value: :id },
-    { value: :name, label: "Name" },
+    { value: :name },
     { value: :category },
     { value: :style_name },
     { value: :cost },

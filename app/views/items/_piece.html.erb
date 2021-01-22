@@ -1,0 +1,5 @@
+<% @item.metals.each do |metal| %>
+  <%= render ModelCardComponent.new(
+               model: metal,
+               attrs: [:category_name, :color_name, :purity_value]) %>
+<% end %>

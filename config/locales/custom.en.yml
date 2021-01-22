@@ -19,9 +19,22 @@ en:
     default_from: 'no-reply@example.com'
     example_email: 'example@example.com'
   items:
+    index:
+      title: 'Inventory'
+      subtitle: 'Items'
+    show:
+      title: '%{item_id}. %{item_name}'
+      subtitle: 'Inventory: %{item_category}'
+      link_to_edit: 'Edit Item'
+    new:
+      title: 'Intake'
+      subtitle: 'New Item'
     create:
       success: "Item was successfully created."
       failure: "Item was not created."
+    edit:
+      title: 'Edit Item'
+      subtitle: 'Inventory'
     update:
       success: "Item was successfully updated."
       failure: "Item was not updated."

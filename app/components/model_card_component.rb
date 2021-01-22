@@ -11,7 +11,9 @@ class ModelCardComponent < ApplicationComponent
   attr_reader :model, :attrs
 
   def set_up_attrs(attrs)
-    attrs.to_h { |attr| set_up_attr(attr) }
+    attrs.to_h do |attr|
+      set_up_attr(attr)
+    end
   end
 
   def set_up_attr(attr)

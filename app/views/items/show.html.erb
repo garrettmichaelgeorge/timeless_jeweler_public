@@ -1,11 +1,14 @@
-<% title = "#{@item.id}. #{@item.name}" %>
-<% pre_title = 'Inventory' %>
+<% provide :title, t('.title', item_id: @item.id,
+                               item_name: @item.name) %>
+<% provide :body_class, '' %>
 
-<%= render PageHeaderComponent.new(title:     title,
-                                   pre_title: pre_title,
-                                   buttons:   [{ text: 'Edit Item',
-                                                 link: edit_item_path(@item.id)}],
-                                   tabs: nil) %>
+<%= render PageHeaderComponent.new(
+     title:     t('.title', item_id: @item.id,
+                            item_name: @item.name),
+     pre_title: t('.subtitle', item_category: @item.category),
+     buttons:   [{ text: t('.link_to_edit'),
+                   link: edit_item_path(@item.id)}]
+     ) %>
 
 <div class="row">
   <div class="col-md-6">
@@ -17,27 +20,26 @@
   <div class="col">
     <%= render CardComponent.new do |component| %>
       <% component.with(:body) do %>
-        <%= render CardStatsComponent.new(stats: [{ label: 'Cost',
-                                                    value: @item.cost },
-                                                  { label: 'Price',
-                                                    value: @item.price }]) %>
 
-        <%= render CardDataContainerComponent.new(attrs: {id: @item.id,
-                                                          name: @item.name,
-                                                          description: @item.description,
-                                                          style_name: @item.style_name,
-                                                          created_at: @item.created_at }) %>
+        <%= render CardStatsComponent.new(
+                     stats: [{ label: 'Cost',
+                               value: @item.cost },
+                             { label: 'Price',
+                               value: @item.price }]) %>
+
+        <%= render CardDataContainerComponent.new(
+                     attrs: {id:          @item.id,
+                             name:        @item.name,
+                             description: @item.description,
+                             style_name:  @item.style_name,
+                             created_at:  @item.created_at }) %>
 
       <% end %>
     <% end %>
 
+    <%= render "items/#{@item.category_underscore}", item: @item %> 
+
     <% if @item.category == 'Piece' %>
-      <% @item.metals.each do |metal| %>
-        <%= render ModelCardComponent.new(model: metal,
-                                          attrs: {category_name: metal.category_name,
-                                                  color_name: metal.color_name,
-                                                  purity: metal.purity_value }) %>
-      <% end %>
     <% end %>
   </div>
 </div>

@@ -63,7 +63,7 @@ class Item < ApplicationRecord
   end
 
   def category=(value)
-    if persisted? && value != category
+    unless new_record? || value == category
       raise StandardError,
             'Cannot change category of an item that has been persisted! ' \
             'Need to create a new item instead.'
