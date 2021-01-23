@@ -7,11 +7,11 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class GemstoneCategory < ApplicationRecord
+
+class Gemstone::Category < ApplicationRecord
   self.table_name = 'gemstone_categories'
 
-  has_many :subcategories, class_name: 'GemstoneSubcategory',
-                           inverse_of: :category
+  has_many :gemstones, inverse_of: :category
 
   validates_presence_of :name
   validates_length_of :name, maximum: 40

@@ -26,6 +26,7 @@
 #  fk_rails_...  (item_style_id => item_styles.id)
 #  fk_rails_...  (user_id => users.id)
 #
+
 require 'test_helper'
 
 class LooseGemstoneTest < ActiveSupport::TestCase
@@ -35,14 +36,20 @@ class LooseGemstoneTest < ActiveSupport::TestCase
 
   context 'delegations' do
     should delegate_method(:carat).to(:profile)
+  end
+end
 
-    describe '#carat=' do
-      subject { LooseGemstone.new }
+class LooseGemstone
+  class ProfileTest < ActiveSupport::TestCase
+    subject { described_class.new }
 
-      it 'sets the carat' do
-        subject.carat = 3.55
-        _(subject.carat).must_equal 3.55
-      end
+    context 'associations' do
+      should belong_to(:loose_gemstone)
+      should belong_to(:gemstone)
+    end
+
+    context 'delegations' do
+      should delegate_method(:carat).to(:gemstone)
     end
   end
 end

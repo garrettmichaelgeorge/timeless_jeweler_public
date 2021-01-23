@@ -11,11 +11,11 @@
 #  index_mounted_gemstones_on_piece_id             (piece_id)
 #
 
-class MountedGemstone < ApplicationRecord
-  include Profilable
+require 'test_helper'
 
-  belongs_to :piece,   inverse_of: :mounted_gemstones,
-                       class_name: 'PieceProfile'
-  belongs_to :profile, inverse_of: :mounted_gemstone,
-                       class_name: 'Gemstone', foreign_key: :gemstone_profile_id
+class MountingTest < ActiveSupport::TestCase
+  context 'associations' do
+    should belong_to(:gemstone)
+    should belong_to(:piece)
+  end
 end

@@ -79,7 +79,7 @@ class Item < ApplicationRecord
 
   class << self
     def categories
-      Item.subclasses.map(&:to_s).sort
+      subclasses.map(&:to_s).sort
     end
 
     # https://www.christopherbloom.com/2012/02/01/notes-on-sti-in-rails-3-0/

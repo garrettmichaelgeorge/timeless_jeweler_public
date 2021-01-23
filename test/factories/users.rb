@@ -28,7 +28,6 @@ FactoryBot.define do
     email { 'example@example.com' }
     password { 'pa$$word' }
     password_confirmation { 'pa$$word' }
-    confirmed_at { Date.today }
 
     trait :unconfirmed do
       confirmed_at { nil }

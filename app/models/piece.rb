@@ -28,10 +28,31 @@
 #
 
 class Piece < Item
+  # self.table_name = 'items'
+
   include Profilable
 
-  has_one :profile, class_name: 'PieceProfile', inverse_of: :piece,
+  has_one :profile, class_name: 'Piece::Profile', inverse_of: :piece,
                     dependent: :destroy, autosave: true, foreign_key: 'item_id'
 
-  delegate_to_profile :metals
+  delegate_to_profile :metals, :gemstones, :mountings
+
+  class Profile < ApplicationRecord
+    # Multiple Table Inheritance (MTI):
+    # Contains attributes and relationships unique to pieces
+    # Acts as the :piece interface to the outside world
+
+    self.table_name = 'pieces'
+
+    belongs_to :piece,   inverse_of: :profile, foreign_key: 'item_id'
+    has_many :metals,    inverse_of: :piece, foreign_key: 'piece_id'
+    has_many :mountings, inverse_of: :piece, foreign_key: 'piece_id'
+    has_many :gemstones, through: :mountings,
+                         inverse_of: :piece, class_name: 'Gemstone::Mounted'
+
+    accepts_nested_attributes_for :metals, :gemstones,
+                                  allow_destroy: true, reject_if: :all_blank
+
+    validates_associated :metals, :mountings, :gemstones
+  end
 end

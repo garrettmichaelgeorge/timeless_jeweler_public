@@ -116,6 +116,26 @@ ALTER SEQUENCE public.diamond_clarities_id_seq OWNED BY public.diamond_clarities
 
 
 --
+-- Name: diamond_clarity_gradings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.diamond_clarity_gradings (
+    diamond_clarity_id bigint NOT NULL,
+    gemstone_profile_id bigint NOT NULL
+);
+
+
+--
+-- Name: diamond_color_gradings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.diamond_color_gradings (
+    diamond_color_id bigint NOT NULL,
+    gemstone_profile_id bigint NOT NULL
+);
+
+
+--
 -- Name: diamond_colors; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -144,6 +164,16 @@ CREATE SEQUENCE public.diamond_colors_id_seq
 --
 
 ALTER SEQUENCE public.diamond_colors_id_seq OWNED BY public.diamond_colors.id;
+
+
+--
+-- Name: diamond_cut_gradings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.diamond_cut_gradings (
+    diamond_cut_id bigint NOT NULL,
+    gemstone_profile_id bigint NOT NULL
+);
 
 
 --
@@ -283,7 +313,8 @@ CREATE TABLE public.gemstone_profiles (
     carat numeric,
     role character varying(20),
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    gemstone_category_id bigint NOT NULL
 );
 
 
@@ -1681,6 +1712,48 @@ CREATE INDEX index_addresses_on_state_province_id ON public.addresses USING btre
 
 
 --
+-- Name: index_diamond_clarity_gradings_on_diamond_clarity_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_diamond_clarity_gradings_on_diamond_clarity_id ON public.diamond_clarity_gradings USING btree (diamond_clarity_id);
+
+
+--
+-- Name: index_diamond_clarity_gradings_on_gemstone_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_diamond_clarity_gradings_on_gemstone_profile_id ON public.diamond_clarity_gradings USING btree (gemstone_profile_id);
+
+
+--
+-- Name: index_diamond_color_gradings_on_diamond_color_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_diamond_color_gradings_on_diamond_color_id ON public.diamond_color_gradings USING btree (diamond_color_id);
+
+
+--
+-- Name: index_diamond_color_gradings_on_gemstone_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_diamond_color_gradings_on_gemstone_profile_id ON public.diamond_color_gradings USING btree (gemstone_profile_id);
+
+
+--
+-- Name: index_diamond_cut_gradings_on_diamond_cut_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_diamond_cut_gradings_on_diamond_cut_id ON public.diamond_cut_gradings USING btree (diamond_cut_id);
+
+
+--
+-- Name: index_diamond_cut_gradings_on_gemstone_profile_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_diamond_cut_gradings_on_gemstone_profile_id ON public.diamond_cut_gradings USING btree (gemstone_profile_id);
+
+
+--
 -- Name: index_diamond_grades_on_diamond_clarity_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1706,6 +1779,13 @@ CREATE INDEX index_diamond_grades_on_diamond_cut_id ON public.diamond_grades USI
 --
 
 CREATE INDEX index_email_addresses_on_emailable_type_and_emailable_id ON public.email_addresses USING btree (emailable_type, emailable_id);
+
+
+--
+-- Name: index_gemstone_profiles_on_gemstone_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_gemstone_profiles_on_gemstone_category_id ON public.gemstone_profiles USING btree (gemstone_category_id);
 
 
 --
@@ -1983,6 +2063,14 @@ ALTER TABLE ONLY public.mountings
 
 
 --
+-- Name: diamond_color_gradings fk_rails_052ccdc4ab; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.diamond_color_gradings
+    ADD CONSTRAINT fk_rails_052ccdc4ab FOREIGN KEY (gemstone_profile_id) REFERENCES public.gemstone_profiles(id);
+
+
+--
 -- Name: pieces fk_rails_11375f5187; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1999,11 +2087,27 @@ ALTER TABLE ONLY public.store_transactions
 
 
 --
+-- Name: diamond_cut_gradings fk_rails_1a50ae831d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.diamond_cut_gradings
+    ADD CONSTRAINT fk_rails_1a50ae831d FOREIGN KEY (diamond_cut_id) REFERENCES public.diamond_cuts(id);
+
+
+--
 -- Name: metals fk_rails_34251d0b2b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.metals
     ADD CONSTRAINT fk_rails_34251d0b2b FOREIGN KEY (metal_purity_id) REFERENCES public.metal_purities(id);
+
+
+--
+-- Name: diamond_cut_gradings fk_rails_42cd184c99; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.diamond_cut_gradings
+    ADD CONSTRAINT fk_rails_42cd184c99 FOREIGN KEY (gemstone_profile_id) REFERENCES public.gemstone_profiles(id);
 
 
 --
@@ -2103,11 +2207,43 @@ ALTER TABLE ONLY public.loose_gemstones
 
 
 --
+-- Name: diamond_clarity_gradings fk_rails_ca6f27d4a7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.diamond_clarity_gradings
+    ADD CONSTRAINT fk_rails_ca6f27d4a7 FOREIGN KEY (gemstone_profile_id) REFERENCES public.gemstone_profiles(id);
+
+
+--
+-- Name: diamond_clarity_gradings fk_rails_ce9f23972c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.diamond_clarity_gradings
+    ADD CONSTRAINT fk_rails_ce9f23972c FOREIGN KEY (diamond_clarity_id) REFERENCES public.diamond_clarities(id);
+
+
+--
+-- Name: diamond_color_gradings fk_rails_d303840ffe; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.diamond_color_gradings
+    ADD CONSTRAINT fk_rails_d303840ffe FOREIGN KEY (diamond_color_id) REFERENCES public.diamond_colors(id);
+
+
+--
 -- Name: items fk_rails_d4b6334db2; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.items
     ADD CONSTRAINT fk_rails_d4b6334db2 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: gemstone_profiles fk_rails_dfa2a15e71; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.gemstone_profiles
+    ADD CONSTRAINT fk_rails_dfa2a15e71 FOREIGN KEY (gemstone_category_id) REFERENCES public.gemstone_categories(id);
 
 
 --
@@ -2260,6 +2396,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210115201212'),
 ('20210116202058'),
 ('20210116202158'),
-('20210121194616');
+('20210121194616'),
+('20210123030829'),
+('20210123040944');
 
 

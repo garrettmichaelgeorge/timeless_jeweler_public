@@ -1,5 +1,7 @@
 <fieldset id="loose_gemstone_fields" class="form-group">
-  <% f.simple_fields_for :gemstone do |f| %>
-    <%= f.input :carat %>
-  <% end %>
+    <%= f.input       :carat %>
+    <%= f.association :category %>
+    <%= f.association :cut %>
+    <%= f.association :color %>
+    <%= f.association :clarity %>
 </fieldset>

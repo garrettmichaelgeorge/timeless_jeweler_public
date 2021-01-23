@@ -29,7 +29,7 @@
 
 require 'test_helper'
 
-describe Item do
+class ItemTest < ActiveSupport::TestCase
   subject { FactoryBot.build(:item) }
   let(:ar) { subject }
   let(:attrs) { FactoryBot.attributes_for(:item) }
@@ -62,7 +62,7 @@ describe Item do
 
   describe '#category=' do
     it 'standardizes the input' do
-      ar.stub :persisted?, false do
+      ar.stub :new_record?, true do
         subject.category = 'piece'
         expected = 'Piece'
         _(subject.category).must_equal expected,
@@ -73,11 +73,11 @@ describe Item do
     end
 
     it 'raises an error when item is already persisted' do
-      ar.stub :persisted?, true do
-        _ { subject.category = 'piece' }.must_raise StandardError,
-                                                    'Should not allow item to' \
-                                                    'change category if it is' \
-                                                    'already persisted'
+      ar.stub :new_record?, false do
+        _ { subject.category = 'MiscellaneousItem' }.must_raise StandardError,
+                                                                'Should not allow item to ' \
+                                                                'change category if it is ' \
+                                                                'already persisted'
       end
     end
   end
