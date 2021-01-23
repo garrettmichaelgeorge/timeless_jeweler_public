@@ -48,13 +48,15 @@ class LooseGemstone < Item
     delegate :carat, :carat=,
              to: :lazily_built_gemstone
 
-    delegate :category, to: :lazily_built_gemstone, prefix: true
-
     delegate_missing_to :lazily_built_gemstone
 
     scope :with_gemstone, -> { includes(:gemstone) }
 
     accepts_nested_attributes_for :gemstone
+
+    def gemstone_category
+      lazily_built_gemstone.category_name
+    end
 
     private
 

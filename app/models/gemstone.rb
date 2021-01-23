@@ -43,9 +43,10 @@ class Gemstone < ApplicationRecord
   validates :role, presence: true, length: { maximum: 20 },
                    inclusion: ROLES
 
-  delegate :grade, to: :cut,     prefix: true
-  delegate :grade, to: :color,   prefix: true
-  delegate :grade, to: :clarity, prefix: true
+  delegate :name,  to: :category, prefix: true
+  delegate :grade, to: :cut,      prefix: true
+  delegate :grade, to: :color,    prefix: true
+  delegate :grade, to: :clarity,  prefix: true
 
   class << self
     def categories
