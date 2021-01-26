@@ -30,6 +30,7 @@ describe User do
 
   context 'attributes' do
     should have_many(:items)
+    should have_many(:sales)
   end
 
   describe '.inheritance_column' do

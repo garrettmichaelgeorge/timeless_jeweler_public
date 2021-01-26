@@ -33,7 +33,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :trackable
 
-  has_many :items
+  has_many :items, inverse_of: :user
+  has_many :sales, inverse_of: :user
 
   validates :role, inclusion: ROLES
 

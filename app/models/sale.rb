@@ -10,18 +10,22 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  party_id    :bigint           not null
+#  user_id     :bigint           not null
 #
 # Indexes
 #
 #  index_sales_on_occurred_at  (occurred_at) UNIQUE
 #  index_sales_on_party_id     (party_id)
+#  index_sales_on_user_id      (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (party_id => parties.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 class Sale < ApplicationRecord
+  belongs_to :user
   belongs_to :party
   has_many :line_items, inverse_of: :sale, dependent: :destroy
   has_many :items,      through: :line_items

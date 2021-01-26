@@ -2,15 +2,7 @@ class SalesController < ApplicationController
   before_action :set_sale, only: %i[edit update destroy]
 
   def index
-    @sales = case params[:type]
-             when 'sale'
-               Sale.includes(:category, :party,
-                             :sale_line_items).where(category: params[:type])
-             when 'order'
-               Sale.includes(:category).where(category: params[:type])
-             else
-               Sale.includes(:category, :party).all
-             end
+    @sales = Sale.includes(:party, :line_items)
   end
 
   def show
@@ -23,7 +15,7 @@ class SalesController < ApplicationController
   def new
     @sale = Sale.new
     @line_item = @sale.line_items.build
-    @product = @line_item.build_product
+    @item = @line_item.build_item
   end
 
   def edit; end
@@ -31,27 +23,26 @@ class SalesController < ApplicationController
   def create
     @sale = Sale.new(sale_params)
 
-    if @person.save
-      redirect_to @person, notice: 'Transaction was successfully logged.'
+    if @sale.save
+      redirect_to @sale, success: t('success')
     else
       render :new
+      flash.now[:info] = t('failure')
     end
   end
 
   def update
     if @sale.update(sale_params)
-      redirect_to @sale
-      flash.now[:success] = 'Transaction was successfully updated.'
+      redirect_to @sale, success: t('success')
     else
       render :edit
-      flash.now[:info] = 'Transaction was not updated.'
+      flash.now[:info] = t('failure')
     end
   end
 
   def destroy
     @sale.destroy
-    redirect_to sales_path
-    flash.now[:success] = 'Transaction was successfully deleted.'
+    redirect_to sales_path, success: t('success')
   end
 
   private
@@ -62,6 +53,6 @@ class SalesController < ApplicationController
 
   def sale_params
     params.require(:sale).permit(:party_id, :transaction_datetime,
-                                 sale_line_items_attributes: %i[id product_id quantity])
+                                 line_items_attributes: %i[id item_id quantity])
   end
 end

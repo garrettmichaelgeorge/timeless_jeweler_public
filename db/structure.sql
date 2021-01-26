@@ -1035,7 +1035,8 @@ CREATE TABLE public.sales (
     party_id bigint NOT NULL,
     occurred_at timestamp without time zone NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    user_id bigint NOT NULL
 );
 
 
@@ -1996,6 +1997,13 @@ CREATE INDEX index_sales_on_party_id ON public.sales USING btree (party_id);
 
 
 --
+-- Name: index_sales_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_sales_on_user_id ON public.sales USING btree (user_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2111,6 +2119,14 @@ ALTER TABLE ONLY public.sales
 
 ALTER TABLE ONLY public.people
     ADD CONSTRAINT fk_rails_829e856eff FOREIGN KEY (household_id) REFERENCES public.households(id);
+
+
+--
+-- Name: sales fk_rails_8e94f16ccc; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sales
+    ADD CONSTRAINT fk_rails_8e94f16ccc FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2351,6 +2367,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210126000408'),
 ('20210126000906'),
 ('20210126003008'),
-('20210126005251');
+('20210126005251'),
+('20210126144655');
 
 
