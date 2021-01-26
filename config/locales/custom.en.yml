@@ -6,13 +6,6 @@ en:
     log_in: *sign_in
     log_out: *sign_out
     sign_up: &sign_up 'Sign up'
-  titles:
-    signup: *sign_up
-    intake: 'New Item'
-  subtitles:
-    signin: *sign_in
-    signup: *sign_up
-    intake: 'Intake'
   placeholders:
     signup_email: 'name@example.com'
   mailer:
@@ -21,7 +14,7 @@ en:
   items:
     index:
       title: 'Inventory'
-      subtitle: 'Items'
+      subtitle: 'Overview'
     show:
       title: '%{item_id}. %{item_name}'
       subtitle: 'Inventory: %{item_category}'
@@ -41,3 +34,10 @@ en:
     destroy:
       success: "Item was successfully destroyed."
       failure: "Item was not destroyed."
+  sales:
+    index:
+      title: 'Sales'
+      subtitle: 'Overview'
+    show:
+      title: 'Sale'
+      subtitle: 'Subtitle'

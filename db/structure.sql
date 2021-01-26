@@ -987,6 +987,78 @@ ALTER SEQUENCE public.product_jewelry_metals_id_seq OWNED BY public.product_jewe
 
 
 --
+-- Name: sale_line_items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sale_line_items (
+    id bigint NOT NULL,
+    sale_id bigint NOT NULL,
+    product_id bigint NOT NULL,
+    quantity integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    price_currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    tax_cents integer DEFAULT 0 NOT NULL,
+    tax_currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    discount_cents integer DEFAULT 0 NOT NULL,
+    discount_currency character varying DEFAULT 'USD'::character varying NOT NULL,
+    actual_price_cents integer DEFAULT 0 NOT NULL,
+    actual_price_currency character varying DEFAULT 'USD'::character varying NOT NULL
+);
+
+
+--
+-- Name: sale_line_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sale_line_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sale_line_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sale_line_items_id_seq OWNED BY public.sale_line_items.id;
+
+
+--
+-- Name: sales; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.sales (
+    id bigint NOT NULL,
+    party_id bigint NOT NULL,
+    occurred_at timestamp without time zone NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: sales_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.sales_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: sales_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.sales_id_seq OWNED BY public.sales.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1056,108 +1128,6 @@ CREATE SEQUENCE public.state_provinces_id_seq
 --
 
 ALTER SEQUENCE public.state_provinces_id_seq OWNED BY public.state_provinces.id;
-
-
---
--- Name: store_transaction_categories; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.store_transaction_categories (
-    id bigint NOT NULL,
-    name character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: store_transaction_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.store_transaction_categories_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: store_transaction_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.store_transaction_categories_id_seq OWNED BY public.store_transaction_categories.id;
-
-
---
--- Name: store_transaction_line_items; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.store_transaction_line_items (
-    id bigint NOT NULL,
-    store_transaction_id bigint NOT NULL,
-    product_id bigint NOT NULL,
-    quantity integer,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    price_currency character varying DEFAULT 'USD'::character varying NOT NULL,
-    tax_cents integer DEFAULT 0 NOT NULL,
-    tax_currency character varying DEFAULT 'USD'::character varying NOT NULL,
-    discount_cents integer DEFAULT 0 NOT NULL,
-    discount_currency character varying DEFAULT 'USD'::character varying NOT NULL
-);
-
-
---
--- Name: store_transaction_line_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.store_transaction_line_items_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: store_transaction_line_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.store_transaction_line_items_id_seq OWNED BY public.store_transaction_line_items.id;
-
-
---
--- Name: store_transactions; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.store_transactions (
-    id bigint NOT NULL,
-    party_id bigint NOT NULL,
-    transaction_datetime timestamp without time zone,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    store_transaction_category_id bigint NOT NULL
-);
-
-
---
--- Name: store_transactions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.store_transactions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: store_transactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.store_transactions_id_seq OWNED BY public.store_transactions.id;
 
 
 --
@@ -1384,6 +1354,20 @@ ALTER TABLE ONLY public.product_jewelry_metals ALTER COLUMN id SET DEFAULT nextv
 
 
 --
+-- Name: sale_line_items id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sale_line_items ALTER COLUMN id SET DEFAULT nextval('public.sale_line_items_id_seq'::regclass);
+
+
+--
+-- Name: sales id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sales ALTER COLUMN id SET DEFAULT nextval('public.sales_id_seq'::regclass);
+
+
+--
 -- Name: sources id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1395,27 +1379,6 @@ ALTER TABLE ONLY public.sources ALTER COLUMN id SET DEFAULT nextval('public.sour
 --
 
 ALTER TABLE ONLY public.state_provinces ALTER COLUMN id SET DEFAULT nextval('public.state_provinces_id_seq'::regclass);
-
-
---
--- Name: store_transaction_categories id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.store_transaction_categories ALTER COLUMN id SET DEFAULT nextval('public.store_transaction_categories_id_seq'::regclass);
-
-
---
--- Name: store_transaction_line_items id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.store_transaction_line_items ALTER COLUMN id SET DEFAULT nextval('public.store_transaction_line_items_id_seq'::regclass);
-
-
---
--- Name: store_transactions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.store_transactions ALTER COLUMN id SET DEFAULT nextval('public.store_transactions_id_seq'::regclass);
 
 
 --
@@ -1642,6 +1605,22 @@ ALTER TABLE ONLY public.product_jewelry_metals
 
 
 --
+-- Name: sale_line_items sale_line_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sale_line_items
+    ADD CONSTRAINT sale_line_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sales sales_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sales
+    ADD CONSTRAINT sales_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1663,30 +1642,6 @@ ALTER TABLE ONLY public.sources
 
 ALTER TABLE ONLY public.state_provinces
     ADD CONSTRAINT state_provinces_pkey PRIMARY KEY (id);
-
-
---
--- Name: store_transaction_categories store_transaction_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.store_transaction_categories
-    ADD CONSTRAINT store_transaction_categories_pkey PRIMARY KEY (id);
-
-
---
--- Name: store_transaction_line_items store_transaction_line_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.store_transaction_line_items
-    ADD CONSTRAINT store_transaction_line_items_pkey PRIMARY KEY (id);
-
-
---
--- Name: store_transactions store_transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.store_transactions
-    ADD CONSTRAINT store_transactions_pkey PRIMARY KEY (id);
 
 
 --
@@ -2013,31 +1968,31 @@ CREATE UNIQUE INDEX index_product_jewelry_metals_on_name ON public.product_jewel
 
 
 --
--- Name: index_store_transaction_line_items_on_product_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_sale_line_items_on_product_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_store_transaction_line_items_on_product_id ON public.store_transaction_line_items USING btree (product_id);
-
-
---
--- Name: index_store_transaction_line_items_on_store_transaction_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_store_transaction_line_items_on_store_transaction_id ON public.store_transaction_line_items USING btree (store_transaction_id);
+CREATE INDEX index_sale_line_items_on_product_id ON public.sale_line_items USING btree (product_id);
 
 
 --
--- Name: index_store_transactions_on_party_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_sale_line_items_on_sale_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_store_transactions_on_party_id ON public.store_transactions USING btree (party_id);
+CREATE INDEX index_sale_line_items_on_sale_id ON public.sale_line_items USING btree (sale_id);
 
 
 --
--- Name: index_store_transactions_on_store_transaction_category_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_sales_on_occurred_at; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_store_transactions_on_store_transaction_category_id ON public.store_transactions USING btree (store_transaction_category_id);
+CREATE UNIQUE INDEX index_sales_on_occurred_at ON public.sales USING btree (occurred_at);
+
+
+--
+-- Name: index_sales_on_party_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_sales_on_party_id ON public.sales USING btree (party_id);
 
 
 --
@@ -2076,14 +2031,6 @@ ALTER TABLE ONLY public.diamond_color_gradings
 
 ALTER TABLE ONLY public.pieces
     ADD CONSTRAINT fk_rails_11375f5187 FOREIGN KEY (item_id) REFERENCES public.items(id);
-
-
---
--- Name: store_transactions fk_rails_13591f4845; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.store_transactions
-    ADD CONSTRAINT fk_rails_13591f4845 FOREIGN KEY (store_transaction_category_id) REFERENCES public.store_transaction_categories(id);
 
 
 --
@@ -2151,10 +2098,10 @@ ALTER TABLE ONLY public.loose_gemstones
 
 
 --
--- Name: store_transactions fk_rails_7775d59e28; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: sales fk_rails_7775d59e28; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.store_transactions
+ALTER TABLE ONLY public.sales
     ADD CONSTRAINT fk_rails_7775d59e28 FOREIGN KEY (party_id) REFERENCES public.parties(id);
 
 
@@ -2183,18 +2130,18 @@ ALTER TABLE ONLY public.metals
 
 
 --
--- Name: store_transaction_line_items fk_rails_af4a850152; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: sale_line_items fk_rails_b16d859386; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.store_transaction_line_items
-    ADD CONSTRAINT fk_rails_af4a850152 FOREIGN KEY (store_transaction_id) REFERENCES public.store_transactions(id);
+ALTER TABLE ONLY public.sale_line_items
+    ADD CONSTRAINT fk_rails_b16d859386 FOREIGN KEY (sale_id) REFERENCES public.sales(id);
 
 
 --
--- Name: store_transaction_line_items fk_rails_ba768cee4d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: sale_line_items fk_rails_ba768cee4d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.store_transaction_line_items
+ALTER TABLE ONLY public.sale_line_items
     ADD CONSTRAINT fk_rails_ba768cee4d FOREIGN KEY (product_id) REFERENCES public.items(id);
 
 
@@ -2398,6 +2345,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210116202158'),
 ('20210121194616'),
 ('20210123030829'),
-('20210123040944');
+('20210123040944'),
+('20210125200226'),
+('20210125200526'),
+('20210126000408'),
+('20210126000906'),
+('20210126003008'),
+('20210126005251');
 
 

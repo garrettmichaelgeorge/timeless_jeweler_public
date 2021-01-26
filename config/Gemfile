@@ -18,7 +18,7 @@ gem 'hiredis'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 gem 'jquery-rails'
-gem 'money-rails', '~> 1.12'
+gem 'money-rails', github: 'juanmanuelramallo/money-rails', branch: 'ruby-3-support-migration-extension'
 gem 'pg'
 gem 'puma'
 gem 'pundit'

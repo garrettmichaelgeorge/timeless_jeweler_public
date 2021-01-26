@@ -55,9 +55,12 @@ class ItemTest < ActiveSupport::TestCase
     should delegate_method(:name).to(:style).with_prefix
   end
 
-  context 'monetize' do
-    should('monetize price') { _(subject.price).must_be_instance_of Money }
-    should('monetize cost')  { _(subject.cost).must_be_instance_of Money }
+  describe 'monetize' do
+    %i[price name].each do |money_attr|
+      it "monetizes #{money_attr}" do
+        assert_monetized subject, money_attr
+      end
+    end
   end
 
   describe '#category=' do

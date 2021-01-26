@@ -20,8 +20,8 @@ Rails.application.routes.draw do
   get 'inventory' => 'items#index'
   get 'customers' => 'people#index'
 
-  resources :store_transactions do
-    resources :store_transaction_line_items
+  resources :sales do
+    resources :sale_line_items
   end
 
   resources :intake, only: %i[new create]

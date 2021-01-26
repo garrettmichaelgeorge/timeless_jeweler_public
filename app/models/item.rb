@@ -41,10 +41,10 @@ class Item < ApplicationRecord
   validates :category, presence: true, length: { maximum: 20 },
                        inclusion: { in: ->(*) { categories } }
 
-  belongs_to :user, inverse_of: :items
-  has_many :line_items, class_name: 'StoreTransactionLineItem', inverse_of: :items
-  belongs_to :style, inverse_of: :items,
-                     class_name: 'ItemStyle', foreign_key: 'item_style_id'
+  has_many :line_items, inverse_of: :item
+  belongs_to :user,     inverse_of: :items
+  belongs_to :style,    inverse_of: :items,
+                        class_name: 'ItemStyle', foreign_key: 'item_style_id'
 
   scope :for_user,            ->(user) { where(user: user) }
   scope :with_styles,         -> { includes(:style) }

@@ -1,0 +1,19 @@
+<% provide :title, t('.title') %>
+
+<%= render PageHeaderComponent.new(
+             title:     t('.title'),
+             pre_title: t('.subtitle'),
+             buttons:   [{ text: 'New Item',
+                           link: new_item_path,
+                           options: nil }]) %>
+
+<%= render TableIndexComponent.new(
+             title:   t('.title'),
+             columns: [{ value: :id },
+                       { value: :name },
+                       { value: :category },
+                       { value: :style_name },
+                       { value: :cost },
+                       { value: :price }],
+             resources: @items,
+             restful_actions: [:show, :edit, :destroy]) %>

@@ -7,6 +7,7 @@ require 'email_spec'
 require 'simple_form'
 require 'view_component/test_helpers'
 require 'view_component/test_case'
+require_relative 'custom_assertions'
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods

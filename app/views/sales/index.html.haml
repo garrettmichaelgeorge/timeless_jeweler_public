@@ -1,0 +1,18 @@
+- provide(:title, t('.title'))
+- provide(:body_class, "")
+
+= render(PageHeaderComponent.new(title: t('.title'),
+  pre_title: t('.subtitle'),
+  buttons: [{ text: 'New Sale',
+    link: new_sale_path,
+    options: nil }],
+  tabs: nil))
+
+-# TODO: add the ability to make any given column values link elsewhere in the app
+= render(TableIndexComponent.new(title: t('.title'),
+  columns: [{ value: :id },
+    { value: :occurred_at },
+    { value: :total },
+    { value: :party_name }],
+  resources: @sales,
+  restful_actions: [:show, :destroy]))

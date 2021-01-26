@@ -15,17 +15,15 @@
 require 'test_helper'
 
 describe Merchant do
-  subject { described_class.new }
+  subject { described_class.new(name: 'name') }
 
   context 'associations' do
-    should have_many(:items)
-    should have_many(:clerks)
-    should have_many(:admins)
+    should_eventually have_many(:items)
+    should_eventually have_many(:clerks)
+    should_eventually have_many(:admins)
   end
 
   context 'validations' do
-    subject { described_class.new(name: 'name') }
-
     should validate_presence_of(:name)
     should validate_uniqueness_of(:name)
   end
