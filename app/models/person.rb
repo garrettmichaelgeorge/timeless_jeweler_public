@@ -25,9 +25,13 @@
 #  fk_rails_...  (household_id => households.id)
 #
 class Person < ApplicationRecord
+  after_initialize do
+    build_party if party.nil?
+  end
+
   acts_as :party
 
-  scope :contact_info, -> { includes(:addresses, :email_addresses, :phone_numbers) }
+  scope :with_contact_info, -> { includes(:addresses, :email_addresses, :phone_numbers) }
 
   belongs_to :household, optional: true
 
@@ -40,10 +44,6 @@ class Person < ApplicationRecord
   accepts_nested_attributes_for :addresses, allow_destroy: true
   accepts_nested_attributes_for :email_addresses, allow_destroy: true
   accepts_nested_attributes_for :phone_numbers, allow_destroy: true
-
-  after_initialize do |person|
-    build_party if party.nil?
-  end
 
   validates :first_name, presence: true, length: { maximum: 40 }
   validates :last_name, length: { maximum: 40 }
@@ -72,20 +72,18 @@ class Person < ApplicationRecord
   def create_household_from_last_name!
     # Create an associated household using the person's last name as
     # the household name unless the person already has a household
-    return household if household
-
-    create_household!(household_name: self.last_name)
+    household || create_household!(household_name: last_name)
   end
 
   def full_name
-    "#{self.first_name} #{self.last_name}"
+    "#{first_name} #{last_name}"
   end
 
   # Provide full name when party.specific.name is called.
-  # This allows us to call #name method on party#specific without knowing the actable_type 
+  # This allows us to call #name method on party#specific without knowing the actable_type
   alias name full_name
 
   def household_name
-    self.household.household_name if self.household_id?
+    household.household_name if household_id?
   end
 end

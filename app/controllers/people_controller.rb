@@ -1,16 +1,16 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: [:edit, :update, :destroy]
+  before_action :set_person, only: %i[edit update destroy]
 
   # GET /people
   # GET /people.json
   def index
-    @people = Person.includes(:party).all
+    @people = Person.all.includes(:party)
   end
 
   # GET /people/1
   # GET /people/1.json
   def show
-    @person = Person.contact_info.find(params[:id])
+    @person = Person.with_contact_info.find(params[:id])
     @household = @person.household
     @addresses = @person.addresses
     @email_addresses = @person.email_addresses
@@ -24,8 +24,7 @@ class PeopleController < ApplicationController
   end
 
   # GET /people/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /people
   # POST /people.json
@@ -46,13 +45,13 @@ class PeopleController < ApplicationController
   # PATCH/PUT /people/1
   # PATCH/PUT /people/1.json
   def update
-      if @person.update(person_params)
-        redirect_to @person
-        flash.now[:success] = 'Customer was successfully updated.'
-      else
-        render :edit
-        flash.now[:info] = 'Customer was not updated.'
-      end
+    if @person.update(person_params)
+      redirect_to @person
+      flash.now[:success] = 'Customer was successfully updated.'
+    else
+      render :edit
+      flash.now[:info] = 'Customer was not updated.'
+    end
   end
 
   # DELETE /people/1
@@ -88,11 +87,11 @@ class PeopleController < ApplicationController
       :necklace_length_notes,
       :birthday,
       :household_id,
-      party: %i[id],
-      household: %i[id household_name],
-      addresses: %i[id address_line_1 address_line_2 city state_province zip_postal_code],
-      email_addresses: %i[id email_address],
-      phone_numbers: %i[id phone_number]
+      { party: %i[id],
+        household: %i[id household_name],
+        addresses: %i[id address_line_1 address_line_2 city state_province zip_postal_code],
+        email_addresses: %i[id email_address],
+        phone_numbers: %i[id phone_number] }
     ]
   end
 end
