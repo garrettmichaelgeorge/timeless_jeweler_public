@@ -17,9 +17,9 @@ class SidebarComponent < ApplicationComponent
         link_path: items_path
       },
       transactions: {
-        name: 'Transactions',
+        name: 'Sales',
         icon: 'fe fe-activity',
-        link_path: store_transactions_path
+        link_path: sales_path
       },
       services: {
         name: 'Service',

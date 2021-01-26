@@ -4,7 +4,7 @@ class CardComponent < ApplicationComponent
   def initialize(has_body_margin: true, image_top: {}, inactive: false, inactive_if_empty: false)
     @image_src = image_top[:source]
     @image_alt = image_top[:alt]
-    @image_alt = image_top[:link_path]
+    @image_link = image_top[:link_path]
     @inactive = inactive
     @inactive_if_empty = inactive_if_empty
     @has_body_margin = has_body_margin
@@ -13,7 +13,7 @@ class CardComponent < ApplicationComponent
   private
 
   attr_reader :inactive, :inactive_if_empty, :has_body_margin,
-              :image_src, :image_alt
+              :image_src, :image_alt, :image_link
 
   def card_class
     result = %w[card]

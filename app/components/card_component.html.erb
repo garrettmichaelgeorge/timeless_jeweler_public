@@ -1,0 +1,20 @@
+<%= tag.div class: card_class do %>
+
+  <!-- Card Image: Top -->
+  <%= render CardImageTopComponent.new(src: image_src,
+                                       link: image_link,
+                                       alt: image_alt) %>
+
+  <!-- Card Header -->
+  <%= render CardHeaderComponent.new do %>
+    <%= header %>
+  <% end %>
+
+  <!-- Card Body -->
+  <div class="<%= class_names card_body: has_body_margin %>">
+    <div class="card-text">
+      <%= body %>
+    </div>
+  </div>
+
+<% end %>

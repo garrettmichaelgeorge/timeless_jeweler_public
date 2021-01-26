@@ -22,15 +22,15 @@ class TableIndexComponent < ApplicationComponent
   protected
 
   def column_for_show?
-    self.restful_actions.include? :show
+    restful_actions.include? :show
   end
 
   def column_for_edit?
-    self.restful_actions.include? :edit
+    restful_actions.include? :edit
   end
 
   def column_for_destroy?
-    self.restful_actions.include? :destroy
+    restful_actions.include? :destroy
   end
 
   private
