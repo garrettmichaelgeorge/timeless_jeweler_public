@@ -15,7 +15,7 @@ class PeopleController < ApplicationController
     @addresses = @person.addresses
     @email_addresses = @person.email_addresses
     @phone_numbers = @person.phone_numbers
-    @store_transactions = @person.store_transactions
+    @sales = @person.sales
   end
 
   # GET /people/new

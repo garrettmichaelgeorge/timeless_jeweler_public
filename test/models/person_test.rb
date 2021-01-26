@@ -22,61 +22,46 @@
 #
 #  fk_rails_...  (household_id => households.id)
 #
+
 require 'test_helper'
 
 class PersonTest < ActiveSupport::TestCase
-  def setup
-    @person = Person.new(title: "Mrs.",
-                         first_name: "Clara",
-                         last_name: "Schumann",
-                         suffix: nil,
-                         ring_size: 33.5,
-                         ring_size_notes: "Will need to resize next visit",
-                         necklace_length: 40,
-                         necklace_length_notes: "Prefers very lightweight necklaces. Too short better than too long.")
+  subject { FactoryBot.build(:person) }
+
+  context 'associations' do
+    should have_many(:sales)
+    should have_many(:addresses)
+    should have_many(:phone_numbers)
+    should have_many(:email_addresses)
   end
 
-  test "should be valid" do
-    assert @person.valid?
+  context 'validations' do
+    should validate_presence_of(:first_name)
+    should validate_length_of(:first_name).is_at_most(40)
+    should validate_length_of(:last_name).is_at_most(40)
   end
 
-  test "first name should be present" do
-    @person.first_name = ""
-    assert_not @person.valid?
+  it 'acts as a party' do
+    _(subject.acting_as).must_be_instance_of Party
   end
 
-  test "first name should not be too long" do
-    @person.first_name = "a" * 41
-    assert_not @person.valid?
+  it 'should be equal to the subtype of its supertype (i.e. parties)' do
+    _(subject.acting_as.specific).must_equal subject
   end
 
-  test "last name should not be too long" do
-    @person.last_name = "a" * 41
-    assert_not @person.valid?
-  end
+  describe '#create_household_from_last_name!' do
+    it 'creates new household from last name' do
+      subject.create_household_from_last_name!
 
-  test "new person should have a corresponding party id" do
-    assert_equal Party, @person.acting_as.class
-  end
+      _(subject.household).wont_be_nil
+    end
 
-  test "should have a corresponding party id on save" do
-    @person.save!
-    assert @person.acting_as.id
-  end
+    it "doesn't create new household from last name if one already exists" do
+      subject.create_household_from_last_name!
 
-  test "should be equal to the subtype of its supertype (i.e. parties)" do
-    @person.save!
-    assert_equal @person, @person.acting_as.specific
+      _(subject.create_household_from_last_name!)
+        .must_equal subject.household,
+                    "Should return the person's household if one exists"
+    end
   end
-
-  test "should create new household from last name" do
-    @person.create_household_from_last_name!
-    assert @person.household
-  end
-
-  test "should not create new household from last name if one already exists" do
-    @person.create_household_from_last_name!
-    assert_equal @person.household, @person.create_household_from_last_name!, "Should return the person's household if one exists"
-  end
-
 end

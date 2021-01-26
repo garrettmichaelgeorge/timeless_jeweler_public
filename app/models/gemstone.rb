@@ -25,16 +25,23 @@ class Gemstone < ApplicationRecord
 
   ROLES = %w[Listed Mounted].freeze
 
-  belongs_to :category,     inverse_of: :gemstones, foreign_key: :gemstone_category_id
+  belongs_to :category,     inverse_of: :gemstones,
+                            foreign_key: :gemstone_category_id
 
-  has_one :cut_grading,     inverse_of: :diamond,  class_name: 'Diamond::Cut::Grading'
-  has_one :cut,             through: :cut_grading, class_name: 'Diamond::Cut'
+  has_one :cut_grading,     inverse_of: :diamond,
+                            class_name: 'Diamond::Cut::Grading'
+  has_one :cut,             through: :cut_grading,
+                            class_name: 'Diamond::Cut'
 
-  has_one :color_grading,   inverse_of: :diamond,    class_name: 'Diamond::Color::Grading'
-  has_one :color,           through: :color_grading, class_name: 'Diamond::Color'
+  has_one :color_grading,   inverse_of: :diamond,
+                            class_name: 'Diamond::Color::Grading'
+  has_one :color,           through: :color_grading,
+                            class_name: 'Diamond::Color'
 
-  has_one :clarity_grading, inverse_of: :diamond,      class_name: 'Diamond::Clarity::Grading'
-  has_one :clarity,         through: :clarity_grading, class_name: 'Diamond::Clarity'
+  has_one :clarity_grading, inverse_of: :diamond,
+                            class_name: 'Diamond::Clarity::Grading'
+  has_one :clarity,         through: :clarity_grading,
+                            class_name: 'Diamond::Clarity'
 
   scope :loose,   -> { where(role: 'Loose') }
   scope :mounted, -> { where(role: 'Mounted') }
@@ -44,9 +51,9 @@ class Gemstone < ApplicationRecord
                    inclusion: ROLES
 
   delegate :name,  to: :category, prefix: true
-  delegate :grade, to: :cut,      prefix: true
-  delegate :grade, to: :color,    prefix: true
-  delegate :grade, to: :clarity,  prefix: true
+  delegate :grade, to: :cut,      prefix: true, allow_nil: true
+  delegate :grade, to: :color,    prefix: true, allow_nil: true
+  delegate :grade, to: :clarity,  prefix: true, allow_nil: true
 
   class << self
     def categories
@@ -60,7 +67,7 @@ class Gemstone < ApplicationRecord
   end
 
   class Mounted < Gemstone
-    has_one :mounting, inverse_of: :gemstone, class_name: 'Mounting'
-    has_one :piece,    through:    :mounting
+    has_one :mounting, inverse_of: :gemstone
+    has_one :piece, through: :mounting, inverse_of: :gemstones
   end
 end

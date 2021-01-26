@@ -7,8 +7,7 @@
                             item_name: @item.name),
      pre_title: t('.subtitle', item_category: @item.category),
      buttons:   [{ text: t('.link_to_edit'),
-                   link: edit_item_path(@item.id)}]
-     ) %>
+                   link: edit_item_path(@item.id)}]) %>
 
 <div class="row">
   <div class="col-md-6">
@@ -37,9 +36,7 @@
       <% end %>
     <% end %>
 
-    <%= render "items/#{@item.category_underscore}", item: @item %> 
-
-    <% if @item.category == 'Piece' %>
-    <% end %>
+    <%= render "items/#{@item.category_underscore}",
+               item: @item %> 
   </div>
 </div>

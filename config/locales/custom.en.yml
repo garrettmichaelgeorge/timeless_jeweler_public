@@ -6,6 +6,7 @@ en:
     log_in: *sign_in
     log_out: *sign_out
     sign_up: &sign_up 'Sign up'
+    new_sale: &new_sale 'New Sale'
   placeholders:
     signup_email: 'name@example.com'
   mailer:
@@ -34,6 +35,11 @@ en:
     destroy:
       success: "Item was successfully destroyed."
       failure: "Item was not destroyed."
+  people:
+    show:
+      title: '%{person_name}'
+      subtitle: 'People'
+      purchase_history: 'Purchase History'
   sales:
     index:
       title: 'Sales'
@@ -41,3 +47,9 @@ en:
     show:
       title: 'Sale'
       subtitle: 'Subtitle'
+  static_pages:
+    dashboard:
+      title: 'Dashboard'
+      subtitle: 'Overview'
+      link_to_new_sale: *new_sale
+      greeting: 'Welcome'

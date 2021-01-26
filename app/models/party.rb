@@ -14,39 +14,31 @@
 class Party < ApplicationRecord
   actable
 
-  scope :purchase_history, -> { joins(store_transactions: { line_items: :product }) }
+  scope :with_purchase_history, -> { joins(sales: { line_items: :item }) }
 
-  has_many :store_transactions, -> { includes :line_items }
-  has_many :products,                     through: :line_items
-  has_many :line_items, through: :store_transactions
+  has_many :sales, -> { includes :line_items }
+  has_many :items, through: :line_items
+  has_many :line_items, through: :sales
 
-  before_validation do |party|
-  end
-
+  # delegate :name, to: :specific
   def name
     specific.name
   end
-
-  def product_names
-    # equivalent to: products.map { |p| p.name }
-    products.map(&:name)
-  end
-
-  def store_transaction_datetime
-    store_transactions.map(&:transaction_datetime)
-  end
-
-  def store_transaction_total_cents
-    store_transactions.map(&:total_cents)
-  end
-
-  def product_ids
-    store_transactions.line_items.product_ids
-  end
-
   alias party_name name
 
-  # def self.purchase_history(party_id)
-  # joins(store_transactions: { store_transaction_line_items: :product }).find(party_id)
-  # end
+  def item_names
+    items.map(&:name)
+  end
+
+  def sales_occurred_at
+    sales.map(&:occurred_at)
+  end
+
+  def sales_total_cents
+    sales.map(&:total_cents)
+  end
+
+  def item_ids
+    sales.line_items.item_ids
+  end
 end

@@ -32,7 +32,7 @@ class Piece < Item
 
   include Profilable
 
-  has_one :profile, class_name: 'Piece::Profile', inverse_of: :piece,
+  has_one :profile, inverse_of: :piece, class_name: 'Piece::Profile',
                     dependent: :destroy, autosave: true, foreign_key: 'item_id'
 
   delegate_to_profile :metals, :gemstones, :mountings
@@ -44,15 +44,17 @@ class Piece < Item
 
     self.table_name = 'pieces'
 
-    belongs_to :piece,   inverse_of: :profile, foreign_key: 'item_id'
-    has_many :metals,    inverse_of: :piece, foreign_key: 'piece_id'
-    has_many :mountings, inverse_of: :piece, foreign_key: 'piece_id'
+    belongs_to :piece, inverse_of: :profile, foreign_key: 'item_id'
+
+    # NOTE: Place all associations unique to Piece below
+    has_many :metals,    inverse_of: :piece
+    has_many :mountings, inverse_of: :piece
     has_many :gemstones, through: :mountings,
                          inverse_of: :piece, class_name: 'Gemstone::Mounted'
 
     accepts_nested_attributes_for :metals, :gemstones,
                                   allow_destroy: true, reject_if: :all_blank
 
-    validates_associated :metals, :mountings, :gemstones
+    validates_associated :metals, :gemstones
   end
 end

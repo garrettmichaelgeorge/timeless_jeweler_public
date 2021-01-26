@@ -35,9 +35,9 @@ class Person < ApplicationRecord
 
   belongs_to :household, optional: true
 
-  has_many :addresses,                    as: :addressable
-  has_many :email_addresses,              as: :emailable
-  has_many :phone_numbers,                as: :phoneable
+  has_many :addresses,       as: :addressable
+  has_many :phone_numbers,   as: :phoneable
+  has_many :email_addresses, as: :emailable
 
   accepts_nested_attributes_for :party, allow_destroy: true
   accepts_nested_attributes_for :household, allow_destroy: true
@@ -48,22 +48,19 @@ class Person < ApplicationRecord
   validates :first_name, presence: true, length: { maximum: 40 }
   validates :last_name, length: { maximum: 40 }
 
-  delegate  :state_province_name, to: :addresses
-  delegate  :members,
-            :member_ids,
-            :member_names,
-            to: :household,
-            prefix: :household,
-            allow_nil: true
+  delegate :state_province_name, to: :addresses,
+                                 allow_nil: true
 
-  delegate  :purchase_history,
-            :products,
-            :product_ids,
-            :product_names,
-            :store_transactions,
-            :store_transaction_datetime,
-            to: :party,
-            allow_nil: true
+  delegate :anniversary, to: :household,
+                         allow_nil: true
+  delegate :members, :member_ids, :member_names,
+           to: :household,
+           prefix: :household, allow_nil: true
+
+  delegate :purchase_history, :products, :product_ids,
+           :product_names, :sales, :occurred_at,
+           to: :party,
+           allow_nil: true
 
   def self.purchase_history
     Party.purchase_history

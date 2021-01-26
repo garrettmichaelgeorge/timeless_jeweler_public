@@ -45,9 +45,9 @@ class GemstoneTest < ActiveSupport::TestCase
   end
 
   context 'delegations' do
-    should delegate_method(:grade).to(:cut).with_prefix(true)
-    should delegate_method(:grade).to(:color).with_prefix(true)
-    should delegate_method(:grade).to(:clarity).with_prefix(true)
+    should delegate_method(:grade).to(:cut).with_prefix(true).allow_nil
+    should delegate_method(:grade).to(:color).with_prefix(true).allow_nil
+    should delegate_method(:grade).to(:clarity).with_prefix(true).allow_nil
     should delegate_method(:name).to(:category).with_prefix(true)
   end
 end

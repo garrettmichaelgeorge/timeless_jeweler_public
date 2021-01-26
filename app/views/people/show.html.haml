@@ -1,5 +1,3 @@
-- title = @person.full_name
-- pre_title = 'Customers'
 - values = { addresses: { address_line_1: 'Address 1',
       address_line_2: 'Address 2',
       city: 'City',
@@ -8,8 +6,8 @@
     phone_numbers: { phone_number: 'Phone' },
     email_addresses: { email_address: 'Email' } }
 
-= render(PageHeaderComponent.new(title: title,
-  pre_title: pre_title,
+= render(PageHeaderComponent.new(title: t('.title', person_name: @person.name),
+  pre_title: t('.subtitle'),
   buttons: [{ text: 'Edit Customer',
     link: edit_person_path(@person),
     options: nil }],
@@ -19,127 +17,69 @@
   .col-12.col-md-5
     = render ModelCardComponent.new(model: @person,
       attrs: [:id,
-      :title,
-      :first_name,
-      :last_name,
-      :suffix,
-      :ring_size,
-      :ring_size_notes,
-      :necklace_length ])
+        :title,
+        :first_name,
+        :last_name,
+        :suffix,
+        :ring_size,
+        :ring_size_notes,
+        :necklace_length ])
 
   .col-12.col-md-7
     / Addresses
-    = render CardComponent.new(inactive_if_empty: true) do |component|
-      - component.with(:header) do
-        Addresses
-      - component.with(:body) do
-        - @addresses.each do |address|
-          .list-group.list-group-flush.my-n3
-            - values[:addresses].each do |value|
-              .list-group-item
-                .row.align-items-baseline
-                  .col
-                    / Label
-                    %h5.mb-0.text-muted= value[1]
-                  .col-8
-                    / Value
-                    .small= address.public_send(value[0])
+    - @person.addresses.each do |address|
+      = render ModelCardComponent.new(model: address,
+        attrs: [:address_line_1,
+          :address_line_2,
+          :city,
+          :state_province,
+          :zip_postal_code])
 
     / Phone Numbers
-    = render CardComponent.new do |component|
-      - component.with(:header) do
-        Phone Numbers
-      - component.with(:body) do
-        - @phone_numbers.each do |phone_number|
-          .list-group.list-group-flush.my-n3
-            - values[:phone_numbers].each do |value|
-              .list-group-item
-                .row.align-items-baseline
-                  .col
-                    / Label
-                    %h5.mb-0.text-muted= value[1]
-                  .col-8
-                    / Value
-                    .small= phone_number.public_send(value[0])
+    - @person.phone_numbers.each do |phone_number|
+      = render ModelCardComponent.new(model: phone_number,
+        attrs: [:phone_number])
 
     / Email Addresses
-    = render CardComponent.new do |component|
-      - component.with(:header) do
-        Email Addresses
-      - component.with(:body) do
-        - @email_addresses.each do |email_address|
-          .list-group.list-group-flush.my-n3
-            - values[:email_addresses].each do |value|
-              .list-group-item
-                .row.align-items-baseline
-                  .col
-                    / Label
-                    %h5.mb-0.text-muted= value[1]
-                  .col-8
-                    / Value
-                    .small= email_address.public_send(value[0])
+    - @person.email_addresses.each do |email_address|
+      = render ModelCardComponent.new(model: email_address,
+        attrs: [:email_address])
 
-    / Households
-    = render CardComponent.new do |component|
-      - component.with(:header) do
-        Household
-      - component.with(:body) do
-        .list-group.list-group-flush.my-n3
-          .list-group-item
-            .row.align-items-baseline
-              .col
-                / Label
-                %h5.mb-0.text-muted Members
-              .col-9
-                / Value
-                .small
-                  - if @household
-                    - @person.household_members.each_with_index do |member, i|
-                      = link_to(member.full_name, url_for(member))
-                      = "| " unless i == @person.household_members.size - 1
-          .list-group-item
-            .row.align-items-baseline
-              .col
-                / Label
-                %h5.mb-0.text-muted Anniversary
-              .col-9
-                / Value
-                .small
-                  - if @household
-                    = @household.anniversary
+    / Household
+    = render ModelCardComponent.new(model: @person,
+      attrs: [:anniversary,
+        :household_members])
 
 .row
   .col
     / Purchase History
     = render CardComponent.new do |component|
       - component.with(:header) do
-        Purchase History
+        = render CardHeaderComponent.new(title: t('.purchase_history'))
       - component.with(:body) do
-        -# - @person.store_transactions.each do
         .table-responsive{ data: { list: "" } }
-          %table.table.table-sm.table-nowrap.card-table.table-hover{ id: title }
-            -# %caption.d-none= title
+          %table.table.table-sm.table-nowrap.card-table.table-hover{ id: t('.title', person_name: @person.name) }
             %thead
+              %caption.px-4= t('.purchase_history')
               %tr
-                -# - values[:purchase_history].values.each do |value|
                 / Label
-                %th.mb-0.text-muted Trans ID
+                %th.mb-0.text-muted Sale ID
                 %th.mb-0.text-muted Date
                 %th.mb-0.text-muted Total
                 %th.mb-0.text-muted Item
             %tbody
-              - @store_transactions.each do |st|
+              - @person.sales.each do |sale|
                 %tr
                   -# - values[:purchase_history].keys.each do |value|
                   / Value
                   %td.small
-                    = link_to st.id, st
-                  %td.small= st.transaction_datetime
-                  %td.small= humanized_money_with_symbol(st.total)
+                    = link_to sale.id, sale
+                  %td.small= sale.occurred_at
+                  %td.small= humanized_money_with_symbol(sale.total)
                   %td.small
-                    - st.products.each_with_index do |product, i|
-                      = link_to product.id, product, data: { 'tippy-content' => product.name }, class: "tippy-instance"
-                      = "| " unless i == st.products.size - 1
+                    - sale.items.each_with_index do |item, i|
+                      = link_to item.id, item, data: { 'tippy-content' => item.name }, class: "tippy-instance"
+                      = "| " unless i == sale.items.size - 1
 
 .row.justify-content-end
   .col.col-2

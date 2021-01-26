@@ -12,13 +12,20 @@
 require 'test_helper'
 
 class PartyTest < ActiveSupport::TestCase
-  def setup
-    @party = Party.new(actable_id: 1)
+  subject { Party.new(actable_id: 1) }
+
+  context 'associations' do
+    should have_many(:sales)
+    should have_many(:line_items).through(:sales)
+    should have_many(:items).through(:line_items)
   end
 
-  test "should not save without associated subtype record" do
-    @party.actable_id = nil
-    assert_not @party.save, "Actable must exist"
+  context 'delegations' do
+    should delegate_method(:name).to(:specific)
   end
 
+  it "doesn't save without associated subtype record" do
+    subject.actable_id = nil
+    assert_not subject.save, 'Actable must exist'
+  end
 end
