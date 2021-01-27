@@ -135,5 +135,5 @@ Rails.application.configure do
   # pass the right values to any helpers that need to build URL paths based on
   # the current application environment
   # https://docs.stimulusreflex.com/appendices/deployment#set-your-default_url_options-for-each-environment
-  config.action_controller.default_url_options = { host: 'stimulusreflex.com' }
+  config.action_controller.default_url_options = { host: 'https://iowhlbk.herokuapp.com' }
 end
