@@ -26,13 +26,13 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = true
+  config.assets.compile = false
 
   # For compatibility with Devise on Heroku
   # Read more: https://github.com/heartcombo/devise#heroku
   config.assets.initialize_on_precompile = false
 
-  # Configure uglifier to be compatible with Webpacker. 
+  # Configure uglifier to be compatible with Webpacker.
   # Read more: https://github.com/rails/webpacker/blob/master/docs/troubleshooting.md#rake-assetsprecompile-fails-execjsruntimeerror
   config.assets.js_compressor = Uglifier.new(harmony: true)
 
@@ -59,10 +59,24 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store,
+                       { driver: :hiredis,
+                         url: ENV.fetch('REDIS_URL') { 'redis://localhost:6379/1' } }
+
+  config.session_store :redis_session_store, {
+    key: Rails.application.credentials.app_session_key,
+    serializer: :json,
+    redis: {
+      expire_after: 1.year,
+      ttl: 1.year,
+      key_prefix: 'app:session:',
+      url: ENV.fetch('REDIS_URL')
+    }
+  }
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
@@ -88,7 +102,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
@@ -117,4 +131,10 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  # Give ActionDispatch enough information about the environment that it can
+  # pass the right values to any helpers that need to build URL paths based on
+  # the current application environment
+  # https://docs.stimulusreflex.com/appendices/deployment#set-your-default_url_options-for-each-environment
+  config.action_controller.default_url_options = { host: 'stimulusreflex.com' }
 end
