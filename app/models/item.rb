@@ -41,7 +41,7 @@ class Item < ApplicationRecord
   validates :category, presence: true, length: { maximum: 20 },
                        inclusion: { in: ->(*) { categories } }
 
-  has_many :line_items, inverse_of: :item
+  has_many :line_items, inverse_of: :item, class_name: 'Sale::LineItem'
   belongs_to :user,     inverse_of: :items
   belongs_to :style,    inverse_of: :items,
                         class_name: 'ItemStyle', foreign_key: 'item_style_id'
@@ -63,12 +63,6 @@ class Item < ApplicationRecord
   end
 
   def category=(value)
-    unless new_record? || value == category
-      raise StandardError,
-            'Cannot change category of an item that has been persisted! ' \
-            'Need to create a new item instead.'
-    end
-
     super(standardize_category(value))
   end
 

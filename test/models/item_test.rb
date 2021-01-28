@@ -30,9 +30,9 @@
 require 'test_helper'
 
 class ItemTest < ActiveSupport::TestCase
-  subject { FactoryBot.build(:item) }
+  subject { build_stubbed(:item) }
   let(:ar) { subject }
-  let(:attrs) { FactoryBot.attributes_for(:item) }
+  let(:attrs) { attributes_for(:item) }
 
   context 'associations' do
     should belong_to(:user)
@@ -55,33 +55,18 @@ class ItemTest < ActiveSupport::TestCase
     should delegate_method(:name).to(:style).with_prefix
   end
 
-  describe 'monetize' do
-    %i[price name].each do |money_attr|
-      it "monetizes #{money_attr}" do
-        assert_monetized subject, money_attr
-      end
-    end
+  it 'monetizes the correct attributes' do
+    assert_monetized subject, :price, :cost
   end
 
   describe '#category=' do
     it 'standardizes the input' do
-      ar.stub :new_record?, true do
-        subject.category = 'piece'
-        expected = 'Piece'
-        _(subject.category).must_equal expected,
-                                       'Input was not converted to standard format when setting the' \
-                                       "attribute. Expected category to read back #{expected} but got" \
-                                       "#{subject.category} instead"
-      end
-    end
-
-    it 'raises an error when item is already persisted' do
-      ar.stub :new_record?, false do
-        _ { subject.category = 'MiscellaneousItem' }.must_raise StandardError,
-                                                                'Should not allow item to ' \
-                                                                'change category if it is ' \
-                                                                'already persisted'
-      end
+      subject.category = 'piece'
+      expected = 'Piece'
+      _(subject.category).must_equal expected,
+                                     'Input was not converted to standard format when setting the' \
+                                     "attribute. Expected category to read back #{expected} but got" \
+                                     "#{subject.category} instead"
     end
   end
 

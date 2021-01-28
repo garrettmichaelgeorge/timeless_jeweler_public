@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: gemstone_profiles
+# Table name: gemstones
 #
 #  id                   :bigint           not null, primary key
 #  carat                :decimal(, )
@@ -11,7 +11,7 @@
 #
 # Indexes
 #
-#  index_gemstone_profiles_on_gemstone_category_id  (gemstone_category_id)
+#  index_gemstones_on_gemstone_category_id  (gemstone_category_id)
 #
 # Foreign Keys
 #
@@ -19,14 +19,14 @@
 #
 
 class Gemstone < ApplicationRecord
-  self.table_name = 'gemstone_profiles'
-
   self.inheritance_column = 'role'
 
-  ROLES = %w[Listed Mounted].freeze
+  ROLES = %w[Gemstone::Listed Gemstone::Mounted].freeze
 
   belongs_to :category,     inverse_of: :gemstones,
                             foreign_key: :gemstone_category_id
+
+  has_many :reports,        inverse_of: :gemstone, class_name: 'Gemstone::Report'
 
   has_one :cut_grading,     inverse_of: :diamond,
                             class_name: 'Diamond::Cut::Grading'
@@ -43,17 +43,17 @@ class Gemstone < ApplicationRecord
   has_one :clarity,         through: :clarity_grading,
                             class_name: 'Diamond::Clarity'
 
-  scope :loose,   -> { where(role: 'Loose') }
-  scope :mounted, -> { where(role: 'Mounted') }
+  scope :listed,   -> { where(role: 'Listed') }
+  scope :mounted,  -> { where(role: 'Mounted') }
   scope :diamonds, -> { joins(:category).where('gemstone_category.name = ?', 'Diamond') }
 
   validates :role, presence: true, length: { maximum: 20 },
                    inclusion: ROLES
 
-  delegate :name,  to: :category, prefix: true
   delegate :grade, to: :cut,      prefix: true, allow_nil: true
   delegate :grade, to: :color,    prefix: true, allow_nil: true
   delegate :grade, to: :clarity,  prefix: true, allow_nil: true
+  delegate :name,  to: :category, prefix: true
 
   class << self
     def categories
@@ -68,6 +68,6 @@ class Gemstone < ApplicationRecord
 
   class Mounted < Gemstone
     has_one :mounting, inverse_of: :gemstone
-    has_one :piece, through: :mounting, inverse_of: :gemstones
+    has_one :piece,    through:    :mounting, inverse_of: :gemstones
   end
 end

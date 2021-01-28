@@ -28,16 +28,16 @@
 #
 
 class Metal < ApplicationRecord
-  belongs_to :piece,    class_name: 'PieceProfile', inverse_of: :metals
+  belongs_to :piece,    inverse_of: :metals, class_name: 'Piece::Profile'
 
-  belongs_to :category, class_name: 'MetalCategory', inverse_of: :metals,
-                        foreign_key: :metal_category_id
+  belongs_to :category, inverse_of: :metals,
+                        class_name: 'MetalCategory', foreign_key: :metal_category_id
 
-  belongs_to :color,    class_name: 'MetalColor', inverse_of: :metals,
-                        foreign_key: :metal_color_id
+  belongs_to :color,    inverse_of: :metals,
+                        class_name: 'MetalColor', foreign_key: :metal_color_id
 
-  belongs_to :purity,   class_name: 'MetalPurity', inverse_of: :metals,
-                        foreign_key: :metal_purity_id
+  belongs_to :purity,   inverse_of: :metals,
+                        class_name: 'MetalPurity', foreign_key: :metal_purity_id
 
   delegate :name,  to: :category, prefix: true
   delegate :name,  to: :color,    prefix: true

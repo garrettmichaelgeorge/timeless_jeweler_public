@@ -24,7 +24,8 @@
 #
 
 class User < ApplicationRecord
-  ROLES = %w[Clerk Merchant].freeze
+  ROLES = %w[Clerk Admin].freeze
+
   self.inheritance_column = 'role'
 
   # Include default devise modules. Others available are:

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: gemstone_profiles
+# Table name: gemstones
 #
 #  id                   :bigint           not null, primary key
 #  carat                :decimal(, )
@@ -11,7 +11,7 @@
 #
 # Indexes
 #
-#  index_gemstone_profiles_on_gemstone_category_id  (gemstone_category_id)
+#  index_gemstones_on_gemstone_category_id  (gemstone_category_id)
 #
 # Foreign Keys
 #
@@ -21,12 +21,12 @@
 require 'test_helper'
 
 class GemstoneTest < ActiveSupport::TestCase
-  ROLES = %w[Mounted Listed].freeze
+  ROLES = %w[Gemstone::Listed Gemstone::Mounted].freeze
 
   context 'associations' do
     should belong_to(:category)
 
-    should_eventually have_many(:reports)
+    should have_many(:reports)
     should_eventually have_many(:tags)
 
     should have_one(:cut_grading)
