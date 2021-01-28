@@ -18,5 +18,8 @@
   "app/components/*_component.html.haml": {
     "test": "test/components/{}_component_test.rb",
     "related": "app/components/{}_component.rb"
+  },
+  "test/factories.rb": {
+    "task": "factory_bot:lint"
   }
 }
