@@ -19,5 +19,6 @@ module TimelessJeweler
     # the framework and any gems in your application.
 
     config.active_record.schema_format = :sql
+    config.exceptions_app = routes
   end
 end

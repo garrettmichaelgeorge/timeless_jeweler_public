@@ -32,11 +32,11 @@ class ItemsController < ApplicationController
   end
 
   # Callback methods
-  def create_item_succeeded(item:, msg: '')
+  def create_item_succeeded(item:)
     redirect_to item, success: t('success')
   end
 
-  def create_item_failed(item:, msg: '')
+  def create_item_failed(item:)
     @item = item
     render :new
     flash.now[:info] = t('failure')

@@ -1,9 +1,7 @@
-require 'browser'
-
 class ApplicationController < ActionController::Base
   include Pundit
 
-  before_action :authenticate_user!, :current_browser
+  before_action :authenticate_user!
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -28,12 +26,5 @@ class ApplicationController < ActionController::Base
 
   def query_from(exception)
     exception.query
-  end
-
-  def current_browser
-    @browser = Browser.new(
-      request.headers['User-Agent'],
-      accept_language: request.headers['Accept-Language']
-    )
   end
 end
