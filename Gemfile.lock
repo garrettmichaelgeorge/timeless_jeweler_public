@@ -280,10 +280,9 @@ GEM
       thor (>= 0.14, < 2.0)
     launchy (2.5.0)
       addressable (~> 2.7)
-    listen (3.1.5)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-      ruby_dep (~> 1.2)
+    listen (3.4.1)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.9.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -395,7 +394,6 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.11.0)
-    ruby_dep (1.5.0)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -492,14 +490,14 @@ DEPENDENCIES
   factory_bot_rails (~> 6.1.0)
   faker!
   guard
-  guard-bundler (~> 3.0)
-  guard-ctags-bundler (~> 1.4)
+  guard-bundler
+  guard-ctags-bundler
   guard-cucumber
   guard-minitest
   haml
   hiredis
   jquery-rails
-  listen (>= 3.0.5, < 3.2)
+  listen
   minitest
   minitest-reporters
   minitest-spec-rails
