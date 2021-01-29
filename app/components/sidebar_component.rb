@@ -30,11 +30,9 @@ class SidebarComponent < ApplicationComponent
   end
 
   def reports
-    @reports = [
-      'Total Inventory',
-      'Inventory Bought',
-      'Inventory Sold'
-    ]
+    ['Total Inventory',
+     'Inventory Bought',
+     'Inventory Sold']
   end
 
   def sidebar_class

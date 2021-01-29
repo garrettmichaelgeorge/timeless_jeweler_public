@@ -1,10 +1,16 @@
 <!-- Flash -->
-<aside id="flash_<%= message_type %>" class="<%= ApplicationHelper.flash_class(message_type) %>" role="alert">
-  <i class="<%= ApplicationHelper.flash_icon(message_type) %>"></i>
+<% flash.each do |message_type, message| %>
 
-  <%= message %>
+  <aside id="<%= id_for(message_type) %>"
+         class="<%= css_class_for(message_type) %>"
+         role="alert">
+    <i class="<%= icon_for(message_type) %>"> </i>
 
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</aside>
+    <%= message %>
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </aside>
+
+<% end %>

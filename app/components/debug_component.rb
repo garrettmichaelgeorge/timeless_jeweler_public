@@ -4,4 +4,8 @@ class DebugComponent < ApplicationComponent
   def initialize(params:)
     @params = params
   end
+
+  def render?
+    Rails.env.development?
+  end
 end

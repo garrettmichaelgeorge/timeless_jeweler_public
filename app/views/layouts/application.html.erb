@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="" lang="en">
   <head>
-    <title><%= yield :title %></title>
+    <title><%=
+      "#{Rails.app_class.to_s.deconstantize.underscore.humanize.titleize} - #{yield(:title)}" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= action_cable_meta_tag %>
@@ -14,15 +15,13 @@
     <%= javascript_packs_with_chunks_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body class="<%= yield :body_class %>">
-    <%= render SidebarComponent.new(browser: @browser) if user_signed_in? %>
+    <%= render SidebarComponent.new if user_signed_in? %>
 
     <!-- MAIN CONTENT ================================================== -->
     <main role="main" class="main-content pb-6">
       <div class="container-fluid">
 
-        <% flash.each do |message_type, message| %>
-          <%= render FlashComponent.new(message_type: message_type, message: message) %>
-        <% end %>
+        <%= render FlashComponent.new(flash: flash) %>
 
         <%= yield %>
 
@@ -30,6 +29,6 @@
     </main>
 
     <!-- Rails debug (development only) -->
-    <%= render DebugComponent.new(params: params) if Rails.env.development? %>
+    <%= render DebugComponent.new(params: params) %>
   </body>
 </html>
