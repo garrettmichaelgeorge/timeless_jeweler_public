@@ -9,8 +9,6 @@ class IntakeReflex < ApplicationReflex
   #   - element - a Hash like object that represents the HTML element that triggered the reflex
   #   - params - parameters from the element's closest form (if any)
 
-  delegate :current_user, to: :connection
-
   def change_category
     category = element.value
 
