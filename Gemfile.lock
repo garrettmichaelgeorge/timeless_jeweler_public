@@ -7,6 +7,14 @@ GIT
       i18n (>= 1.6, < 2)
 
 GIT
+  remote: https://github.com/heartcombo/simple_form.git
+  revision: cbcfe2e972fc25a53474d72b256a7f6c389de545
+  specs:
+    simple_form (5.0.3)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
+
+GIT
   remote: https://github.com/hopsoft/stimulus_reflex.git
   revision: ba3ad300d96ea48891f00e2ed1da80eaed962787
   specs:
@@ -416,9 +424,6 @@ GEM
     shoulda-context (2.0.0)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
-    simple_form (5.0.3)
-      actionpack (>= 5.0)
-      activemodel (>= 5.0)
     smart_properties (1.15.0)
     sprockets (4.0.0)
       concurrent-ruby (~> 1.0)
@@ -517,7 +522,7 @@ DEPENDENCIES
   sass-rails (~> 6.0)
   selenium-webdriver
   shoulda (~> 4.0)
-  simple_form
+  simple_form!
   sprockets (= 4.0.0)
   stimulus_reflex!
   turbolinks (~> 5)
