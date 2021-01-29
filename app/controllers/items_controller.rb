@@ -38,7 +38,7 @@ class ItemsController < ApplicationController
 
   def create_item_failed(item:)
     @item = item
-    render :new, status: :unprocessable_entity
+    render :new
     flash.now[:info] = t('failure')
   end
 
@@ -48,7 +48,7 @@ class ItemsController < ApplicationController
 
   def update_item_failed(item:, msg: '')
     @item = item
-    render :edit, status: :unprocessable_entity
+    render :edit
     flash.now[:info] = t('failure')
   end
 
