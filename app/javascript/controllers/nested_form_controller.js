@@ -38,12 +38,10 @@ export default class extends Controller {
 
   connect() {
     this.wrapperClass = this.data.get("wrapperClass") || "nested-fields"
-    console.log(this.wrapperClass)
   }
 
   add(event) {
-    console.log('Adding field...', this.templateTarget)
-    var content = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, new Date().getTime())
+    let content = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, new Date().getTime())
     this.linksTarget.insertAdjacentHTML('beforebegin', content)
   }
 
@@ -61,4 +59,3 @@ export default class extends Controller {
     }
   }
 }
-

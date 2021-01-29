@@ -1,7 +1,6 @@
 class ProductFields::PieceComponent < ApplicationComponent
   def initialize(f:)
     @f = f
-
     super
   end
 
@@ -17,7 +16,7 @@ class ProductFields::PieceComponent < ApplicationComponent
     Metal.new
   end
 
-  def build_gemstones
-    form_object.gemstones.build
+  def build_gemstone
+    Gemstone.new
   end
 end

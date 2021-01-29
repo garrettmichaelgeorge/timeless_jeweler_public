@@ -1,5 +1,5 @@
-<section id="piece_fields" class="form-group" data-controller="nested-form">
-  <fieldset> 
+<section id="item_profile_fields" class="form-group" data-controller="nested-form">
+  <fieldset class="mb-2"> 
     <template data-target="nested-form.template">
       <%= f.fields_for :metals, build_metal, child_index: 'NEW_RECORD' do |metal_fields| %>
 
@@ -13,8 +13,9 @@
 
     <div data-target="nested-form.links">
       <button type="button"
-              class='btn btn-sm btn-secondary'
-              data-action="nested-form#add">
+              class='btn btn-secondary'
+              data-action="nested-form#add"
+              disabled>
         Add metal
       </button>
     </div>
@@ -22,19 +23,20 @@
 
   <fieldset>
     <template data-target="nested-form.template">
-      <% f.fields_for :gemstones, build_gemstones, child_index: 'NEW_RECORD' do |gemstone_fields| %>
-        <% render ProductFields::GemstoneComponent.new(f: gemstone_fields) %>
-      <% end %>
+      <%# f.fields_for :gemstones, build_gemstone, child_index: 'NEW_RECORD' do |gemstone_fields| %>
+        <%# render ProductFields::GemstoneComponent.new(f: gemstone_fields) %>
+      <%# end %>
     </template>
 
-    <%# f.simple_fields_for :mounted_gemstones do |mounted_gemstone_fields| %>
+    <%# f.simple_fields_for :gemstones do |gemstone_fields| %>
       <%# render ProductFields::GemstoneComponent.new(f: mounted_gemstone_fields) %>
     <%# end %>
 
     <div data-target="nested-form.links">
       <button type="button"
-              class='btn btn-sm btn-secondary'
-              data-action="nested-form#add">
+              class="btn btn-secondary"
+              data-action="nested-form#add"
+              disabled>
         Add gemstone
       </button>
     </div>
