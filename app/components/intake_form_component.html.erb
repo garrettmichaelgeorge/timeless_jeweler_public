@@ -1,11 +1,31 @@
-<div id="form-wrapper">
-  <%= simple_form_for item, wrapper_mappings: wrapper_mappings do |f| %>
-    <%= f.error_notification %>
+<div id="intake-form-wrapper">
 
-    <%= render ProductFields::BasicComponent.new(f: f) %>
+  <% if item.category %>
 
-    <%= f.button :submit, class: "btn-primary" %>
-    <%= f.button :button, "Reset", type: "reset",
-                                   class: "btn-outline-secondary" %>
+    <%= simple_form_for item, wrapper_mappings: wrapper_mappings do |f| %>
+      <%= f.error_notification %>
+
+      <%= f.hidden_field :category %>
+
+      <section id="intake-form-basic-fields">
+        <%= f.input :name %>
+        <%= f.input :description %>
+        <%= f.association :style, label_method: :name, prompt: 'Please select a style' %>
+        <%= f.input :cost_cents %>
+        <%= f.input :price_cents %>
+        <%= f.input :notes %>
+      </section>
+
+      <section id="intake-form-special-fields">
+        <%= f.simple_fields_for :profile do |f| %>
+          <%= render item_fields_component.new(f: f) %>
+        <% end %>
+      </section>
+
+      <%= f.button :submit, class: "btn-primary" %>
+      <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
+    <% end %>
+
   <% end %>
+
 </div>

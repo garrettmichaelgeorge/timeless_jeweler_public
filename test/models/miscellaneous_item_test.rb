@@ -34,3 +34,11 @@ class MiscellaneousItemTest < ActiveSupport::TestCase
     should have_one(:profile)
   end
 end
+
+class MiscellaneousItem
+  describe Profile do
+    context 'associations' do
+      should belong_to(:item)
+    end
+  end
+end

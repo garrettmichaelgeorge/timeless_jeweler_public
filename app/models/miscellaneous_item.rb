@@ -28,5 +28,12 @@
 #
 
 class MiscellaneousItem < Item
-  has_one :profile, inverse_of: :miscellaneous_item, class_name: 'MiscellaneousItemProfile', foreign_key: 'item_id'
+  has_one :profile, inverse_of: :item, foreign_key: 'item_id'
+
+  class Profile < ApplicationRecord
+    self.table_name = 'miscellaneous_items'
+
+    belongs_to :item, inverse_of: :profile,
+                      class_name: 'MiscellaneousItem'
+  end
 end

@@ -1,13 +1,14 @@
 <section id="piece_fields" class="form-group" data-controller="nested-form">
   <fieldset> 
     <template data-target="nested-form.template">
-      <%= f.fields_for :metals, Metal.new, child_index: 'NEW_RECORD' do |metal_fields| %>
+      <%= f.fields_for :metals, build_metal, child_index: 'NEW_RECORD' do |metal_fields| %>
+
       <%= render ProductFields::MetalComponent.new(f: metal_fields) %>
       <% end %>
     </template>
 
     <%# f.simple_fields_for :metals do |metal_fields| %>
-    <%# render ProductFields::MetalComponent.new(f: metal_fields) %>
+      <%# render ProductFields::MetalComponent.new(f: metal_fields) %>
     <%#end %>
 
     <div data-target="nested-form.links">
@@ -21,13 +22,13 @@
 
   <fieldset>
     <template data-target="nested-form.template">
-      <% f.fields_for :mounted_gemstones, MountedGemstone.new, child_index: 'NEW_RECORD' do |mounted_gemstone_fields| %>
-      <% render ProductFields::GemstoneComponent.new(f: mounted_gemstone_fields) %>
+      <% f.fields_for :gemstones, build_gemstones, child_index: 'NEW_RECORD' do |gemstone_fields| %>
+        <% render ProductFields::GemstoneComponent.new(f: gemstone_fields) %>
       <% end %>
     </template>
 
     <%# f.simple_fields_for :mounted_gemstones do |mounted_gemstone_fields| %>
-    <%# render ProductFields::GemstoneComponent.new(f: mounted_gemstone_fields) %>
+      <%# render ProductFields::GemstoneComponent.new(f: mounted_gemstone_fields) %>
     <%# end %>
 
     <div data-target="nested-form.links">

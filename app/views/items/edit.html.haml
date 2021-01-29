@@ -3,6 +3,7 @@
 
 .row.justify-content-center
   .col-12.col-lg-10.col-xl-8
-    = render PageHeaderComponent.new(title: title, pre_title: pre_title )
+    = render PageHeaderComponent.new(title: t('.title'),
+                                     pre_title: t('.subtitle') )
 
-    = render IntakeFormSwitcherComponent.new(item: @item)
+    = render IntakeFormComponent.new(item: @item)

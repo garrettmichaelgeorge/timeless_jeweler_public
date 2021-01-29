@@ -13,6 +13,7 @@ class IntakeReflex < ApplicationReflex
 
   def change_category
     category = element.value
+
     morph '#intake-form-wrapper',
           render_intake_form_for(build_item(category))
   end
@@ -20,16 +21,12 @@ class IntakeReflex < ApplicationReflex
   private
 
   def render_intake_form_for(item)
-    render(intake_form_for(item))
-  end
-
-  def intake_form_for(item)
-    IntakeFormSwitcherComponent.new(item: item)
+    render IntakeFormComponent.new(item: item)
   end
 
   def build_item(category)
-    creator = Items::Creator.new(context: self,
-                                 attrs: { category: category })
-    creator.item
+    Items::Creator.new(context: self,
+                       attrs: { category: category })
+                  .item
   end
 end

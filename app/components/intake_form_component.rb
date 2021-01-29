@@ -7,6 +7,10 @@ class IntakeFormComponent < ApplicationComponent
 
   attr_reader :item
 
+  def item_fields_component
+    "ProductFields::#{item.class}Component".constantize
+  end
+
   def wrapper_mappings
     { boolean: :custom_boolean,
       check_boxes: :custom_collection,
@@ -24,7 +28,5 @@ class IntakeFormComponent < ApplicationComponent
       nested_form_wrapper_selector_value: '.nested-form-wrapper' }
   end
 
-  def item_signed_id
-    item.to_sgid.to_s
-  end
+  def item_signed_id = item.to_sgid.to_s
 end

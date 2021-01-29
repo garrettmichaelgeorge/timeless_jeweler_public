@@ -33,7 +33,7 @@ class Item < ApplicationRecord
   include STIPreload
 
   # Warning: the following constant is deprecated
-  CATEGORIES = %w[Piece Gemstone MiscellaneousItem].freeze
+  CATEGORIES = %w[Piece LooseGemstone MiscellaneousItem].freeze
 
   self.inheritance_column = 'category'
 
@@ -73,7 +73,7 @@ class Item < ApplicationRecord
 
   class << self
     def categories
-      subclasses.map(&:to_s).sort
+      CATEGORIES
     end
 
     # https://www.christopherbloom.com/2012/02/01/notes-on-sti-in-rails-3-0/

@@ -1,0 +1,9 @@
+<%= simple_form_for item, wrapper_mappings: { radio_buttons: :custom_collection },
+                              html: { id:    'category_switcher',
+                                      class: 'category_switcher' } do |f| %>
+
+  <%= f.input :category, as: :radio_buttons,
+                         collection: Item::CATEGORIES,
+                         label: 'Choose a category',
+                         input_html: { data: { reflex: 'input->Intake#change_category' } } %>
+<% end %>

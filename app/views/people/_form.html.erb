@@ -21,8 +21,9 @@
   </div>
 
   <!-- Households -->
-  <%= f.association :household, input_html: { class: "custom-select with-select2", id: "new-person-household-association" },
-                                prompt: "Select a household" %>
+  <%= f.association :household, prompt: "Select a household",
+                                input_html: { class: "custom-select with-select2",
+                                              id: "new-person-household-association" } %>
 
   <div class="form-row">
     <%= f.input :ring_size, wrapper_html: { class: "col col-md-3"} %>

@@ -1,2 +1,0 @@
-class PieceFormComponent < IntakeFormComponent
-end
