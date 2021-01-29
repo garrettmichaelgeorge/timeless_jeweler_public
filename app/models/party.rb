@@ -11,14 +11,15 @@
 #  updated_at   :datetime         not null
 #  actable_id   :integer
 #
+
 class Party < ApplicationRecord
   actable
 
-  scope :with_purchase_history, -> { joins(sales: { line_items: :item }) }
+  scope :with_purchase_history, -> { joins(purchases: { purchases: :item }) }
 
-  has_many :sales, -> { includes :line_items }
-  has_many :items, through: :line_items
-  has_many :line_items, through: :sales
+  has_many :purchases, -> { includes :line_items }, inverse_of: :party, class_name: 'Sale'
+  has_many :purchase_line_items, through: :purchases, source: :line_items
+  has_many :items, through: :purchase_line_items
 
   # delegate :name, to: :specific
   def name
@@ -30,15 +31,15 @@ class Party < ApplicationRecord
     items.map(&:name)
   end
 
-  def sales_occurred_at
-    sales.map(&:occurred_at)
-  end
-
-  def sales_total_cents
-    sales.map(&:total_cents)
-  end
-
   def item_ids
-    sales.line_items.item_ids
+    items.map(&:id)
+  end
+
+  def purchases_occurred_at
+    purchases.map(&:occurred_at)
+  end
+
+  def purchases_total_cents
+    purchases.map(&:total_cents)
   end
 end

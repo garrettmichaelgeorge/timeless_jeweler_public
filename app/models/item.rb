@@ -81,7 +81,7 @@ class Item < ApplicationRecord
     def inherited(child)
       child.instance_eval do
         alias :original_model_name :model_name
-        def model_name() = Item.model_name
+        def model_name = Item.model_name
       end
 
       super

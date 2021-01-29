@@ -15,9 +15,9 @@ class PartyTest < ActiveSupport::TestCase
   subject { Party.new(actable_id: 1) }
 
   context 'associations' do
-    should have_many(:sales)
-    should have_many(:line_items).through(:sales)
-    should have_many(:items).through(:line_items)
+    should have_many(:purchases)
+    should have_many(:purchase_line_items).through(:purchases)
+    should have_many(:items).through(:purchase_line_items)
   end
 
   context 'delegations' do

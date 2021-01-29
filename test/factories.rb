@@ -45,6 +45,13 @@ FactoryBot.define do
     end
   end
 
+  factory :item, aliases: [:miscellaneous_item] do
+    name { Faker::Commerce.unique.product_name }
+    description { Faker::Lorem.paragraph(sentence_count: 1, random_sentences_to_add: 3) }
+    style factory: :item_style
+    user
+  end
+
   factory :loose_gemstone do
     name { Faker::Commerce.unique.product_name }
     description { Faker::Lorem.paragraph(sentence_count: 1, random_sentences_to_add: 3) }

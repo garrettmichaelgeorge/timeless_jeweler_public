@@ -72,14 +72,8 @@ class ItemTest < ActiveSupport::TestCase
 
   describe '.categories' do
     it 'returns an array of descendants' do
-      child1 = Class.new(described_class).to_s
-      child2 = Class.new(described_class).to_s
-      [child1, child2].each do |child|
-        _(described_class.categories).must_include child,
-                                                   'Expected ' \
-                                                   "#{described_class}.categories " \
-                                                   'to include the child class ' \
-                                                   "#{child}, but it did not"
+      %w[Piece LooseGemstone MiscellaneousItem].each do |category|
+        _(described_class.categories).must_include category
       end
     end
   end

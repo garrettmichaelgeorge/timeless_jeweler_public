@@ -22,12 +22,12 @@ module Items
     end
 
     def item
-      @item ||= build(record_class, **attrs)
+      @item ||= build(record_class)
     end
 
     private
 
-    def build(record_class, **attrs)
+    def build(record_class)
       record_class.new(user: current_user, **attrs)
     end
 

@@ -26,8 +26,9 @@
 
 class Sale < ApplicationRecord
   belongs_to :user
-  belongs_to :party
-  has_many :line_items, inverse_of: :sale, dependent: :destroy
+  belongs_to :party, inverse_of: :purchases
+  has_many :line_items, inverse_of: :sale, class_name: 'Sale::LineItem',
+                        dependent: :destroy
   has_many :items,      through: :line_items
 
   accepts_nested_attributes_for :line_items, allow_destroy: true

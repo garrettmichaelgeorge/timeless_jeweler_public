@@ -1,25 +1,28 @@
 require_relative '../../test_helper_lite'
 require_relative '../../../app/models/items/creator'
 
-class TranslatorDouble
-  def t(*) = ''
-end
-
 module Items
   describe Creator do
     let(:context) { MiniTest::Mock.new }
-    let(:item_class) { MiniTest::Mock }
-    let(:translator) { TranslatorDouble.new }
+    let(:user) { MiniTest::Mock.new }
+    let(:item) { MiniTest::Mock.new }
+    let(:record_class) { MiniTest::Mock.new }
     subject do
       Creator.new(context: context,
                   attrs: {},
-                  item_class: item_class,
-                  translator: translator)
+                  record_class: record_class)
     end
 
-    describe '#persist' do
+    before do
+      context.expect(:current_user, user)
+      record_class.expect(:new, item) do |arg1|
+        arg1
+      end
+    end
+
+    describe '#create!' do
       it 'notifies the context on success' do
-        subject.item.expect(:save, true)
+        item.expect(:save, true)
 
         expect_context_to_receive(:create_item_succeeded)
         subject.create!
@@ -27,7 +30,7 @@ module Items
       end
 
       it 'notifies the context on failure' do
-        subject.item.expect(:save, false)
+        item.expect(:save, false)
 
         expect_context_to_receive(:create_item_failed)
         subject.create!
