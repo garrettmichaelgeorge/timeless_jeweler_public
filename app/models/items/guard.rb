@@ -8,15 +8,14 @@ class Items::Guard
           .permit(:name,
                   :description,
                   :item_style_id,
-                  :cost_cents,
-                  :price_cents,
+                  :cost,
+                  :price,
                   :notes,
                   :category,
-                  piece_attributes: [
+                  profile_attributes: [
                     { metals_attributes: metals_attributes },
                     { mounted_gemstones_attributes: gemstone_attributes }
-                  ],
-                  gemstone_attributes: gemstone_attributes)
+                  ])
   end
 
   private
