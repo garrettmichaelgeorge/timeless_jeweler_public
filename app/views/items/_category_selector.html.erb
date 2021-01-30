@@ -1,10 +1,22 @@
-<%= simple_form_for item, wrapper_mappings: { radio_buttons: :custom_collection },
-                              html: { id:    'category_switcher',
-                                      class: 'category_switcher' } do |f| %>
+<div id="item-category-selector-wrapper" class="text-center">
+  <p>Select a category</p>
 
-  <%= f.input :category, as: :radio_buttons,
-                         collection: Item::CATEGORIES,
-                         label_method: -> (cat){ cat.underscore.humanize.titleize },
-                         label: 'Choose a category',
-                         input_html: { data: { reflex: 'input->Intake#change_category' } } %>
-<% end %>
+  <div class="btn-group btn-group-toggle" data-toggle="buttons"
+                                          role="group"
+                                          aria-label="Item category selector">
+
+    <% Item.categories.each do |category| %>
+      <label class="btn btn-secondary active">
+        <input type="radio"
+               name="options"
+               id="<%= "option#{category.camelize}" %>"
+               value="<%= category %>"
+               data-reflex="click->Intake#change_category">
+
+        <%= category.underscore.humanize.titleize %>
+
+      </label>
+    <% end %>
+
+  </div>
+</div>
