@@ -1,12 +1,12 @@
 <div id="item-category-selector-wrapper" class="text-center">
-  <p>Select a category</p>
+  <p class="user-select-none">Select a category</p>
 
   <div class="btn-group btn-group-toggle" data-toggle="buttons"
                                           role="group"
                                           aria-label="Item category selector">
 
     <% Item.categories.each do |category| %>
-      <label class="btn btn-secondary active">
+      <label class="btn btn-outline-secondary active">
         <input type="radio"
                name="options"
                id="<%= "option#{category.camelize}" %>"

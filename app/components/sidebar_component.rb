@@ -3,23 +3,23 @@ class SidebarComponent < ApplicationComponent
     {
       dashboard: {
         icon: 'home',
-        link_path: dashboard_path
+        path: dashboard_path
       },
       customers: {
         icon: 'users',
-        link_path: customers_path
+        path: customers_path
       },
       inventory: {
         icon: 'briefcase',
-        link_path: items_path
+        path: items_path
       },
       sales: {
         icon: 'activity',
-        link_path: sales_path
+        path: sales_path
       },
       services: {
         icon: 'calendar',
-        link_path: dashboard_path
+        path: dashboard_path
       }
     }
   end
@@ -28,9 +28,5 @@ class SidebarComponent < ApplicationComponent
     ['Total Inventory',
      'Inventory Bought',
      'Inventory Sold']
-  end
-
-  def sidebar_class
-    'navbar navbar-vertical fixed-left navbar-expand-md navbar-light'
   end
 end

@@ -5,6 +5,7 @@
     <%= render PageHeaderComponent.new(title:     t('.title'),
                                        pre_title: t('.subtitle')) %>
 
+
     <%= render "category_selector", item: @item %>
 
     <%= render IntakeFormComponent.new(item: @item) %> 

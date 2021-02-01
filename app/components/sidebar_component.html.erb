@@ -19,7 +19,7 @@
       <ul class="navbar-nav">
         <% nav_items.each do |nav_item, options| %>
           <li class="nav-item">
-            <%= link_to options[:link_path], class: "nav-link" do %>
+            <%= link_to options[:path], class: "nav-link" do %>
               <%= icon options[:icon] %>
               <%= nav_item.to_s.humanize %>
             <% end %>
