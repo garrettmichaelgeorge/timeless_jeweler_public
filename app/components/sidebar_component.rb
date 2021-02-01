@@ -2,28 +2,23 @@ class SidebarComponent < ApplicationComponent
   def nav_items
     {
       dashboard: {
-        name: 'Dashboard',
-        icon: 'fe fe-home',
+        icon: 'home',
         link_path: dashboard_path
       },
       customers: {
-        name: 'Customers',
-        icon: 'fe fe-users',
+        icon: 'users',
         link_path: customers_path
       },
       inventory: {
-        name: 'Inventory',
-        icon: 'fe fe-briefcase',
+        icon: 'briefcase',
         link_path: items_path
       },
-      transactions: {
-        name: 'Sales',
-        icon: 'fe fe-activity',
+      sales: {
+        icon: 'activity',
         link_path: sales_path
       },
       services: {
-        name: 'Service',
-        icon: 'fe fe-calendar',
+        icon: 'calendar',
         link_path: dashboard_path
       }
     }
@@ -37,9 +32,5 @@ class SidebarComponent < ApplicationComponent
 
   def sidebar_class
     'navbar navbar-vertical fixed-left navbar-expand-md navbar-light'
-  end
-
-  def sign_out_text(translator = I18n)
-    translator.t('devise.actions.sign_out')
   end
 end

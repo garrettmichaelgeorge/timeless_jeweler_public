@@ -3,23 +3,26 @@
   <!-- Icon -->
   <a class="navbar-user-link" href="#sidebarModalActivity" data-toggle="modal">
     <span class="icon">
-      <i class="fe fe-bell"></i>
+      <%= icon :bell %>
     </span>
   </a>
 
   <!-- Dropup -->
   <div class="dropup">
     <!-- Toggle -->
-    <a id="sidebarIconCopy" class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a id="sidebarIconCopy" class="dropdown-toggle" href="#" data-toggle="dropdown"
+       role="button" aria-haspopup="true" aria-expanded="false">
       <span class="icon">
-        <i class="fe fe-globe"></i>
+        <%= icon :globe %>
       </span>
     </a>
 
     <!-- Menu -->
     <div class="dropdown-menu" aria-labelledby="sidebarIconCopy">
       <%= link_to 'Edit profile', edit_user_registration_path, class: "dropdown-item" %>
+
       <hr class="dropdown-divider">
+
       <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
     </div>
   </div>

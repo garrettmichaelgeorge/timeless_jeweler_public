@@ -17,8 +17,8 @@
       </section>
 
       <section id="intake-form-special-fields">
-        <%= f.simple_fields_for :profile do |f| %>
-          <%= render item_fields_component.new(f: f) %>
+        <%= f.simple_fields_for :profile do |profile_builder| %>
+          <%= render item_fields_component.new(f: profile_builder) %>
         <% end %>
       </section>
 

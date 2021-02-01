@@ -1,0 +1,67 @@
+<!-- NAVIGATION -->
+<!-- ================================================== -->
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light" id="sidebar">
+  <div class="container-fluid">
+
+    <!-- Toggler -->
+    <%= render Navbars::TogglerComponent.new %>
+
+    <!-- Brand -->
+    <%= render Navbars::BrandComponent.new %>
+
+    <!-- User (xs) -->
+    <%= render Navbars::UserXSComponent.new %>
+
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse" id="sidebarCollapse">
+
+      <!-- Nav Items -->
+      <ul class="navbar-nav">
+        <% nav_items.each do |nav_item, options| %>
+          <li class="nav-item">
+            <%= link_to options[:link_path], class: "nav-link" do %>
+              <%= icon options[:icon] %>
+              <%= nav_item.to_s.humanize %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+
+      <hr class="navbar-divider my-3">
+
+      <!-- Reports -->
+      <h6 class="navbar-heading">Reports</h6>
+      <ul class="navbar-nav mb-md-4">
+        <li class="nav-item">
+
+          <a class="nav-link" href="#sidebarReports" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+            <%= icon :pie_chart %>
+            Reports
+          </a>
+
+          <div class="collapse" id="sidebarReports">
+            <ul class="nav nav-sm flex-column">
+
+              <% reports.each do |report| %>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <%= report %>
+                  </a>
+                </li>
+              <% end %>
+
+            </ul>
+          </div>
+
+        </li>
+      </ul>
+
+      <!-- Spacer -->
+      <div class="mt-lg-auto"></div>
+      <!-- Quick Action Button -->
+      <%= render Buttons::QuickActionComponent.new %>
+      <%= render Tooltips::QuickActionComponent.new %>
+      <%= render Navbars::UserWidgetComponent.new %>
+    </div>
+  </div>
+</nav>

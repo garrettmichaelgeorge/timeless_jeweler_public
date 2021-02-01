@@ -1,4 +1,6 @@
 class ApplicationComponent < ViewComponent::Base
+  delegate :icon, to: :helpers
+
   def acts_like_view_component?; end
 
   def link_to_add_fields(name, f, association)

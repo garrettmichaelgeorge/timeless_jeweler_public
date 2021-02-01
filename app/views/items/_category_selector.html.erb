@@ -11,10 +11,8 @@
                name="options"
                id="<%= "option#{category.camelize}" %>"
                value="<%= category %>"
-               data-reflex="click->Intake#change_category">
-
+               data-reflex="input->Intake#change_category">
         <%= category.underscore.humanize.titleize %>
-
       </label>
     <% end %>
 
