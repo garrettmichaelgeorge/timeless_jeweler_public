@@ -33,10 +33,6 @@ class Piece < Item
   has_one :profile, inverse_of: :piece, class_name: 'Piece::Profile',
                     dependent: :destroy, autosave: true, foreign_key: 'item_id'
 
-  # has_many :metals, inverse_of: :item, through: :profile
-  # has_many :mountings, inverse_of: :item, through: :profile
-  # has_many :gemstones, inverse_of: :item, through: :mountings
-
   delegate_to_profile :metals, :gemstones, :mountings
 
   accepts_nested_attributes_for :profile
@@ -54,7 +50,7 @@ class Piece < Item
     has_many :metals,    inverse_of: :piece, foreign_key: 'piece_id'
     has_many :mountings, inverse_of: :piece, foreign_key: 'piece_id'
     has_many :gemstones, through: :mountings,
-                         inverse_of: :piece, class_name: 'Gemstone::Mounted'
+                         inverse_of: :piece
 
     accepts_nested_attributes_for :metals, :gemstones, :mountings,
                                   allow_destroy: true, reject_if: :all_blank

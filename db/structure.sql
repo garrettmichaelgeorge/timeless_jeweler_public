@@ -773,16 +773,6 @@ ALTER SEQUENCE public.miscellaneous_items_id_seq OWNED BY public.miscellaneous_i
 
 
 --
--- Name: mounted_gemstones; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.mounted_gemstones (
-    gemstone_profile_id bigint NOT NULL,
-    piece_id bigint NOT NULL
-);
-
-
---
 -- Name: mountings; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1923,20 +1913,6 @@ CREATE INDEX index_miscellaneous_items_on_item_id ON public.miscellaneous_items 
 
 
 --
--- Name: index_mounted_gemstones_on_gemstone_profile_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_mounted_gemstones_on_gemstone_profile_id ON public.mounted_gemstones USING btree (gemstone_profile_id);
-
-
---
--- Name: index_mounted_gemstones_on_piece_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_mounted_gemstones_on_piece_id ON public.mounted_gemstones USING btree (piece_id);
-
-
---
 -- Name: index_mountings_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2395,6 +2371,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210126005251'),
 ('20210126144655'),
 ('20210127151626'),
-('20210127160435');
+('20210127160435'),
+('20210202224607');
 
 
