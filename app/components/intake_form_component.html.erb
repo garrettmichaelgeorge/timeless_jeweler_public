@@ -23,8 +23,7 @@
       <hr />
 
       <section id="intake-form-special-fields">
-        <%= f.simple_fields_for :profile, f.object.build_profile do |builder| %>
-          <p>Hello from IntakeFormComponent!</p>
+        <%= f.simple_fields_for :profile do |builder| %>
           <%= render item_fields_component.new(f: builder) %>
         <% end %>
       </section>
