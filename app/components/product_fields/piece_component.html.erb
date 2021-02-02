@@ -1,44 +1,37 @@
-<section id="item_profile_fields" class="form-group" data-controller="nested-form">
-  <fieldset class="mb-2"> 
-    <template data-target="nested-form.template">
-      <%= f.fields_for :metals, build_metal, child_index: 'NEW_RECORD' do |metal_fields| %>
+<div id="intake_form_metals" class="form-group" data-controller="nested-form">
 
-      <%= render ProductFields::MetalComponent.new(f: metal_fields) %>
-      <% end %>
-    </template>
+  <template data-target="nested-form.template">
+    <%= f.simple_fields_for :metals, build_metal, child_index: 'NEW_RECORD' do |builder| %>
+      <%= render ProductFields::MetalComponent.new(f: builder) %>
+    <% end %>
+  </template>
 
-    <%# f.simple_fields_for :metals do |metal_fields| %>
-      <%# render ProductFields::MetalComponent.new(f: metal_fields) %>
-    <%#end %>
+  <% if metals.present? %>
+    <%= f.simple_fields_for :metals do |builder| %>
+      <%# render ProductFields::MetalComponent.new(f: builder) %>
+    <% end %>
+  <% end %>
 
-    <div data-target="nested-form.links">
-      <button type="button"
-              class='btn btn-secondary btn-small'
-              data-action="nested-form#add"
-              disabled>
-        Add metal
-      </button>
-    </div>
-  </fieldset>
 
-  <fieldset>
-    <template data-target="nested-form.template">
-      <%# f.fields_for :gemstones, build_gemstone, child_index: 'NEW_RECORD' do |gemstone_fields| %>
-        <%# render ProductFields::GemstoneComponent.new(f: gemstone_fields) %>
-      <%# end %>
-    </template>
+  <div data-target="nested-form.links">
+    <%= link_to 'Add metal', '#', class: 'btn btn-sm btn-outline-secondary btn-small',
+                                  data: { action: 'nested-form#add' } %>
+  </div>
+</div>
 
-    <%# f.simple_fields_for :gemstones do |gemstone_fields| %>
-      <%# render ProductFields::GemstoneComponent.new(f: mounted_gemstone_fields) %>
-    <%# end %>
+<div id="intake_form_gemstones" class="form-group" data-controller="nested-form">
+  <template data-target="nested-form.template">
+    <%= f.fields_for :gemstones, build_gemstone, child_index: 'NEW_RECORD' do |builder| %>
+      <%= render ProductFields::GemstoneComponent.new(f: builder) %>
+    <% end %>
+  </template>
 
-    <div data-target="nested-form.links">
-      <button type="button"
-              class="btn btn-secondary btn-small"
-              data-action="nested-form#add"
-              disabled>
-        Add gemstone
-      </button>
-    </div>
-  </fieldset>
-</section>
+  <%= f.simple_fields_for :gemstones do |builder| %>
+    <%# render ProductFields::GemstoneComponent.new(f: builder) %>
+  <% end %>
+
+  <div data-target="nested-form.links">
+    <%= link_to 'Add gemstone', '#', class: 'btn btn-sm btn-outline-secondary btn-small',
+                                     data: { action: 'nested-form#add' } %>
+  </div>
+</div>

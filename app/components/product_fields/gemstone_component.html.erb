@@ -1,7 +1,25 @@
-<fieldset id="loose_gemstone_fields" class="form-group">
-    <%= f.input       :carat %>
-    <%= f.association :category %>
-    <%= f.association :cut %>
-    <%= f.association :color %>
-    <%= f.association :clarity %>
-</fieldset>
+<%= content_tag :fieldset, id: "gemstone_fields",
+                           class: "nested-fields form-group",
+                           data: { new_record: new_record? } do %>
+  <legend><small>Gemstone</small></legend>
+
+  <%= content_tag :div, class: 'form-row' do %>
+    <%= content_tag :div, class: 'col' do %>
+      <%= f.association :category, label_method: :name,
+                                   prompt: "Category", label: false,
+                                   input_html: { class: 'custom-select' },
+                                   wrapper_html: { class: 'col' } %>
+    <% end %>
+
+    <%= content_tag :div, class: 'col' do %>
+      <%= f.input :carat, placeholder: "Carat", label: false,
+                          input_html: { class: 'custom-select' },
+                          wrapper_html: { class: 'col' } %>
+    <% end %>
+
+      <%# f.association :cut %>
+      <%# f.association :color %>
+      <%# f.association :clarity %>
+
+  <% end %>
+<% end %>

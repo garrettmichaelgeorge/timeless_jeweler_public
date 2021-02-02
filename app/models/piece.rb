@@ -28,14 +28,18 @@
 #
 
 class Piece < Item
-  # self.table_name = 'items'
-
   include Profilable
 
   has_one :profile, inverse_of: :piece, class_name: 'Piece::Profile',
                     dependent: :destroy, autosave: true, foreign_key: 'item_id'
 
+  # has_many :metals, inverse_of: :item, through: :profile
+  # has_many :mountings, inverse_of: :item, through: :profile
+  # has_many :gemstones, inverse_of: :item, through: :mountings
+
   delegate_to_profile :metals, :gemstones, :mountings
+
+  accepts_nested_attributes_for :profile
 
   class Profile < ApplicationRecord
     # Multiple Table Inheritance (MTI):
@@ -47,12 +51,12 @@ class Piece < Item
     belongs_to :piece, inverse_of: :profile, foreign_key: 'item_id'
 
     # NOTE: Place all associations unique to Piece below
-    has_many :metals,    inverse_of: :piece
-    has_many :mountings, inverse_of: :piece
+    has_many :metals,    inverse_of: :piece, foreign_key: 'piece_id'
+    has_many :mountings, inverse_of: :piece, foreign_key: 'piece_id'
     has_many :gemstones, through: :mountings,
                          inverse_of: :piece, class_name: 'Gemstone::Mounted'
 
-    accepts_nested_attributes_for :metals, :gemstones,
+    accepts_nested_attributes_for :metals, :gemstones, :mountings,
                                   allow_destroy: true, reject_if: :all_blank
 
     validates_associated :metals, :gemstones

@@ -6,7 +6,7 @@
                                        pre_title: t('.subtitle')) %>
 
 
-    <%= render "category_selector", item: @item %>
+    <%= render Intake::CategorySelectorComponent.new %>
 
     <%= render IntakeFormComponent.new(item: @item) %> 
   </div>

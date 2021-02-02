@@ -28,7 +28,7 @@
 #
 
 class Metal < ApplicationRecord
-  belongs_to :piece,    inverse_of: :metals, class_name: 'Piece::Profile'
+  belongs_to :piece,    inverse_of: :metals, class_name: 'Piece::Profile', foreign_key: 'piece_id'
 
   belongs_to :category, inverse_of: :metals,
                         class_name: 'MetalCategory', foreign_key: :metal_category_id

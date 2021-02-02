@@ -1,4 +1,4 @@
-<div id="intake-form-wrapper">
+<div id="intake-form-wrapper" class="mt-5">
 
   <% if item.category %>
 
@@ -11,16 +11,25 @@
         <%= f.input :name %>
         <%= f.input :description %>
         <%= f.association :style, label_method: :name, prompt: 'Please select a style' %>
-        <%= f.input :cost %>
-        <%= f.input :price %>
+
+        <div class="form-row">
+          <%= f.input :cost, wrapper_html: { class: 'col-md-6' } %>
+          <%= f.input :price, wrapper_html: { class: 'col-md-6' } %>
+        </div>
+
         <%= f.input :notes %>
       </section>
 
+      <hr />
+
       <section id="intake-form-special-fields">
-        <%= f.simple_fields_for :profile do |profile_builder| %>
-          <%= render item_fields_component.new(f: profile_builder) %>
+        <%= f.simple_fields_for :profile, f.object.build_profile do |builder| %>
+          <p>Hello from IntakeFormComponent!</p>
+          <%= render item_fields_component.new(f: builder) %>
         <% end %>
       </section>
+
+      <hr />
 
       <%= f.button :submit, class: "btn-primary" %>
       <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>

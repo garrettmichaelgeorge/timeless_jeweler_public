@@ -1,22 +1,14 @@
-class ProductFields::PieceComponent < ApplicationComponent
-  def initialize(f:)
-    @f = f
-    super
-  end
+class ProductFields::PieceComponent < FieldsComponent
+  delegate :metals, :gemstones, :id,
+           to: :form_object
 
   private
 
-  attr_reader :f
-
-  def form_object
-    f.object
-  end
-
   def build_metal
-    Metal.new
+    metals.build
   end
 
   def build_gemstone
-    Gemstone.new
+    gemstones.build
   end
 end

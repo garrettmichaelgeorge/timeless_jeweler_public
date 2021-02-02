@@ -1,6 +1,8 @@
 class IntakeFormComponent < ApplicationComponent
   def initialize(item:)
     @item = item
+
+    super
   end
 
   private

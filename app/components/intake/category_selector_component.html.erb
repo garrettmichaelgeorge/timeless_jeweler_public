@@ -1,0 +1,18 @@
+<div id="item-category-selector-wrapper" class="text-center">
+  <div class="btn-group btn-group-toggle" data-toggle="buttons"
+                                          role="group"
+                                          aria-label="Item category selector">
+
+    <% model_categories.each do |category| %>
+      <label class="btn btn-outline-primary">
+        <%= tag.input id: id_for(category),
+                      value: category,
+                      type: 'radio',
+                      name: 'options',
+                      data: { reflex: 'input->Intake#change_category' } %>
+        <%= label_text_for(category) %>
+      </label>
+    <% end %>
+
+  </div>
+</div>

@@ -23,6 +23,9 @@ en:
     new:
       title: 'Intake'
       subtitle: 'New Item'
+      category_selector: 'Please select a category'
+      carat: 'Carat'
+      gemstone_category: 'Gemstone category'
     create:
       success: "Item was successfully created."
       failure: "Item was not created."

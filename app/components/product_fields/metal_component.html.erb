@@ -1,17 +1,28 @@
 <%= content_tag :fieldset, id: "metal_fields",
-                           class: "nested-fields",
+                           class: "nested-fields form-group",
                            data: { new_record: new_record? } do %>
-  <legend>Metal</legend>
+  <legend><small>Metal</small></legend>
 
-  <%= f.association :category, collection: MetalCategory.all,
-                               prompt: "Choose a metal" %>
-  <%= f.association :color %>
-  <%= f.association :purity %>
+  <div class="form-row">
+    <%= f.association :category, label_method: :name,
+                                 prompt: "Category", label: false,
+                                 input_html: { class: 'custom-select' },
+                                 wrapper_html: { class: 'col' } %>
+    <%= f.association :color, label_method: :name,
+                              prompt: "Color", label: false,
+                              input_html: { class: 'custom-select' },
+                              wrapper_html: { class: 'col' } %>
+    <%= f.association :purity, label_method: :value,
+                               prompt: "Purity", label: false,
+                               input_html: { class: 'custom-select' },
+                               wrapper_html: { class: 'col' } %>
 
-  <button type="button" class="btn btn-sm btn-danger"
-                        data-action="nested-form#remove">
-    Remove metal
-  </button>
-
+    <div class="col-auto">
+      <%= link_to '#', data: { action: 'nested-form#remove' },
+                       class: 'btn btn-sm btn-danger' do %>
+        <%= icon :trash %>
+      <% end %>
+    </div>
+  </div>
   <%= f.hidden_field :_destroy %>
 <% end %>

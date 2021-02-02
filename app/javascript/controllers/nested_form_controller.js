@@ -41,11 +41,14 @@ export default class extends Controller {
   }
 
   add(event) {
+    event.preventDefault()
     let content = this.templateTarget.innerHTML.replace(/NEW_RECORD/g, new Date().getTime())
+    console.log(content)
     this.linksTarget.insertAdjacentHTML('beforebegin', content)
   }
 
   remove(event) {
+    event.preventDefault()
     let wrapper = event.target.closest("." + this.wrapperClass)
 
     // New records are simply removed from the page

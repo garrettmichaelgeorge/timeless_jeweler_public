@@ -16,8 +16,11 @@ class Mounting < ApplicationRecord
 
   self.table_name = 'mounted_gemstones'
 
-  belongs_to :gemstone, inverse_of: :mounting, class_name: 'Gemstone::Mounted',
-                        foreign_key: :gemstone_profile_id
+  belongs_to :gemstone, inverse_of: :mounting,
+                        class_name: 'Gemstone::Mounted',
+                        foreign_key: 'gemstone_profile_id'
+
   belongs_to :piece,    inverse_of: :mountings,
-                        class_name: 'Piece::Profile'
+                        class_name: 'Piece::Profile',
+                        foreign_key: 'piece_id'
 end

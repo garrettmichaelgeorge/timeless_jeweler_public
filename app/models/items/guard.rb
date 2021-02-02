@@ -12,10 +12,12 @@ class Items::Guard
                   :price,
                   :notes,
                   :category,
-                  profile_attributes: [
-                    { metals_attributes: metals_attributes },
-                    { mounted_gemstones_attributes: gemstone_attributes }
-                  ])
+                  profile_attributes: {
+                    metals_attributes: metals_attributes,
+                    metals: metals_attributes,
+                    gemstone_attributes: gemstone_attributes,
+                    gemstones: gemstone_attributes
+                  })
   end
 
   private
