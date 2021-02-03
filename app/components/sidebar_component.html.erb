@@ -1,5 +1,4 @@
 <!-- NAVIGATION -->
-<!-- ================================================== -->
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light" id="sidebar">
   <div class="container-fluid">
 
@@ -18,12 +17,14 @@
       <!-- Nav Items -->
       <ul class="navbar-nav">
         <% nav_items.each do |nav_item, options| %>
+
           <li class="nav-item">
             <%= link_to options[:path], class: "nav-link" do %>
               <%= icon options[:icon] %>
               <%= nav_item.to_s.humanize %>
             <% end %>
           </li>
+
         <% end %>
       </ul>
 
