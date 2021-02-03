@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class FieldsComponent < ApplicationComponent
+  delegate :new_record?, to: :form_object, allow_nil: true
+
   def initialize(f:)
     @f = f
+
+    super
   end
 
   def render?

@@ -4,20 +4,18 @@
   <legend><small>Gemstone</small></legend>
 
   <%= content_tag :div, class: 'form-row' do %>
-    <%= content_tag :div, class: 'col' do %>
-      <%= f.association :category, label_method: :name,
-                                   prompt: 'Category', label: false,
-                                   wrapper_html: { class: 'col' } %>
+    <%= f.association :category, label_method: :name,
+                                 prompt: 'Category', label: false,
+                                 wrapper_html: { class: 'col' }, input_html: { class: 'custom-select' } %>
+    <%= f.input :carat, placeholder: 'Carat', label: false,
+                        wrapper_html: { class: 'col' }, input_html: { class: 'custom-float' } %>
+
+    <%= content_tag :div, class: 'col-auto' do %>
+      <%= render Buttons::RemoveNestedFieldComponent.new %>
     <% end %>
 
-    <%= content_tag :div, class: 'col' do %>
-      <%= f.input :carat, placeholder: 'Carat', label: false,
-                          wrapper_html: { class: 'col' } %>
-    <% end %>
-
-      <%# f.association :cut %>
-      <%# f.association :color %>
-      <%# f.association :clarity %>
-
+    <%# f.association :cut %>
+    <%# f.association :color %>
+    <%# f.association :clarity %>
   <% end %>
 <% end %>

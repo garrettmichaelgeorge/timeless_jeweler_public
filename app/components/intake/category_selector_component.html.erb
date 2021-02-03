@@ -10,6 +10,9 @@
                       type: 'radio',
                       name: 'options',
                       data: { reflex: 'input->Intake#change_category' } %>
+        <span class="pr-2">
+          <%= icon_for(category) %>
+        </span>
         <%= label_text_for(category) %>
       </label>
     <% end %>
