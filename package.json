@@ -19,6 +19,7 @@
     "core-js": "^3.6.5",
     "dropzone": "^5.7.0",
     "feather": "0.0.6",
+    "feather-icons": "^4.28.0",
     "flatpickr": "^4.6.3",
     "highlightjs": "^9.16.2",
     "jquery": "3.4.1",
