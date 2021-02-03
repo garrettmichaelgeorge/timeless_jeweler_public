@@ -24,7 +24,8 @@ class Diamond::Color < ApplicationRecord
 
     belongs_to :color, inverse_of: :gradings, foreign_key: :diamond_color_id
     belongs_to :diamond, -> { diamonds },
-               inverse_of: :color_grading, class_name: 'Gemstone',
+               inverse_of: :color_grading,
+               class_name: 'Gemstone',
                foreign_key: :gemstone_profile_id
   end
 end

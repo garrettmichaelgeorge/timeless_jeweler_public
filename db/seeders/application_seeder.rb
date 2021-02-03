@@ -34,7 +34,7 @@ class Seeders
 
       def seeder_target
         # Assumes the naming convention: 'Seeders::ModelClassSeeder' seeds 'ModelClass'
-        to_s.demodulize.gsub('Seeder', '')
+        to_s.demodulize.gsub('Seeder', '').constantize
       end
     end
 
@@ -42,7 +42,7 @@ class Seeders
 
     # helper method for creating records in lookup tables
     # Example usage: NAMES.each { |name| seed_with_value(name: name) }
-    def seed_with_value(record_class = seeder_target.constantize, **attrs)
+    def seed_with_value(record_class = seeder_target, **attrs)
       record_class.create_or_find_by(**attrs)
     end
   end

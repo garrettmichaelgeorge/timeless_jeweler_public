@@ -11,6 +11,7 @@ class Seeder
                 PersonSeeder
                 HouseholdSeeder
                 ItemStyleSeeder
+                GemstoneCategorySeeder
                 DiamondCutSeeder
                 DiamondClaritySeeder
                 DiamondColorSeeder

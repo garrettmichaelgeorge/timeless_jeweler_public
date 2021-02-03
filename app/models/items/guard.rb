@@ -29,9 +29,14 @@ class Items::Guard
   end
 
   def gemstone_attributes
-    %i[id
-       carat
-       _destroy]
+    [:id,
+     :carat,
+     :gemstone_category_id,
+     :diamond_color_id,
+     :diamond_cut_id,
+     :diamond_clarity_id,
+     :_destroy,
+     { report_attributes: [] }]
   end
 
   def metals_attributes

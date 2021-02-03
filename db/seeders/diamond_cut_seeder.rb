@@ -9,13 +9,17 @@ class Seeders
               'Poor'].freeze
 
     def execute
-      GRADES.each do |grade|
-        ::DiamondCut.create!(grade: grade)
-      end
+      GRADES.each { |grade| seed_with_value(Diamond::Cut, grade: grade) }
     end
 
-    def self.safe_for_production?
-      true
+    class << self
+      def safe_for_production?
+        true
+      end
+
+      def seeder_target
+        Diamond::Cut
+      end
     end
   end
 end

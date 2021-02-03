@@ -30,10 +30,12 @@
 class MiscellaneousItem < Item
   has_one :profile, inverse_of: :item, foreign_key: 'item_id'
 
+  # Must include Profilable after defining :profile association
+  include Profilable
+
   class Profile < ApplicationRecord
     self.table_name = 'miscellaneous_items'
 
-    belongs_to :item, inverse_of: :profile,
-                      class_name: 'MiscellaneousItem'
+    belongs_to :item, inverse_of: :profile, class_name: 'MiscellaneousItem', foreign_key: 'item_id'
   end
 end

@@ -1,6 +1,4 @@
 class IntakeFormComponent < ApplicationComponent
-  delegate :lazily_built_profile, to: :item
-
   def initialize(item:)
     @item = item
 

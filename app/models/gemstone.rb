@@ -29,17 +29,17 @@ class Gemstone < ApplicationRecord
   has_many :reports,        inverse_of: :gemstone, class_name: 'Gemstone::Report'
 
   has_one :cut_grading,     inverse_of: :diamond,
-                            class_name: 'Diamond::Cut::Grading'
+                            class_name: 'Diamond::Cut::Grading', foreign_key: 'gemstone_profile_id'
   has_one :cut,             through: :cut_grading,
                             class_name: 'Diamond::Cut'
 
   has_one :color_grading,   inverse_of: :diamond,
-                            class_name: 'Diamond::Color::Grading'
+                            class_name: 'Diamond::Color::Grading', foreign_key: 'gemstone_profile_id'
   has_one :color,           through: :color_grading,
                             class_name: 'Diamond::Color'
 
   has_one :clarity_grading, inverse_of: :diamond,
-                            class_name: 'Diamond::Clarity::Grading'
+                            class_name: 'Diamond::Clarity::Grading', foreign_key: 'gemstone_profile_id'
   has_one :clarity,         through: :clarity_grading,
                             class_name: 'Diamond::Clarity'
 
@@ -55,15 +55,10 @@ class Gemstone < ApplicationRecord
   delegate :grade, to: :clarity,  prefix: true, allow_nil: true
   delegate :name,  to: :category, prefix: true
 
-  class << self
-    def categories
-      subclasses.map(&:to_s).sort
-    end
-  end
-
   class Listed < Gemstone
     has_one :listing, inverse_of: :gemstone,
-                      class_name: 'LooseGemstone::Profile'
+                      class_name: 'LooseGemstone::Profile',
+                      foreign_key: 'gemstone_profile_id'
   end
 
   class Mounted < Gemstone

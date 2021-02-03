@@ -9,6 +9,8 @@ module Profilable
     scope :with_profile, -> { includes(:profile) }
 
     validates_associated :profile
+
+    accepts_nested_attributes_for :profile
   end
 
   class_methods do

@@ -28,40 +28,31 @@
 #
 
 class LooseGemstone < Item
-  include Profilable
-
   has_one :profile, inverse_of: :loose_gemstone, foreign_key: 'item_id',
                     dependent: :destroy, autosave: true
 
-  delegate_to_profile :carat, :carat=, :color_grade, :cut_grade, :clarity_grade, :gemstone_category
+  # Must include Profilable after defining :profile association
+  include Profilable
+
+  delegate_to_profile :gemstone, :carat, :carat=,
+                      :color_grade, :cut_grade, :clarity_grade,
+                      :gemstone_category
 
   class Profile < ApplicationRecord
     self.table_name = 'loose_gemstones'
 
-    belongs_to :loose_gemstone, inverse_of: :profile,
-                                foreign_key: :item_id
+    after_initialize do
+      build_gemstone if gemstone.nil?
+    end
 
-    belongs_to :gemstone, inverse_of: :listing,
-                          class_name: 'Gemstone::Listed',
-                          foreign_key: :gemstone_profile_id
+    belongs_to :loose_gemstone, inverse_of: :profile, foreign_key: 'item_id'
+    belongs_to :gemstone,       inverse_of: :listing, foreign_key: 'gemstone_profile_id',
+                                class_name: 'Gemstone::Listed'
 
-    delegate :carat, :carat=,
-             to: :lazily_built_gemstone
-
-    delegate_missing_to :lazily_built_gemstone
+    delegate_missing_to :gemstone
 
     scope :with_gemstone, -> { includes(:gemstone) }
 
     accepts_nested_attributes_for :gemstone
-
-    def gemstone_category
-      lazily_built_gemstone.category_name
-    end
-
-    private
-
-    def lazily_built_gemstone
-      gemstone || build_gemstone
-    end
   end
 end

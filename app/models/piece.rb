@@ -28,14 +28,13 @@
 #
 
 class Piece < Item
+  has_one :profile, inverse_of: :piece, foreign_key: 'item_id',
+                    dependent: :destroy, autosave: true
+
+  # Must include Profilable after defining :profile association
   include Profilable
 
-  has_one :profile, inverse_of: :piece, class_name: 'Piece::Profile',
-                    dependent: :destroy, autosave: true, foreign_key: 'item_id'
-
   delegate_to_profile :metals, :gemstones, :mountings
-
-  accepts_nested_attributes_for :profile
 
   class Profile < ApplicationRecord
     # Multiple Table Inheritance (MTI):

@@ -2,18 +2,16 @@ class Wiper
   # Hard-code sequence of tables to be wiped
   # Note: Make sure TABLES with foreign keys
   # appear before the tables they reference
-  TABLES = %w[StoreTransactionLineItem
-              StoreTransaction
-              StoreTransactionCategory
+  TABLES = %w[Sale::LineItem
+              Sale
               Person
               Household
               Party
               Gemstone
-              DiamondCut
-              DiamondClarity
-              DiamondColor
-              Piece
-              MiscellaneousItem
+              Gemstone::Category
+              Diamond::Cut
+              Diamond::Clarity
+              Diamond::Color
               Metal
               MetalCategory
               MetalColor
@@ -27,8 +25,7 @@ class Wiper
               User].freeze
 
   def self.execute
-    wiper = new
-    wiper.wipe_tables
+    new.wipe_tables
   end
 
   def wipe_tables

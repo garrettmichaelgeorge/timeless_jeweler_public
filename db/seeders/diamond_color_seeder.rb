@@ -5,13 +5,17 @@ class Seeders
     GRADES = ('D'..'Z').to_a.freeze
 
     def execute
-      GRADES.each do |grade|
-        seed_with_value(DiamondColor, grade: grade)
-      end
+      GRADES.each { |grade| seed_with_value(grade: grade) }
     end
 
-    def self.safe_for_production?
-      true
+    class << self
+      def safe_for_production?
+        true
+      end
+
+      def seeder_target
+        Diamond::Color
+      end
     end
   end
 end

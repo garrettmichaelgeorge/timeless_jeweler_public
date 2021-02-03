@@ -17,11 +17,17 @@ class Seeders
     ].freeze
 
     def execute
-      VALUES.each { |value| seed_with_value(DiamondClarity, grade: value) }
+      VALUES.each { |value| seed_with_value(grade: value) }
     end
 
-    def self.safe_for_production?
-      true
+    class << self
+      def safe_for_production?
+        true
+      end
+
+      def seeder_target
+        Diamond::Clarity
+      end
     end
   end
 end
