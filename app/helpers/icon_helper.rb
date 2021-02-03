@@ -6,10 +6,10 @@ module IconHelper
   private
 
   def icon_class_for(name)
-    "fe fe-#{formatted_name(name)}"
+    class_names 'fe', icon_name(name)
   end
 
-  def formatted_name(name)
-    name.to_s.dasherize
+  def icon_name(name)
+    "fe-#{name.to_s.dasherize}"
   end
 end
