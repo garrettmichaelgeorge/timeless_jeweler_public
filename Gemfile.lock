@@ -356,7 +356,8 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.5.2)
     rack (2.2.3)
-    rack-cors (0.4.1)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -517,7 +518,7 @@ DEPENDENCIES
   pry-rails
   puma
   pundit
-  rack-cors (~> 0.4.1)
+  rack-cors (~> 1.1.1)
   rails!
   rails-controller-testing
   rails-erd

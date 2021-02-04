@@ -22,7 +22,7 @@ gem 'money-rails', github: 'juanmanuelramallo/money-rails', branch: 'ruby-3-supp
 gem 'pg'
 gem 'puma'
 gem 'pundit'
-gem 'rack-cors',                 '~> 0.4.1'
+gem 'rack-cors',                 '~> 1.1.1'
 gem 'rails', github: 'rails/rails'
 gem 'rails-controller-testing'
 gem 'rails-i18n', '~> 6.0.0'
@@ -90,4 +90,4 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem "optimism", "~> 0.4.1"
+gem 'optimism', '~> 0.4.1'
