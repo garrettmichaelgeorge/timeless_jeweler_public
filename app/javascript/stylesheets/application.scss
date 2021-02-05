@@ -1,0 +1,55 @@
+/**
+ * Dashkit
+ *
+ * Custom variables followed by Dashkit variables followed by Bootstrap variables
+ * to ensure cascade of styles.
+ */
+
+// Plugins
+
+// Tippy.js
+@import 'tippy.js/dist/tippy';
+@import 'tippy.js/animations/shift-away';
+@import 'tippy.js/animations/shift-away-subtle';
+@import 'tippy.js/themes/light';
+@import 'tippy.js/themes/light-border';
+
+// @import 'reports_kit/application';
+
+// Theme
+
+// FIXME: import Dashkit SCSS such that custom variables can be overridden, etc.
+// (see below for a desired implementation)
+// The temporary solution is to import the default theme entry point, which
+// works but does not allow for customization
+@import 'user-variables';
+
+@import 'dashkit/src/scss/theme';
+
+// Custom scss
+@import 'user';
+
+//////////////////////////////////////////
+// Modified version of Dashkit theme index (note: this does not work)
+
+// Bootstrap functions
+// @use '~bootstrap/scss/functions';
+
+// Custom variables
+// @import 'user-variables';
+
+// Dashkit variables
+// @import '~dashkit/src/scss/theme/variables';
+
+// Bootstrap core
+// @import '~bootstrap/scss/bootstrap';
+
+// Dashkit core
+// @import 'dashkit/src/scss/theme/theme';
+
+// Simple Form - Bootstrap
+// @import 'simple_form-bootstrap/simple_form-bootstrap';
+
+// Custom core
+// @import '~@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4';
+// @import 'user';

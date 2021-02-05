@@ -6,23 +6,18 @@ import Turbolinks from 'turbolinks'
 import * as ActiveStorage from '@rails/activestorage'
 import 'channels'
 
-// Theme Dependencies
-import 'jquery'
-import 'popper.js'
-import 'bootstrap'
-
 // Theme
-// import 'dashkit/src/assets/js/dashkit'
+import 'dashkit/src/js/theme'
 
 // Custom
-import initApplication from 'src/js/main'
+import initApplication from 'src/main'
 
 // To decrease page load time, load js files asynchronously
 // by importing them in the following file:
 // import 'src/plugins'
 
 // SCSS
-import 'src/assets/scss/application'
+import 'stylesheets/application'
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)

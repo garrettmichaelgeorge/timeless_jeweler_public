@@ -3,8 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.0'
 
-# Use ActiveRecord::ActsAs to simulate Multiple Table Inheritance (MTI). Read more: https://github.com/manuelmeurer/active_record-acts_as
-# This enables type-subtype relationships between models (e.g. Party-Person/Household)
+# Use ActiveRecord::ActsAs to simulate Multiple Table Inheritance (MTI).
+# Read more: https://github.com/manuelmeurer/active_record-acts_as
 # FIXME: deprecate use of this gem
 gem 'active_record-acts_as'
 # Use Active Model has_secure_password

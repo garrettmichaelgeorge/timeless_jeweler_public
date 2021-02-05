@@ -12,5 +12,13 @@ const context = require.context("controllers", true, /_controller\.js$/)
 application.load(definitionsFromContext(context))
 
 StimulusReflex.initialize(application, { consumer, controller })
-// Debug Stimulus Reflex only in development
-StimulusReflex.debug = process.env.RAILS_ENV === 'development'
+
+if (process.env.RAILS_ENV === 'development') {
+  // Import and use Radiolabel in development only
+  import('radiolabel').then(Radiolabel =>
+    application.register('radiolabel', Radiolabel.default)
+  )
+
+  // Debug StimulusReflex in development only
+  StimulusReflex.debug = true
+}
