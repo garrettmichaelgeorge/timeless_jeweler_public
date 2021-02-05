@@ -17,17 +17,18 @@
 class EmailAddress < ApplicationRecord
   belongs_to :emailable, polymorphic: true
 
-  # credit: Michael Hartl, Rails Tutorial
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
-
   validates :email_address, presence: true,
                             length: { maximum: 255 },
-                            format: { with: VALID_EMAIL_REGEX },
+                            email: true,
                             uniqueness: true
 
   def email_address=(value)
-    return if value.nil?
+    super(format_email(value))
+  end
 
-    super(value.downcase)
+  private
+
+  def format_email(email)
+    email&.downcase
   end
 end
