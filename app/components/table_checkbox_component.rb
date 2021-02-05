@@ -4,6 +4,8 @@ class TableCheckboxComponent < ApplicationComponent
   def initialize(id:, resource:)
     @id = id.to_s
     @resource = resource
+
+    super
   end
 
   def input_name
@@ -15,11 +17,7 @@ class TableCheckboxComponent < ApplicationComponent
   end
 
   def input_class
-    result = [
-      type.to_s,
-      'custom-control-input'
-    ]
-    result.join(' ')
+    class_names type.to_s, 'form-check-input'
   end
 
   private

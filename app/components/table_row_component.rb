@@ -1,22 +1,32 @@
 class TableRowComponent < ApplicationComponent
-  def initialize(resource:, columns:, restful_actions:)
+  def initialize(resource:, columns:, restful_actions: [])
     @resource = resource
     @columns = columns
     @restful_actions = restful_actions
+
+    super
   end
 
   private
 
   attr_reader :resource, :columns, :restful_actions
 
-  def render_cell(resource, column)
-    column_value = if column[:value] == :id
-                     column_for_show? ? link_to(resource.id, resource) : resource.id
+  def cell_value(resource, column)
+    column_value = if id_column?(column)
+                     if column_for_show?
+                       link_to resource.id, resource
+                     else
+                       resource.id
+                     end
                    else
                      resource.send(column[:value])
                    end
 
     format_money(column_value)
+  end
+
+  def id_column?(column)
+    column[:value] == :id
   end
 
   def column_for_show?
@@ -32,7 +42,7 @@ class TableRowComponent < ApplicationComponent
   end
 
   def format_money(value)
-    return value unless value.class == Money
+    return value unless value.instance_of?(Money)
 
     humanized_money_with_symbol(value)
   end

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html class="" lang="en">
   <head>
-    <title><%=
-      "#{Rails.app_class.to_s.deconstantize.underscore.humanize.titleize} - #{yield(:title)}" %></title>
+    <title><%= page_title local_title: yield(:title)  %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= action_cable_meta_tag %>
@@ -14,7 +13,8 @@
     <!-- <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> -->
     <%= javascript_packs_with_chunks_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body class="<%= yield :body_class %>">
+  <body class="<%= class_names yield(:body_class) %>"
+    data-controller="radiolabel">
     <%= render SidebarComponent.new if user_signed_in? %>
 
     <!-- MAIN CONTENT ================================================== -->

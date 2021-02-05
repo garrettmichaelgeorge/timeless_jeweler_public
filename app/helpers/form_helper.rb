@@ -1,9 +1,6 @@
 module FormHelper
-  def setup_item(item)
-    item.jewelry_item       ||= Piece.new
-    item.gemstone_item      ||= Gemstone.new
-    item.miscellaneous_item ||= MiscellaneousItem.new
-
-    item
+  def custom_form_for(object, *args, &block)
+    options = args.extract_options!
+    simple_form_for(object, *(args << options.merge(builder: CustomFormBuilder)), &block)
   end
 end

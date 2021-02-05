@@ -1,16 +1,18 @@
 <div id="item-category-selector-wrapper" class="text-center">
-  <div class="btn-group btn-group-toggle" data-toggle="buttons"
+  <div class="btn-group" data-toggle="buttons"
                                           role="group"
                                           aria-label="Item category selector">
 
     <% model_categories.each do |category| %>
       <label class="btn btn-white">
         <%= tag.input id: id_for(category),
+                      class: 'btn-check',
                       value: category,
                       type: 'radio',
                       name: 'options',
+                      autocomplete: false,
                       data: { reflex: 'input->Intake#change_category' } %>
-        <span class="pr-2">
+        <span class="pe-2">
           <%= icon_for(category) %>
         </span>
         <%= label_text_for(category) %>

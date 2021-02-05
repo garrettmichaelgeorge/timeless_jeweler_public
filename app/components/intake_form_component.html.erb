@@ -2,7 +2,7 @@
 
   <% if item.category %>
 
-    <%= simple_form_for item, wrapper_mappings: wrapper_mappings do |f| %>
+    <%= simple_form_for item do |f| %>
       <%= f.error_notification %>
 
       <%= f.hidden_field :category %>
@@ -10,7 +10,8 @@
       <section id="intake-form-basic-fields">
         <%= f.input :name %>
         <%= f.input :description %>
-        <%= f.association :style, label_method: :name, prompt: 'Please select a style' %>
+        <%= f.association :style, label_method: :name, prompt: 'Please select a style',
+                                  input_html: { class: 'with-select2' }%>
 
         <div class="form-row">
           <%= f.input :cost, wrapper_html: { class: 'col-md-6' } %>

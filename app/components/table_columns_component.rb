@@ -1,2 +1,0 @@
-class TableColumnsComponent < ApplicationComponent
-end
