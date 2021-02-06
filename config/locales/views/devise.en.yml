@@ -1,0 +1,6 @@
+en:
+  devise:
+    sessions:
+      new:
+        title: 'Sign in'
+        subtitle: 'Authentication required'

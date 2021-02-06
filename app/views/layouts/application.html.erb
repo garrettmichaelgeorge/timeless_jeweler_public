@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="" lang="en">
   <head>
-    <title><%= page_title local_title: yield(:title)  %></title>
+    <title><%= page_title(local_title: yield(:title)) %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= action_cable_meta_tag %>
@@ -10,23 +10,26 @@
     <%= render 'layouts/components/shim' %>
 
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <!-- <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> -->
     <%= javascript_packs_with_chunks_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body class="<%= class_names yield(:body_class) %>"
-    data-controller="radiolabel">
+  <body class="<%= class_names yield(:body_class) %>" data-controller="radiolabel">
     <%= render SidebarComponent.new if user_signed_in? %>
 
     <!-- MAIN CONTENT ================================================== -->
-    <main role="main" class="main-content pb-6">
-      <div class="container-fluid">
+    <%= tag.main class: (content_for?(:main_class) ?
+                          content_for(:main_class) :
+                          'main-content pb-6'),
+                          style: 'd-block' do %>
+      <%= tag.div class: (content_for?(:container_class) ?
+                            content_for(:container_class) :
+                            'container-fluid') do %>
 
         <%= render FlashComponent.new(flash: flash) %>
 
         <%= yield %>
 
-      </div>
-    </main>
+      <% end %>
+    <% end %>
 
     <!-- Rails debug (development only) -->
     <%= render DebugComponent.new(params: params) %>
