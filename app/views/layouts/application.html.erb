@@ -18,8 +18,7 @@
     <!-- MAIN CONTENT ================================================== -->
     <%= tag.main class: (content_for?(:main_class) ?
                           content_for(:main_class) :
-                          'main-content pb-6'),
-                          style: 'd-block' do %>
+                          'main-content pb-6 min-vh-100') do %>
       <%= tag.div class: (content_for?(:container_class) ?
                             content_for(:container_class) :
                             'container-fluid') do %>

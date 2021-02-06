@@ -3,11 +3,11 @@
 .row.justify-content-center
   .col-12.col-md-5.col-xl-4.my-5
     / Heading
-    %h1.display-4.text-center.mb-3= yield :title
+    %h1.display-4.text-center.mb-3= t('.title')
     / Subheading
     %p.text-muted.text-center.mb-5= t('.subtitle')
 
-    = simple_form_for resource, as: resource_name, url: session_path(resource_name), wrapper: :floating_labels_form  do |f|
+    = simple_form_for resource, as: resource_name, url: session_path(resource_name) do |f|
       .form-group.form-inputs
         = f.input :email,
           type: :email,
