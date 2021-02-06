@@ -10,12 +10,16 @@
       <section id="intake-form-basic-fields">
         <%= f.input :name %>
         <%= f.input :description %>
-        <%= f.association :style, label_method: :name, prompt: 'Please select a style',
-                                  input_html: { class: 'with-select2' }%>
+        <%= f.association :style, label_method: :name,
+                                  prompt: 'Please select a style' %>
 
-        <div class="form-row">
-          <%= f.input :cost, wrapper_html: { class: 'col-md-6' } %>
-          <%= f.input :price, wrapper_html: { class: 'col-md-6' } %>
+        <div class="row">
+          <div class="col-md">
+            <%= f.input :cost %>
+          </div>
+          <div class="col-md">
+            <%= f.input :price %>
+          </div>
         </div>
 
         <%= f.input :notes %>

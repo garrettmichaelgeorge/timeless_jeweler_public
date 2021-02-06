@@ -9,14 +9,12 @@ class IntakeFormComponent < ApplicationComponent
 
   attr_reader :item
 
-  def item_fields_component
-    "ProductFields::#{item.class}Component".constantize
-  end
+  def item_fields_component = "ProductFields::#{item.class}Component".constantize
+
+  def item_signed_id = item.to_sgid.to_s
 
   def data_form
     { controller: 'nested-form',
       nested_form_wrapper_selector_value: '.nested-form-wrapper' }
   end
-
-  def item_signed_id = item.to_sgid.to_s
 end
