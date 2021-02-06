@@ -429,7 +429,7 @@ SimpleForm.setup do |config|
   end
 
   # The default wrapper to be used by the FormBuilder.
-  config.default_wrapper = :floating_labels_form
+  config.default_wrapper = :vertical_form
 
   # Custom wrappers for input types. This should be a hash containing an input
   # type as key and the wrapper that will be used for all inputs with specified type.
@@ -450,6 +450,7 @@ SimpleForm.setup do |config|
     check_boxes: :custom_collection,
     date: :custom_multi_select,
     datetime: :custom_multi_select,
+    select: :custom_multi_select,
     file: :custom_file,
     radio_buttons: :custom_collection,
     range: :custom_range,

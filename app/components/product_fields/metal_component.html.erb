@@ -1,21 +1,23 @@
 <%= content_tag :fieldset, id: "metal_fields",
-                           class: "nested-fields form-group",
+                           class: "nested-fields mb-3",
                            data: { new_record: new_record? } do %>
   <legend><small>Metal</small></legend>
 
-  <div class="form-row">
+  <div class="row">
     <%= f.association :category, label_method: :name,
-                                 prompt: "Category", label: false,
-                                 input_html: { class: 'custom-select' },
-                                 wrapper_html: { class: 'col' } %>
-    <%= f.association :color, label_method: :name,
-                              prompt: "Color", label: false,
-                              input_html: { class: 'custom-select' },
-                              wrapper_html: { class: 'col' } %>
-    <%= f.association :purity, label_method: :value,
-                               prompt: "Purity", label: false,
-                               input_html: { class: 'custom-select' },
-                               wrapper_html: { class: 'col' } %>
+                                 prompt: "Choose a metal",
+                                 label: false,
+                                 wrapper_html: { class: 'col-md' } %>
+
+    <%= f.association :color,    label_method: :name,
+                                 prompt: "Color",
+                                 label: false,
+                                 wrapper_html: { class: 'col-md' } %>
+
+    <%= f.association :purity,   label_method: :value,
+                                 prompt: "Purity",
+                                 label: false,
+                                 wrapper_html: { class: 'col-md' } %>
 
     <div class="col-auto">
       <%= render Buttons::RemoveNestedFieldComponent.new %>
