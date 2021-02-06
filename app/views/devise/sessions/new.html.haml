@@ -1,16 +1,14 @@
-- provide(:title, 'Sign in')
+- provide(:title, t('.title'))
 - provide(:body_class, 'bg-auth border-top border-top-2 border-primary')
-- subtitle = 'Authentication required.' 
-/ 
 
 .d-flex.justify-content-center.align-items-center.vh-100
   .col-12.col-md-5.col-xl-4.my-5
     / Heading
-    %h1.display-4.text-center.mb-3= yield :title 
+    %h1.display-4.text-center.mb-3= yield :title
     / Subheading
-    %p.text-muted.text-center.mb-5= subtitle 
+    %p.text-muted.text-center.mb-5= t('.subtitle')
 
-    = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    = simple_form_for resource, as: resource_name, url: session_path(resource_name), wrapper: :floating_labels_form  do |f|
       .form-group.form-inputs
         = f.input :email,
           required: false,
@@ -22,6 +20,6 @@
         = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
 
       .form-actions
-        = f.submit 'Sign in', class: 'btn btn-lg btn-block btn-primary mb-3'
+        = f.submit 'Sign in', class: 'btn btn-lg w-100 btn-primary mb-3'
 
     = render "devise/shared/links"
