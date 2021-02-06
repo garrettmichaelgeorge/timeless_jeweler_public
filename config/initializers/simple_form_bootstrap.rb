@@ -10,7 +10,7 @@
 # components.
 # See https://github.com/heartcombo/simple_form#custom-components
 # to know more about custom components.
-Dir[Rails.root.join('lib/simple_form_components/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('app/lib/simple_form/custom_components/**/*.rb')].each { |f| require f }
 
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
@@ -21,7 +21,7 @@ SimpleForm.setup do |config|
   config.boolean_label_class = 'form-check-label'
 
   # How the label text should be generated altogether with the required text.
-  config.label_text = ->(label, required, _explicit_label) { "#{label} #{required}" }
+  config.label_text = ->(label, required, _explicit_label) { "#{label}#{required}" }
 
   # Define the way to render check boxes / radio buttons with labels.
   config.boolean_style = :inline
@@ -380,7 +380,7 @@ SimpleForm.setup do |config|
 
   # Input Group - custom component
   # see example app and config at https://github.com/rafaelfranca/simple_form-bootstrap
-  config.wrappers :input_group, tag: 'div', class: 'mb-3', error_class: 'form-group-invalid',
+  config.wrappers :input_group, tag: 'div', class: 'form-floating mb-3', error_class: 'form-group-invalid',
                                 valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
@@ -429,7 +429,7 @@ SimpleForm.setup do |config|
   end
 
   # The default wrapper to be used by the FormBuilder.
-  config.default_wrapper = :vertical_form
+  config.default_wrapper = :floating_labels_form
 
   # Custom wrappers for input types. This should be a hash containing an input
   # type as key and the wrapper that will be used for all inputs with specified type.
