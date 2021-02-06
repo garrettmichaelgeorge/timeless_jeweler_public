@@ -2,7 +2,11 @@ module IconHelper
   CUSTOM_MAPPINGS = {
     piece: :watch,
     loose_gemstone: :square,
-    miscellaneous_item: :shopping_bag
+    miscellaneous_item: :shopping_bag,
+    notice: :alert_circle,
+    success: :check_square,
+    error: :alert_triangle,
+    alert: :alert_octagon
   }
 
   def icon_for(custom_name)

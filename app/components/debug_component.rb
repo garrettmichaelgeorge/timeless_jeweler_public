@@ -1,11 +1,15 @@
 class DebugComponent < ApplicationComponent
-  attr_reader :params
-
   def initialize(params:)
     @params = params
+
+    super
   end
 
   def render?
     Rails.env.development?
   end
+
+  private
+
+  attr_reader :params
 end

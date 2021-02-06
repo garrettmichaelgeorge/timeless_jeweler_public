@@ -1,4 +1,11 @@
 class FlashComponent < ApplicationComponent
+  CSS_CLASSES = {
+    notice: 'success',
+    success: 'success',
+    error: 'danger',
+    alert: 'danger'
+  }
+
   def initialize(flash:)
     @flash = flash
   end
@@ -11,25 +18,21 @@ class FlashComponent < ApplicationComponent
 
   attr_reader :flash
 
-  def id_for(message_type)
-    "flash_#{message_type}"
-  end
+  def id_for(message_type) = "flash_#{message_type}"
 
   def css_class_for(message_type)
-    case message_type.to_sym
-    when :notice then 'alert alert-success alert-dismissable fade show'
-    when :success then 'alert alert-success alert-dismissable fade show'
-    when :error then 'alert alert-danger alert-dismissable fade show'
-    when :alert then 'alert alert-danger alert-dismissable fade show'
-    end
+    class_names 'alert', alert_type(message_type), 'alert-dismissable', 'fade', 'show'
   end
 
-  def icon_for(message_type)
-    case message_type.to_sym
-    when :notice then 'fe fe-alert-circle'
-    when :success then 'fe fe-check-square'
-    when :error then 'fe fe-alert-triangle'
-    when :alert then 'fe fe-alert-octagon'
-    end
+  def alert_type(message_type)
+    "#{alert_base}-#{alert_modifier(message_type)}"
+  end
+
+  def alert_modifier(message_type)
+    CSS_CLASSES.fetch(message_type.to_sym)
+  end
+
+  def alert_base
+    'alert'
   end
 end
