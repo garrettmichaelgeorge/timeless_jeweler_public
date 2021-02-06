@@ -16,13 +16,13 @@
 require 'test_helper'
 
 class EmailAddressTest < ActiveSupport::TestCase
+  subject { FactoryBot.build(:email_address) }
+
   context 'associations' do
     should belong_to(:emailable)
   end
 
   context 'validations' do
-    subject { FactoryBot.build(:email_address) }
-
     should validate_presence_of(:email_address)
     should validate_length_of(:email_address).is_at_most(255)
     should validate_uniqueness_of(:email_address).ignoring_case_sensitivity
