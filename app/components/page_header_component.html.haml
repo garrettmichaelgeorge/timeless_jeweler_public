@@ -1,27 +1,28 @@
-.header{class: wrapper_class}
-  .header-body
-    .row.align-items-end
-      .col
-        / Pretitle
-        %h6.header-pretitle= pre_title
-        / Title
-        %h1.header-title= title
-      .col-auto
-        / Button
-        - buttons&.each do |button|
-          = link_to button[:text], button[:link], class: "btn btn-primary lift"
+.header
+  .container-fluid
+    .header-body
+      .row.align-items-center
+        .col
+          / Pretitle
+          %h6.header-pretitle= pre_title
+          / Title
+          %h1.header-title= title
+        .col-auto
+          / Button
+          - buttons&.each do |button|
+            = link_to button[:text], button[:link], class: "btn btn-primary lift"
 
-        / Tabs - primary
-        %ul.nav.nav-tabs.nav-overflow.header-tabs
-          - tabs&.each do |tab|
-            %li.nav-item
-              = link_to tab[:name], tab[:link], class: "nav-link"
+          / Tabs - primary
+          %ul.nav.nav-tabs.nav-overflow.header-tabs
+            - tabs&.each do |tab|
+              %li.nav-item
+                = link_to tab[:name], tab[:link], class: "nav-link"
 
-      / Tabs - secondary
-      - if buttons_and_tabs?
-        .row
-          .col-12
-            %ul.nav.nav-tabs.nav-overflow.header-tabs
-              - tabs.each do |tab|
-                %li.nav-item
-                  = link_to tab[:name], tab[:link], class: "nav-link"
+        / Tabs - secondary
+        - if buttons_and_tabs?
+          .row
+            .col-12
+              %ul.nav.nav-tabs.nav-overflow.header-tabs
+                - tabs.each do |tab|
+                  %li.nav-item
+                    = link_to tab[:name], tab[:link], class: "nav-link"
