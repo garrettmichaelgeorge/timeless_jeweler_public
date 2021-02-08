@@ -143,6 +143,6 @@ Rails.application.configure do
 
   # Guard against header attacks on production
   # Read more: https://edgeguides.rubyonrails.org/configuring.html#configuring-middleware
-  config.application.hosts << 'admin.timelessjeweler.com'
-  config.application.hosts << 'iowhlbk.herokuapp.com'
+  config.hosts << 'admin.timelessjeweler.com'
+  config.hosts << 'iowhlbk.herokuapp.com'
 end
