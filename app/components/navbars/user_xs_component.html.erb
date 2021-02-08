@@ -18,7 +18,10 @@
     <!-- Menu -->
     <ul class="dropdown-menu dropdown-menu-end"
         aria-labelledby="sidebarIconCopy">
-      <li class="dropdown-header">Account</li>
+      <li class="dropdown-header">
+        <%= t 'components.user.menu_title' %>
+      </li>
+
       <li><%= link_to 'Edit profile', edit_user_registration_path, class: "dropdown-item" %></li>
       <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
     </ul>
