@@ -10,7 +10,13 @@ module IconHelper
   }
 
   def icon_for(custom_name)
-    icon(custom_icon_name(custom_name))
+    icon(fetch_icon_name(custom_name))
+  end
+
+  def sidebar_icon(...)
+    tag.span class: 'icon' do
+      icon(...)
+    end
   end
 
   def icon(name)
@@ -19,7 +25,7 @@ module IconHelper
 
   private
 
-  def custom_icon_name(custom_name)
+  def fetch_icon_name(custom_name)
     CUSTOM_MAPPINGS.fetch(formatted_custom_icon_name(custom_name)) { '' }
   end
 
@@ -28,7 +34,7 @@ module IconHelper
   end
 
   def icon_class_for(name)
-    class_names base_class, modifier_class(name)
+    class_names(base_class, modifier_class(name))
   end
 
   def base_class

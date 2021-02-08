@@ -27,7 +27,7 @@
 
       <hr />
 
-      <section id="intake-form-special-fields">
+      <section id="intake-form-profile-fields">
         <%= f.simple_fields_for :profile, f.object.profile do |profile_form| %>
           <%= render item_fields_component.new(f: profile_form) %>
         <% end %>

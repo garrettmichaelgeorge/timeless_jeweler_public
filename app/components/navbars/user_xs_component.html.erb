@@ -1,9 +1,7 @@
 <!-- User (xs) -->
 <div class="navbar-user d-md-none">
-
   <!-- Dropdown -->
   <div class="dropdown">
-
     <!-- Toggle -->
     <a href="#" id="sidebarIcon"
                 class="dropdown-toggle"
@@ -17,15 +15,12 @@
         </span>
       </div>
     </a>
-
     <!-- Menu -->
-    <div class="dropdown-menu dropdown-menu-right"
-         aria-labelledby="sidebarIcon">
-      <%= link_to 'Edit profile', edit_user_registration_path, class: "dropdown-item" %>
-      <%= tag.hr class: 'dropdown-divider' %>
-      <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-    </div>
-
+    <ul class="dropdown-menu dropdown-menu-end"
+        aria-labelledby="sidebarIconCopy">
+      <li class="dropdown-header">Account</li>
+      <li><%= link_to 'Edit profile', edit_user_registration_path, class: "dropdown-item" %></li>
+      <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
+    </ul>
   </div>
-
 </div>

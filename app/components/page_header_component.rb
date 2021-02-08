@@ -1,6 +1,5 @@
 class PageHeaderComponent < ApplicationComponent
   def initialize(title:, pre_title:, wrapper_class: '', buttons: [], tabs: [])
-    @wrapper_class = wrapper_class
     @title = title
     @pre_title = pre_title
     @buttons = buttons

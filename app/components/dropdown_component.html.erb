@@ -1,0 +1,25 @@
+  <!-- Dropup -->
+  <div class="dropup">
+    <!-- Toggle -->
+    <a href="#" id="sidebarIconCopy"
+                data-bs-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                disabled>
+      <%= sidebar_icon :globe %>
+    </a>
+
+    <!-- Menu -->
+    <ul class="dropdown-menu dropdown-menu-end"
+        aria-labelledby="sidebarIconCopy">
+
+      <%= tag.li 'User', class: 'dropdown-header' if header? %>
+
+      <% menu_items.each do |menu_item| %>
+        <%= tag.li do %>
+          <%= link_to menu_item.text, menu_item.url, **menu_item.options %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>

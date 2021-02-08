@@ -1,8 +1,14 @@
 <!-- Flash -->
 <% flash.each do |message_type, message| %>
-  <%= tag.aside id: id_for(message_type), class: css_class_for(message_type), role: 'alert' do %>
+  <% next if message_type == 'timedout' %>
+
+  <%= tag.aside id: id_for(message_type),
+                class: css_classes_for(message_type),
+                role: 'alert' do %>
       <%= icon_for message_type %>
       <%= message %>
-      <%= tag.button class: 'btn-close', data: { bs: { dismiss: 'alert' } }, aria: { label: 'Close' } %>
+      <%= tag.button class: 'btn-close',
+                     data: { bs: { dismiss: 'alert' } },
+                     aria: { label: 'Close' } %>
     <% end %>
 <% end %>

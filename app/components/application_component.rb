@@ -1,5 +1,5 @@
 class ApplicationComponent < ViewComponent::Base
-  delegate :icon, :icon_for, :class_names, to: :helpers
+  delegate :icon, :icon_for, :sidebar_icon, :class_names, to: :helpers
 
   def acts_like_view_component?; end
 

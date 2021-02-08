@@ -1,29 +1,29 @@
 <div id="sidebarUser" class="navbar-user d-none d-md-flex">
 
   <!-- Icon -->
-  <a class="navbar-user-link" href="#sidebarModalActivity" data-toggle="modal">
-    <span class="icon">
-      <%= icon :bell %>
-    </span>
+  <a href="#sidebarModalActivity" class="navbar-user-link"
+                                  data-bs-toggle="modal">
+    <%= sidebar_icon :bell %>
   </a>
 
   <!-- Dropup -->
   <div class="dropup">
     <!-- Toggle -->
-    <a id="sidebarIconCopy" class="dropdown-toggle" href="#" data-toggle="dropdown"
-       role="button" aria-haspopup="true" aria-expanded="false">
-      <span class="icon">
-        <%= icon :globe %>
-      </span>
+    <a href="#" id="sidebarIconCopy"
+                data-bs-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                disabled>
+      <%= sidebar_icon :globe %>
     </a>
 
     <!-- Menu -->
-    <div class="dropdown-menu" aria-labelledby="sidebarIconCopy">
-      <%= link_to 'Edit profile', edit_user_registration_path, class: "dropdown-item" %>
-
-      <hr class="dropdown-divider">
-
-      <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-    </div>
+    <ul class="dropdown-menu dropdown-menu-end"
+        aria-labelledby="sidebarIconCopy">
+      <li class="dropdown-header">User</li>
+      <li><%= link_to 'Edit profile', edit_user_registration_path, class: "dropdown-item" %></li>
+      <li><%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
+    </ul>
   </div>
 </div>
