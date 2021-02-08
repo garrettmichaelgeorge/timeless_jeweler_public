@@ -1,6 +1,6 @@
 class EmailValidator < ActiveModel::EachValidator
   # credit: Michael Hartl, Rails Tutorial
-  VALIDATOR_REGEX = /
+  REGEX = /
     \A          # beginning of string
     [\w+\-.]+   # local name
     @           # "@"
@@ -23,7 +23,7 @@ class EmailValidator < ActiveModel::EachValidator
   private
 
   def valid_email?(value)
-    value =~ VALIDATOR_REGEX
+    value =~ REGEX
   end
 
   def error_msg
