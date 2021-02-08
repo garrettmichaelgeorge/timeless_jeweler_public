@@ -4,6 +4,9 @@ class FlashComponent < ApplicationComponent
                   error: 'danger',
                   alert: 'danger' }.freeze
 
+  delegate :close_button,
+           to: :helpers
+
   def initialize(flash:)
     @flash = flash
 
@@ -23,7 +26,7 @@ class FlashComponent < ApplicationComponent
   def css_classes_for(message_type)
     class_names('alert',
                 alert_css_class(message_type),
-                'alert-dismissable',
+                'alert-dismissible',
                 'fade',
                 'show')
   end
@@ -37,6 +40,6 @@ class FlashComponent < ApplicationComponent
   end
 
   def alert_modifier_class(message_type)
-    CSS_CLASSES.fetch(message_type.to_sym)
+    CSS_CLASSES.fetch(message_type.to_sym) { '' }
   end
 end

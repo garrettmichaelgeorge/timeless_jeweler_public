@@ -5,10 +5,10 @@
   <%= tag.aside id: id_for(message_type),
                 class: css_classes_for(message_type),
                 role: 'alert' do %>
+
       <%= icon_for message_type %>
       <%= message %>
-      <%= tag.button class: 'btn-close',
-                     data: { bs: { dismiss: 'alert' } },
-                     aria: { label: 'Close' } %>
+      <%= close_button(dismiss: 'alert') %>
+
     <% end %>
 <% end %>
