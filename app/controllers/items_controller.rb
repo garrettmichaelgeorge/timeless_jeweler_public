@@ -36,9 +36,10 @@ class ItemsController < ApplicationController
     redirect_to item, success: t('success')
   end
 
-  def create_item_failed(item:)
+  def create_item_failed(item:, attrs_to_validate: item_params)
     @item = item
     render :new
+    # broadcast_errors @item, attrs_to_validate
     flash.now[:info] = t('failure')
   end
 
@@ -62,6 +63,12 @@ class ItemsController < ApplicationController
   end
 
   private
+
+  def item_presenter_for(item) = Items::Presenter.new(item)
+
+  def item_params = item_guard.protect
+
+  def new_item = item_creator.item
 
   def set_item
     # https://docs.stimulusreflex.com/working-with-forms#the-params-accessor
@@ -88,15 +95,7 @@ class ItemsController < ApplicationController
     @item_destroyer ||= Items::Destroyer.new(self)
   end
 
-  def item_presenter_for(item)
-    Items::Presenter.new(item)
-  end
-
-  def item_params
-    Items::Guard.new(context: self).protect
-  end
-
-  def new_item
-    item_creator.item
+  def item_guard
+    @item_guard ||= Items::Guard.new(context: self)
   end
 end
