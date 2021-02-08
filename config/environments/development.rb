@@ -43,6 +43,9 @@ Rails.application.configure do
                                                    port: 3000 }
   config.action_mailer.default_url_options = config.action_controller.default_url_options
 
+  # Allow connections from within network (for previewing on mobile devices)
+  config.web_console.whitelisted_ips = [ENV.fetch('LOCAL_NETWORK_IP_ADDRESS') { '' }]
+
   # Print deprecation notices to the Rails logger.
   # config.active_support.deprecation = :log
   config.active_support.deprecation = false
@@ -66,12 +69,9 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Raises error for missing translations.
-  # config.action_view.raise_on_missing_translations = true
+  config.action_view.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-
-  # Allow connections from within network (for previewing on mobile devices)
-  config.web_console.whitelisted_ips = ['192.168.0.0/16']
 end

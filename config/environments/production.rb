@@ -71,6 +71,7 @@ Rails.application.configure do
                        key: Rails.application.credentials.app_session_key,
                        serializer: :json,
                        redis: {
+                         driver: :hiredis,
                          expire_after: 1.year,
                          ttl: 1.year,
                          key_prefix: 'app:session:',
@@ -135,5 +136,13 @@ Rails.application.configure do
   # pass the right values to any helpers that need to build URL paths based on
   # the current application environment
   # https://docs.stimulusreflex.com/appendices/deployment#set-your-default_url_options-for-each-environment
-  config.action_controller.default_url_options = { host: 'https://iowhlbk.herokuapp.com' }
+  config.action_controller.default_url_options = { host: 'iowhlbk.herokuapp.com' }
+
+  # Ensure that ActionMailer's default URL options are the same as ActionController's
+  config.action_mailer.default_url_options = config.action_controller.default_url_options
+
+  # Guard against header attacks on production
+  # Read more: https://edgeguides.rubyonrails.org/configuring.html#configuring-middleware
+  config.application.hosts << 'admin.timelessjeweler.com'
+  config.application.hosts << 'iowhlbk.herokuapp.com'
 end

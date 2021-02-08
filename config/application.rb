@@ -30,5 +30,14 @@ module TimelessJeweler
     # This is for e.g. config/locales/models and config/locales/views
     # Read more: https://rails.rubystyle.guide/#organize-locale-files
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+
+    config.action_dispatch.default_headers.merge!('Cache-Control' => 'no-store, no-cache')
+
+    config.generators do |g|
+      # Don't generate stylesheets by default
+      g.stylesheets = false
+    end
+
+    config.action_view.image_loading = 'lazy'
   end
 end
