@@ -12,8 +12,6 @@ class IntakeReflex < ApplicationReflex
   include Formable
 
   def change_category
-    puts "@auth_token = #{@auth_token}"
-
     category = element.value
 
     morph '#intake-form-wrapper',

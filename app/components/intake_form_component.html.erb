@@ -37,7 +37,8 @@
 
       <%= f.button :submit, class: "btn-primary" %>
       <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
-      <%= hidden_field_tag :authenticity_token, @auth_token %>
+
+      <%= hidden_field_tag :authenticity_token, auth_token %>
     <% end %>
 
   <% end %>

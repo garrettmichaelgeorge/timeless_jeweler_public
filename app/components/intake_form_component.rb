@@ -8,7 +8,11 @@ class IntakeFormComponent < ApplicationComponent
 
   private
 
-  attr_reader :item, :auth_token
+  attr_reader :item
+
+  def auth_token
+    @auth_token ||= form_authenticity_token
+  end
 
   def item_fields_component = "ProductFields::#{item.class}Component".constantize
 
