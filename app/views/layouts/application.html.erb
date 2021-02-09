@@ -12,6 +12,7 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_packs_with_chunks_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
+
   <body class="<%= class_names yield(:body_class) %>" data-controller="radiolabel">
     <%= render SidebarComponent.new if user_signed_in? %>
 
