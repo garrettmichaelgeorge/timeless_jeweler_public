@@ -4,18 +4,13 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.json
   def index
-    @people = Person.all.includes(:party)
+    @people = Person.all.includes(:party).order(:id)
   end
 
   # GET /people/1
   # GET /people/1.json
   def show
     @person = Person.with_contact_info.find(params[:id])
-    @household = @person.household
-    @addresses = @person.addresses
-    @email_addresses = @person.email_addresses
-    @phone_numbers = @person.phone_numbers
-    @sales = @person.sales
   end
 
   # GET /people/new
