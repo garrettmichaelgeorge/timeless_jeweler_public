@@ -21,10 +21,7 @@ class Party < ApplicationRecord
   has_many :purchase_line_items, through: :purchases, source: :line_items
   has_many :items, through: :purchase_line_items
 
-  # delegate :name, to: :specific
-  def name
-    specific.name
-  end
+  delegate :name, to: :specific
   alias party_name name
 
   def item_names

@@ -53,12 +53,13 @@ class Person < ApplicationRecord
 
   delegate :anniversary, to: :household,
                          allow_nil: true
+
   delegate :members, :member_ids, :member_names,
            to: :household,
-           prefix: :household, allow_nil: true
+           prefix: true, allow_nil: true
 
-  delegate :purchase_history, :products, :product_ids,
-           :product_names, :sales, :occurred_at,
+  delegate :purchase_history, :items, :item_ids,
+           :item_names, :purchases, :occurred_at,
            to: :party,
            allow_nil: true
 
@@ -75,10 +76,7 @@ class Person < ApplicationRecord
   def full_name
     "#{first_name} #{last_name}"
   end
-
-  # Provide full name when party.specific.name is called.
-  # This allows us to call #name method on party#specific without knowing the actable_type
-  alias name full_name
+  alias name full_name # Duck-type for 'nameable'
 
   def household_name
     household.household_name if household_id?

@@ -68,18 +68,18 @@
                 %th.mb-0.text-muted Total
                 %th.mb-0.text-muted Item
             %tbody
-              - @person.sales.each do |sale|
+              - @person.purchases.each do |purchase|
                 %tr
                   -# - values[:purchase_history].keys.each do |value|
                   / Value
                   %td.small
-                    = link_to sale.id, sale
-                  %td.small= sale.occurred_at
-                  %td.small= humanized_money_with_symbol(sale.total)
+                    = link_to purchase.id, purchase
+                  %td.small= purchase.occurred_at
+                  %td.small= humanized_money_with_symbol(purchase.total)
                   %td.small
-                    - sale.items.each_with_index do |item, i|
+                    - purchase.items.each_with_index do |item, i|
                       = link_to item.id, item, data: { 'tippy-content' => item.name }, class: "tippy-instance"
-                      = "| " unless i == sale.items.size - 1
+                      = "| " unless i == purchase.items.size - 1
 
 .row.justify-content-end
   .col.col-2
