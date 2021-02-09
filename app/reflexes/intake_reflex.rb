@@ -9,7 +9,11 @@ class IntakeReflex < ApplicationReflex
   #   - element - a Hash like object that represents the HTML element that triggered the reflex
   #   - params - parameters from the element's closest form (if any)
 
+  include Formable
+
   def change_category
+    puts "@auth_token = #{@auth_token}"
+
     category = element.value
 
     morph '#intake-form-wrapper',
@@ -19,7 +23,7 @@ class IntakeReflex < ApplicationReflex
   private
 
   def render_intake_form_for(item)
-    render IntakeFormComponent.new(item: item)
+    render IntakeFormComponent.new(item: item, auth_token: @auth_token)
   end
 
   def build_item(category)
