@@ -1,5 +1,6 @@
 class ApplicationComponent < ViewComponent::Base
-  delegate :icon, :icon_for, :sidebar_icon, :class_names, to: :helpers
+  delegate :icon, :icon_for, :sidebar_icon, :class_names,
+           to: :helpers
 
   def acts_like_view_component?; end
 
@@ -11,13 +12,12 @@ class ApplicationComponent < ViewComponent::Base
 
     fields = f.simple_fields_for(association, new_object, child_index: new_object.object_id) do |builder|
       fields_component = fields_component_from(builder, association)
-      render(fields_component.new(f: builder))
+      render fields_component.new(f: builder)
     end
 
-    css_class = 'btn btn-small btn-outline-secondary add_fields'
-    link_to(name, '#', class: css_class,
+    link_to name, '#', class: 'btn btn-small btn-outline-secondary add_fields',
                        data: { id: new_object.object_id,
-                               fields: fields.gsub('\n', '') })
+                               fields: fields.gsub('\n', '') }
   end
 
   private
