@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+# Automatically deploy to production
+# Keep this up to date as deployment step changes
+system('git push && git push heroku')
