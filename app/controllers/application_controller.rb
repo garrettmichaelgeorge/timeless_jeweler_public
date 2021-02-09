@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true, with: :exception
 
   rescue_from ActionController::InvalidAuthenticityToken do
+    reset_session
     redirect_to request.referrer, alert: t('devise.failure.timeout')
   end
 end
