@@ -2,7 +2,7 @@
 
   <% if item.category %>
 
-    <%= simple_form_for item do |f| %>
+    <%= simple_form_for item, authenticity_token: false do |f| %>
       <%= f.error_notification %>
 
       <%= f.hidden_field :category %>
@@ -37,6 +37,7 @@
 
       <%= f.button :submit, class: "btn-primary" %>
       <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
+      <%= hidden_field_tag :authenticity_token, @auth_token %>
     <% end %>
 
   <% end %>

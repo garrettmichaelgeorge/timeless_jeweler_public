@@ -1,13 +1,14 @@
 class IntakeFormComponent < ApplicationComponent
-  def initialize(item:)
+  def initialize(item:, auth_token: nil)
     @item = item
+    @auth_token = auth_token
 
     super
   end
 
   private
 
-  attr_reader :item
+  attr_reader :item, :auth_token
 
   def item_fields_component = "ProductFields::#{item.class}Component".constantize
 

@@ -12,7 +12,7 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @item = new_item
+    @item = item_creator.item
   end
 
   def edit; end
@@ -67,8 +67,6 @@ class ItemsController < ApplicationController
   def item_presenter_for(item) = Items::Presenter.new(item)
 
   def item_params = item_guard.protect
-
-  def new_item = item_creator.item
 
   def set_item
     # https://docs.stimulusreflex.com/working-with-forms#the-params-accessor
