@@ -71,6 +71,11 @@ class Item < ApplicationRecord
     "#{name} (#{price})"
   end
 
+  def sku
+    # TODO: finish implementing (see Item::SKU)
+    SKU.new(context: self).to_s
+  end
+
   class << self
     def categories
       CATEGORIES
