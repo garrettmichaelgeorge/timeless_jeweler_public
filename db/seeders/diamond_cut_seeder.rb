@@ -2,11 +2,13 @@ require_relative 'application_seeder'
 
 class Seeders
   class DiamondCutSeeder < ApplicationSeeder
-    GRADES = ['Excellent',
-              'Very Good',
-              'Good',
-              'Fair',
-              'Poor'].freeze
+    GRADES = [
+      'Excellent',
+      'Very Good',
+      'Good',
+      'Fair',
+      'Poor'
+    ].freeze
 
     def execute
       GRADES.each { |grade| seed_with_value(Diamond::Cut, grade: grade) }

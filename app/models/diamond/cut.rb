@@ -19,6 +19,8 @@ class Diamond::Cut < ApplicationRecord
   has_many :gradings, inverse_of: :cut, class_name: 'Grading'
   has_many :diamonds, through: :gradings
 
+  alias_attribute :name, :grade
+
   class Grading < ApplicationRecord
     self.table_name = 'diamond_cut_gradings'
 

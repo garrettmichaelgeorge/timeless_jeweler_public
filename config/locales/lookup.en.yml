@@ -1,0 +1,275 @@
+en:
+  lookup:
+    item_sources:
+      - E
+      - B
+      - T
+
+    item_styles:
+      - 21st Century
+      - Art Deco
+      - Art Nouveau
+      - Arts and Crafts
+      - Baroque
+      - Belle Époque
+      - Cameo
+      - Edwardian
+      - Egyptian Revival
+      - Ethnic, Tribal
+      - Etruscan Revival
+      - Georgian
+      - Gothic Revival
+      - Greek Revival
+      - Holiday
+      - Late 20th Century
+      - Medieval
+      - Micro-mosaic
+      - Mid-Century
+      - Modernist
+      - Mourning
+      - Native American
+      - OOAK One-of-a-Kind
+      - Renaissance Revival
+      - Retro
+      - Revival
+      - Russian Empire
+      - Russian Revival
+      - Victorian
+      - Victorian Revival
+      - Wedding & Bridal
+      - Aesthetic Movement
+      - American Classical
+      - American Expressionism
+      - Ancient
+      - Chinese Export
+      - Chinoiserie
+      - Dutch, Flemish
+      - Edo
+      - Empire
+      - Ethnic Art
+      - Handcrafted
+      - Ming
+      - Modernism
+      - Napoleon I
+      - Portrait
+      - Pre-Columbian
+      - Primitive
+      - Qing
+      - Romantic
+      - Romanticism
+      - Scandinavian Modern
+      - Streamline Moderne
+      - William IV
+
+    piece_categories:
+      - ring
+      - necklace
+      - pendant
+      - bracelet
+      - brooch
+      - earring
+      - watch
+
+    gemstone_categories:
+      - Agate
+      - Alexandrite
+      - Amazonite
+      - Amber
+      - Amethyst
+      - Aquamarine
+      - Beryl
+      - Carnelian
+      - Chalcedony
+      - Chrysoberyl
+      - Chrysoprase
+      - Citrine
+      - Coral
+      - Crystal
+      - Diamond
+      - Black Diamond
+      - Blue Diamond
+      - Brown Diamond
+      - Pink Diamond
+      - White Diamond
+      - Yellow Diamond
+      - Emerald
+      - Garnet
+      - Hematite
+      - Iolite
+      - Jade
+      - Kunzite
+      - Labradorite
+      - Lapis Lazuli
+      - Malachite
+      - Marcasite
+      - Moonstone
+      - Morganite
+      - Multi-gemstone
+      - Onyx
+      - Opal
+      - Pearl
+      - Black Pearl
+      - Cultured Pearl
+      - Freshwater Pearl
+      - Natural Pearl
+      - Saltwater Pearl
+      - Seed Pearl
+      - South Sea Pearl
+      - Peridot
+      - Quartz
+      - Rhinestone
+      - Rock Crystal
+      - Rubellite
+      - Ruby
+      - Sapphire
+      - Blue Sapphire
+      - Green Sapphire
+      - Pink Sapphire
+      - Star Sapphire
+      - Yellow Sapphire
+      - Spinel
+      - Tanzanite
+      - Tiger's Eye
+      - Topaz
+      - Tourmaline
+      - Tsavorite
+      - Turquoise
+      - Turquoise Matrix
+      - Zircon
+      - Chrysophrase
+      - Rubelite
+
+    diamond_clarities:
+      - I1
+      - I2
+      - I3
+      - SI1
+      - SI2
+      - VS1
+      - VS2
+      - VVS1
+      - VVS2
+      - IF
+      - FL
+
+    diamond_cuts:
+      - Excellent
+      - Very Good
+      - Good
+      - Fair
+      - Poor
+
+    diamond_colors:
+      - D
+      - E
+      - F
+      - G
+      - H
+      - I
+      - J
+      - K
+      - L
+      - M
+      - N
+      - O
+      - P
+      - Q
+      - R
+      - S
+      - T
+      - U
+      - V
+      - W
+      - X
+      - Y
+      - Z
+
+    metal_categories:
+      - Aluminum
+      - Brass
+      - Bronze
+      - Copper
+      - Copper Plate
+      - Gold
+      - Iron
+      - Platinum
+      - Silver
+      - Sterling Silver
+      - Fine Silver
+      - Mexican Silver
+      - Silver Plate
+      - Steel
+      - Stainless Steel
+      - Titanium
+      - Unknown
+
+    metal_colors:
+      - White
+      - Yellow
+      - Rose
+
+    metal_purities:
+      - 9K
+      - 10K
+      - 14K
+      - 18K
+      - 22K
+      - 0.800
+      - 0.900
+      - 0.925
+      - 0.950
+      - 0.999
+      - GF
+      - Unknown
+
+    state_provinces:
+      AL: Alabama
+      AK: Alaska
+      AZ: Arizona
+      AR: Arkansas
+      CA: California
+      CO: Colorado
+      CT: Connecticut
+      DE: Delaware
+      FL: Florida
+      GA: Georgia
+      HI: Hawaii
+      ID: Idaho
+      IL: Illinois
+      IN: Indiana
+      IA: Iowa
+      KS: Kansas
+      KY: Kentucky
+      LA: Louisiana
+      ME: Maine
+      MD: Maryland
+      MA: Massachusetts
+      MI: Michigan
+      MN: Minnesota
+      MS: Mississippi
+      MO: Missouri
+      MT: Montana
+      NE: Nebraska
+      NV: Nevada
+      NH: New Hampshire
+      NJ: New Jersey
+      NM: New Mexico
+      NY: New York
+      NC: North Carolina
+      ND: North Dakota
+      OH: Ohio
+      OK: Oklahoma
+      OR: Oregon
+      PA: Pennsylvania
+      RI: Rhode Island
+      SC: South Carolina
+      SD: South Dakota
+      TN: Tennessee
+      TX: Texas
+      UT: Utah
+      VT: Vermont
+      VA: Virginia
+      WA: Washington
+      WV: West Virginia
+      WI: Wisconsin
+      WY: Wyoming

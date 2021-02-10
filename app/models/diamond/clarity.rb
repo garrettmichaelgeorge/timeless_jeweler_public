@@ -19,6 +19,8 @@ class Diamond::Clarity < ApplicationRecord
   has_many :gradings, inverse_of: :clarity, class_name: 'Grading'
   has_many :diamonds, through: :gradings
 
+  alias_attribute :name, :grade
+
   class Grading < ApplicationRecord
     self.table_name = 'diamond_clarity_gradings'
 
