@@ -77,4 +77,31 @@ class ItemTest < ActiveSupport::TestCase
       end
     end
   end
+
+  describe '#sku' do
+    it 'returns a string with the right number of characters' do
+      expected_low = 10
+      expected_high = 11
+      actual = subject.sku.length
+      msg = "SKU must be between #{expected_low} and #{expected_high} characters, but this SKU was #{actual} characters instead"
+
+      _(actual).must_be :>=, expected_low, msg
+      _(actual).must_be :<=, expected_high, msg
+    end
+
+    it 'is formatted correctly' do
+      regex = /
+        \A             # -- start
+        ([RNPBREW]|BR) # item type code
+        \d{2}          # 2-digit year
+        \d{2}          # 2-digit month
+        \d{4}          # 4-digit item no.
+        [TC]           # owned or consigned
+        \z             # -- end
+      /x
+
+      _(subject.sku).must_match regex,
+                                "SKU '#{subject.sku}' was formatted incorrectly. It should conform to the following regex"
+    end
+  end
 end

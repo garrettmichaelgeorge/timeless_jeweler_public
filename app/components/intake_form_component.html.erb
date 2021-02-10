@@ -25,7 +25,7 @@
         <%= f.input :notes %>
       </section>
 
-      <hr />
+      <%= tag.hr %>
 
       <section id="intake-form-profile-fields">
         <%= f.simple_fields_for :profile, f.object.profile do |profile_form| %>
@@ -33,7 +33,7 @@
         <% end %>
       </section>
 
-      <hr />
+      <%= tag.hr %>
 
       <%= f.button :submit, class: "btn-primary" %>
       <%= f.button :button, "Reset", type: "reset", class: "btn-outline-secondary" %>
