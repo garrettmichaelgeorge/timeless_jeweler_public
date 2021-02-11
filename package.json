@@ -14,7 +14,7 @@
     "@shopify/draggable": "^1.0.0-beta.8",
     "@ttskch/select2-bootstrap4-theme": "^1.4.0",
     "autosize": "^4.0.2",
-    "bootstrap": "^5.0.0-beta1",
+    "bootstrap": "^5.0.0-beta2",
     "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
     "dashkit": "./vendor/dashkit/2.0.0-beta1",
