@@ -3,15 +3,21 @@
                            data: { new_record: new_record? } do %>
   <legend><small>Gemstone</small></legend>
 
-  <%= content_tag :div, class: 'form-row' do %>
+  <%= content_tag :div, class: 'row' do %>
     <%= f.association :category, label_method: :name,
-                                 prompt: 'Category', label: false,
-                                 wrapper_html: { class: 'col' }, input_html: { class: 'custom-select' } %>
-    <%= f.input :carat, placeholder: 'Carat', label: false,
-                        wrapper_html: { class: 'col' }, input_html: { class: 'custom-float' } %>
+                                 prompt: 'Category',
+                                 label: false,
+                                 wrapper_html: { class: 'col' } %>
 
-    <%= content_tag :div, class: 'col-auto' do %>
-      <%= render Buttons::RemoveNestedFieldComponent.new %>
+    <%= f.input :carat, as: :float,
+                        placeholder: 'Carat',
+                        label: false,
+                        wrapper_html: { class: 'col' } %>
+
+    <% if f.object.mounted? %>
+      <%= content_tag :div, class: 'col-auto' do %>
+        <%= render Buttons::RemoveNestedFieldComponent.new %>
+      <% end %>
     <% end %>
 
     <%# f.association :cut %>
