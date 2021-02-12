@@ -2,6 +2,14 @@ class Item
   class SKU
     # Value object for Item stock-keeping units (SKUs)
 
+    LENGTHS = {
+      subcategory: 2,
+      year: 2,
+      month: 2,
+      id: 4,
+      ownership_status_code: 1
+    }.freeze
+
     def initialize(context:)
       @context = context
     end
@@ -14,30 +22,35 @@ class Item
       #   https://rubydocs.org/d/ruby-3-0-0/classes/Kernel.html#method-i-sprintf
       #   https://rubystyle.guide/#sprintf
 
-      "#{item_type}#{year}#{month}#{item_no}#{owner}"
-    end
+      # "#{subcategory}#{year}#{month}#{id}#{ownership_status_code}"
 
-    def item_type
-      # TODO: implement
-      'BR'
+      format("%<subcategory>s%0#{LENGTHS[:year]}<year>d%0#{LENGTHS[:month]}<month>d%0#{LENGTHS[:id]}<id>d%1<ownership_status_code>c",
+             subcategory: subcategory,
+             year: year,
+             month: month,
+             id: id,
+             ownership_status_code: ownership_status_code)
+    end
+    alias sku to_s
+
+    def subcategory
+      context.subcategory_code
     end
 
     def year
-      item_date.year.to_s[2, 3]
+      item_date.strftime('%y')
     end
 
     def month
-      item_date.month
+      item_date.strftime('%m')
     end
 
-    def item_no
-      # TODO: implement
-      '1001'
+    def id
+      context.id
     end
 
-    def owner
-      # TODO: implement
-      'T'
+    def ownership_status_code
+      context.ownership_status_code
     end
 
     private
@@ -45,7 +58,7 @@ class Item
     attr_reader :context
 
     def item_date
-      context.created_at
+      context.acquired_at
     end
   end
 end

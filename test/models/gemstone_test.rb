@@ -51,18 +51,3 @@ class GemstoneTest < ActiveSupport::TestCase
     should delegate_method(:name).to(:category).with_prefix(true)
   end
 end
-
-class Gemstone
-  class ListedTest < ActiveSupport::TestCase
-    context 'associations' do
-      should have_one(:listing)
-    end
-  end
-
-  class MountedTest < ActiveSupport::TestCase
-    context 'associations' do
-      should have_one(:mounting)
-      should have_one(:piece).through(:mounting)
-    end
-  end
-end

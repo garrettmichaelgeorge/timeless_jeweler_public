@@ -58,18 +58,4 @@ class Gemstone < ApplicationRecord
   def mounted? = false
 
   def listed? = false
-
-  class Listed < Gemstone
-    has_one :listing, inverse_of: :gemstone,
-                      class_name: 'LooseGemstone::Profile',
-                      foreign_key: 'gemstone_profile_id'
-    def listed? = true
-  end
-
-  class Mounted < Gemstone
-    has_one :mounting, inverse_of: :gemstone
-    has_one :piece,    through:    :mounting, inverse_of: :gemstones
-
-    def mounted? = true
-  end
 end

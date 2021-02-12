@@ -2,7 +2,8 @@ require_relative 'application_seeder'
 
 class Seeders
   class ItemStyleSeeder < ApplicationSeeder
-    NAMES = ['21st Century',
+    NAMES = [
+             '21st Century',
              'Art Deco',
              'Art Nouveau',
              'Arts and Crafts',
@@ -55,7 +56,8 @@ class Seeders
              'Romanticism',
              'Scandinavian Modern',
              'Streamline Moderne',
-             'William IV'].freeze
+             'William IV'
+    ].freeze
 
     def execute
       NAMES.each do |name|

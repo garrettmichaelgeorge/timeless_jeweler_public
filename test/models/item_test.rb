@@ -2,27 +2,31 @@
 #
 # Table name: items
 #
-#  id             :bigint           not null, primary key
-#  category       :string(20)
-#  cost_cents     :integer          default(0), not null
-#  cost_currency  :string           default("USD"), not null
-#  description    :text
-#  name           :string(40)       not null
-#  notes          :text
-#  price_cents    :integer          default(0), not null
-#  price_currency :string           default("USD"), not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  item_style_id  :bigint           not null
-#  user_id        :bigint           not null
+#  id                       :bigint           not null, primary key
+#  acquired_at              :datetime         not null
+#  category                 :string(20)
+#  cost_cents               :integer          default(0), not null
+#  cost_currency            :string           default("USD"), not null
+#  description              :text
+#  name                     :string(40)       not null
+#  notes                    :text
+#  price_cents              :integer          default(0), not null
+#  price_currency           :string           default("USD"), not null
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  item_ownership_status_id :bigint           not null
+#  item_style_id            :bigint           not null
+#  user_id                  :bigint           not null
 #
 # Indexes
 #
-#  index_items_on_item_style_id  (item_style_id)
-#  index_items_on_user_id        (user_id)
+#  index_items_on_item_ownership_status_id  (item_ownership_status_id)
+#  index_items_on_item_style_id             (item_style_id)
+#  index_items_on_user_id                   (user_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (item_ownership_status_id => item_ownership_statuses.id)
 #  fk_rails_...  (item_style_id => item_styles.id)
 #  fk_rails_...  (user_id => users.id)
 #
@@ -35,9 +39,10 @@ class ItemTest < ActiveSupport::TestCase
   let(:attrs) { attributes_for(:item) }
 
   context 'associations' do
-    should belong_to(:user)
-    should have_many(:line_items)
-    should belong_to(:style)
+    should belong_to(:user).inverse_of(:items)
+    should have_many(:line_items).inverse_of(:item)
+    should belong_to(:style).inverse_of(:items)
+    should belong_to(:ownership_status).inverse_of(:items)
   end
 
   context 'validations' do
@@ -53,6 +58,7 @@ class ItemTest < ActiveSupport::TestCase
 
   context 'delegations' do
     should delegate_method(:name).to(:style).with_prefix
+    should delegate_method(:code).to(:ownership_status).with_prefix
   end
 
   it 'monetizes the correct attributes' do
@@ -79,29 +85,15 @@ class ItemTest < ActiveSupport::TestCase
   end
 
   describe '#sku' do
-    it 'returns a string with the right number of characters' do
-      expected_low = 10
-      expected_high = 11
-      actual = subject.sku.length
-      msg = "SKU must be between #{expected_low} and #{expected_high} characters, but this SKU was #{actual} characters instead"
+    let(:sku_calculator) { MiniTest::Mock.new }
+    let(:skuable)        { MiniTest::Mock.new }
 
-      _(actual).must_be :>=, expected_low, msg
-      _(actual).must_be :<=, expected_high, msg
-    end
+    it 'delegates to the SKU object' do
+      sku_calculator.expect :new, skuable, [{ context: subject }]
+      skuable.expect :sku, ''
 
-    it 'is formatted correctly' do
-      regex = /
-        \A             # -- start
-        ([RNPBREW]|BR) # item type code
-        \d{2}          # 2-digit year
-        \d{2}          # 2-digit month
-        \d{4}          # 4-digit item no.
-        [TC]           # owned or consigned
-        \z             # -- end
-      /x
-
-      _(subject.sku).must_match regex,
-                                "SKU '#{subject.sku}' was formatted incorrectly. It should conform to the following regex"
+      subject.sku(sku_calculator)
+      assert_mock skuable
     end
   end
 end

@@ -33,6 +33,19 @@ FactoryBot.define do
     end
   end
 
+  factory :item_ownership_status, aliases: [:ownership_status], class: 'Item::OwnershipStatus' do
+    transient { class_name { 'Item::OwnershipStatus' } }
+
+    name { 'Consigned' }
+    code { 'C' }
+
+    initialize_with do
+      class_name.constantize
+                .where(name: name)
+                .first_or_initialize(attributes)
+    end
+  end
+
   factory :item_style, aliases: [:art_deco] do
     transient { class_name { 'ItemStyle' } }
 
@@ -49,6 +62,8 @@ FactoryBot.define do
     name { Faker::Commerce.unique.product_name }
     description { Faker::Lorem.paragraph(sentence_count: 1, random_sentences_to_add: 3) }
     style factory: :item_style
+    ownership_status factory: :item_ownership_status
+    acquired_at { Time.now }
     user
   end
 
@@ -56,6 +71,8 @@ FactoryBot.define do
     name { Faker::Commerce.unique.product_name }
     description { Faker::Lorem.paragraph(sentence_count: 1, random_sentences_to_add: 3) }
     style factory: :item_style
+    ownership_status factory: :item_ownership_status
+    acquired_at { Time.now }
     user
   end
 
@@ -109,15 +126,28 @@ FactoryBot.define do
     last_name { 'Smith' }
   end
 
+  factory :piece_profile, class: 'Piece::Profile' do
+    piece
+    piece_subcategory
+  end
+
+  factory :piece_subcategory, class: 'Piece::Subcategory' do
+    name { 'Ring' }
+    code { 'R' }
+
+    initialize_with do
+      Piece::Subcategory.where(name: name)
+                        .first_or_initialize(attributes)
+    end
+  end
+
   factory :piece do
     name { Faker::Commerce.unique.product_name }
     description { 'Lorem ipsum sic dolor amet.' }
     style factory: :item_style
+    ownership_status factory: :item_ownership_status
+    acquired_at { Time.now }
     user
-  end
-
-  factory :piece_profile, class: 'Piece::Profile' do
-    piece
   end
 
   factory :user do

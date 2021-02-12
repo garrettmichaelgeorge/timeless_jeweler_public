@@ -2,7 +2,8 @@ require_relative 'application_seeder'
 
 class Seeders
   class MetalCategorySeeder < ApplicationSeeder
-    NAMES = ['Aluminum',
+    NAMES = [
+             'Aluminum',
              'Brass',
              'Bronze',
              'Copper',
@@ -18,7 +19,8 @@ class Seeders
              'Steel',
              'Stainless Steel',
              'Titanium',
-             'Unknown'].freeze
+             'Unknown'
+    ].freeze
 
     def execute
       NAMES.each do |name|

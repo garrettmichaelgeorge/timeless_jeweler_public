@@ -450,6 +450,38 @@ ALTER SEQUENCE public.households_id_seq OWNED BY public.households.id;
 
 
 --
+-- Name: item_ownership_statuses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.item_ownership_statuses (
+    id bigint NOT NULL,
+    name character varying(40) NOT NULL,
+    code character varying(1) NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: item_ownership_statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.item_ownership_statuses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: item_ownership_statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.item_ownership_statuses_id_seq OWNED BY public.item_ownership_statuses.id;
+
+
+--
 -- Name: item_styles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -497,7 +529,9 @@ CREATE TABLE public.items (
     notes text,
     item_style_id bigint NOT NULL,
     category character varying(20),
-    user_id bigint NOT NULL
+    user_id bigint NOT NULL,
+    acquired_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    item_ownership_status_id bigint NOT NULL
 );
 
 
@@ -742,6 +776,37 @@ ALTER SEQUENCE public.metals_id_seq OWNED BY public.metals.id;
 
 
 --
+-- Name: miscellaneous_item_subcategories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.miscellaneous_item_subcategories (
+    id bigint NOT NULL,
+    name character varying(40),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: miscellaneous_item_subcategories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.miscellaneous_item_subcategories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: miscellaneous_item_subcategories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.miscellaneous_item_subcategories_id_seq OWNED BY public.miscellaneous_item_subcategories.id;
+
+
+--
 -- Name: miscellaneous_items; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -749,7 +814,8 @@ CREATE TABLE public.miscellaneous_items (
     id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    item_id bigint NOT NULL
+    item_id bigint NOT NULL,
+    miscellaneous_item_subcategory_id bigint NOT NULL
 );
 
 
@@ -887,6 +953,38 @@ ALTER SEQUENCE public.phone_numbers_id_seq OWNED BY public.phone_numbers.id;
 
 
 --
+-- Name: piece_subcategories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.piece_subcategories (
+    id bigint NOT NULL,
+    name character varying(40),
+    code character varying(1),
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: piece_subcategories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.piece_subcategories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: piece_subcategories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.piece_subcategories_id_seq OWNED BY public.piece_subcategories.id;
+
+
+--
 -- Name: pieces; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -894,7 +992,8 @@ CREATE TABLE public.pieces (
     id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    item_id bigint NOT NULL
+    item_id bigint NOT NULL,
+    piece_subcategory_id bigint NOT NULL
 );
 
 
@@ -1243,6 +1342,13 @@ ALTER TABLE ONLY public.households ALTER COLUMN id SET DEFAULT nextval('public.h
 
 
 --
+-- Name: item_ownership_statuses id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.item_ownership_statuses ALTER COLUMN id SET DEFAULT nextval('public.item_ownership_statuses_id_seq'::regclass);
+
+
+--
 -- Name: item_styles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1299,6 +1405,13 @@ ALTER TABLE ONLY public.metals ALTER COLUMN id SET DEFAULT nextval('public.metal
 
 
 --
+-- Name: miscellaneous_item_subcategories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.miscellaneous_item_subcategories ALTER COLUMN id SET DEFAULT nextval('public.miscellaneous_item_subcategories_id_seq'::regclass);
+
+
+--
 -- Name: miscellaneous_items id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1324,6 +1437,13 @@ ALTER TABLE ONLY public.people ALTER COLUMN id SET DEFAULT nextval('public.peopl
 --
 
 ALTER TABLE ONLY public.phone_numbers ALTER COLUMN id SET DEFAULT nextval('public.phone_numbers_id_seq'::regclass);
+
+
+--
+-- Name: piece_subcategories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.piece_subcategories ALTER COLUMN id SET DEFAULT nextval('public.piece_subcategories_id_seq'::regclass);
 
 
 --
@@ -1479,6 +1599,14 @@ ALTER TABLE ONLY public.households
 
 
 --
+-- Name: item_ownership_statuses item_ownership_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.item_ownership_statuses
+    ADD CONSTRAINT item_ownership_statuses_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: item_styles item_styles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1543,6 +1671,14 @@ ALTER TABLE ONLY public.metals
 
 
 --
+-- Name: miscellaneous_item_subcategories miscellaneous_item_subcategories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.miscellaneous_item_subcategories
+    ADD CONSTRAINT miscellaneous_item_subcategories_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: miscellaneous_items miscellaneous_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1572,6 +1708,14 @@ ALTER TABLE ONLY public.people
 
 ALTER TABLE ONLY public.phone_numbers
     ADD CONSTRAINT phone_numbers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: piece_subcategories piece_subcategories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.piece_subcategories
+    ADD CONSTRAINT piece_subcategories_pkey PRIMARY KEY (id);
 
 
 --
@@ -1801,6 +1945,13 @@ CREATE UNIQUE INDEX index_item_styles_on_name ON public.item_styles USING btree 
 
 
 --
+-- Name: index_items_on_item_ownership_status_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_items_on_item_ownership_status_id ON public.items USING btree (item_ownership_status_id);
+
+
+--
 -- Name: index_items_on_item_style_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1913,6 +2064,13 @@ CREATE INDEX index_miscellaneous_items_on_item_id ON public.miscellaneous_items 
 
 
 --
+-- Name: index_miscellaneous_items_on_miscellaneous_item_subcategory_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_miscellaneous_items_on_miscellaneous_item_subcategory_id ON public.miscellaneous_items USING btree (miscellaneous_item_subcategory_id);
+
+
+--
 -- Name: index_mountings_on_gemstone_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1941,10 +2099,31 @@ CREATE INDEX index_phone_numbers_on_phoneable_type_and_phoneable_id ON public.ph
 
 
 --
+-- Name: index_piece_subcategories_on_code; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_piece_subcategories_on_code ON public.piece_subcategories USING btree (code);
+
+
+--
+-- Name: index_piece_subcategories_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_piece_subcategories_on_name ON public.piece_subcategories USING btree (name);
+
+
+--
 -- Name: index_pieces_on_item_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_pieces_on_item_id ON public.pieces USING btree (item_id);
+
+
+--
+-- Name: index_pieces_on_piece_subcategory_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pieces_on_piece_subcategory_id ON public.pieces USING btree (piece_subcategory_id);
 
 
 --
@@ -2027,6 +2206,14 @@ ALTER TABLE ONLY public.diamond_color_gradings
 
 
 --
+-- Name: pieces fk_rails_0f22b0c09e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pieces
+    ADD CONSTRAINT fk_rails_0f22b0c09e FOREIGN KEY (piece_subcategory_id) REFERENCES public.piece_subcategories(id);
+
+
+--
 -- Name: pieces fk_rails_11375f5187; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2056,6 +2243,14 @@ ALTER TABLE ONLY public.metals
 
 ALTER TABLE ONLY public.diamond_cut_gradings
     ADD CONSTRAINT fk_rails_42cd184c99 FOREIGN KEY (gemstone_profile_id) REFERENCES public.gemstones(id);
+
+
+--
+-- Name: miscellaneous_items fk_rails_42d8596240; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.miscellaneous_items
+    ADD CONSTRAINT fk_rails_42d8596240 FOREIGN KEY (miscellaneous_item_subcategory_id) REFERENCES public.miscellaneous_item_subcategories(id);
 
 
 --
@@ -2219,6 +2414,14 @@ ALTER TABLE ONLY public.metals
 
 
 --
+-- Name: items fk_rails_f7b4d38194; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT fk_rails_f7b4d38194 FOREIGN KEY (item_ownership_status_id) REFERENCES public.item_ownership_statuses(id);
+
+
+--
 -- Name: addresses fk_rails_fe85803a1e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2372,6 +2575,14 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210126144655'),
 ('20210127151626'),
 ('20210127160435'),
-('20210202224607');
+('20210202224607'),
+('20210211014129'),
+('20210211015010'),
+('20210211150652'),
+('20210211161330'),
+('20210211175205'),
+('20210212144325'),
+('20210212150301'),
+('20210212151022');
 
 

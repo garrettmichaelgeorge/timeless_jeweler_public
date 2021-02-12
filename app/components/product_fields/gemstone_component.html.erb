@@ -1,11 +1,11 @@
 <%= content_tag :fieldset, id: 'gemstone_fields',
-                           class: 'nested-fields form-group',
+                           class: 'nested-fields mb-3',
                            data: { new_record: new_record? } do %>
   <legend><small>Gemstone</small></legend>
 
   <%= content_tag :div, class: 'row' do %>
     <%= f.association :category, label_method: :name,
-                                 prompt: 'Category',
+                                 prompt: 'Choose a gemstone category',
                                  label: false,
                                  wrapper_html: { class: 'col' } %>
 

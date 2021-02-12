@@ -2,7 +2,8 @@ require_relative 'application_seeder'
 
 class Seeders
   class GemstoneCategorySeeder < ApplicationSeeder
-    NAMES = ['Agate',
+    NAMES = [
+             'Agate',
              'Alexandrite',
              'Amazonite',
              'Amber',
@@ -68,7 +69,8 @@ class Seeders
              'Turquoise Matrix',
              'Zircon',
              'Chrysophrase',
-             'Rubelite'].freeze
+             'Rubelite'
+    ].freeze
 
     def execute
       NAMES.each { |value| seed_with_value(seeder_target.constantize, name: value) }
