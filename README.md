@@ -1,18 +1,22 @@
 # Timeless Jeweler Web App
 
-See the demo at https://iowhlbk.herokuapp.com/
+The Timeless Jeweler Web App is a retail management web app that helps small
+jewelers organize their business, tracking customers, inventory, sales, and
+services.
 
-This is a retail management web app that tracks business information for
-customers, products, and services. It is not a Point-of-Sale (POS) app and
-is intended for record-keeping only.
+See the demo at https://iowhlbk.herokuapp.com/ with the demo account:
+email: demo@example.com
+password: password
 
 ## Features
+* A data model tailor-fit for the jewelry domain.
 
-* Intelligently track retail data related to customers and inventory
+* Intelligently track customers, inventory, and sales
   (services coming soon!)
 
-* Easily perform CRUD (create, read, update, destroy) actions using visual
-  interface
+* Reactive user interface using [Stimulus
+* Reflex](https://github.com/hopsoft/stimulus_reflex) (HTML and JS over the wire
+* using WebSockets)
 
 * Secure authentication using
 [Devise](https://github.com/heartcombo/devise) gem
@@ -26,54 +30,8 @@ is intended for record-keeping only.
 
 ## Requirements
 
-* Ruby version 2.7.0+
-    
+* Ruby version 2.7.2+
+
     ```
     ruby -v
-    ```
-
-## Installation
-
-1. Clone the repository
-
-    ```
-    git clone https://github.com/garrettmichaelgeorge/timeless-jeweler
-    ```
-
-2. Install all gems listed in Gemfile
-    
-    ```
-    bundle install
-    ```
-
-3. Create the database and load the schema from schema.rb
-
-    ```
-    bin/rails db:create
-    bin/rails db:schema:load
-    bin/rails db:seed # optional
-    ```
-
-4. Set up Yarn
-
-    ```
-    yarn install
-    ```
-
-5. Run the test suite
-
-    ```
-    bin/rails test
-    ```
-
-6. Start the Webpack dev server to compile assets
-
-    ```
-    bin/webpack-dev-server
-    ```
-
-7. Start the Rails server
-
-    ```
-    bundle exec rails server
     ```
