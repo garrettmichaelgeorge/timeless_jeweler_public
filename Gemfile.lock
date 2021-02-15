@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: https://github.com/hopsoft/stimulus_reflex.git
-  revision: ba3ad300d96ea48891f00e2ed1da80eaed962787
+  revision: baaac3d54ddf1203aa05461cf7298f6b34886934
   specs:
     stimulus_reflex (3.4.1)
       cable_ready (>= 4.5)
@@ -323,7 +323,7 @@ GEM
     msgpack (1.4.1)
     multi_test (0.1.2)
     nenv (0.3.0)
-    nio4r (2.5.4)
+    nio4r (2.5.5)
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
