@@ -34,7 +34,12 @@
 /public/packs
 /public/packs-test
 /node_modules/
+
+/vendor/dashkit
 /vendor/dashkit/node_modules/
+/javascript/img/*
+/javascript/fonts/*
+/javascript/vendor/*
 
 /yarn-error.log
 yarn-debug.log*
