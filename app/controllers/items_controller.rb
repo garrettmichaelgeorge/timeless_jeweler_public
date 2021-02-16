@@ -12,7 +12,7 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @item = item_creator.item
+    @item ||= Items::Creator.new(context: self).item
   end
 
   def edit; end

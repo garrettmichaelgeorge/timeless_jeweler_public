@@ -10,6 +10,10 @@ class IntakeFormComponent < ApplicationComponent
 
   attr_reader :item
 
+  def render_form?
+    item.category.present?
+  end
+
   def auth_token
     @auth_token ||= form_authenticity_token
   end

@@ -15,14 +15,8 @@ class Item
     end
 
     def to_s
-      # implementation options:
-      # 1. string interpolation
-      # 2. sprintf()
-      #   Read more:
       #   https://rubydocs.org/d/ruby-3-0-0/classes/Kernel.html#method-i-sprintf
       #   https://rubystyle.guide/#sprintf
-
-      # "#{subcategory}#{year}#{month}#{id}#{ownership_status_code}"
 
       format("%<subcategory>s%0#{LENGTHS[:year]}<year>d%0#{LENGTHS[:month]}<month>d%0#{LENGTHS[:id]}<id>d%1<ownership_status_code>c",
              subcategory: subcategory,
@@ -34,23 +28,28 @@ class Item
     alias sku to_s
 
     def subcategory
-      context.subcategory_code
+      # OPTIMIZE
+      context.subcategory_code || ' '
     end
 
     def year
-      item_date.strftime('%y')
+      # OPTIMIZE
+      item_date&.strftime('%y') || 0
     end
 
     def month
-      item_date.strftime('%m')
+      # OPTIMIZE
+      item_date&.strftime('%m') || 0
     end
 
     def id
-      context.id
+      # OPTIMIZE
+      context.id || 0
     end
 
     def ownership_status_code
-      context.ownership_status_code
+      # OPTIMIZE
+      context.ownership_status_code || ' '
     end
 
     private

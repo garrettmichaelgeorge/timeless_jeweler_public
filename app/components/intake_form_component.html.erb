@@ -1,6 +1,6 @@
 <div id="intake-form-wrapper" class="mt-5">
 
-  <% if item.category %>
+  <% if render_form? %>
 
     <%= simple_form_for item, authenticity_token: false do |f| %>
       <%= f.error_notification %>
@@ -8,10 +8,15 @@
       <%= f.hidden_field :category %>
 
       <section id="intake-form-basic-fields">
+        <%= f.simple_fields_for :profile, f.object.profile do |profile_form| %>
+          <%= profile_form.association :subcategory %>
+        <% end %>
+
         <%= f.input :name %>
         <%= f.input :description %>
         <%= f.association :style, label_method: :name,
                                   prompt: 'Please select a style' %>
+        <%= f.input :acquired_at, input_html: { data: { reflex: 'input->Intake#update_sku' } } %>
 
         <div class="row">
           <div class="col-md">
@@ -23,6 +28,7 @@
         </div>
 
         <%= f.input :notes %>
+        <%= f.association :ownership_status %>
       </section>
 
       <%= tag.hr %>

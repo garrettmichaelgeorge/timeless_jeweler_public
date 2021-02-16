@@ -10,14 +10,21 @@ class Items::Guard
                   :item_style_id,
                   :cost,
                   :price,
+                  :acquired_at,
                   :notes,
                   :category,
-                  profile_attributes: {
-                    metals_attributes: metals_attributes,
-                    metals: metals_attributes,
-                    gemstone_attributes: gemstone_attributes,
-                    gemstones: gemstone_attributes
-                  })
+                  :item_ownership_status_id,
+                  profile_attributes: [
+                    :miscellaneous_item_subcategory_id,
+                    :piece_subcategory_id,
+                    :gemstone_subcategory_id,
+                    {
+                      metals_attributes: metals_attributes,
+                      metals: metals_attributes,
+                      gemstone_attributes: gemstone_attributes,
+                      gemstones: gemstone_attributes
+                    }
+                  ])
   end
 
   private

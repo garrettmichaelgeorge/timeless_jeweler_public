@@ -96,4 +96,12 @@ class ItemTest < ActiveSupport::TestCase
       assert_mock skuable
     end
   end
+
+  describe '#child' do
+    it 'returns the STI child class' do
+      subject.category = 'Piece'
+
+      _(subject.child).must_be_instance_of Piece
+    end
+  end
 end
