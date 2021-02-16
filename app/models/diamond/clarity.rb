@@ -12,12 +12,12 @@ class Diamond::Clarity < ApplicationRecord
   # Lookup class
   self.table_name = 'diamond_clarities'
 
-  validates :grade, presence: true,
-                    uniqueness: true,
-                    length: { maximum: 4 }
+  include Lookupable
 
   has_many :gradings, inverse_of: :clarity, class_name: 'Grading'
-  has_many :diamonds, through: :gradings
+  has_many :diamonds, through: :gradings, inverse_of: :clarity
+
+  lookup_attribute :grade, maximum_length: 4
 
   alias_attribute :name, :grade
 

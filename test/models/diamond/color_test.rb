@@ -11,8 +11,8 @@ require 'test_helper'
 
 class Diamond::ColorTest < ActiveSupport::TestCase
   context 'associations' do
-    should have_many(:gradings)
-    should have_many(:diamonds).through(:gradings)
+    should have_many(:gradings).inverse_of(:color)
+    should have_many(:diamonds).through(:gradings).inverse_of(:color)
   end
 
   context 'validations' do
@@ -21,12 +21,13 @@ class Diamond::ColorTest < ActiveSupport::TestCase
     should validate_presence_of(:grade)
     should validate_uniqueness_of(:grade)
     should validate_length_of(:grade).is_at_most(1)
+    should validate_inclusion_of(:grade).in_array(described_class.lookup_values)
   end
 end
 
 class Diamond::Color::GradingTest < ActiveSupport::TestCase
   context 'associations' do
-    should belong_to(:color)
-    should belong_to(:diamond)
+    should belong_to(:color).inverse_of(:gradings)
+    should belong_to(:diamond).inverse_of(:color_grading)
   end
 end
