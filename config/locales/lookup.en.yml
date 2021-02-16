@@ -1,5 +1,9 @@
 en:
   lookup:
+    item_ownership_statuses:
+      T: Owned
+      C: Consigned
+
     item_sources:
       - E
       - B
@@ -214,13 +218,22 @@ en:
       - 14K
       - 18K
       - 22K
-      - 0.800
-      - 0.900
-      - 0.925
-      - 0.950
-      - 0.999
+      - '0.800'
+      - '0.900'
+      - '0.925'
+      - '0.950'
+      - '0.999'
       - GF
       - Unknown
+
+    piece_subcategories:
+      R: Ring
+      N: Necklace
+      P: Pendant
+      B: Bracelet
+      BR: Brooch
+      E: Earring
+      W: Watch
 
     state_provinces:
       AL: Alabama

@@ -18,17 +18,29 @@ def lookup(value)
   I18n.t(value, scope: :lookup)
 end
 
-def seed_table(lookup_key, model:)
-  lookup(lookup_key).each do |value|
-    model.create_or_find_by(name: value)
+def seed_table(lookup_key, **opts)
+  model = opts.fetch(:model) { lookup_key.constantize }
+
+  if lookup(lookup_key).is_a?(Hash)
+    lookup(lookup_key).each_pair do |code, name|
+      model.create_or_find_by(name: name, code: code)
+    end
+  else
+    lookup(lookup_key).each do |name|
+      model.create_or_find_by(name: name)
+    end
   end
+
   print '.'
 end
 
+# Wiper.execute
+
 puts '== Seeding database'
 
-ActiveRecord::Base.transaction do |_t|
+ActiveRecord::Base.transaction do
   seed_table(:item_styles, model: ItemStyle)
+  seed_table(:item_ownership_statuses, model: Item::OwnershipStatus)
   seed_table(:gemstone_categories, model: Gemstone::Category)
   seed_table(:diamond_clarities, model: Diamond::Clarity)
   seed_table(:diamond_cuts, model: Diamond::Cut)
@@ -36,6 +48,7 @@ ActiveRecord::Base.transaction do |_t|
   seed_table(:metal_categories, model: MetalCategory)
   seed_table(:metal_colors, model: MetalColor)
   seed_table(:metal_purities, model: MetalPurity)
+  seed_table(:piece_subcategories, model: Piece::Subcategory)
   seed_table(:state_provinces, model: StateProvince)
 end
 
