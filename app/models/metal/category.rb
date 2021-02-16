@@ -15,15 +15,13 @@
 class Metal
   class Category < ApplicationRecord
     # This is a lookup class
-    ALLOWED_VALUES = I18n.t('metal_categories', scope: :lookup).freeze
+
+    include Lookupable
 
     # Associations
     has_many :metals, inverse_of: :category
 
     # Validations
-    validates :name, presence: true,
-                     uniqueness: true,
-                     length: { maximum: 20 },
-                     inclusion: { in: ALLOWED_VALUES }
+    lookup_attribute :name, maximum_length: 20
   end
 end

@@ -17,15 +17,12 @@ class Metal
     # This is a lookup class
     self.table_name = 'metal_colors'
 
-    ALLOWED_VALUES = I18n.t('metal_colors', scope: :lookup).freeze
+    include Lookupable
 
     # Associations
     has_many :metals, inverse_of: :color
 
     # Validations
-    validates :name, presence: true,
-                     uniqueness: true,
-                     length: { maximum: 10 },
-                     inclusion: { in: ALLOWED_VALUES }
+    lookup_attribute :name, maximum_length: 10
   end
 end

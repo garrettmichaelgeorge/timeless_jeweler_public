@@ -14,16 +14,13 @@
 
 class Metal
   class Purity < ApplicationRecord
-    ALLOWED_VALUES = I18n.t('metal_purities', scope: :lookup).freeze
+    include Lookupable
 
     # Associations
     has_many :metals, inverse_of: :purity
 
     # Validations
-    validates :value, presence: true,
-                      uniqueness: true,
-                      length: { maximum: 10 },
-                      inclusion: { in: ALLOWED_VALUES }
+    lookup_attribute :value, maximum_length: 10
 
     # Aliases
     alias_attribute :name, :value
