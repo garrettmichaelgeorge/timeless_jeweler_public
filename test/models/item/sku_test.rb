@@ -58,5 +58,23 @@ class Item
                                   "SKU '#{subject.sku}' was formatted incorrectly. It should conform to the following regex"
       end
     end
+
+    describe '#==(other)' do
+      it 'returns true when the skus are equal' do
+        equal_other = subject.dup
+
+        _(subject).must_be :==, equal_other
+      end
+
+      it 'returns false when the skus are not equal' do
+        subject
+
+        acquired_at = Time.new(2021, 2)
+        different_skuable = skuable_class.new(subcategory_code, acquired_at, id, ownership_status_code)
+        different_other = SKU.new(context: different_skuable)
+
+        _(subject).wont_be :==, different_other
+      end
+    end
   end
 end

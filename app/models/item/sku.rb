@@ -14,47 +14,59 @@ class Item
       @context = context
     end
 
-    def to_s
+    def sku
       #   https://rubydocs.org/d/ruby-3-0-0/classes/Kernel.html#method-i-sprintf
       #   https://rubystyle.guide/#sprintf
 
-      format("%<subcategory>s%0#{LENGTHS[:year]}<year>d%0#{LENGTHS[:month]}<month>d%0#{LENGTHS[:id]}<id>d%1<ownership_status_code>c",
-             subcategory: subcategory,
-             year: year,
-             month: month,
-             id: id,
-             ownership_status_code: ownership_status_code)
+      # HACK
+      format(format_string, subcategory: subcategory,
+                            year: year,
+                            month: month,
+                            id: id,
+                            ownership_status_code: ownership_status_code)
     end
-    alias sku to_s
+    alias to_s sku
+
+    def ==(other)
+      sku == other.sku
+    end
 
     def subcategory
-      # OPTIMIZE
+      # HACK
       context.subcategory_code || ' '
     end
 
     def year
-      # OPTIMIZE
+      # HACK
       item_date&.strftime('%y') || 0
     end
 
     def month
-      # OPTIMIZE
+      # HACK
       item_date&.strftime('%m') || 0
     end
 
     def id
-      # OPTIMIZE
+      # HACK
       context.id || 0
     end
 
     def ownership_status_code
-      # OPTIMIZE
+      # HACK
       context.ownership_status_code || ' '
     end
 
     private
 
     attr_reader :context
+
+    def format_string
+      '%<subcategory>s' \
+        "%0#{LENGTHS[:year]}<year>d" \
+        "%0#{LENGTHS[:month]}<month>d" \
+        "%0#{LENGTHS[:id]}<id>d" \
+        '%1<ownership_status_code>c'
+    end
 
     def item_date
       context.acquired_at
