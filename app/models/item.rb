@@ -80,10 +80,10 @@ class Item < ApplicationRecord
     "#{name} (#{price})"
   end
 
-  def sku(calculator = SKU)
-    # TODO: finish implementing (see Item::SKU)
-    @sku ||= calculator.new(context: self).sku
+  def sku
+    id
   end
+
 
   class << self
     def categories
