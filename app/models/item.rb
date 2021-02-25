@@ -61,6 +61,7 @@ class Item < ApplicationRecord
 
   delegate :name, to: :style, prefix: true, allow_nil: true
   delegate :code, to: :ownership_status, prefix: true, allow_nil: true
+  delegate :year, :month, to: :acquired_at, prefix: true, allow_nil: true
 
   monetize :cost_cents,  numericality: { greater_than_or_equal_to: 0 }
   monetize :price_cents, numericality: { greater_than_or_equal_to: 0 }
@@ -83,7 +84,6 @@ class Item < ApplicationRecord
   def sku
     id
   end
-
 
   class << self
     def categories
