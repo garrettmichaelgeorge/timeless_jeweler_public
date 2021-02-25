@@ -292,6 +292,7 @@ GEM
     mime-types-data (3.2021.0212)
     mimemagic (0.3.5)
     mini_mime (1.0.2)
+    mini_portile2 (2.5.0)
     minitest (5.14.4)
     minitest-reporters (1.4.3)
       ansi
@@ -309,7 +310,12 @@ GEM
     multi_test (0.1.2)
     nenv (0.3.0)
     nio4r (2.5.5)
+    nokogiri (1.11.1)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
     nokogiri (1.11.1-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.11.1-x86_64-linux)
       racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
@@ -501,7 +507,9 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
+  ruby
   x86_64-darwin-17
+  x86_64-linux
 
 DEPENDENCIES
   active_record-acts_as
