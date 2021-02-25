@@ -79,4 +79,10 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # Lazy load images using HTML5 loading attribute
+  # https://edgeguides.rubyonrails.org/configuring.html#configuring-action-view
+  # https://html.spec.whatwg.org/#lazy-loading-attributes
+  # FIXME: This breaks on launch
+  # config.action_view.image_loading = 'lazy'
 end

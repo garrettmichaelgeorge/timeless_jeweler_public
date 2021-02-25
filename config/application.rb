@@ -37,7 +37,5 @@ module TimelessJeweler
       # Don't generate stylesheets by default
       g.stylesheets = false
     end
-
-    # config.action_view.image_loading = 'lazy'
   end
 end
