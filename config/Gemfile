@@ -50,6 +50,8 @@ group :development do
   gem 'better_errors'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'binding_of_caller'
+  # Kill N+1 queries and unused eager loading 
+  gem 'bullet'
   gem 'erb_lint', require: false
   gem 'guard'
   gem 'guard-bundler'
