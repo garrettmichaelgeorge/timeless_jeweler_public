@@ -18,6 +18,7 @@
 #  fk_rails_...  (item_id => items.id)
 #  fk_rails_...  (piece_subcategory_id => piece_subcategories.id)
 #
+
 class Piece
   class Profile < ApplicationRecord
     # Multiple Table Inheritance (MTI):
@@ -40,6 +41,6 @@ class Piece
 
     validates_associated :metals, :gemstones
 
-    delegate :code, :name, to: :subcategory, prefix: true
+    delegate :code, :name, to: :subcategory, prefix: true, allow_nil: true
   end
 end

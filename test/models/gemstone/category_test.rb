@@ -12,7 +12,7 @@ require 'test_helper'
 
 class Gemstone::CategoryTest < ActiveSupport::TestCase
   context 'associations' do
-    should have_many(:gemstones)
+    should have_many(:gemstones).inverse_of(:subcategory)
   end
 
   context 'validations' do

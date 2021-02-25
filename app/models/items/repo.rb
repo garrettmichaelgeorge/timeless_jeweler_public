@@ -9,7 +9,6 @@ class Items::Repo
   def find_all_items
     model_class.for_user(current_user)
                .includes(:profile)
-               .includes(:style)
   end
 
   def find_item(id)

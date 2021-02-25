@@ -51,4 +51,18 @@ class PieceTest < ActiveSupport::TestCase
     # defined
     should_eventually delegate_method(:subcategory=).to(:profile)
   end
+
+  describe '#sku' do
+    let(:sku_calculator) { MiniTest::Mock.new }
+    let(:skuable)        { MiniTest::Mock.new }
+
+    it 'delegates to the SKU object' do
+      sku_calculator.expect :new, skuable, [{ context: subject }]
+      skuable.expect :sku, ''
+
+      subject.sku(sku_calculator)
+      assert_mock skuable
+    end
+  end
+
 end

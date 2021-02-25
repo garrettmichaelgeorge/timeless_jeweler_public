@@ -11,8 +11,8 @@
 class Gemstone::Category < ApplicationRecord
   self.table_name = 'gemstone_categories'
 
-  has_many :gemstones, inverse_of: :category
+  has_many :gemstones, inverse_of: :subcategory
 
-  validates_presence_of :name
-  validates_length_of :name, maximum: 40
+  validates :name, presence: true,
+                   length: { maximum: 40 }
 end
