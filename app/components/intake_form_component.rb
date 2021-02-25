@@ -26,4 +26,12 @@ class IntakeFormComponent < ApplicationComponent
     { controller: 'nested-form',
       nested_form_wrapper_selector_value: '.nested-form-wrapper' }
   end
+
+  def acquired_at_start_year
+    2010
+  end
+
+  def acquired_at_end_year(calendar = Date)
+    calendar.today.year
+  end
 end

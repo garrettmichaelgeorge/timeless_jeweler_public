@@ -8,7 +8,9 @@
 
     <%= render Intake::CategorySelectorComponent.new %>
 
-    <%= render Intake::SKUComponent.new(item: @item) %>
+    <div id="sku-preview">
+      <%= render Intake::SKUComponent.new(sku: @item.sku) %>
+    </div>
 
     <%= render IntakeFormComponent.new(item: @item) %> 
   </div>

@@ -1,16 +1,20 @@
 require_relative '../test_helper_lite'
 require_relative '../../app/models/sku'
+require_relative '../../app/models/skuable_double'
 
 describe SKU do
   let(:acquired_at) { Time.new(2021, 1) }
   let(:ownership_status_code) { 'C' }
   let(:subcategory_code) { 'B' }
   let(:id) { 901 }
-  let(:skuable_class) do
-    Struct.new(:subcategory_code, :acquired_at, :id, :ownership_status_code)
-  end
-  let(:skuable_double) do
-    skuable_class.new(subcategory_code, acquired_at, id, ownership_status_code)
+  let(:skuable_class) { SKUableDouble } 
+  let(:skuable_double) { build_skuable_double }
+
+  def build_skuable_double
+    SKUableDouble.new(subcategory_code: subcategory_code,
+                      acquired_at: acquired_at,
+                      id: id,
+                      ownership_status_code: ownership_status_code)
   end
 
   subject { SKU.new(context: skuable_double) }
@@ -25,7 +29,7 @@ describe SKU do
       skuable_double.id = 9999
       _(subject.sku).must_equal 'B21019999C'
 
-      skuable_double.acquired_at = Time.new(12, 12)
+      skuable_double.acquired_at = Time.new(2012, 12)
       _(subject.sku).must_equal 'B12129999C'
 
       skuable_double.subcategory_code = 'BR'
@@ -60,19 +64,20 @@ describe SKU do
 
   describe '#==(other)' do
     it 'returns true when the skus are equal' do
-      equal_other = subject.dup
+      other = subject.dup
 
-      _(subject).must_be :==, equal_other
+      _(subject).must_be :==, other
     end
 
     it 'returns false when the skus are not equal' do
       subject
 
-      acquired_at = Time.new(2021, 2)
-      skuable_double = skuable_class.new(subcategory_code, acquired_at, id, ownership_status_code)
-      different_other = SKU.new(context: skuable_double)
+      other_skuable = skuable_double.dup
+      other_skuable.acquired_at = Time.new(2021, 2)
 
-      _(subject).wont_be :==, different_other
+      other = SKU.new(context: other_skuable)
+
+      _(subject).wont_be :==, other
     end
   end
 end

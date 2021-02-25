@@ -84,24 +84,27 @@ class ItemTest < ActiveSupport::TestCase
     end
   end
 
-  describe '#sku' do
-    let(:sku_calculator) { MiniTest::Mock.new }
-    let(:skuable)        { MiniTest::Mock.new }
-
-    it 'delegates to the SKU object' do
-      sku_calculator.expect :new, skuable, [{ context: subject }]
-      skuable.expect :sku, ''
-
-      subject.sku(sku_calculator)
-      assert_mock skuable
-    end
-  end
-
   describe '#child' do
     it 'returns the STI child class' do
       subject.category = 'Piece'
 
-      _(subject.child).must_be_instance_of Piece
+      _(subject.child).must_equal Piece
+    end
+  end
+
+  describe '#acquired_at_year' do
+    it 'returns the year as an integer' do
+      subject.acquired_at = Time.new(2021)
+
+      _(subject.acquired_at_year).must_equal 2021
+    end
+  end
+
+  describe '#acquired_at_month' do
+    it 'returns the month as an integer' do
+      subject.acquired_at = Time.new(2021, 10)
+
+      _(subject.acquired_at_month).must_equal 10
     end
   end
 end

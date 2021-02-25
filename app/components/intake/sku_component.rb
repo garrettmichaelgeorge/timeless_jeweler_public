@@ -2,16 +2,17 @@
 
 module Intake
   class SKUComponent < ApplicationComponent
-    def initialize(item:)
-      @item = item
+    def initialize(sku: '')
+      @sku = sku
     end
 
     def render?
-      item.category == 'Piece'
+      true
+      # sku.present?
     end
 
     private
 
-    attr_reader :item
+    attr_reader :sku
   end
 end

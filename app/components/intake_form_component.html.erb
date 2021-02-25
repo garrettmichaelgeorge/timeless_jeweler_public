@@ -2,21 +2,23 @@
 
   <% if render_form? %>
 
+
     <%= simple_form_for item, authenticity_token: false do |f| %>
       <%= f.error_notification %>
 
       <%= f.hidden_field :category %>
 
       <section id="intake-form-basic-fields">
-        <%= f.simple_fields_for :profile, f.object.profile do |profile_form| %>
-          <%= profile_form.association :subcategory %>
-        <% end %>
-
         <%= f.input :name %>
         <%= f.input :description %>
         <%= f.association :style, label_method: :name,
                                   prompt: 'Please select a style' %>
-        <%= f.input :acquired_at, input_html: { data: { reflex: 'input->Intake#update_sku' } } %>
+
+        <%= f.input :acquired_at, as: :date,
+                                  start_year: acquired_at_start_year,
+                                  end_year: acquired_at_end_year,
+                                  input_html: { data: { reflex: 'input->SKU#update',
+                                  skuable_attr: 'acquired_at' } } %>
 
         <div class="row">
           <div class="col-md">

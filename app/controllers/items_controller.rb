@@ -8,11 +8,14 @@ class ItemsController < ApplicationController
 
   def show
     item_record = repo.find_item(params[:id])
+    fresh_when(item_record)
     @item ||= item_presenter_for(item_record)
   end
 
   def new
     @item ||= Items::Creator.new(context: self).item
+    @skuable ||= SKUableDouble.new
+    @sku ||= SKU.new(context: @skuable)
   end
 
   def edit; end
@@ -33,33 +36,33 @@ class ItemsController < ApplicationController
 
   # Callback methods
   def create_item_succeeded(item:)
-    redirect_to item, success: t('success')
+    redirect_to item, success: t('.success')
   end
 
   def create_item_failed(item:, attrs_to_validate: item_params)
     @item = item
     render :new
     # broadcast_errors @item, attrs_to_validate
-    flash.now[:info] = t('failure')
+    flash.now[:info] = t('.failure')
   end
 
   def update_item_succeeded(item:, msg: '')
-    redirect_to item, success: t('success')
+    redirect_to item, success: t('.success')
   end
 
   def update_item_failed(item:, msg: '')
     @item = item
     render :edit
-    flash.now[:info] = t('failure')
+    flash.now[:info] = t('.failure')
   end
 
   def destroy_item_suceeded(msg: '')
-    redirect_to items_path, success: t('success')
+    redirect_to items_path, success: t('.success')
   end
 
   def destroy_item_failed(msg: '')
     redirect_back fallback_location: items_path,
-                  notice: t('failure')
+                  notice: t('.failure')
   end
 
   private
