@@ -1,4 +1,4 @@
-class CreatePieceSubcategories < ActiveRecord::Migration[6.2]
+class CreatePieceSubcategories < ActiveRecord::Migration[6.1]
   def change
     create_table :piece_subcategories do |t|
       t.string :name, limit: 40

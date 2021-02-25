@@ -1,4 +1,4 @@
-class AddAcquiredAtToItems < ActiveRecord::Migration[6.2]
+class AddAcquiredAtToItems < ActiveRecord::Migration[6.1]
   def change
     # Defaults to time of transaction (PostgreSQL 'CURRENT_TIMESTAMP')
     # https://stackoverflow.com/a/40647191/12344822
