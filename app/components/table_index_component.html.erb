@@ -1,0 +1,25 @@
+<%= render(CardComponent.new) do |component| %>
+  <% component.with(:header) do %>
+    <%= render TableControlsComponent.new %>
+  <% end %>
+  <% component.with(:body) do %>
+    <%= tag.div class: "table_responsive", data: { list: "" } do %>
+      <%= tag.table id: title,
+                    class: "table table-sm table-nowrap card-table table-hover" do %>
+        <%= render TableHeaderComponent.new(resources: resources,
+                                            columns: columns,
+                                            restful_actions: restful_actions) %>
+        <tbody class="list">
+          <% resources.each do |resource| %>
+            <% cache resource do %>
+              <%= render TableRowComponent.new(resource: resource,
+                                               columns: columns,
+                                               restful_actions: restful_actions),
+                         cached: true %>
+            <% end %>
+          <% end %>
+        </tbody>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

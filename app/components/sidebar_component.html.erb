@@ -17,14 +17,14 @@
       <!-- Nav Items -->
       <ul class="navbar-nav">
         <% nav_items.each do |nav_item, options| %>
-
-          <li class="nav-item">
-            <%= link_to options[:path], class: "nav-link" do %>
-              <%= icon options[:icon] %>
-              <%= nav_item.to_s.humanize %>
-            <% end %>
-          </li>
-
+          <% cache nav_item do %>
+            <li class="nav-item">
+              <%= link_to options[:path], class: "nav-link" do %>
+                <%= icon options[:icon] %>
+                <%= nav_item.to_s.humanize %>
+              <% end %>
+            </li>
+          <% end %>
         <% end %>
       </ul>
 
@@ -59,6 +59,7 @@
 
       <!-- Spacer -->
       <div class="mt-lg-auto"></div>
+
       <!-- Quick Action Button -->
       <%= render Buttons::QuickActionComponent.new %>
       <%= render Tooltips::QuickActionComponent.new %>

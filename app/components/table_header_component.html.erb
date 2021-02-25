@@ -1,13 +1,17 @@
 <thead>
   <tr>
     <th>
-      <%= render TableCheckboxComponent.new(id: 'all', resource: resources) %>
+      <%= render TableCheckboxComponent.new(id: 'all', resource: resources), cached: true %>
     </th>
 
-    <% labels_from(columns).map do |label| %>
-    <%= render TableHeaderCellComponent.new(label: label) %>
+    <% labels.each do |label| %>
+      <% cache label do %>
+        <%= render TableHeaderCellComponent.new(label: label), cached: true %>
+      <% end %>
     <% end %>
 
-    <th scope='col' colspan="<%= colspan %>"></th>
+    <th scope='col'
+        colspan="<%= colspan %>">
+    </th>
   </tr>
 </thead>

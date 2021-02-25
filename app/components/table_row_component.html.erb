@@ -4,9 +4,11 @@
   </td>
 
   <% columns.each_with_index do |column, index| %>
-    <td class="text-truncate" style="max-width: 8em">
-      <%= cell_value(resource, column) %>
-    </td>
+    <% cache column do %>
+      <td class="text-truncate" style="max-width: 8em">
+        <%= cell_value(resource, column) %>
+      </td>
+    <% end %>
   <% end %>
 
   <td>
