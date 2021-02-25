@@ -18,7 +18,7 @@ class SKU
   end
 
   def subcategory
-    context.subcategory_code || ''
+    context.subcategory_code || '-'
   end
 
   def acquired_at_year
@@ -34,7 +34,7 @@ class SKU
   end
 
   def ownership_status_code
-    context.ownership_status_code || 'T'
+    context.ownership_status_code || '-'
   end
 
   private
