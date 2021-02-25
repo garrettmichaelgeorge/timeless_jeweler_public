@@ -1,4 +1,4 @@
-class ChangeColumnNullOnSalesOccurredAt < ActiveRecord::Migration[6.2]
+class ChangeColumnNullOnSalesOccurredAt < ActiveRecord::Migration[6.1]
   def change
     change_column_null :sales, :occurred_at, false
     add_index :sales, :occurred_at, unique: true,
