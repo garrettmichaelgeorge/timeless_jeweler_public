@@ -136,7 +136,7 @@ Rails.application.configure do
     # pass the right values to any helpers that need to build URL paths based on
     # the current application environment
     # https://docs.stimulusreflex.com/appendices/deployment#set-your-default_url_options-for-each-environment
-    config.action_controller.default_url_options = { host: 'iowhlbk.herokuapp.com' }
+    config.action_controller.default_url_options = { host: 'admin.timelessjeweler.com' }
 
     # Ensure that ActionMailer's default URL options are the same as ActionController's
     config.action_mailer.default_url_options = config.action_controller.default_url_options
