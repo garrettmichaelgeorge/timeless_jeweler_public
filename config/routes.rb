@@ -1,31 +1,33 @@
 Rails.application.routes.draw do
-  # Devise
-  devise_for :users, controllers: {
-    confirmations: 'users/confirmations',
-    passwords: 'users/passwords',
-    registrations: 'users/registrations',
-    sessions: 'users/sessions'
-  }
+  devise_for :users, skip: [:sessions],
+                     controllers: { sessions: 'users/sessions',
+                                    # confirmations: 'users/confirmations',
+                                    # passwords: 'users/passwords',
+                                    # registrations: 'users/registrations'
+                                    }
 
   devise_scope :user do
-    get      'login'                  => 'devise/sessions#new'
-    post     'login'                  => 'devise/sessions#create'
-    get      '/users/sign_out'        => 'devise/sessions#destroy'
-    root to: 'static_pages#dashboard'
+    get      'sign_in'  => 'devise/sessions#new',     as: :new_user_session
+    post     'sign_in'  => 'devise/sessions#create',  as: :user_session
+    delete   'sign_out' => 'devise/sessions#destroy', as: :destroy_user_session
   end
+
+  authenticated :user do
+    root to: 'static_pages#dashboard', as: :authenticated_root
+  end
+  root to: redirect('/sign_in')
 
   resources :people,
             :households,
             :items
-  get 'inventory' => 'items#index'
-  get 'customers' => 'people#index'
 
   resources :sales do
     resources :sale_line_items
   end
 
-  resources :intake, only: %i[new create]
-  get 'intake', to: 'intake#new', as: :intake
+  get 'inventory' => 'items#index'
+  get 'intake'    => 'items#new'
+  get 'customers' => 'people#index'
 
   # Static pages
   get 'dashboard' => 'static_pages#dashboard'
