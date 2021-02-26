@@ -5,7 +5,8 @@ class Items::Guard
 
   def protect
     params.require(:item)
-          .permit(:name,
+          .permit(:id,
+                  :name,
                   :description,
                   :item_style_id,
                   :cost,
@@ -15,6 +16,7 @@ class Items::Guard
                   :category,
                   :item_ownership_status_id,
                   profile_attributes: [
+                    :id,
                     :miscellaneous_item_subcategory_id,
                     :piece_subcategory_id,
                     :gemstone_subcategory_id,
