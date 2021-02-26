@@ -55,3 +55,4 @@ models.txt
 
 /config/credentials/test.key
 .env
+coverage
