@@ -7,8 +7,7 @@ module Intake
     end
 
     def render?
-      true
-      # sku.present?
+      sku.present?
     end
 
     private
