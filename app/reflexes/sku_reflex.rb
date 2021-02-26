@@ -23,7 +23,7 @@ class SKUReflex < ApplicationReflex
   end
 
   def update
-    morph '#sku-preview-text', @item.sku
+    morph '#sku-preview', render(Intake::SKUComponent.new(sku: @item.sku))
   end
 
   private

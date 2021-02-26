@@ -12,6 +12,5 @@ class IntakeReflex < ApplicationReflex
   # include Formable, Intakable
 
   def update_sku
-    @item ||= build_item(category: 'Piece')
   end
 end
