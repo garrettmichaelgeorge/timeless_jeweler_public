@@ -37,4 +37,8 @@ Rails.application.routes.draw do
   match '/404', to: 'errors#not_found',             via: :all
   match '/422', to: 'errors#unprocessable_entity',  via: :all
   match '/500', to: 'errors#internal_server_error', via: :all
+
+  # Set up service worker for Progressive Web Application (PWA)
+  get '/service-worker.js' => 'service_worker#service_worker'
+  get '/manifest.json'     => 'service_worker#manifest'
 end
