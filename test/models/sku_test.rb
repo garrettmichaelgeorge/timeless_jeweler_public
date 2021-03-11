@@ -36,16 +36,6 @@ describe SKU do
       _(subject.sku).must_equal 'BR12129999C'
     end
 
-    it 'returns a string with the right number of characters' do
-      expected_low = 10
-      expected_high = 11
-      actual = subject.sku.length
-      msg = "SKU must be between #{expected_low} and #{expected_high} characters, but this SKU was #{actual} characters instead"
-
-      _(actual).must_be :>=, expected_low, msg
-      _(actual).must_be :<=, expected_high, msg
-    end
-
     it 'is formatted correctly' do
       regex = /
       \A             # -- start
