@@ -33,6 +33,10 @@
 
 /public/packs
 /public/packs-test
+# Ignore service worker, which is compiled by Webpack
+# https://dev.to/coorasse/the-progressive-rails-app-46ma
+/public/service-worker.js*
+
 /node_modules/
 /vendor/dashkit/node_modules/
 
@@ -56,3 +60,4 @@ models.txt
 /config/credentials/test.key
 .env
 coverage
+.rbenv-vars
