@@ -11,13 +11,14 @@ end
 
 def seed_table(lookup_key, **opts)
   model = opts.fetch(:model) { lookup_key.constantize }
+  lookup_attrs = lookup(lookup_key)
 
-  if lookup(lookup_key).is_a?(Hash)
-    lookup(lookup_key).each do |code, name|
+  if lookup_attrs.is_a?(Hash)
+    lookup_attrs.each do |code, name|
       model.create_or_find_by(code: code, name: name)
     end
   else
-    lookup(lookup_key).each do |name|
+    lookup_attrs.each do |name|
       model.create_or_find_by(name: name)
     end
   end
