@@ -11,8 +11,8 @@ require 'test_helper'
 
 class Diamond::CutTest < ActiveSupport::TestCase
   context 'associations' do
-    should have_many(:gradings)
-    should have_many(:diamonds).through(:gradings)
+    should have_many(:gradings).inverse_of(:cut)
+    should have_many(:diamonds).through(:gradings).inverse_of(:cut)
   end
 
   context 'validations' do
@@ -21,13 +21,13 @@ class Diamond::CutTest < ActiveSupport::TestCase
     should validate_presence_of(:grade)
     should validate_uniqueness_of(:grade)
     should validate_length_of(:grade).is_at_most(9)
-    should_eventually validate_inclusion_of(:grade)
+    should validate_inclusion_of(:grade).in_array(described_class.lookup_values)
   end
 end
 
 class Diamond::Cut::GradingTest < ActiveSupport::TestCase
   context 'associations' do
-    should belong_to(:cut)
-    should belong_to(:diamond)
+    should belong_to(:cut).inverse_of(:gradings)
+    should belong_to(:diamond).inverse_of(:cut_grading)
   end
 end

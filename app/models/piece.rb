@@ -40,4 +40,8 @@ class Piece < Item
 
   delegate_to_profile :subcategory, :subcategory=, :subcategory_code,
                       :metals, :gemstones, :mountings
+
+  def sku(calculator = SKU)
+    @sku ||= calculator.new(context: self).sku
+  end
 end

@@ -1,31 +1,34 @@
 Rails.application.routes.draw do
-  # Devise
-  devise_for :users, controllers: {
-    confirmations: 'users/confirmations',
-    passwords: 'users/passwords',
-    registrations: 'users/registrations',
-    sessions: 'users/sessions'
-  }
+  root to: redirect('/sign_in')
+
+  devise_for :users, skip: [:sessions],
+                     controllers: { sessions: 'users/sessions',
+                                    # confirmations: 'users/confirmations',
+                                    # passwords: 'users/passwords',
+                                    # registrations: 'users/registrations'
+                                    }
 
   devise_scope :user do
-    get      'login'                  => 'devise/sessions#new'
-    post     'login'                  => 'devise/sessions#create'
-    get      '/users/sign_out'        => 'devise/sessions#destroy'
-    root to: 'static_pages#dashboard'
+    get      'sign_in'  => 'devise/sessions#new',     as: :new_user_session
+    post     'sign_in'  => 'devise/sessions#create',  as: :user_session
+    delete   'sign_out' => 'devise/sessions#destroy', as: :destroy_user_session
+  end
+
+  authenticated :user do
+    root to: 'static_pages#dashboard', as: :authenticated_root
   end
 
   resources :people,
             :households,
             :items
-  get 'inventory' => 'items#index'
-  get 'customers' => 'people#index'
 
   resources :sales do
     resources :sale_line_items
   end
 
-  resources :intake, only: %i[new create]
-  get 'intake', to: 'intake#new', as: :intake
+  get 'inventory' => 'items#index'
+  get 'intake'    => 'items#new'
+  get 'customers' => 'people#index'
 
   # Static pages
   get 'dashboard' => 'static_pages#dashboard'
@@ -35,4 +38,8 @@ Rails.application.routes.draw do
   match '/404', to: 'errors#not_found',             via: :all
   match '/422', to: 'errors#unprocessable_entity',  via: :all
   match '/500', to: 'errors#internal_server_error', via: :all
+
+  # Set up service worker for Progressive Web Application (PWA)
+  get '/service-worker.js' => 'service_worker#service_worker'
+  get '/manifest.json'     => 'service_worker#manifest'
 end

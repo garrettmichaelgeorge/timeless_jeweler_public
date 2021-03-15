@@ -1,4 +1,4 @@
-class DropDuplicateGemstones < ActiveRecord::Migration[6.2]
+class DropDuplicateGemstones < ActiveRecord::Migration[6.1]
   # As the data model has evolved, the naming convention for the Gemstone table
   # has changed back and forth between two main options.
 

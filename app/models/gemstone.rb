@@ -23,8 +23,8 @@ class Gemstone < ApplicationRecord
 
   ROLES = %w[Gemstone::Listed Gemstone::Mounted].freeze
 
-  belongs_to :category,     inverse_of: :gemstones,
-                            foreign_key: :gemstone_category_id
+  belongs_to :subcategory,  inverse_of: :gemstones,
+                            class_name: 'Gemstone::Category', foreign_key: :gemstone_category_id
 
   has_many :reports,        inverse_of: :gemstone, class_name: 'Gemstone::Report'
 
@@ -53,7 +53,7 @@ class Gemstone < ApplicationRecord
   delegate :grade, to: :cut,      prefix: true, allow_nil: true
   delegate :grade, to: :color,    prefix: true, allow_nil: true
   delegate :grade, to: :clarity,  prefix: true, allow_nil: true
-  delegate :name,  to: :category, prefix: true
+  delegate :name,  to: :subcategory, prefix: true
 
   def mounted? = false
 

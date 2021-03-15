@@ -1,6 +1,7 @@
 <div id="intake-form-wrapper" class="mt-5">
 
-  <% if item.category %>
+  <% if render_form? %>
+
 
     <%= simple_form_for item, authenticity_token: false do |f| %>
       <%= f.error_notification %>
@@ -13,6 +14,11 @@
         <%= f.association :style, label_method: :name,
                                   prompt: 'Please select a style' %>
 
+        <%= f.input :acquired_at, as: :date,
+                                  start_year: acquired_at_start_year,
+                                  end_year: acquired_at_end_year,
+                                  input_html: { data: { reflex: 'input->SKU#update' } } %>
+
         <div class="row">
           <div class="col-md">
             <%= f.input :cost %>
@@ -23,6 +29,7 @@
         </div>
 
         <%= f.input :notes %>
+        <%= f.association :ownership_status, input_html: { data: { reflex: 'input->SKU#update' } } %>
       </section>
 
       <%= tag.hr %>

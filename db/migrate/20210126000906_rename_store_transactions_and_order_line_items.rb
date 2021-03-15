@@ -1,4 +1,4 @@
-class RenameStoreTransactionsAndOrderLineItems < ActiveRecord::Migration[6.2]
+class RenameStoreTransactionsAndOrderLineItems < ActiveRecord::Migration[6.1]
   def change
     rename_table :store_transactions, :sales if table_exists?(:store_transactions)
     rename_table :order_line_items, :sale_line_items if table_exists?(:order_line_items)

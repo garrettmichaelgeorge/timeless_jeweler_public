@@ -1,3 +1,7 @@
+# https://github.com/simplecov-ruby/simplecov
+require 'simplecov'
+SimpleCov.start
+
 require_relative 'test_helper_lite'
 require_relative '../config/environment'
 require 'rails/test_help'

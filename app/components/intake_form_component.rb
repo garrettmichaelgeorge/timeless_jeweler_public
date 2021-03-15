@@ -10,6 +10,10 @@ class IntakeFormComponent < ApplicationComponent
 
   attr_reader :item
 
+  def render_form?
+    item.category.present?
+  end
+
   def auth_token
     @auth_token ||= form_authenticity_token
   end
@@ -21,5 +25,13 @@ class IntakeFormComponent < ApplicationComponent
   def data_form
     { controller: 'nested-form',
       nested_form_wrapper_selector_value: '.nested-form-wrapper' }
+  end
+
+  def acquired_at_start_year
+    2010
+  end
+
+  def acquired_at_end_year(calendar = Date)
+    calendar.today.year
   end
 end

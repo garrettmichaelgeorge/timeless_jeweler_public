@@ -40,7 +40,7 @@ class LooseGemstone < Item
 
   delegate_to_profile :gemstone, :carat, :carat=,
                       :color_grade, :cut_grade, :clarity_grade,
-                      :gemstone_category
+                      :subcategory, :subcategory=
 
   class Profile < ApplicationRecord
     self.table_name = 'loose_gemstones'
@@ -52,6 +52,7 @@ class LooseGemstone < Item
     belongs_to :loose_gemstone, inverse_of: :profile, foreign_key: 'item_id'
     belongs_to :gemstone,       inverse_of: :listing, foreign_key: 'gemstone_profile_id',
                                 class_name: 'Gemstone::Listed'
+    # has_one :subcategory, through: :gemstone
 
     delegate_missing_to :gemstone
 

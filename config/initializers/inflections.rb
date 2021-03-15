@@ -16,4 +16,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'STI'
   inflect.acronym 'XS'
   inflect.acronym 'SKU'
+  inflect.acronym 'SKUable'
 end

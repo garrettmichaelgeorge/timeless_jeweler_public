@@ -1,5 +1,3 @@
 class OptimismChannel < ApplicationCable::Channel
-  def subscribed
-    stream_from "OptimismChannel"
-  end
+  include AutoStreamable
 end

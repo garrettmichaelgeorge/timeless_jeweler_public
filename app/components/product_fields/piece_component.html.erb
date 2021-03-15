@@ -1,3 +1,5 @@
+<%= f.association :subcategory, input_html: { data: { reflex: 'input->SKU#update' } } %>
+
 <div id="intake_form_metals" class="form-group" data-controller="nested-form">
 
   <template data-target="nested-form.template">
@@ -12,7 +14,6 @@
     <% end %>
   <% end %>
 
-
   <div data-target="nested-form.links">
     <%= link_to 'Add metal', '#', class: 'btn btn-sm btn-outline-secondary btn-small',
                                   data: { action: 'nested-form#add' } %>
@@ -26,8 +27,10 @@
     <% end %>
   </template>
 
-  <%= f.simple_fields_for :gemstones do |builder| %>
-    <%# render ProductFields::GemstoneComponent.new(f: builder) %>
+  <% if gemstones.present? %>
+    <%= f.simple_fields_for :gemstones do |builder| %>
+      <%# render ProductFields::GemstoneComponent.new(f: builder) %>
+    <% end %>
   <% end %>
 
   <div data-target="nested-form.links">

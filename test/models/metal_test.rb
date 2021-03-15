@@ -31,10 +31,10 @@ require 'test_helper'
 
 class MetalTest < ActiveSupport::TestCase
   context 'associations' do
-    should belong_to(:piece)
-    should belong_to(:category)
-    should belong_to(:color)
-    should belong_to(:purity)
+    should belong_to(:piece).inverse_of(:metals)
+    should belong_to(:category).inverse_of(:metals)
+    should belong_to(:color).inverse_of(:metals)
+    should belong_to(:purity).inverse_of(:metals)
   end
 
   context 'delegations' do

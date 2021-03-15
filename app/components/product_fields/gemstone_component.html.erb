@@ -4,8 +4,7 @@
   <legend><small>Gemstone</small></legend>
 
   <%= content_tag :div, class: 'row' do %>
-    <%= f.association :category, label_method: :name,
-                                 prompt: 'Choose a gemstone category',
+    <%= f.association :subcategory, prompt: 'Choose a gemstone category',
                                  label: false,
                                  wrapper_html: { class: 'col' } %>
 
@@ -14,7 +13,7 @@
                         label: false,
                         wrapper_html: { class: 'col' } %>
 
-    <% if f.object.mounted? %>
+    <% if removable? %>
       <%= content_tag :div, class: 'col-auto' do %>
         <%= render Buttons::RemoveNestedFieldComponent.new %>
       <% end %>

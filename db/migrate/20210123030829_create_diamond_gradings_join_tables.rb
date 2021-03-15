@@ -1,4 +1,4 @@
-class CreateDiamondGradingsJoinTables < ActiveRecord::Migration[6.2]
+class CreateDiamondGradingsJoinTables < ActiveRecord::Migration[6.1]
   def change
     create_table :diamond_cut_gradings, id: false do |t|
       t.references :diamond_cut,      null: false, foreign_key: true

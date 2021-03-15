@@ -1,4 +1,4 @@
-class CreateReports < ActiveRecord::Migration[6.2]
+class CreateReports < ActiveRecord::Migration[6.1]
   def change
     create_table :gemstone_reports do |t|
       t.string :report_no, null: false

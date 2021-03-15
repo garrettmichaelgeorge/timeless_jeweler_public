@@ -59,14 +59,17 @@ class Item < ApplicationRecord
   scope :gemstones,           -> { where(category: 'Gemstone') }
   scope :miscellaneous_items, -> { where(category: 'MiscellaneousItem') }
 
-  delegate :name, to: :style, prefix: true
-  delegate :code, to: :ownership_status, prefix: true
+  delegate :name, to: :style, prefix: true, allow_nil: true
+  delegate :code, to: :ownership_status, prefix: true, allow_nil: true
+  delegate :year, :month, to: :acquired_at, prefix: true, allow_nil: true
 
   monetize :cost_cents,  numericality: { greater_than_or_equal_to: 0 }
   monetize :price_cents, numericality: { greater_than_or_equal_to: 0 }
 
-  def salable
-    category.underscore
+  def profile; end
+
+  def child
+    self.class.sti_class_for(category)
   end
 
   def category=(value)
@@ -78,9 +81,8 @@ class Item < ApplicationRecord
     "#{name} (#{price})"
   end
 
-  def sku(calculator = SKU)
-    # TODO: finish implementing (see Item::SKU)
-    @sku ||= calculator.new(context: self).sku
+  def sku
+    id
   end
 
   class << self

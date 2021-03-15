@@ -12,12 +12,12 @@ class Diamond::Cut < ApplicationRecord
   # Lookup class
   self.table_name = 'diamond_cuts'
 
-  validates :grade, presence: true,
-                    uniqueness: true,
-                    length: { maximum: 9 }
+  include Lookupable
+
+  lookup_attribute :grade, maximum_length: 9
 
   has_many :gradings, inverse_of: :cut, class_name: 'Grading'
-  has_many :diamonds, through: :gradings
+  has_many :diamonds, through: :gradings, inverse_of: :cut
 
   alias_attribute :name, :grade
 

@@ -22,6 +22,7 @@ class TableRowComponent < ApplicationComponent
                      resource.send(column[:value])
                    end
 
+    # HACK: this logic belongs in a presenter
     format_money(column_value)
   end
 

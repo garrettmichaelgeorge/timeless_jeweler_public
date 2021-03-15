@@ -6,7 +6,7 @@ class TableIndexComponent < ApplicationComponent
   def initialize(resources:, title:, columns:, restful_actions: [])
     @resources = resources
     @title = title
-    @columns = columns
+    @columns = Columns.new(columns)
     @restful_actions = restful_actions
   end
 
@@ -36,4 +36,33 @@ class TableIndexComponent < ApplicationComponent
   private
 
   attr_reader :title, :columns, :resources, :restful_actions
+
+  class Columns
+    include Enumerable
+
+    attr_reader :columns
+
+    def initialize(columns)
+      @columns = columns
+    end
+
+    def each(&block)
+      columns.each(&block)
+    end
+
+    def labels
+      @columns.map { |column| label_from(column) }
+    end
+
+    private
+
+    def label_from(column)
+      column.fetch(:label) { default_label_for(column) }
+    end
+
+    def default_label_for(column)
+      label = column.fetch(:value) { "" }
+      label.to_s.capitalize.gsub(/_/, ' ')
+    end
+  end
 end

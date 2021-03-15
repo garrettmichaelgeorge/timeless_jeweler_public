@@ -8,6 +8,10 @@
 
     <%= render Intake::CategorySelectorComponent.new %>
 
+    <div id="sku-preview">
+      <%= render Intake::SKUComponent.new(sku: @item.sku) %>
+    </div>
+
     <%= render IntakeFormComponent.new(item: @item) %> 
   </div>
 </div>

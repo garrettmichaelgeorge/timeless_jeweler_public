@@ -28,7 +28,12 @@ module Items
     private
 
     def build(record_class)
-      record_class.new(user: current_user, **attrs)
+      if attrs[:category]
+        record_class.sti_class_for(attrs[:category])
+                    .new(user: current_user, **attrs)
+      else
+        record_class.new(user: current_user, **attrs)
+      end
     end
 
     def current_user
