@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: redirect('/sign_in')
+
   devise_for :users, skip: [:sessions],
                      controllers: { sessions: 'users/sessions',
                                     # confirmations: 'users/confirmations',
@@ -15,7 +17,6 @@ Rails.application.routes.draw do
   authenticated :user do
     root to: 'static_pages#dashboard', as: :authenticated_root
   end
-  root to: redirect('/sign_in')
 
   resources :people,
             :households,
