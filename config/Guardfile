@@ -2,7 +2,7 @@
 # More info at https://github.com/guard/guard#readme
 
 ## Uncomment and set this to only include directories you want to watch
-directories %w[app config test features] \
+directories %w[app config test] \
   .select { |d| Dir.exist?(d) ? d : UI.warning("Directory #{d} does not exist") }
 
 ## Note: if you are using the `directories` clause above and you are not
@@ -96,14 +96,14 @@ cucumber_options = {
   notification: false
 }
 
-guard 'cucumber', cucumber_options do
-  watch(%r{^features/.+\.feature$})
-  watch(%r{^features/support/.+$}) { 'features' }
+# guard 'cucumber', cucumber_options do
+#   watch(%r{^features/.+\.feature$})
+#   watch(%r{^features/support/.+$}) { 'features' }
 
-  watch(%r{^features/step_definitions/(.+)_steps\.rb$}) do |m|
-    Dir[File.join("**/#{m[1]}.feature")][0] || 'features'
-  end
-end
+#   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) do |m|
+#     Dir[File.join("**/#{m[1]}.feature")][0] || 'features'
+#   end
+# end
 
 ctags_options = {
   binary: 'ctags-exuberant', # name of the ctags binary (default ctags)
