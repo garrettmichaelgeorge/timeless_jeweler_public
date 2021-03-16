@@ -47,7 +47,7 @@ describe SKU do
         \z             # -- end
       /x
 
-        _(subject.sku).must_match regex,
+      _(subject.sku).must_match regex,
         "SKU '#{subject.sku}' was formatted incorrectly. It should conform to the following regex"
     end
   end
