@@ -48,13 +48,19 @@ password: password
 
 * Redis with separate instances for caching and session storage
 
-* Heroku
+* Progressive Web App (PWA) capability
 
-* Service worker
+* Heroku
 
 ## Requirements
 
-* Ruby version 3.0+
+* Ruby 3.0+
+
+* PostgreSQL
+
+* Redis
+
+* Node 14.16.0
 
 ## Code highlights
 
@@ -110,3 +116,50 @@ which cleverly uses Rails' built-in STI mechanism to set up the inheritance
 hierarchy. This approach affords integrity at the DB level, avoids unnecessary
 dependencies (no gems), and allows utmost flexibility in terms of branching
 associations.
+
+## Running it locally
+
+* Clone the repository
+
+  ```bash
+  $ git clone git@github.com:garrettmichaelgeorge/timeless_jeweler_public.git
+  ```
+
+* Install gem dependencies
+
+  ```bash
+  $ bundle
+  ```
+
+* Install yarn dependencies
+
+  ```bash
+  $ yarn
+  ```
+
+* Set up the database
+
+  ```bash
+  $ bin/rails db:create
+  $ bin/rails db:schema:load
+  ```
+
+* Launch the server
+
+  ```bash
+  $ bin/rails server
+  ```
+
+* Visit in the browser
+
+## Troubleshooting
+
+* Node Sass blocks Webpacker with error message: `Node Sass could not find a binding for your current environment: OS X 64-bit with Node.js 14.x`
+
+  * Solution: set the node version to that in `.nvmrc`, then upgrade the NPM
+      package.
+
+    ```bash
+    $ nvm use
+    $ yarn upgrade
+    ```
