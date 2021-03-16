@@ -3,15 +3,15 @@ require_relative '../../app/models/sku'
 require_relative '../../app/models/skuable_double'
 
 describe SKU do
-  let(:acquired_at) { Time.new(2021, 1) }
+  let(:time_class) { Time }
+  let(:acquired_at) { time_class.new(2021, 1) }
   let(:ownership_status_code) { 'C' }
   let(:subcategory_code) { 'B' }
   let(:id) { 901 }
-  let(:skuable_class) { SKUableDouble } 
   let(:skuable_double) { build_skuable_double }
 
-  def build_skuable_double
-    SKUableDouble.new(subcategory_code: subcategory_code,
+  def build_skuable_double(skuable_class = SKUableDouble)
+    skuable_class.new(subcategory_code: subcategory_code,
                       acquired_at: acquired_at,
                       id: id,
                       ownership_status_code: ownership_status_code)
@@ -20,7 +20,7 @@ describe SKU do
   subject { SKU.new(context: skuable_double) }
 
   describe '#sku' do
-    it 'generates the correct string' do
+    it 'generates the correct string based on its context' do
       _(subject.sku).must_equal 'B21010901C'
 
       skuable_double.id = 1
@@ -29,7 +29,7 @@ describe SKU do
       skuable_double.id = 9999
       _(subject.sku).must_equal 'B21019999C'
 
-      skuable_double.acquired_at = Time.new(2012, 12)
+      skuable_double.acquired_at = time_class.new(2012, 12)
       _(subject.sku).must_equal 'B12129999C'
 
       skuable_double.subcategory_code = 'BR'
@@ -38,14 +38,14 @@ describe SKU do
 
     it 'is formatted correctly' do
       regex = /
-      \A             # -- start
-      ([RNPBREW]|BR) # item type code
-      \d{2}          # 2-digit year
-      \d{2}          # 2-digit month
-      \d{4}          # 4-digit item no.
+        \A             # -- start
+        ([RNPBREW]|BR) # item type code
+        \d{2}          # 2-digit year
+        \d{2}          # 2-digit month
+        \d{4}          # 4-digit item no.
         [TC]           # owned or consigned
         \z             # -- end
-        /x
+      /x
 
         _(subject.sku).must_match regex,
         "SKU '#{subject.sku}' was formatted incorrectly. It should conform to the following regex"
@@ -63,7 +63,7 @@ describe SKU do
       subject
 
       other_skuable = skuable_double.dup
-      other_skuable.acquired_at = Time.new(2021, 2)
+      other_skuable.acquired_at = time_class.new(2021, 2)
 
       other = SKU.new(context: other_skuable)
 
