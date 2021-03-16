@@ -1,12 +1,6 @@
 Rails.application.routes.draw do
-  root to: redirect('/sign_in')
-
   devise_for :users, skip: [:sessions],
-                     controllers: { sessions: 'users/sessions',
-                                    # confirmations: 'users/confirmations',
-                                    # passwords: 'users/passwords',
-                                    # registrations: 'users/registrations'
-                                    }
+                     controllers: { sessions: 'users/sessions' }
 
   devise_scope :user do
     get      'sign_in'  => 'devise/sessions#new',     as: :new_user_session
@@ -17,6 +11,7 @@ Rails.application.routes.draw do
   authenticated :user do
     root to: 'static_pages#dashboard', as: :authenticated_root
   end
+  root to: redirect('/sign_in')
 
   resources :people,
             :households,
@@ -40,6 +35,8 @@ Rails.application.routes.draw do
   match '/500', to: 'errors#internal_server_error', via: :all
 
   # Set up service worker for Progressive Web Application (PWA)
-  get '/service-worker.js' => 'service_worker#service_worker'
-  get '/manifest.json'     => 'service_worker#manifest'
+  # FIXME: The app erroneously routes to /service-worker.js directly (like a
+  # page). Make it serve the service worker like an ordinary javascript file
+  # get '/service-worker.js' => 'service_worker#service_worker'
+  # get '/manifest.json'     => 'service_worker#manifest'
 end
