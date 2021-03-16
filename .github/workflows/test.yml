@@ -41,6 +41,10 @@ jobs:
         sudo apt-get -y install libpq-dev
     - name: Install Bundler
       run: gem install bundler
+    - name: Bundle install
+      run: |
+        bundle config set --local deployment 'false'
+        bundle install --jobs 4 --retry 3
     - name: Read Node.js version to install from `.nvmrc`
       run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
       id: nvm
@@ -56,10 +60,6 @@ jobs:
       with:
         path: ${{ steps.yarn-cache.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-    - name: Bundle install
-      run: |
-        bundle config set --local deployment 'false'
-        bundle install --jobs 4 --retry 3
     - name: Yarn install
       run: yarn --frozen-lockfile
     - name: Set up database config
@@ -73,3 +73,26 @@ jobs:
         bin/rails db:schema:load
     - name: Run tests
       run: bin/rails test
+  coverage:
+    needs: [ test ]
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Read Node.js version to install from `.nvmrc`
+      run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+      id: nvm
+    - name: Install required Node.js version
+      uses: actions/setup-node@v1
+      with:
+        node-version: "${{ steps.nvm.outputs.NVMRC }}"
+    - name: Get Yarn cache directory path
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - name: Set up cache key and directory for node_modules cache
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+    - name: Yarn install
+      run: yarn --frozen-lockfile
