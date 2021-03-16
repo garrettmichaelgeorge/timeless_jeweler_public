@@ -1,10 +1,8 @@
 <h1 align="center">Timeless Jeweler App</h1>
 <div align="center">
-  <a href="https://codeclimate.com/github/garrettmichaelgeorge/timeless_jeweler_public/maintainability">
-    <img src="https://api.codeclimate.com/v1/badges/2e9f659f4ba63f50d6dd/maintainability"/>
-  </a>
 
-  [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
+  [![Maintainability](https://api.codeclimate.com/v1/badges/2e9f659f4ba63f50d6dd/maintainability)](https://codeclimate.com/github/garrettmichaelgeorge/timeless_jeweler_public/maintainability)
+  [![Test Coverage](https://api.codeclimate.com/v1/badges/2e9f659f4ba63f50d6dd/test_coverage)](https://codeclimate.com/github/garrettmichaelgeorge/timeless_jeweler_public/test_coverage)
 
   The Timeless Jeweler Web App is a commercial retail management web app for jewelers. Manage customers, inventory, sales, and services all in one place.
 
