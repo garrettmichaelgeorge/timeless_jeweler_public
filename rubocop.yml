@@ -1,0 +1,14 @@
+Style:
+  enabled: false
+Layout:
+  enabled: true
+Lint:
+  enabled: true
+Metrics:
+  enabled: true
+Naming:
+  enabled: true
+Security:
+  enabled: true
+Bundler:
+  enabled: true
