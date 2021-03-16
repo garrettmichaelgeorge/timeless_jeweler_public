@@ -3,8 +3,23 @@ name: Test
 on:
   push:
     branches: [ master, public ]
+    paths:
+      - .github/workflows
+      - app/**/*
+      - db/**/*
+      - test/**/*
+      - lib/**/*
+      - '**/Gemfile*'
+      - '!*.md'
   pull_request:
     branches: [ master, public ]
+      - .github/workflows
+      - app/**/*
+      - db/**/*
+      - test/**/*
+      - lib/**/*
+      - '**/Gemfile*'
+      - '!*.md'
 jobs:
   test:
     strategy:
