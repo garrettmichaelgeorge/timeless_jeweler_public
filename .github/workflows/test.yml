@@ -36,21 +36,34 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Install required apt packages
+      run: |
+        sudo apt-get -y install libpq-dev
     - name: Install Bundler
       run: gem install bundler
     - name: Install Node
       uses: actions/setup-node@v1
       with:
         node-version: 14.4.0
+    - name: Set up cache key and directory for node_modules cache
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+    - name: Bundle install
+      run: |
+        bundle config set --local deployment 'false'
+        bundle install --jobs 4 --retry 3
+    - name: Yarn install
+      run: yarn --frozen-lockfile
+    - name: Set up database config
+      run: |
+        cp config/database.github.yml config/database.yml
     - name: Set up Rails application
       env:
         RAILS_ENV: test
       run: |
-        bundle config set --local deployment 'false'
-        bundle install --jobs 4 --retry 3
-        cp config/database.github.yml config/database.yml
         bin/rails db:create
         bin/rails db:migrate
-        yarn --frozen-lockfile
     - name: Run tests
       run: bin/rails test
