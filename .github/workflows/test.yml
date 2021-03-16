@@ -65,11 +65,11 @@ jobs:
     - name: Set up database config
       run: |
         cp config/database.github.yml config/database.yml
-    - name: Set up Rails application
+    - name: Set up database
       env:
         RAILS_ENV: test
       run: |
         bin/rails db:create
-        bin/rails db:migrate
+        bin/rails db:schema:load
     - name: Run tests
       run: bin/rails test
