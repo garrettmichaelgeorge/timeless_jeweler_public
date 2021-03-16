@@ -1,30 +1,14 @@
 class HouseholdsController < ApplicationController
-  before_action :set_household, only: [:show, :edit, :update, :destroy]
+  before_action :set_household, only: [:edit, :update, :destroy]
 
-  # GET /households
-  # GET /households.json
-  def index
-    @households = Household.all
-  end
-
-  # GET /households/1
-  # GET /households/1.json
-  def show
-    @household = Household.find(params[:id])
-  end
-
-  # GET /households/new
   def new
     @household = Household.new
   end
 
-  # GET /households/1/edit
   def edit
     @household = Household.find(params[:id])
   end
 
-  # POST /households
-  # POST /households.json
   def create
     @household = Household.new(household_params)
 
@@ -39,8 +23,6 @@ class HouseholdsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /households/1
-  # PATCH/PUT /households/1.json
   def update
     respond_to do |format|
       if @household.update(household_params)
@@ -54,14 +36,13 @@ class HouseholdsController < ApplicationController
     end
   end
 
-  # DELETE /households/1
-  # DELETE /households/1.json
   def destroy
     @household.destroy
+
     respond_to do |format|
       format.html { redirect_to households_url, success: 'Household was successfully destroyed.' }
-      # redirect_to households_url
-      # flash.now[:success] = 'Household was successfully deleted.'
+      redirect_to households_path
+      flash.now[:success] = 'Household was successfully deleted.'
       format.json { head :no_content }
     end
   end
@@ -69,14 +50,11 @@ class HouseholdsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_household
     @household = Household.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def household_params
-    params.require(:household).permit(:actable_type)
+    params.require(:household).permit(:id)
   end
-
 end
