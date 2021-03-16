@@ -3,9 +3,11 @@ name: Rails Best Practices
 on:
   push:
     branches: [ master, public ]
+  pull_request:
+    branches: [ master, public ]
 
 jobs:
-  rails-best-practices:
+  rails_best_practices:
     runs-on: ubuntu-latest
     steps:
     - name: Code review using Rails Best Practices
