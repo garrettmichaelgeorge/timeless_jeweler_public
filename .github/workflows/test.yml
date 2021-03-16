@@ -3,6 +3,8 @@ name: Test
 on:
   push:
     branches: [ master, public ]
+  pull_request:
+    branches: [ master, public ]
 jobs:
   test:
     strategy:
@@ -35,7 +37,7 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Install Bundler
-      run: bundle install
+      run: gem install bundler
     - name: Install Node
       uses: actions/setup-node@v1
       with:
@@ -44,7 +46,8 @@ jobs:
       env:
         RAILS_ENV: test
       run: |
-        bundle install --no-deployment --jobs 4 --retry 3
+        bundle config set --local deployment 'false'
+        bundle install --jobs 4 --retry 3
         cp config/database.github.yml config/database.yml
         bin/rails db:create
         bin/rails db:migrate
