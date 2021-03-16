@@ -41,10 +41,16 @@ jobs:
         sudo apt-get -y install libpq-dev
     - name: Install Bundler
       run: gem install bundler
-    - name: Install Node
+    - name: Read Node.js version to install from `.nvmrc`
+      run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+      id: nvm
+    - name: Install required Node.js version
       uses: actions/setup-node@v1
       with:
-        node-version: 14.4.0
+        node-version: "${{ steps.nvm.outputs.NVMRC }}"
+    - name: Get Yarn cache directory path
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
     - name: Set up cache key and directory for node_modules cache
       uses: actions/cache@v1
       with:
