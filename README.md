@@ -99,8 +99,9 @@ by DHH: polymorphic associations, single-table inheritance (STI), and his own
 solution, delegated types. These form the canonical Rails-way solutions to
 inheritance. Multiple-table inheritance, has, despite its ubiquity in other
 database-backed environments, has never enjoyed mainstream usage in the Rails
-world, though it has been discussed in various places and implemented in
-third-party gems such as
+world, though it has been discussed in various
+[places](https://danchak99.wordpress.com/enterprise-rails/chapter-10-multiple-table-inheritance/)
+and implemented in third-party gems such as
 [ActiveRecord::ActsAs](https://github.com/chaadow/active_record-acts_as).
 
 After considering the tradeoffs, I opted for the MTI approach outlined by
