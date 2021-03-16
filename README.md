@@ -4,6 +4,8 @@
     <img src="https://api.codeclimate.com/v1/badges/2e9f659f4ba63f50d6dd/maintainability"/>
   </a>
 
+  [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
+
   The Timeless Jeweler Web App is a commercial retail management web app for jewelers. Manage customers, inventory, sales, and services all in one place.
 
   Note that this repository is a public mirror only, with some front-end assets
