@@ -42,12 +42,6 @@ jobs:
     - name: Install required apt packages
       run: |
         sudo apt-get -y install libpq-dev
-    - name: Install Bundler
-      run: gem install bundler
-    - name: Bundle install
-      run: |
-        bundle config set --local deployment 'false'
-        bundle install --jobs 4 --retry 3
     - name: Read Node.js version to install from `.nvmrc`
       run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
       id: nvm
@@ -100,7 +94,7 @@ jobs:
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
     - name: Yarn install
       run: yarn --frozen-lockfile
-    - uses: paambaati/codeclimate-action@v2.2.4
+    - uses: paambaati/codeclimate-action@v2.7.5
       env:
         CC_TEST_REPORTER_ID: d432674f71e0e94044b63a2dd097f8164b8c1e8b88f8f5e66ea815c2de165680
       with:
