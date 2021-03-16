@@ -3,9 +3,6 @@ name: Test
 on:
   push:
     branches: [ master, public ]
-  pull_request:
-    branches: [ master, public ]
-
 jobs:
   test:
     strategy:
@@ -26,8 +23,9 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Install dependencies
-      run: bundle install
-      run: npm install -g yarn
-      run: yarn install
+      run: |
+        bundle install
+        npm install -g yarn
+        yarn install
     - name: Run tests
       run: bin/rails test
