@@ -12,13 +12,15 @@
   ommitted for copyright purposes. Cloning the repo and setting it up locally
   should work but may look rather strange. **For the live running application, see
   the demo**.
-
-  Check out the demo at https://admin.timelessjeweler.com/
-
-  email: demo@example.com
-
-  password: password
 </div>
+
+## See it live
+
+Check out the demo at https://admin.timelessjeweler.com/
+
+email: demo@example.com
+
+password: password
 
 ## Features
 * Manage customers, inventory, and sales (services coming soon!)
