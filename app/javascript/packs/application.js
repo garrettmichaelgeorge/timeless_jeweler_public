@@ -7,7 +7,7 @@ import * as ActiveStorage from '@rails/activestorage'
 import 'channels'
 
 // Theme
-import 'dashkit/src/js/theme'
+// import 'dashkit/src/js/theme'
 
 // Custom
 import initApplication from 'src/main'
