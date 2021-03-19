@@ -16,51 +16,40 @@
 
 ## See it live
 
-Check out the demo at https://admin.timelessjeweler.com/
+Check out the as a guest usser at https://admin.timelessjeweler.com/
 
 email: demo@example.com
 
 password: password
 
 ## Features
-* Manage customers, inventory, and sales (services coming soon!)
+- Manage customers, inventory, and sales (services coming soon!)
 
-* A data model tailor-fit for the jewelry domain.
+- A data model tailor-fit for the jewelry domain.
 
-* Reactive user interface using [Stimulus Reflex](https://github.com/hopsoft/stimulus_reflex) (HTML over the wire using WebSockets)
+- Reactive user interface using [Stimulus Reflex](https://github.com/hopsoft/stimulus_reflex) (HTML over the wire using WebSockets)
 
-* Secure authentication using [Devise](https://github.com/heartcombo/devise)
+- Secure authentication using [Devise](https://github.com/heartcombo/devise)
 
-* Component-based view layer using [View Component](https://github.com/joelhawksley/view-component) gem
+- Component-based view layer using [View Component](https://github.com/joelhawksley/view-component) gem
 
-* Beautiful custom Bootstrap UI using [Dashkit](https://dashkit.goodthemes.co/) theme with [Cerebri Sans](https://www.myfonts.com/fonts/hanken-designco/cerebri-sans?tab=techSpecs) and [Feather](https://feathericons.com) icons
+- Beautiful custom Bootstrap UI using [Dashkit](https://dashkit.goodthemes.co/) theme with [Cerebri Sans](https://www.myfonts.com/fonts/hanken-designco/cerebri-sans?tab=techSpecs) and [Feather](https://feathericons.com) icons
 
 ## Technologies
-* Ruby on Rails 6.1
-
-* Stimulus Reflex
-
-* PostgreSQL 12
-
-* Bootstrap 5 (no jQuery)
-
-* Webpack/Webpacker
-
-* Redis with separate instances for caching and session storage
-
-* Progressive Web App (PWA) capability
-
-* Heroku
+- Ruby on Rails 6.1
+- Stimulus Reflex
+- PostgreSQL 12
+- Bootstrap 5 (no jQuery)
+- Webpack/Webpacker
+- Redis with separate instances for caching and session storage
+- Progressive Web App (PWA) capability
+- Heroku
 
 ## Requirements
-
-* Ruby 3.0+
-
-* PostgreSQL
-
-* Redis
-
-* Node 14.16.0
+- Ruby 3.0+
+- PostgreSQL
+- Redis
+- Node 14.16.0
 
 ## Code highlights
 
@@ -125,6 +114,12 @@ associations.
   $ git clone git@github.com:garrettmichaelgeorge/timeless_jeweler_public.git
   ```
 
+* Turn on caching in development for Stimulus Reflex
+
+  ```bash
+  $ bin/rails dev:cache
+  ```
+
 * Install gem dependencies
 
   ```bash
@@ -143,11 +138,16 @@ associations.
   $ bin/rails db:create
   $ bin/rails db:schema:load
   ```
-
-* Launch the server
+* Launch Rails server
 
   ```bash
   $ bin/rails server
+  ```
+
+* In a separate terminal, launch `webpack-dev-server`
+
+  ```bash
+  $ bin/webpack-dev-server
   ```
 
 * Visit in the browser
