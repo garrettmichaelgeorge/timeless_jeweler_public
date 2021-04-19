@@ -9,14 +9,14 @@
   jewelers. Manage customers, inventory, sales, and services all in one place.
 
   Note that this repository is a public mirror only, with some front-end assets
-  ommitted for copyright purposes. Cloning the repo and setting it up locally
-  should work but may look rather strange. **For the live running application, see
+  ommitted for copyright purposes. While cloning the repo and setting it up locally
+  should work, it will look strange in the browser. **For the live running application, see
   the demo**.
 </div>
 
 ## See it live
 
-Check out the as a guest usser at https://admin.timelessjeweler.com/
+Check out the demo at https://admin.timelessjeweler.com/ with the following credentials:
 
 email: demo@example.com
 
