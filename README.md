@@ -51,13 +51,56 @@ password: password
 - Redis
 - Node 14.16.0
 
-## Code highlights
+## Running it locally
 
-For those interested in the source code, here follows a brief discussion of some
-of the design decisions made during development. Links are included to the
-relevant source code files.
+* Clone the repository
 
-### SKU Generator
+  ```bash
+  $ git clone git@github.com:garrettmichaelgeorge/timeless_jeweler_public.git
+  ```
+
+* Turn on caching in development for Stimulus Reflex
+
+  ```bash
+  $ bin/rails dev:cache
+  ```
+
+* Install gem dependencies
+
+  ```bash
+  $ bundle
+  ```
+
+* Install yarn dependencies
+
+  ```bash
+  $ yarn
+  ```
+
+* Set up the database
+
+  ```bash
+  $ bin/rails db:create
+  $ bin/rails db:schema:load
+  ```
+* Launch Rails server
+
+  ```bash
+  $ bin/rails server
+  ```
+
+* In a separate terminal, launch `webpack-dev-server`
+
+  ```bash
+  $ bin/webpack-dev-server
+  ```
+
+* Visit in the browser
+
+
+## Implementation details
+
+### SKU generator
 
 See the [SKU value
 object](https://github.com/garrettmichaelgeorge/timeless_jeweler_public/blob/public/app/models/sku.rb)
@@ -106,51 +149,7 @@ hierarchy. This approach affords integrity at the DB level, avoids unnecessary
 dependencies (no gems), and allows utmost flexibility in terms of branching
 associations.
 
-## Running it locally
 
-* Clone the repository
-
-  ```bash
-  $ git clone git@github.com:garrettmichaelgeorge/timeless_jeweler_public.git
-  ```
-
-* Turn on caching in development for Stimulus Reflex
-
-  ```bash
-  $ bin/rails dev:cache
-  ```
-
-* Install gem dependencies
-
-  ```bash
-  $ bundle
-  ```
-
-* Install yarn dependencies
-
-  ```bash
-  $ yarn
-  ```
-
-* Set up the database
-
-  ```bash
-  $ bin/rails db:create
-  $ bin/rails db:schema:load
-  ```
-* Launch Rails server
-
-  ```bash
-  $ bin/rails server
-  ```
-
-* In a separate terminal, launch `webpack-dev-server`
-
-  ```bash
-  $ bin/webpack-dev-server
-  ```
-
-* Visit in the browser
 
 ## Troubleshooting
 
