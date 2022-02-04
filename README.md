@@ -24,15 +24,10 @@ password: password
 
 ## Features
 - Manage customers, inventory, and sales (services coming soon!)
-
 - A data model tailor-fit for the jewelry domain.
-
 - Reactive user interface using [Stimulus Reflex](https://github.com/hopsoft/stimulus_reflex) (HTML over the wire using WebSockets)
-
 - Secure authentication using [Devise](https://github.com/heartcombo/devise)
-
 - Component-based view layer using [View Component](https://github.com/joelhawksley/view-component) gem
-
 - Beautiful custom Bootstrap UI using [Dashkit](https://dashkit.goodthemes.co/) theme with [Cerebri Sans](https://www.myfonts.com/fonts/hanken-designco/cerebri-sans?tab=techSpecs) and [Feather](https://feathericons.com) icons
 
 ## Technologies
